@@ -1,6 +1,6 @@
 {
     "name": "uik",
-    "version": "0.1.0-beta7",
+    "version": "0.1.0-beta8",
     "author": "sunzhibin",
     "description": "ts 组件库",
     "license": "MIT",
@@ -109,7 +109,7 @@
         "webpack-merge": "^4.2.2"
     },
     "dependencies": {
-        "less": "^4.0.0",
+        "less": "3.13.1",
         "react": "^17.0.1",
         "react-dom": "^17.0.1"
     }
