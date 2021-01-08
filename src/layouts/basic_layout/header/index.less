@@ -1,0 +1,31 @@
+.header {
+    height: 64px;
+    box-shadow: 0 2px 8px #f0f1f2;
+    padding: 0 24px;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    z-index: 2;
+    margin: 0 0 24px 0;
+
+    .left {
+        display: flex;
+        align-items: center;
+        font-size: 32px;
+    }
+    
+    .right {
+        display: flex;
+        align-items: center;
+
+        .nav-item {
+            cursor: pointer;
+
+            & + .nav-item {
+                margin-left: 15px;
+            }
+        }
+    }
+}

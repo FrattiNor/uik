@@ -1,0 +1,29 @@
+@import '~@/theme';;
+
+.doc {
+    flex-grow: 1;
+    padding: 0 48px 32px 48px;
+    background-color: #fff;
+    color: rgba(0, 0, 0, 0.85);
+    font-size: 14px;
+    position: relative;
+    z-index: 1;
+    min-width: 0;
+
+    
+
+    // 针对特定 自定义样式
+    :global {
+        .api {
+            // 只针对api table
+            td:nth-child(1) {
+                font-weight: bold;
+            }
+
+            // 只针对api table
+            td:nth-child(3) {
+                color: #c41d7f;
+            }
+        }
+    }
+}

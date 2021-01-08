@@ -1,0 +1,85 @@
+@import '~@/theme';;
+
+.format-markdown {
+    // 针对 markdown 的 标签样式
+    h1 {
+        margin: 8px 0 20px;
+    }
+
+    h2 {
+        margin: 30px 0 14px;
+    }
+
+    p {
+        line-height: 28px;
+    }
+
+    ul {
+        margin: 0;
+        padding: 0;
+
+        li {
+            line-height: 28px;
+            margin: 3px 3px 3px 20px;
+            list-style-type: circle;
+        }
+    }
+
+    table {
+        width: 100%;
+        border: 1px solid @border-color;
+        border-collapse: collapse;
+        margin: 14px 0;
+
+        th,
+        td {
+            border: 1px solid @border-color;
+            padding: 12px;
+        }
+
+        th {
+            background-color: rgba(0, 0, 0, 0.02);
+            color: #5c6b77;
+            font-weight: normal;
+        }
+
+        td {
+            color: #595959;
+            transition: background-color 0.3s;
+        }
+
+        tr:hover {
+            td {
+                background-color: rgba(60, 90, 100, 0.04);
+            }
+        }
+    }
+
+    // 只涉及`text`类型
+    // 代码块由 code_block 组件覆盖
+    code {
+        background-color: #f2f4f5;
+        padding: 0.2em 0.4em;
+        margin: 0 1px;
+        font-size: 0.9em;
+        border-radius: 2px;
+    }
+
+    pre {
+        overflow: auto;
+        border-radius: 2px;
+        padding: 12px 20px;
+        background-color: #f2f4f5;
+
+        // 不需要代码高亮时，调用此样式
+        code {
+            background-color: unset;
+            padding: 0;
+            margin: 0;
+            font-size: 14px;
+            border-radius: 0;
+
+            line-height: 1.5;
+        }
+    }
+}

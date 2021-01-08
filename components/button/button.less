@@ -1,0 +1,74 @@
+@import '../theme';
+
+.uik {
+    &-btn {
+        cursor: pointer;
+        white-space: nowrap;
+        user-select: none;
+        box-shadow: 0 2px 0 rgba(0, 0, 0, 0.015);
+        outline: 0;
+        padding: 0;
+        border-radius: @border-radius;
+        border-width: @border-width;
+        border-style: solid;
+        transition: border-color 0.3s, color 0.3s, background-color 0.3s;
+
+        // == type
+        &-primary {
+            background-color: @primary-color;
+            border-color: @primary-color;
+            color: #fff;
+        }
+        &-danger {
+            background-color: @danger-color;
+            border-color: @danger-color;
+            color: #fff;
+        }
+        &-default {
+            background-color: #fff;
+            border-color: @border-color;
+            color: @font-color;
+
+            :not(.uik-btn-disabled):not(.uik-btn-loading)&:hover {
+                border-color: @primary-color;
+                color: @primary-color;
+            }
+        }
+
+        // == large
+        &-large {
+            height: @height-large;
+            font-size: @font-size-large;
+            padding: 0 15px;
+        }
+        &-middle {
+            height: @height-middle;
+            font-size: @font-size-middle;
+            padding: 0 15px;
+        }
+        &-small {
+            height: @height-small;
+            font-size: @font-size-small;
+            padding: 0 7px;
+        }
+        
+        // == loading
+        &-loading {
+            cursor: default;
+            opacity: 0.7;
+        }
+
+        // == disabled
+        &-disabled {
+            cursor: not-allowed;
+            background-color: @disabled-bg-color;
+            color: @disabled-color;
+            border-color: @border-color;
+            opacity: 1;
+        }
+
+        &-loading-icon {
+            margin-right: 10px;
+        }
+    }
+}
