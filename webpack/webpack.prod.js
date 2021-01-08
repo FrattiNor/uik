@@ -17,7 +17,7 @@ const prodConfig = {
     entry,
     output: {
         filename: 'js/[name].[chunkhash].js',
-        publicPath: '/',
+        publicPath: '/uik',
         ...output
     },
     module: {
