@@ -40,6 +40,9 @@ while [ "$newVersionIsTrue" == false ]; do
     fi
 done
 
+# 生成changelog
+yarn log
+
 # git提交
 while [ "$pushGitIsTrue" == false ]; do
     echo "git是否提交（y/n）："
@@ -58,8 +61,8 @@ while [ "$pushGitIsTrue" == false ]; do
 done
 
 # yarn 和 npm 设置源为npm
-nrm use npm
-yrm use npm
+# nrm use npm
+# yrm use npm
 
 # npm发布
 npm publish
