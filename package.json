@@ -43,7 +43,7 @@
         "types:umd": "tsc -p tsconfig.build.json --outDir umd",
         "build:doc": "yarn clean:doc && webpack --config webpack/webpack.prod.js",
         "build:uik": "yarn gulp:cjs && yarn types:cjs && yarn gulp:esm && yarn types:esm && yarn gulp:umd && yarn types:umd",
-        "package": "yarn build:uik && sh scripts/publish.sh",
+        "package": "sh scripts/publish.sh",
         "test": "jest",
         "test:watch": "jest --watch",
         "test:coverage": "jest --coverage",

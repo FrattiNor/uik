@@ -11,6 +11,11 @@ newVersionIsTrue=false # while新版本是否正确
 pushGit=false          # 是否要提交git
 pushGitIsTrue=false    # while gitPush变量是否正确
 
+# 构建
+function build() {
+    yarn build:uik
+}
+
 # 查找之前的版本号
 function showOldVersion() {
     echo "当前版本号："
@@ -80,18 +85,14 @@ function publish() {
     npm publish
 }
 
-function putStartAndEnd () {
-    echo "=> 开始任务：$1"
-    echo "✨ 结束任务：$1"
-}
-
-function main () {
+# 执行函数
+function main() {
+    build
     showOldVersion
     inputNewVersion
     updateLog
     gitAddCommitPush
     publish
-    putStartAndEnd
 }
 
 main
