@@ -49,8 +49,7 @@
         "test:coverage": "jest --coverage",
         "test:update": "jest --updateSnapshot",
         "log:release": "conventional-changelog -p angular -i CHANGELOG.md -s",
-        "log:all": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
-        "commit": "git-cz"
+        "log:all": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0"
     },
     "devDependencies": {
         "@babel/core": "^7.12.10",
@@ -76,10 +75,8 @@
         "autoprefixer": "^10.2.1",
         "babel-loader": "^8.2.2",
         "classnames": "^2.2.6",
-        "commitizen": "^4.2.2",
         "copy-to-clipboard": "^3.3.1",
         "css-loader": "^5.0.1",
-        "cz-conventional-changelog": "^3.3.0",
         "dva-core": "^2.0.4",
         "dva-loading": "^3.0.22",
         "eslint": "^7.17.0",
@@ -128,10 +125,5 @@
         "webpack-dev-server": "^3.10.3",
         "webpack-merge": "^4.2.2"
     },
-    "dependencies": {},
-    "config": {
-        "commitizen": {
-            "path": "./node_modules/cz-conventional-changelog"
-        }
-    }
+    "dependencies": {}
 }

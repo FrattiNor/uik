@@ -8,7 +8,7 @@ describe('<Button />', () => {
         expect(container).toMatchSnapshot()
     })
 
-    test('should render alert with type', () => {
+    test('should render button with type', () => {
         const types: string[] = ['default', 'primary', 'danger']
 
         const { getByText } = render(
