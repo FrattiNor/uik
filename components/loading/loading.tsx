@@ -4,7 +4,7 @@ import LoadingIcon from './loading_icon'
 import { loadingProps } from './types'
 import './loading.less'
 
-const Loading: FC<loadingProps & props> = (props) => {
+const Loading: FC<loadingProps> = (props) => {
     const { className = false, loading, children } = props
 
     const loadingState = (
