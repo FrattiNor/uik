@@ -41,7 +41,7 @@ while [ "$newVersionIsTrue" == false ]; do
 done
 
 # 生成changelog
-yarn log
+yarn log:all
 
 # git提交
 while [ "$pushGitIsTrue" == false ]; do
