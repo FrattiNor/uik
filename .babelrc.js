@@ -22,13 +22,13 @@
 //     ]
 // }
 
-let babelEnv = process.env.BABEL_ENV
+let babelEnv = process.env.BABEL_ENV || 'cjs'
 
 console.log('babelEnv', babelEnv)
 
-let loose = false
-let modules = false
-let useESModules = false
+let loose
+let modules
+let useESModules
 
 switch (babelEnv) {
     case 'cjs':
@@ -43,7 +43,7 @@ switch (babelEnv) {
         break
     case 'umd':
         loose = false
-        modules = false
+        modules = 'umd'
         useESModules = false
         break
     default: 
