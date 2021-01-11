@@ -9,3 +9,4 @@
 - ci CI 配置，脚本文件等更新
 - chore 非 src 或者 测试文件的更新
 - revert commit 回退
+- del 删除，取消 功能

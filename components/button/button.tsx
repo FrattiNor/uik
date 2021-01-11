@@ -1,10 +1,11 @@
 import React, { FC } from 'react'
 import classnames from 'classnames'
-import { LoadingIcon } from 'uik/lib/loading'
+import { Loading } from 'uik'
 import { buttonProps } from './types'
 import './button.less'
 
 const Button: FC<buttonProps> = (props) => {
+    const { LoadingIcon } = Loading
     const { className = false, children, disabled = false, loading = false, htmlType = 'button', size = 'middle', type = 'default', onClick } = props
 
     // 多种状态可以重叠

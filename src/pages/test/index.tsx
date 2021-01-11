@@ -1,6 +1,9 @@
 import React, { FC } from 'react'
 import { Button, Loading } from 'uik'
 
+const { LoadingIcon } = Loading
+console.log('LoadingIcon', LoadingIcon)
+
 const Test: FC = () => {
     return (
         <>

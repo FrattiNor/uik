@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<Button /> should render alert with type 1`] = `
+exports[`<Button /> should render button with type 1`] = `
 <button
   class="uik-btn uik-btn-default uik-btn-middle"
   type="button"
@@ -9,7 +9,7 @@ exports[`<Button /> should render alert with type 1`] = `
 </button>
 `;
 
-exports[`<Button /> should render alert with type 2`] = `
+exports[`<Button /> should render button with type 2`] = `
 <button
   class="uik-btn uik-btn-default uik-btn-middle"
   type="button"
@@ -18,7 +18,7 @@ exports[`<Button /> should render alert with type 2`] = `
 </button>
 `;
 
-exports[`<Button /> should render alert with type 3`] = `
+exports[`<Button /> should render button with type 3`] = `
 <button
   class="uik-btn uik-btn-default uik-btn-middle"
   type="button"
