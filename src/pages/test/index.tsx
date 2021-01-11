@@ -5,6 +5,9 @@ const Test: FC = () => {
     return (
         <>
             <Button type="primary">Button</Button>
+            <Loading loading>
+                <div>1111</div>
+            </Loading>
         </>
     )
 }
