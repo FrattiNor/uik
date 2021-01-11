@@ -6,13 +6,18 @@ const cssnano = require('gulp-cssnano')
 
 const paths = {
     dest: {
-        cjs: 'lib', // commonjs 文件存放的目录名 
-        esm: 'esm', // ES module 文件存放的目录名 
-        umd: 'umd' // umd文件存放的目录名 
+        cjs: 'lib', // commonjs 文件存放的目录名
+        esm: 'esm', // ES module 文件存放的目录名
+        umd: 'umd' // umd文件存放的目录名
     },
-    styles: ['components/**/*.less'], // 样式文件路径 
-    cssStyles:['components/**/*.less', '!components/**/theme.less'], // css 样式文件路径 
-    scripts: ['components/**/*.{ts,tsx}', '!components/@types/*', '!components/**/doc/**', '!components/**/types.ts'] // 脚本文件路径
+    styles: ['components/**/*.less'], // 样式文件路径
+    cssStyles: ['components/**/*.less', '!components/**/theme.less'], // css 样式文件路径
+    scripts: [
+        'components/**/*.{ts,tsx}',
+        '!components/**/types.ts',
+        '!components/**/__doc__/**',
+        '!components/**/__tests__/*.{ts,tsx}'
+    ] // 脚本文件路径
 }
 
 const { dest, styles, cssStyles, scripts } = paths
@@ -29,17 +34,16 @@ const { dest, styles, cssStyles, scripts } = paths
 //             .pipe(cssnano({ zindex: false, reduceIdents: false })) // 压缩
 //             .pipe(gulp.dest(dest[env]))
 //     }
-        
+
 // }
 
 /**
  * 拷贝less文件
  */
 function copyLessByEnv(env) {
-    return function copyLess () {
+    return function copyLess() {
         return gulp.src(styles).pipe(gulp.dest(dest[env]))
     }
-    
 }
 
 /**
@@ -61,7 +65,7 @@ function compileScripts(babelEnv, destDir) {
  * 编译cjs umd esm
  */
 function compileByEnv(env) {
-    return function compile () {
+    return function compile() {
         return compileScripts(env, dest[env])
     }
 }

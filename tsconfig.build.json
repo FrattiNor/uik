@@ -1,5 +1,5 @@
 {
     "extends": "./tsconfig.json",
     "compilerOptions": { "emitDeclarationOnly": true }, // 只生成声明文件
-    "exclude": ["**/__tests__/**", "**/doc/**", "src"] // 排除示例、测试以及打包好的文件夹
+    "exclude": ["**/__tests__/**", "**/__doc__/**", "src"] // 排除示例、测试以及打包好的文件夹
 }

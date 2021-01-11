@@ -3,5 +3,3 @@ import LoadingIcon from './loading_icon'
 
 export { LoadingIcon }
 export default Loading
-
-export * from './types'

@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Button /> should render alert with type 1`] = `
+<button
+  class="uik-btn uik-btn-default uik-btn-middle"
+  type="button"
+>
+  default
+</button>
+`;
+
+exports[`<Button /> should render alert with type 2`] = `
+<button
+  class="uik-btn uik-btn-default uik-btn-middle"
+  type="button"
+>
+  primary
+</button>
+`;
+
+exports[`<Button /> should render alert with type 3`] = `
+<button
+  class="uik-btn uik-btn-default uik-btn-middle"
+  type="button"
+>
+  danger
+</button>
+`;
+
+exports[`<Button /> should render default 1`] = `
+<div>
+  <button
+    class="uik-btn uik-btn-default uik-btn-middle"
+    type="button"
+  >
+    default
+  </button>
+</div>
+`;

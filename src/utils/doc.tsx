@@ -61,7 +61,7 @@ const judgeName = (name: string): boolean => {
 const getDoc = (name: string): FC => {
     if (judgeName(name)) {
         try {
-            return require(`uik/${name}/doc/index.mdx`)?.default
+            return require(`uik/${name}/__doc__/index.mdx`)?.default
         } catch (e) {
             console.error(`not found ${name}'s doc!`)
         }

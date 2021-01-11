@@ -2,7 +2,6 @@ import React, { FC } from 'react'
 import classnames from 'classnames'
 import { Icon } from 'uik'
 import { loadingIconProps } from './types'
-
 import './loading_icon.less'
 
 const LoadingIcon: FC<loadingIconProps> = ({ className }) => {

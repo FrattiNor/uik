@@ -2,6 +2,8 @@
 const path = require('path')
 const ProgressBarPlugin = require('progress-bar-webpack-plugin')
 
+process.env.BABEL_ENV = 'esm'
+
 module.exports = {
     // 模块
     module: {
