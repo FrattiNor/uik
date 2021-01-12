@@ -1,8 +1,8 @@
 import React, { FC } from 'react'
-import { containerProps } from './types'
+import { maskProps } from './types'
 import './index.less'
 
-const Container: FC<containerProps> = ({ id }) => {
+const Container: FC<maskProps> = ({ id }) => {
     return (
         <div className="uik-container">
             <div id={id} />

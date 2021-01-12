@@ -10,15 +10,22 @@ message.config({
 const Test: FC = () => {
     const [n, setN] = useState(0)
 
-    const click = () => {
+    const add = () => {
         message.success('This is a normal message ' + n)
         setN(n + 1)
     }
 
+    const destroy = () => {
+        message.destroy()
+    }
+
     return (
         <>
-            <Button type="primary" onClick={click}>
-                Button
+            <Button type="primary" onClick={add}>
+                ADD
+            </Button>
+            <Button type="primary" onClick={destroy}>
+                destroy
             </Button>
         </>
     )

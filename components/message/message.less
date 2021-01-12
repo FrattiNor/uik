@@ -1,7 +1,6 @@
-@import '../theme.less';
+@import '../_style/theme.less';
+@import '../_style/move.less';
 
-// 容器
-// 定位
 .uik {
     &-message {
         &-container {
@@ -9,16 +8,27 @@
             flex-direction: column;
             position: absolute;
 
-            & > div + div {
-                margin-top: 10px;
+            // 解决div覆盖问题，原因未知
+            & > div {
+                position: relative;
+                z-index: 1;
             }
 
             &-top {
                 top: 10px;
+
+                .show {
+                    animation: moveUpIn 0.3s forwards;
+                }
             }
 
             &-bottom {
                 bottom: 10px;
+                flex-direction: column-reverse;
+
+                .show {
+                    animation: moveDownIn 0.3s forwards;
+                }
             }
 
             &-left {
@@ -38,35 +48,52 @@
             }
         }
 
-        .loop(@n) when(@n <= 100) {
-            .loop(@n + 1); // @i + 1 相当于"++i"
-            &-max-@{n} {
-                :nth-last-child(n + @{n}) {
-                    display: none;
+        &-item {
+            background-color: #fff;
+            transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, transform 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+            box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
+            border-radius: @border-radius;
+            padding: 10px 20px;
+            margin: 6px;
+            max-width: 80vw;
+            pointer-events: auto;
+
+            &.hidden {
+                animation: messageMoveOut 0.3s forwards;
+            }
+            // show在top和bottom下，因为从上和从下的动画不一样
+            
+            &-icon {
+                margin-right: 10px;
+
+                &.success {
+                    color: @success-color;
+                }
+                &.error {
+                    color: @error-color;
+                }
+                &.warn {
+                    color: @warn-color;
+                }
+                &.info {
+                    color: @info-color;
                 }
             }
         }
-        .loop(1);
     }
 }
 
-// message 本体
-.uik {
-    &-message {
-        display: inline-flex;
-        background-color: #fff;
-        transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, transform 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
-        box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
-        border-radius: @border-radius;
-        align-items: center;
-        justify-content: center;
+@keyframes messageMoveOut {
+    0% {
+        max-height: 150px;
         padding: 10px 20px;
-        max-width: 80vw;
-        pointer-events: auto;
-
-        &-close {
-            cursor: pointer;
-            margin-left: 5px;
-        }
+        margin: 6px;
+        opacity: 1;
+    }
+    100% {
+        max-height: 0;
+        padding: 0;
+        margin: 0;
+        opacity: 0;
     }
 }

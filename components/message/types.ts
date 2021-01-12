@@ -13,4 +13,6 @@ export type messageProps = {
     father: Element | DocumentFragment // 这个是挂载点 要unmount卸载 完毕后卸载挂载点
     content: string | ReactNode
     type: messageType
+    isOver: boolean
+    id?:string
 }
