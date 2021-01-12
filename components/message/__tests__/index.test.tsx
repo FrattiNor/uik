@@ -8,17 +8,7 @@ describe('<Button />', () => {
         expect(container).toMatchSnapshot()
     })
 
-    test('should render disabled', () => {
-        const { container } = render(<Button disabled>disabled</Button>)
-        expect(container).toMatchSnapshot()
-    })
-
-    test('should render loading', () => {
-        const { container } = render(<Button loading>loading</Button>)
-        expect(container).toMatchSnapshot()
-    })
-
-    test('should render with type', () => {
+    test('should render button with type', () => {
         const types: string[] = ['default', 'primary', 'danger']
 
         const { getByText } = render(

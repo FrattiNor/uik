@@ -5,7 +5,7 @@ export type buttonProps = {
     disabled?: boolean
     loading?: boolean
     htmlType?: 'submit' | 'reset' | 'button'
-    shape?: 'circle' | 'round'
+    // shape?: 'circle' | 'round'
     size?: 'large' | 'middle' | 'small'
     type?: 'primary' | 'danger' | 'default'
     onClick?: MouseEventHandler<HTMLButtonElement>

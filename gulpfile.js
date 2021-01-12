@@ -14,6 +14,7 @@ const paths = {
     cssStyles: ['components/**/*.less', '!components/**/theme.less'], // css 样式文件路径
     scripts: [
         'components/**/*.{ts,tsx}',
+        '!components/_types/*',
         '!components/**/types.ts',
         '!components/**/__doc__/**',
         '!components/**/__tests__/*.{ts,tsx}'
@@ -34,7 +35,6 @@ const { dest, styles, cssStyles, scripts } = paths
 //             .pipe(cssnano({ zindex: false, reduceIdents: false })) // 压缩
 //             .pipe(gulp.dest(dest[env]))
 //     }
-
 // }
 
 /**
