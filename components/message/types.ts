@@ -16,4 +16,9 @@ export type messageProps = {
     content: string | ReactNode
     type?: messageType
     id?: string
+    isOver: boolean
+}
+
+export type messageDestroyFun = {
+    [key:string]: () => void
 }

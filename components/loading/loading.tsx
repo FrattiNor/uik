@@ -3,10 +3,8 @@ import classnames from 'classnames'
 import LoadingIcon from './loading_icon'
 import { loadingProps } from './types'
 import './loading.less'
-console.log('load out')
 
 const Loading: FC<loadingProps> = (props) => {
-    console.log('load in')
 
     const { className = false, loading, children } = props
 
