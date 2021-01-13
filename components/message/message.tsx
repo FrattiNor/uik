@@ -5,6 +5,9 @@ import { messageProps, messageType, messageConfig, messageContent } from './type
 import { createContainer } from '../_utils'
 import './message.less'
 
+console.log('Message out')
+
+
 // 默认配置
 let _messageConfig = {
     position: ['top', 'center'],
@@ -14,6 +17,8 @@ let _messageConfig = {
 
 // Message组件
 const Message: FC<messageProps> = ({ father, container, content, type = 'default', id }) => {
+    console.log('Message in')
+
     const [visible, setVisible] = useState(true)
     const { duration } = _messageConfig
 

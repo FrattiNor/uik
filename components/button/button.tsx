@@ -4,7 +4,9 @@ import { Loading } from 'uik'
 import { buttonProps } from './types'
 import './button.less'
 
+console.log('button out')
 const Button: FC<buttonProps> = (props) => {
+    console.log('button in')
     const { LoadingIcon } = Loading
     const { className = false, children, disabled = false, loading = false, htmlType = 'button', size = 'middle', type = 'default', onClick } = props
 
