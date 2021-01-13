@@ -15,12 +15,6 @@
         "allowSyntheticDefaultImports": true,
         "resolveJsonModule": true,
         "paths": {
-            "lib": ["lib/index.js"],
-            "lib/*": ["lib/*"],
-            "esm": ["esm/index.js"],
-            "esm/*": ["esm/*"],
-            "umd": ["umd/index.js"],
-            "umd/*": ["umd/*"],
             "@/*": ["src/*"],
             "uik/lib/*": ["components/*"],
             "uik": ["components/index.tsx"],

@@ -1,4 +1,4 @@
-@import '~@/theme';;
+@import '~@/theme';
 
 .doc {
     flex-grow: 1;
@@ -10,19 +10,27 @@
     z-index: 1;
     min-width: 0;
 
-    
-
     // 针对特定 自定义样式
     :global {
+        // 只针对api table
         .api {
-            // 只针对api table
+            
             td:nth-child(1) {
                 font-weight: bold;
+                width: 15%;
             }
 
-            // 只针对api table
             td:nth-child(3) {
                 color: #c41d7f;
+                width: 25%;
+            }
+
+            td:nth-child(4) {
+                width: 10%;
+            }
+
+            td:nth-child(5) {
+                width: 10%;
             }
         }
     }

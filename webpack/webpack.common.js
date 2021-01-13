@@ -69,9 +69,6 @@ module.exports = {
         // 别名
         alias: {
             '@': path.join(__dirname, '../src'),
-            lib: path.join(__dirname, '../lib'),
-            esm: path.join(__dirname, '../esm'),
-            umd: path.join(__dirname, '../umd'),
             'uik/lib': path.join(__dirname, '../components'),
             uik: path.join(__dirname, '../components')
         }
