@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 import classnames from 'classnames'
-import Loading from 'uik/lib/loading'
+import Loading from '../loading'
 import { buttonProps } from './types'
 import './button.less'
 

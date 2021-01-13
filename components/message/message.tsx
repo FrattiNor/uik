@@ -1,6 +1,6 @@
 import React, { FC, useCallback, useEffect, useState } from 'react'
 import ReactDOM, { unmountComponentAtNode } from 'react-dom'
-import Icon from 'uik/lib/icon'
+import Icon from '../icon'
 import { messageProps, messageType, messageConfig, messageContent } from './types'
 import { createContainer } from '../_utils'
 import './message.less'

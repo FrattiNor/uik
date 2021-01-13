@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 import classnames from 'classnames'
-import { Icon } from 'uik'
+import Icon from '../icon'
 import { loadingIconProps } from './types'
 import './loading_icon.less'
 
