@@ -1,8 +1,7 @@
 import React, { FC, useState } from 'react'
 import copy from 'copy-to-clipboard'
-import Icon from '@/components/icon'
 import CodeBlock from '@/components/code_block'
-import { message } from 'uik'
+import { message, Icon } from 'uik'
 import styles from './index.less'
 
 type props = {
@@ -21,7 +20,7 @@ const CodeBox: FC<props> = ({ children, code, title, desc }) => {
     // 拷贝函数
     const copyToClipboard = (): void => {
         copy(noEndLineCode)
-        message.success('复制成功')
+        message.open('复制成功', { type: 'success' })
     }
 
     return (
@@ -41,10 +40,10 @@ const CodeBox: FC<props> = ({ children, code, title, desc }) => {
                 </div>
             )}
 
-            {/* btn */}
-            <div className={styles['btn-box']}>
-                <Icon name={`${visible ? 'code-open' : 'code-close'}`} className={styles['btn']} onClick={(): void => setVisible(!visible)} />
-                <Icon name="copy" className={styles['btn']} onClick={copyToClipboard} />
+            {/* icon */}
+            <div className={styles['icon-box']}>
+                <Icon name={`${visible ? 'code-open' : 'code-close'}`} className={styles['icon']} onClick={(): void => setVisible(!visible)} />
+                <Icon name="copy" className={styles['icon']} onClick={copyToClipboard} />
             </div>
 
             {/* code */}

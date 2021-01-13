@@ -17,6 +17,10 @@ const menu = [
                 name: 'loading',
                 desc: 'Loading 加载'
             },
+            {
+                name: 'message',
+                desc: 'message 消息反馈'
+            },
         ]
     }
 ]

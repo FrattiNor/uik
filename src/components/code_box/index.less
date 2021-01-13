@@ -1,9 +1,12 @@
-@import '~@/theme';;
+@import '~@/theme';
 
 .code-box {
     border: 1px solid @border-color;
     border-bottom: 0;
-    margin: 14px 0;
+
+    & + .code-box {
+        margin-top: 14px;
+    }
 
     .demo {
         padding: 24px 24px 20px 24px;
@@ -48,7 +51,7 @@
         }
     }
 
-    .btn-box {
+    .icon-box {
         border-top: 1px dashed @border-color;
         border-bottom: 1px solid @border-color;
         padding: 5px 0;
@@ -56,9 +59,10 @@
         align-items: center;
         justify-content: center;
 
-        .btn {
+        .icon {
             font-size: 24px;
             cursor: pointer;
+            color: #00000073;
         }
 
         & > * + * {

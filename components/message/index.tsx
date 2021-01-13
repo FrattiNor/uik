@@ -1,3 +1,3 @@
-import { success, error, warn, info, config, destroy } from './message'
+import { open, config, destroy } from './message'
 
-export default { success, error, warn, info, config, destroy }
+export default { open, config, destroy }

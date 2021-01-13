@@ -1,1 +1,68 @@
-# message
+import CodeBox from '@/components/code_box'
+import CodeBlock from '@/components/code_block'
+
+import DemoNormal from './demo-normal'
+import descNormal from './demo-normal/desc.md'
+import codeNormal from '!raw-loader!./demo-normal'
+
+import DemoType from './demo-type'
+import descType from './demo-type/desc.md'
+import codeType from '!raw-loader!./demo-type'
+
+# message 消息提示
+
+message 用于全局展示操作的反馈信息。
+
+## 何时使用
+
+可提供成功、警告和错误等反馈信息。
+
+显示并自动消失，是一种不打断用户操作的轻量级提示方式。
+
+## 代码演示
+
+<CodeBox code={codeNormal} title="普通提示" desc={descNormal}>
+    <DemoNormal />
+</CodeBox>
+
+<CodeBox code={codeType} title="其他提示类型" desc={descType}>
+    <DemoType />
+</CodeBox>
+
+## API
+
+组件提供了一些静态方法，使用方式和参数如下：
+
+-   `message.open(content, options)`
+-   `message.config(config)`
+-   `message.destory()`
+
+<div className="api">
+
+| 属性    | 说明     | 类型                | 默认值 | 版本 |
+| :------ | :------- | :------------------ | :----- | :--- |
+| content | 反馈信息 | string \| ReactNode | -      | -    |
+
+</div>
+
+`options`对象属性如下：
+
+<div className="api">
+
+| 属性 | 说明     | 类型                                        | 默认值    | 版本 |
+| :--- | :------- | :------------------------------------------ | :-------- | :--- |
+| type | 消息类型 | success \| error \| warn \| info \| default | `default` | -    |
+
+</div>
+
+`config`对象属性如下：
+
+<div className="api">
+
+| 属性     | 说明                                          | 类型                                               | 默认值        | 版本 |
+| :------- | :-------------------------------------------- | :------------------------------------------------- | :------------ | :--- |
+| position | 弹出消息的位置                                | ['top' \| 'bottom', 'center' \| 'left' \| 'right'] | [top, center] | -    |
+| maxCount | 最大弹出消息数量                              | number                                             | 3             | -    |
+| duration | 弹出消息显示时长秒数`（设为 0 时不自动关闭）` | number                                             | 3             | -    |
+
+</div>

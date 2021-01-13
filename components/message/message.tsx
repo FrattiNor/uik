@@ -1,7 +1,7 @@
-import React, { FC, useCallback, useEffect, ReactNode, useState } from 'react'
+import React, { FC, useCallback, useEffect, useState } from 'react'
 import ReactDOM, { unmountComponentAtNode } from 'react-dom'
 import { Icon } from 'uik'
-import { messageProps, messageType, messageConfig } from './types'
+import { messageProps, messageType, messageConfig, messageContent } from './types'
 import { createContainer } from '../_utils'
 import './message.less'
 
@@ -13,11 +13,12 @@ let _messageConfig = {
 }
 
 // Message组件
-const Message: FC<messageProps> = ({ father, container, content, isOver, type, id }) => {
+const Message: FC<messageProps> = ({ father, container, content, type = 'default', id }) => {
     const [visible, setVisible] = useState(true)
     const { duration } = _messageConfig
 
-    const classname = visible ? (isOver ? '' : 'show') : 'hidden'
+    // const classname = visible ? (isOver ? '' : 'show') : 'hidden'
+    const classname = visible ? 'show' : 'hidden'
 
     const unmount = useCallback(() => {
         if (father && container) {
@@ -42,7 +43,7 @@ const Message: FC<messageProps> = ({ father, container, content, isOver, type, i
 
     return (
         <div className={`uik-message-item ${classname}`} {...props}>
-            <Icon name={type} className={`uik-message-item-icon ${type}`} />
+            {type !== 'default' && <Icon name={type} className={`uik-message-item-icon ${type}`} />}
             {content}
         </div>
     )
@@ -73,16 +74,7 @@ const delOverMax = (container: HTMLElement | null): boolean => {
     return false
 }
 
-// 插入Message
-const appendMessage = ({ type, content, key }: { type: messageType; content: string | ReactNode; key?: string }) => {
-    const container = getContainer()
-    const isOver = delOverMax(container)
-    const div = document.createElement('div')
-    const ReactNode = <Message id={key} father={div} container={container} content={content} type={type} isOver={isOver} />
-    container?.append(div)
-    ReactDOM.render(ReactNode, div)
-}
-
+// 销毁
 const destroy = (): void => {
     const container = getContainer()
     const divs = container?.childNodes
@@ -93,11 +85,7 @@ const destroy = (): void => {
     }
 }
 
-const success = (content: string | ReactNode, key?: string): void => appendMessage({ type: 'success', content, key })
-const error = (content: string | ReactNode, key?: string): void => appendMessage({ type: 'error', content, key })
-const warn = (content: string | ReactNode, key?: string): void => appendMessage({ type: 'warn', content, key })
-const info = (content: string | ReactNode, key?: string): void => appendMessage({ type: 'info', content, key })
-
+// 配置
 const config = (newConfig: messageConfig): void => {
     _messageConfig = {
         ..._messageConfig,
@@ -105,4 +93,15 @@ const config = (newConfig: messageConfig): void => {
     }
 }
 
-export { success, error, warn, info, config, destroy }
+// 插入Message
+const open = (content: messageContent, options?: { type?: messageType; key?: string }): void => {
+    const { type, key } = options || {}
+    const container = getContainer()
+    delOverMax(container)
+    const div = document.createElement('div')
+    const ReactNode = <Message id={key} father={div} container={container} content={content} type={type} />
+    container?.append(div)
+    ReactDOM.render(ReactNode, div)
+}
+
+export { open, config, destroy }

@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { FC } from 'react'
 import { Button } from 'uik'
 
-export default (): JSX.Element => (
-    <>
+const Demo: FC = () => {
+    return (
         <Button loading type="primary">
             btn
         </Button>
-    </>
-)
+    )
+}
+
+export default Demo
