@@ -1,12 +1,11 @@
 import React, { FC, useCallback, useEffect, useState } from 'react'
 import ReactDOM, { unmountComponentAtNode } from 'react-dom'
-import { Icon } from 'uik'
+import Icon from 'uik/lib/icon'
 import { messageProps, messageType, messageConfig, messageContent } from './types'
 import { createContainer } from '../_utils'
 import './message.less'
 
 console.log('Message out')
-
 
 // 默认配置
 let _messageConfig = {
