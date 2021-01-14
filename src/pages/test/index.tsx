@@ -3,8 +3,9 @@ import { Button, message } from 'uik'
 
 message.config({
     position: ['top', 'center'],
-    duration: 0,
-    maxCount: 3
+    duration: 3,
+    maxCount: 3,
+    overAnimate: true
 })
 
 const Test: FC = () => {

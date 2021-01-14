@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { ReactNode } from 'react'
 
 export type messageType = 'success' | 'error' | 'warn' | 'info' | 'default'
@@ -8,6 +9,18 @@ export type messageConfig = {
     position: ['top' | 'bottom', 'center' | 'left' | 'right']
     duration: number
     maxCount: number
+    overAnimate: boolean
+}
+
+export type newMessageConfig = {
+    position?: ['top' | 'bottom', 'center' | 'left' | 'right']
+    duration?: number
+    maxCount?: number
+    overAnimate?: boolean
+}
+
+export type messageDestroyFun = {
+    [key:string]: (animate?: boolean) => void
 }
 
 export type messageProps = {
@@ -16,8 +29,7 @@ export type messageProps = {
     content: string | ReactNode
     type?: messageType
     id?: string
+    destroyFun: messageDestroyFun,
+    messageConfig: messageConfig
 }
 
-export type messageDestroyFun = {
-    [key:string]: () => void
-}
