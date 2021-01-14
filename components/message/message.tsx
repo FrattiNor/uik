@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState, useRef, MutableRefObject } from 'react'
+import React, { FC, useEffect, useState, useRef, MutableRefObject, useLayoutEffect } from 'react'
 import { unmountComponentAtNode } from 'react-dom'
 import classnames from 'classnames'
 import Icon from '../icon'
@@ -52,7 +52,7 @@ const Message: FC<messageProps> = ({ father, container, content, type = 'default
     }
 
     // 手动增加卸载方法
-    useEffect(() => {
+    useLayoutEffect(() => {
         addDestroyFun_JudgeOverMaxCount()
     }, [])
 

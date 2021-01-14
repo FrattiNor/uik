@@ -1,6 +1,6 @@
 {
     "name": "uik",
-    "version": "0.1.0-beta17",
+    "version": "0.1.0-beta18",
     "author": "sunzhibin",
     "description": "ts 组件库",
     "license": "MIT",
@@ -21,9 +21,7 @@
         "registry": "https://registry.npmjs.org/"
     },
     "files": [
-        "lib",
-        "esm",
-        "umd"
+        "lib"
     ],
     "sideEffects": [
         "*.less"
