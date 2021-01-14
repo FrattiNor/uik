@@ -15,13 +15,14 @@ let _messageConfig = {
 const destroyFun: messageDestroyFun = {}
 
 // Message组件
-const Message: FC<messageProps> = ({ father, container, content, type = 'default', id, isOver }) => {
-
+const Message: FC<messageProps> = ({ father, container, content, type = 'default', id }) => {
+    const { duration, maxCount } = _messageConfig
+    // 记录卸载方法的唯一key
     const key = id || Math.random().toString()
     const [visible, setVisible] = useState(true)
-    const { duration } = _messageConfig
-    const classname = visible ? (isOver ? '' : 'show') : 'hidden'
+    const classname = visible ? 'show' : 'hidden'
 
+    // 卸载方法 取消挂载以及移除dom
     const unmount = useCallback(() => {
         if (father && container) {
             unmountComponentAtNode(father)
@@ -29,27 +30,40 @@ const Message: FC<messageProps> = ({ father, container, content, type = 'default
         }
     }, [father, container])
 
-    const hiddenAndUnmount = () => {
-        setTimeout(() => {
-            setVisible(false)
+    // 执行隐藏动画 后 卸载 并 移除destroyFun
+    const hidden_Unmount = () => {
+        setVisible(false)
 
-            setTimeout(() => {
-                unmount()
-            }, 500)
-        }, duration * 1000)
+        setTimeout(() => {
+            unmount()
+        }, 500)
 
         delete destroyFun[key]
     }
 
-    useEffect(() => {
-        if (duration !== 0) {
-            hiddenAndUnmount()
+    // 将卸载方法 保存在destroyFun
+    // 并判断加入本方法后是否超过最大长度，如超过则执行最前面的卸载方法
+    const addDestroyFun_JudgeOverMaxCount = () => {
+        destroyFun[key] = hidden_Unmount
+        const list = Object.values(destroyFun)
+        if (list.length > maxCount) {
+            list[0]()
         }
+    }
+
+    // 手动增加卸载方法
+    useEffect(() => {
+        addDestroyFun_JudgeOverMaxCount()
     }, [])
 
+    // 自动卸载
     useEffect(() => {
-        destroyFun[key] = hiddenAndUnmount
-    }, [key])
+        if (duration !== 0) {
+            setTimeout(() => {
+                hidden_Unmount()
+            }, duration * 1000)
+        }
+    }, [])
 
     return (
         <div className={`uik-message-item ${classname}`}>
@@ -82,24 +96,10 @@ const getContainer = (): HTMLElement => {
     return container
 }
 
-// 超过maxCount删除第一个元素
-const delOverMax = (container: HTMLElement): boolean => {
-    const { maxCount } = _messageConfig
-    const child = container.children
-
-    if (child.length >= maxCount) {
-        unmountComponentAtNode(child[0])
-        container.removeChild(child[0])
-        return true
-    }
-
-    return false
-}
-
 // 销毁
 const destroy = (id?: string): void => {
     if (id) {
-        destroyFun[id]()
+        typeof destroyFun[id] === 'function' && destroyFun[id]()
     } else {
         Object.values(destroyFun).forEach((fun) => fun())
     }
@@ -117,9 +117,8 @@ const config = (newConfig: messageConfig): void => {
 const open = (content: messageContent, options?: { type?: messageType; id?: string }): void => {
     const { type, id } = options || {}
     const container = getContainer()
-    const isOver = delOverMax(container)
     const div = document.createElement('div')
-    const ReactNode = <Message isOver={isOver} id={id} father={div} container={container} content={content} type={type} />
+    const ReactNode = <Message id={id} father={div} container={container} content={content} type={type} />
     container.append(div)
     ReactDOM.render(ReactNode, div)
 }
