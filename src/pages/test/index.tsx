@@ -1,34 +1,20 @@
 import React, { FC, useState } from 'react'
-import { Button, message } from 'uik'
-
-message.config({
-    position: ['top', 'center'],
-    duration: 3,
-    maxCount: 1,
-    overAnimate: false
-})
+import { Button } from 'uik'
 
 const Test: FC = () => {
-    const [n, setN] = useState(0)
+    const [loading, setLoading] = useState(false)
+    const [type, setType] = useState('primary')
 
-    const add = () => {
-        message.open('This is a normal message ' + n, { type: 'success', id: n.toString() })
-        setN(n + 1)
-    }
-
-    const destroy = () => {
-        message.destroy()
+    const onClick = () => {
+        // setType(type === 'default' ? 'primary' : 'default')
     }
 
     return (
-        <>
-            <Button type="primary" onClick={add}>
+        <div style={{ margin: 15 }}>
+            <Button type={type} loading={loading} onClick={onClick}>
                 ADD
             </Button>
-            <Button type="primary" onClick={destroy}>
-                destroy
-            </Button>
-        </>
+        </div>
     )
 }
 

@@ -2,32 +2,49 @@
 
 .uik {
     &-btn {
+        position: relative;
         cursor: pointer;
         white-space: nowrap;
         user-select: none;
-        box-shadow: 0 2px 0 rgba(0, 0, 0, 0.015);
+        // box-shadow: 0 2px 0 rgba(0, 0, 0, 0.015);
+        box-shadow: 0px 3px 1px -2px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 1px 5px 0px rgba(0,0,0,0.12);
         outline: 0;
         padding: 0;
         border-radius: @border-radius;
         border-width: @border-width;
         border-style: solid;
         transition: border-color 0.3s, color 0.3s, background-color 0.3s;
+        // overflow: hidden;
+
+        // ================= status ================
 
         // == type
         &-primary {
             background-color: @primary-color;
             border-color: @primary-color;
             color: #fff;
+
+            .uik-btn-animate-ball {
+                background: #fff;
+            }
         }
         &-danger {
             background-color: @danger-color;
             border-color: @danger-color;
             color: #fff;
+
+            .uik-btn-animate-ball {
+                background: #fff;
+            }
         }
         &-default {
             background-color: #fff;
             border-color: @border-color;
             color: @font-color;
+
+            .uik-btn-animate-ball {
+                background: @primary-color;
+            }
 
             :not(.uik-btn-disabled):not(.uik-btn-loading)&:hover {
                 border-color: @primary-color;
@@ -51,7 +68,7 @@
             font-size: @font-size-small;
             padding: 0 7px;
         }
-        
+
         // == loading
         &-loading {
             cursor: default;
@@ -67,8 +84,56 @@
             opacity: 1;
         }
 
+        // ================= status ================
+
         &-loading-icon {
-            margin-right: 10px;
+            display: inline-block;
+            transition: opacity 0.3s, width 0.3s, margin 0.3s;
+
+            &.show {
+                opacity: 1;
+                width: 14px;
+                margin-right: 10px;
+            }
+
+            &.hidden {
+                opacity: 0;
+                width: 0;
+                margin-right: 0;
+            }
         }
+
+        &-animate {
+            position: absolute;
+            width: calc(~'100% + 2px');
+            height: calc(~'100% + 2px');
+            overflow: hidden;
+            top: -1px;
+            left: -1px;
+            pointer-events: none;
+
+            /* 实现水波纹效果的小球样式 */
+            &-ball {
+                position: absolute;
+                display: block;
+                border-radius: 50%;
+                animation: buttonnAnimateBall 1s;
+                opacity: 0.2;
+            }
+        }
+    }
+}
+
+/* 小球动画 */
+@keyframes buttonnAnimateBall {
+    0% {
+        transform: scale(2);
+    }
+    /* 波纹扩张 */
+    85% {
+        transform: scale(25);
+    }
+    100% {
+        opacity: 0;
     }
 }

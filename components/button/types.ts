@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { MouseEventHandler } from 'react'
 
 export type buttonProps = {
@@ -9,4 +10,8 @@ export type buttonProps = {
     size?: 'large' | 'middle' | 'small'
     type?: 'primary' | 'danger' | 'default'
     onClick?: MouseEventHandler<HTMLButtonElement>
+}
+
+export type buttonLoadingProps = {
+    visible: boolean
 }

@@ -21,7 +21,9 @@
         "registry": "https://registry.npmjs.org/"
     },
     "files": [
-        "lib"
+        "lib",
+        "esm",
+        "umd"
     ],
     "sideEffects": [
         "*.less"
