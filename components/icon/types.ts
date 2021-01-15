@@ -4,7 +4,7 @@ export type iconProps = {
     name: string
     className?: string
     style?: CSSProperties
-    [key: string]: any
+    [key: string]: any // 其他属性
 }
 
 export type iconConfig = {
