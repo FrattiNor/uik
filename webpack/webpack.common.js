@@ -13,20 +13,6 @@ module.exports = {
                 use: ['babel-loader']
             },
             {
-                test: /\.css$/, // 正则匹配css, 样式文件匹配 非依赖文件夹，
-                use: ['style-loader', 'css-loader']
-            },
-            {
-                test: /\.less$/, // 正则匹配css, 样式文件匹配 非依赖文件夹，
-                use: ['style-loader', 'css-loader', 'less-loader'],
-                include: [
-                    path.join(__dirname, '../components'),
-                    path.join(__dirname, '../lib'),
-                    path.join(__dirname, '../umd'),
-                    path.join(__dirname, '../esm')
-                ]
-            },
-            {
                 test: /\.md$/,
                 use: ['html-loader', 'markdown-loader']
             },

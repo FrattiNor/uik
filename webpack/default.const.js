@@ -20,22 +20,37 @@ const htmlWebpackPlugin = {
 }
 
 // less
-const lessRule = ({ styleLoader, cssLoaderModules }) => ({
-    test: /\.less$/, // 正则匹配less, 样式文件匹配 非依赖文件夹，
-    use: [
-        // loader生效是从下往上的
-        styleLoader,
-        {
-            loader: 'css-loader',
-            options: {
-                modules: cssLoaderModules
-            }
-        },
-        'postcss-loader', // postcss
-        'less-loader'
-    ],
-    include: path.join(__dirname, '../src')
-})
+const styleRule = ({ styleLoader, cssLoaderModules }) => [
+    {
+        test: /\.less$/, // 正则匹配less, 样式文件匹配 非依赖文件夹，
+        use: [
+            // loader生效是从下往上的
+            styleLoader,
+            {
+                loader: 'css-loader',
+                options: {
+                    modules: cssLoaderModules
+                }
+            },
+            'postcss-loader', // postcss
+            'less-loader'
+        ],
+        include: /src/
+    },
+    {
+        test: /\.css$/, // 正则匹配css, 样式文件匹配 非依赖文件夹，
+        use: [styleLoader, 'css-loader']
+    },
+    {
+        test: /\.less$/, // 正则匹配css, 样式文件匹配 非依赖文件夹，
+        use: [styleLoader, 'css-loader', 'postcss-loader', 'less-loader'],
+        include: [
+            path.join(__dirname, '../components'),
+            path.join(__dirname, '../lib'),
+            path.join(__dirname, '../umd'),
+            path.join(__dirname, '../esm')
+        ]
+    }
+]
 
-
-module.exports = { entry, output, htmlWebpackPlugin, lessRule }
+module.exports = { entry, output, htmlWebpackPlugin, styleRule }

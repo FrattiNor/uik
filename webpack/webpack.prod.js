@@ -8,7 +8,7 @@ const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin')
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 // const path = require('path')
 // const PrerenderSPAPlugin = require('prerender-spa-plugin')
-const { entry, output, htmlWebpackPlugin, lessRule } = require('./default.const')
+const { entry, output, htmlWebpackPlugin, styleRule } = require('./default.const')
 
 const prodConfig = {
     mode: 'production',
@@ -21,7 +21,7 @@ const prodConfig = {
     },
     module: {
         rules: [
-            lessRule({
+            ...styleRule({
                 styleLoader: MiniCssExtractPlugin.loader,
                 cssLoaderModules: {
                     localIdentName: '[hash:base64:6]'
