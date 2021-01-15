@@ -7,7 +7,7 @@ import { messageType, messageConfig, newMessageConfig, messageContent, messageDe
 // 配置
 let _messageConfig: messageConfig = {
     position: ['top', 'center'],
-    duration: 5,
+    duration: 3,
     maxCount: Infinity,
     overAnimate: false
 }

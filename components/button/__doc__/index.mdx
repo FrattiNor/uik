@@ -5,13 +5,13 @@ import DemoSize from './demo-size'
 import descSize from './demo-size/desc.md'
 import codeSize from '!raw-loader!./demo-size'
 
-import DemoStyle from './demo-style'
-import descStyle from './demo-style/desc.md'
-import codeStyle from '!raw-loader!./demo-style'
-
 import DemoType from './demo-type'
 import descType from './demo-type/desc.md'
 import codeType from '!raw-loader!./demo-type'
+
+import DemoStatus from './demo-status'
+import descStatus from './demo-status/desc.md'
+import codeStatus from '!raw-loader!./demo-status'
 
 # Button 按钮
 
@@ -34,17 +34,19 @@ import codeType from '!raw-loader!./demo-type'
 
 ## 代码演示
 
-<CodeBox code={codeSize} title="按钮大小" desc={descSize}>
+<CodeBox title="按钮大小" desc={descSize} code={codeSize}>
     <DemoSize />
 </CodeBox>
 
-<CodeBox code={codeStyle} title="按钮样式" desc={descStyle}>
-    <DemoStyle />
-</CodeBox>
-
-<CodeBox code={codeType} title="按钮状态" desc={descType}>
+<CodeBox title="按钮类型" desc={descType} code={codeType}>
     <DemoType />
 </CodeBox>
+
+<CodeBox title="按钮状态" desc={descStatus} code={codeStatus}>
+    <DemoStatus />
+</CodeBox>
+
+
 
 ## API
 
@@ -59,9 +61,9 @@ import codeType from '!raw-loader!./demo-type'
 | 属性      | 说明                                               | 类型                         | 默认值  | 版本 |
 | :-------- | :------------------------------------------------- | :--------------------------- | :------ | :--- |
 | htmlType  | 设置 button 原生的 type 值，可选值请参考 HTML 标准 | string                       | button  | -    |
-| className | 设置危险按钮                                       | string                       | -       | -    |
-| disabled  | 按钮失效状态                                       | boolean                      | false   | -    |
-| loading   | 设置按钮载入状态                                   | boolean                      | false   | -    |
+| className | 类属性                                             | string                       | -       | -    |
+| disabled  | 设置按钮禁用                                       | boolean                      | false   | -    |
+| loading   | 设置按钮加载中状态                                 | boolean                      | false   | -    |
 | size      | 设置按钮大小                                       | large \| middle \| small     | middle  | -    |
 | type      | 设置按钮类型                                       | primary \| danger \| default | default | -    |
 | onClick   | 点击按钮时的回调                                   | (event) => void              | -       | -    |

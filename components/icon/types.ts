@@ -6,7 +6,3 @@ export type iconProps = {
     style?: CSSProperties
     [key: string]: any // 其他属性
 }
-
-export type iconConfig = {
-    fontFamily: string
-}

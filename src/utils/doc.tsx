@@ -15,7 +15,7 @@ const menu = [
             },
             {
                 name: 'loading',
-                desc: 'Loading 加载'
+                desc: 'Loading 加载中'
             },
             {
                 name: 'message',

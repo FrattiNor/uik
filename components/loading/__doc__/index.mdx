@@ -1,1 +1,62 @@
-# 2
+import CodeBox from '@/components/code_box'
+import CodeBlock from '@/components/code_block'
+
+import DemoIcon from './demo-icon'
+import descIcon from './demo-icon/desc.md'
+import codeIcon from '!raw-loader!./demo-icon'
+
+import DemoBasic from './demo-basic'
+import descBasic from './demo-basic/desc.md'
+import codeBasic from '!raw-loader!./demo-basic'
+
+import DemoInline from './demo-inline'
+import descInline from './demo-inline/desc.md'
+import codeInline from '!raw-loader!./demo-inline'
+
+# Loading 加载中
+
+用于页面和区块的加载中状态。
+
+## 何时使用
+
+页面局部处于等待异步数据或正在渲染过程时，合适的加载动效会有效缓解用户的焦虑。
+
+## 代码演示
+
+<CodeBox title="加载按钮" desc={descIcon} code={codeIcon}>
+    <DemoIcon />
+</CodeBox>
+
+<CodeBox title="基本用法" desc={descBasic} code={codeBasic}>
+    <DemoBasic />
+</CodeBox>
+
+<CodeBox title="行内元素Loading" desc={descInline} code={codeInline}>
+    <DemoInline />
+</CodeBox>
+
+## API
+
+<!-- 给table设置外部className 下方需要留空一行（不然mdx解析会出错） -->
+
+`Loading` 属性如下：
+
+<div className="api">
+
+| 属性      | 说明             | 类型    | 默认值 | 版本 |
+| :-------- | :--------------- | :------ | :----- | :--- |
+| loading   | 是否为加载中状态 | boolean | false  | -    |
+| inline    | 是否为行内元素   | boolean | false  | -    |
+| className | 类属性           | string  | -      | -    |
+
+</div>
+
+`LoadingIcon` 属性如下：
+
+<div className="api">
+
+| 属性      | 说明   | 类型   | 默认值 | 版本 |
+| :-------- | :----- | :----- | :----- | :--- |
+| className | 类属性 | string | -      | -    |
+
+</div>

@@ -1,4 +1,4 @@
-import React, { FC, MouseEvent, useRef, MutableRefObject } from 'react'
+import React, { FC, Fragment, MouseEvent, useRef, MutableRefObject, useState, useEffect } from 'react'
 import classnames from 'classnames'
 import Loading from '../loading'
 import { buttonProps, buttonLoadingProps } from './types'
@@ -23,14 +23,15 @@ const classList = {
 // 按钮loading
 const ButtonLoading: FC<buttonLoadingProps> = ({ visible }) => {
     const { LoadingIcon } = Loading
+    const [show, setShow] = useState(visible)
 
     const classname = visible ? 'show' : 'hidden'
 
-    return (
-        <span className={classnames('uik-btn-loading-icon', classname)}>
-            <LoadingIcon />
-        </span>
-    )
+    useEffect(() => {
+        setShow(visible)
+    }, [visible])
+
+    return <span className={classnames('uik-btn-loading-icon', classname)}>{show ? <LoadingIcon /> : <Fragment />}</span>
 }
 
 // 按钮
