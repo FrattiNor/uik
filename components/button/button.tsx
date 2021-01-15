@@ -1,4 +1,4 @@
-import React, { FC, MouseEvent, useRef } from 'react'
+import React, { FC, MouseEvent, useRef, MutableRefObject } from 'react'
 import classnames from 'classnames'
 import Loading from '../loading'
 import { buttonProps, buttonLoadingProps } from './types'
@@ -36,7 +36,7 @@ const ButtonLoading: FC<buttonLoadingProps> = ({ visible }) => {
 // 按钮
 const Button: FC<buttonProps> = (props) => {
     const { className = false, children, disabled = false, loading = false, htmlType = 'button', size = 'middle', type = 'default', onClick } = props
-    const btnRef = useRef(null)
+    const btnRef: MutableRefObject<HTMLButtonElement | null> = useRef(null)
 
     const getClassName = (): string => {
         const stateType = classList[type]
@@ -50,7 +50,7 @@ const Button: FC<buttonProps> = (props) => {
     // 获取点击坐标
     // 增加点击动画
     const getPosition = (event: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>) => {
-        const target = (btnRef.current as unknown) as HTMLButtonElement | null
+        const target = btnRef.current
         if (target !== null) {
             const rect = target.getBoundingClientRect()
             const x = event.clientX - rect.x
@@ -59,7 +59,7 @@ const Button: FC<buttonProps> = (props) => {
 
             const ballWrapper = document.createElement('div')
             ballWrapper.setAttribute('class', 'uik-btn-animate')
-            
+
             const ball = document.createElement('div')
             ball.setAttribute('class', 'uik-btn-animate-ball')
             ball.setAttribute('style', style)

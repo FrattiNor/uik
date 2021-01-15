@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react'
-import { Button } from 'uik'
+import { Button, message } from 'uik'
 
 const Test: FC = () => {
     const [loading, setLoading] = useState(false)
@@ -7,6 +7,7 @@ const Test: FC = () => {
 
     const onClick = () => {
         // setType(type === 'default' ? 'primary' : 'default')
+        message.open('okkk', { type: 'success' })
     }
 
     return (

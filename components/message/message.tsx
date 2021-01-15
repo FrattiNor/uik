@@ -11,7 +11,8 @@ const Message: FC<messageProps> = ({ father, container, content, type = 'default
     const list = Object.values(destroyFun) // 卸载列表
     const isOver = list.length >= maxCount // 是否超长
     const key = id || Math.random().toString() // 记录卸载方法的唯一key
-    const timeout: MutableRefObject<any> = useRef(null) // 记录自动卸载的setTimeout，避免二次卸载
+    const timeout: MutableRefObject<NodeJS.Timeout | null> = useRef(null) // 记录自动卸载的setTimeout，避免二次卸载
+    const messageRef: MutableRefObject<HTMLDivElement | null> = useRef(null)
     const [visible, setVisible] = useState(true)
 
     // 配置动画，如果超长并且overAnimate为false，则没有进场动画
@@ -28,17 +29,22 @@ const Message: FC<messageProps> = ({ father, container, content, type = 'default
     // 执行隐藏动画 后 卸载 并 移除destroyFun
     const hidden_Unmount = (animate = true) => {
         if (animate) {
-            setVisible(false)
+            const target = messageRef.current
+            if (target !== null) {
+                target.addEventListener('animationend', () => {
+                    unmount()
+                })
+            }
 
-            setTimeout(() => {
-                unmount()
-            }, 500)
+            setVisible(false)
         } else {
             unmount()
         }
 
         delete destroyFun[key]
-        clearTimeout(timeout.current)
+        if (timeout.current !== null) {
+            clearTimeout(timeout.current)
+        }
     }
 
     // 将卸载方法 保存在destroyFun
@@ -66,7 +72,7 @@ const Message: FC<messageProps> = ({ father, container, content, type = 'default
     }, [])
 
     return (
-        <div className={classnames('uik-message-item', classname)}>
+        <div ref={messageRef} className={classnames('uik-message-item', classname)}>
             {type !== 'default' && <Icon name={type} className={classnames('uik-message-item-icon', type)} />}
             {content}
         </div>

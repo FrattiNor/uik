@@ -3,9 +3,10 @@ const merge = require('webpack-merge')
 const baseConfig = require('./webpack.common')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin')
-const { entry,output, htmlWebpackPlugin, lessRule } = require('./default.const')
+const portfinder = require('portfinder')
+const { entry, output, htmlWebpackPlugin, lessRule } = require('./default.const')
 
-const devConfig = {
+const devConfig = (port) => ({
     mode: 'development',
     devtool: 'cheap-module-eval-source-map',
     entry,
@@ -37,7 +38,7 @@ const devConfig = {
     // node 本地服务器配置
     devServer: {
         host: '0.0.0.0',
-        port: 3000,
+        port,
         historyApiFallback: true, // 该选项的作用所有的404都连接到index.html
         overlay: {
             //当出现编译器错误或警告时，就在网页上显示一层黑色的背景层和错误信息
@@ -47,7 +48,7 @@ const devConfig = {
         hot: true, // 热加载
         open: true, // 打开页面
         useLocalIp: true, // 此选项允许浏览器使用本地 IP 打开
-        publicPath: '/',
+        publicPath: '/'
         // proxy: {
         //     '/api/': {
         //         target: 'https://192.168.2.3/api/',
@@ -64,6 +65,19 @@ const devConfig = {
         // }
     },
     stats: 'errors-only'
-}
+})
 
-module.exports = merge(baseConfig, devConfig)
+const getDevConfig = new Promise((res, rej) => {
+    //查找端口号
+    portfinder.getPort({ port: 3000, stopPort: 9000 }, (err, port) => {
+        if (err) {
+            rej(err)
+            return
+        }
+
+        // 端口被占用时就重新设置devServer的端口
+        res(merge(baseConfig, devConfig(port)))
+    })
+})
+
+module.exports = getDevConfig
