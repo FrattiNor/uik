@@ -1,12 +1,14 @@
 import React, { FC } from 'react'
 import { Loading } from 'uik'
-import './index.less'
+import styles from './index.less'
 
 const Demo: FC = () => {
     return (
-        <div className="card">
+        <div className={styles['card']}>
             <span>加载中</span>
-            <Loading loading inline>加载中</Loading>
+            <Loading loading inline>
+                加载中
+            </Loading>
             <span>加载中</span>
         </div>
     )

@@ -6,3 +6,13 @@ export type iconProps = {
     style?: CSSProperties
     [key: string]: any // 其他属性
 }
+
+export type iconConfig = {
+    fontFamily: string
+    url: string
+}
+
+export type newIconConfig = {
+    fontFamily: string
+    url?: string
+}

@@ -35,7 +35,7 @@ const styleRule = ({ styleLoader, cssLoaderModules }) => [
             'postcss-loader', // postcss
             'less-loader'
         ],
-        include: /src/
+        include: [/src/, /__doc__/] // 包含src和components的__doc__
     },
     {
         test: /\.css$/, // 正则匹配css, 样式文件匹配 非依赖文件夹，
@@ -44,12 +44,8 @@ const styleRule = ({ styleLoader, cssLoaderModules }) => [
     {
         test: /\.less$/, // 正则匹配css, 样式文件匹配 非依赖文件夹，
         use: [styleLoader, 'css-loader', 'postcss-loader', 'less-loader'],
-        include: [
-            path.join(__dirname, '../components'),
-            path.join(__dirname, '../lib'),
-            path.join(__dirname, '../umd'),
-            path.join(__dirname, '../esm')
-        ]
+        include: [/components/],
+        exclude: [/src/, /__doc__/]
     }
 ]
 

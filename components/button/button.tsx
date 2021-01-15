@@ -1,7 +1,7 @@
-import React, { FC, Fragment, MouseEvent, useRef, MutableRefObject, useState, useEffect } from 'react'
+import React, { FC, MouseEvent, useRef, MutableRefObject } from 'react'
 import classnames from 'classnames'
-import Loading from '../loading'
-import { buttonProps, buttonLoadingProps } from './types'
+import ButtonLoading from './button_loading'
+import { buttonProps } from './types'
 import './button.less'
 
 // 多种状态可以重叠
@@ -20,25 +20,12 @@ const classList = {
     small: 'uik-btn-small'
 }
 
-// 按钮loading
-const ButtonLoading: FC<buttonLoadingProps> = ({ visible }) => {
-    const { LoadingIcon } = Loading
-    const [show, setShow] = useState(visible)
-
-    const classname = visible ? 'show' : 'hidden'
-
-    useEffect(() => {
-        setShow(visible)
-    }, [visible])
-
-    return <span className={classnames('uik-btn-loading-icon', classname)}>{show ? <LoadingIcon /> : <Fragment />}</span>
-}
-
 // 按钮
 const Button: FC<buttonProps> = (props) => {
     const { className = false, children, disabled = false, loading = false, htmlType = 'button', size = 'middle', type = 'default', onClick } = props
     const btnRef: MutableRefObject<HTMLButtonElement | null> = useRef(null)
 
+    // btn的class
     const getClassName = (): string => {
         const stateType = classList[type]
         const stateSize = classList[size]
@@ -75,13 +62,18 @@ const Button: FC<buttonProps> = (props) => {
 
     // onClick 在 loading 和 disabled 状态 不能点击
     const onClickFun: React.MouseEventHandler<HTMLButtonElement> = (event) => {
-        if (!loading && !disabled) {
-            getPosition(event)
+        // if (!loading && !disabled) {
+        //     getPosition(event)
+
+        //     if (onClick) {
+        //         onClick(event)
+        //     }
+        // }
+        getPosition(event)
 
             if (onClick) {
                 onClick(event)
             }
-        }
     }
 
     return (

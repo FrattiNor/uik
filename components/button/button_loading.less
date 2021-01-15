@@ -1,0 +1,20 @@
+.uik {
+    &-btn {
+        &-loading-icon {
+            display: inline-block;
+            transition: opacity 0.3s, width 0.3s, margin 0.3s;
+
+            &.show {
+                opacity: 1;
+                width: 14px;
+                margin-right: 10px;
+            }
+
+            &.hidden {
+                opacity: 0;
+                width: 0;
+                margin-right: 0;
+            }
+        }
+    }
+}

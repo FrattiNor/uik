@@ -1,10 +1,10 @@
 import React, { FC } from 'react'
 import { Icon } from 'uik'
-import './index.less'
+import styles from './index.less'
 
 const Demo: FC = () => {
     return (
-        <div className="wrapper">
+        <div className={styles['wrapper']}>
             <Icon name="success" />
             <Icon name="error" />
             <Icon name="warn" />

@@ -1,7 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState, useCallback } from 'react'
 
-const useEffectAfterFirst = (func: Function, depend: any[]): void => {
+type fun = () => void
+
+const useEffectAfterFirst = (func: () => fun | void, depend: any[]): void => {
     const [first, setFirst] = useState(true)
 
     const trucFun = useCallback(() => func(), depend)
