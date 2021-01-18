@@ -71,7 +71,7 @@ const Modal: FC<modalProps> = (props) => {
                 ) : (
                     <div className="uik-modal-head">
                         <span>{title}</span>
-                        {!hiddenClose && <Icon name="close" className="uik-modal-head-close" onClick={trueCancel} />}
+                        {!hiddenClose && <Icon uik name="close" className="uik-modal-head-close" onClick={trueCancel} />}
                     </div>
                 )}
                 <div className="uik-modal-content">{children}</div>

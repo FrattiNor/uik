@@ -5,10 +5,10 @@ import styles from './index.less'
 const Demo: FC = () => {
     return (
         <div className={styles['wrapper']}>
-            <Icon name="success" />
-            <Icon name="error" />
-            <Icon name="warn" />
-            <Icon name="info" />
+            <Icon uik name="success" />
+            <Icon uik name="error" />
+            <Icon uik name="warn" />
+            <Icon uik name="info" />
         </div>
     )
 }

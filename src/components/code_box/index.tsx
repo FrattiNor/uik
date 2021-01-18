@@ -42,8 +42,8 @@ const CodeBox: FC<props> = ({ children, code, title, desc }) => {
 
             {/* icon */}
             <div className={styles['icon-box']}>
-                <Icon name={`${visible ? 'code-open' : 'code-close'}`} className={styles['icon']} onClick={(): void => setVisible(!visible)} />
-                <Icon name="copy" className={styles['icon']} onClick={copyToClipboard} />
+                <Icon uik name={`${visible ? 'code-open' : 'code-close'}`} className={styles['icon']} onClick={(): void => setVisible(!visible)} />
+                <Icon uik name="copy" className={styles['icon']} onClick={copyToClipboard} />
             </div>
 
             {/* code */}
