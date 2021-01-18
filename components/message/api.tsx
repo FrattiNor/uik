@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import classnames from 'classnames'
 import Message from './message'
+import { getContainer } from '../_utils'
 import { messageType, messageConfig, newMessageConfig, messageContent, messageDestroyFun } from './types'
 
 // 配置
@@ -16,26 +17,25 @@ let _messageConfig: messageConfig = {
 const destroyFun: messageDestroyFun = {}
 
 // 获取容器 message 容器
-const getContainer = (): HTMLElement => {
+const getMessageContainer = (): HTMLElement => {
     const id = 'uik-message'
     const { position } = _messageConfig
-    const classname = classnames(position.map((text) => `uik-message-${text}`).join(' '), 'uik-message')
-    const container = document.getElementById(id)
+    const classname = classnames('uik-message-container', position.map((text) => `uik-message-container-${text}`).join(' '))
+    const messageContainer = document.getElementById(id)
 
-    if (!container) {
-        const containerOut = document.createElement('div')
-        containerOut.setAttribute('class', 'uik-container')
+    if (!messageContainer) {
+        const container = getContainer()
 
-        const container = document.createElement('div')
-        container.setAttribute('class', classname)
-        container.setAttribute('id', id)
+        const messageContainer = document.createElement('div')
+        messageContainer.setAttribute('class', classname)
+        messageContainer.setAttribute('id', id)
 
-        containerOut.append(container)
-        document.body.append(containerOut)
-        return container
+        container.append(messageContainer)
+        document.body.append(container)
+        return messageContainer
     }
 
-    return container
+    return messageContainer
 }
 
 // 销毁
@@ -58,9 +58,11 @@ const config = (newConfig: newMessageConfig): void => {
 // 插入Message
 const open = (content: messageContent, options?: { type?: messageType; id?: string }): void => {
     const { type, id } = options || {}
-    const container = getContainer()
+    const container = getMessageContainer()
     const div = document.createElement('div')
-    const ReactNode = <Message id={id} father={div} container={container} content={content} type={type} destroyFun={destroyFun} messageConfig={_messageConfig} />
+    const ReactNode = (
+        <Message id={id} father={div} container={container} content={content} type={type} destroyFun={destroyFun} messageConfig={_messageConfig} />
+    )
     container.append(div)
     ReactDOM.render(ReactNode, div)
 }

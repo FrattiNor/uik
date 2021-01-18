@@ -1,4 +1,4 @@
-import React, { FC, Fragment, useState } from 'react'
+import React, { FC, Fragment, useState, useRef, MutableRefObject } from 'react'
 import classnames from 'classnames'
 import Loading from '../loading'
 import { useEffectAfterFirst } from '../_hooks'
@@ -10,18 +10,25 @@ const ButtonLoading: FC<buttonLoadingProps> = ({ visible }) => {
     const { LoadingIcon } = Loading
     const [show, setShow] = useState(visible)
     const [classname, setClassname] = useState(visible ? 'show' : 'hidden')
+    const timeout: MutableRefObject<NodeJS.Timeout | null> = useRef(null)
 
     useEffectAfterFirst(() => {
         if (visible) {
             setShow(true)
-            setTimeout(() => {
+            timeout.current = setTimeout(() => {
                 setClassname('show')
             }, 50)
         } else {
             setClassname('hidden')
-            setTimeout(() => {
+            timeout.current = setTimeout(() => {
                 setShow(false)
-            }, 3000000)
+            }, 350)
+        }
+
+        return () => {
+            if (timeout.current !== null) {
+                clearTimeout(timeout.current)
+            }
         }
     }, [visible])
 

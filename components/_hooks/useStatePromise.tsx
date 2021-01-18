@@ -4,6 +4,7 @@ import { useEffect, useState, useRef } from 'react'
 type change<T> = (v: T) => Promise<T>
 type fun = <T>(v: T) => [T, change<T>]
 
+// setValue后触发return的promise，相当于setValue的callback
 const useStatePromise: fun = (v) => {
     type typeV = typeof v
     const [value, setValue] = useState(v)

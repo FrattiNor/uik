@@ -72,8 +72,8 @@ const Message: FC<messageProps> = ({ father, container, content, type = 'default
     }, [])
 
     return (
-        <div ref={messageRef} className={classnames('uik-message-item', classname)}>
-            {type !== 'default' && <Icon name={type} className={classnames('uik-message-item-icon', type)} />}
+        <div ref={messageRef} className={classnames('uik-message', classname)}>
+            {type !== 'default' && <Icon name={type} className={classnames('uik-message-icon', type)} />}
             {content}
         </div>
     )

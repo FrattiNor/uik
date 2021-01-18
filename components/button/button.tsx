@@ -62,18 +62,13 @@ const Button: FC<buttonProps> = (props) => {
 
     // onClick 在 loading 和 disabled 状态 不能点击
     const onClickFun: React.MouseEventHandler<HTMLButtonElement> = (event) => {
-        // if (!loading && !disabled) {
-        //     getPosition(event)
-
-        //     if (onClick) {
-        //         onClick(event)
-        //     }
-        // }
-        getPosition(event)
+        if (!loading && !disabled) {
+            getPosition(event)
 
             if (onClick) {
                 onClick(event)
             }
+        }
     }
 
     return (

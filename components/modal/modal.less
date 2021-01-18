@@ -1,0 +1,98 @@
+@import '../_style/theme.less';
+@import '../_style/zoom.less';
+
+.uik {
+    &-modal {
+        &-mask {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(0, 0, 0, 0.3);
+            pointer-events: auto;
+
+            &.show {
+                animation: maskIn 0.3s forwards;
+            }
+
+            &.hidden {
+                animation: maskOut 0.3s forwards;
+            }
+        }
+    }
+}
+
+.uik {
+    &-modal {
+        position: absolute;
+        z-index: @modal-zindex;
+        width: 100%;
+        color: @font-color;
+        border-radius: @border-radius;
+        box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
+        background-color: #fff;
+        pointer-events: auto;
+        transition: width 0.3s, left 0.3s, top 0.3s;
+
+        &.show {
+            animation: zoomIn 0.3s forwards;
+        }
+
+        &.hidden {
+            animation: zoomOut 0.3s forwards;
+        }
+
+        &-head {
+            padding: 10px 24px;
+            border-bottom: @border-width solid @border-color;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            &-close {
+                cursor: pointer;
+                color: @disabled-color;
+                transition: color 0.3s;
+
+                &:hover {
+                    color: @font-color;
+                }
+            }
+        }
+
+        &-content {
+            padding: 10px 24px;
+            max-height: 50vh;
+            overflow: auto;
+        }
+
+        &-foot {
+            text-align: right;
+            padding: 10px 24px;
+            border-top: @border-width solid @border-color;
+
+            & > button + button {
+                margin-left: 15px;
+            }
+        }
+    }
+}
+
+@keyframes maskIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes maskOut {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}

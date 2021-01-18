@@ -8,14 +8,6 @@ let _iconConfig: iconConfig = {
     url: ''
 }
 
-// icon 组件
-const Icon: FC<iconProps> = ({ name, className, style, ...rest }) => {
-    const { fontFamily } = _iconConfig
-    const iconStyle = { fontFamily, ...style }
-
-    return <i className={classnames(`uik-iconfont icon-${name}`, { [`${className}`]: className })} style={iconStyle} {...rest} />
-}
-
 const getIconCss = (url: string): void => {
     const id = 'uik-icon-css'
     const style = document.getElementById(id)
@@ -34,6 +26,14 @@ const config = (newConfig: newIconConfig): void => {
     if (newConfig.url) {
         getIconCss(newConfig.url)
     }
+}
+
+// icon 组件
+const Icon: FC<iconProps> = ({ name, className, style, ...rest }) => {
+    const { fontFamily } = _iconConfig
+    const iconStyle = { fontFamily, ...style }
+
+    return <i className={classnames(`uik-iconfont icon-${name}`, { [`${className}`]: className })} style={iconStyle} {...rest} />
 }
 
 export { config }

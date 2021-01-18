@@ -1,12 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState, useCallback } from 'react'
 
-type fun = () => void
+type returnFun = () => void
+type func = () => returnFun | void
 
-const useEffectAfterFirst = (func: () => fun | void, depend: any[]): void => {
+// 第一次不执行的useEffect
+const useEffectAfterFirst = (fun: func, depend: anyArray): void => {
     const [first, setFirst] = useState(true)
 
-    const trucFun = useCallback(() => func(), depend)
+    const trucFun = useCallback(() => fun(), depend)
 
     useEffect(() => {
         if (first) {

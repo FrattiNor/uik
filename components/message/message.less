@@ -1,84 +1,92 @@
 @import '../_style/theme.less';
 @import '../_style/move.less';
-@import '../_style/container.less';
 
 .uik {
     &-message {
-        display: flex;
-        flex-direction: column;
-        position: absolute;
+        &-container {
+            display: flex;
+            flex-direction: column;
+            position: absolute;
+            z-index: @message-zindex;
 
-        // 解决div覆盖问题，原因未知
-        & > div {
-            position: relative;
-            z-index: 1;
-        }
+            // 解决div覆盖问题，原因未知
+            & > div {
+                position: relative;
+                z-index: 1;
+            }
 
-        &-top {
-            top: 10px;
+            &-top {
+                top: 10px;
+            }
 
-            .show {
-                animation: moveUpIn 0.3s forwards;
+            &-bottom {
+                bottom: 10px;
+                flex-direction: column-reverse;
+            }
+
+            &-left {
+                left: 10px;
+                align-items: flex-start;
+            }
+
+            &-right {
+                right: 10px;
+                align-items: flex-end;
+            }
+
+            &-center {
+                left: 50%;
+                transform: translate(-50%);
+                align-items: center;
             }
         }
+    }
+}
 
-        &-bottom {
-            bottom: 10px;
-            flex-direction: column-reverse;
+.uik {
+    &-message {
+        color: @font-color;
+        background-color: #fff;
+        transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, transform 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+        box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
+        border-radius: @border-radius;
+        padding: 10px 20px;
+        margin: 6px;
+        max-width: 80vw;
+        pointer-events: auto;
 
-            .show {
-                animation: moveDownIn 0.3s forwards;
+        &-icon {
+            margin-right: 10px;
+
+            &.success {
+                color: @success-color;
+            }
+            &.error {
+                color: @error-color;
+            }
+            &.warn {
+                color: @warn-color;
+            }
+            &.info {
+                color: @info-color;
             }
         }
+    }
+}
 
-        &-left {
-            left: 10px;
-            align-items: flex-start;
-        }
+.uik-message.hidden {
+    animation: messageMoveOut 0.3s forwards;
+}
 
-        &-right {
-            right: 10px;
-            align-items: flex-end;
-        }
+.uik-message-container-top {
+    .uik-message.show {
+        animation: moveUpIn 0.3s forwards;
+    }
+}
 
-        &-center {
-            left: 50%;
-            transform: translate(-50%);
-            align-items: center;
-        }
-
-        &-item {
-            background-color: #fff;
-            transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, transform 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
-            box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
-            border-radius: @border-radius;
-            padding: 10px 20px;
-            margin: 6px;
-            max-width: 80vw;
-            pointer-events: auto;
-
-            &.hidden {
-                animation: messageMoveOut 0.3s forwards;
-            }
-            // show在top和bottom下，因为从上和从下的动画不一样
-
-            &-icon {
-                margin-right: 10px;
-
-                &.success {
-                    color: @success-color;
-                }
-                &.error {
-                    color: @error-color;
-                }
-                &.warn {
-                    color: @warn-color;
-                }
-                &.info {
-                    color: @info-color;
-                }
-            }
-        }
+.uik-message-container-bottom {
+    .uik-message.show {
+        animation: moveDownIn 0.3s forwards;
     }
 }
 

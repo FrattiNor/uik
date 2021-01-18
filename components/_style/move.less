@@ -1,5 +1,31 @@
 // 移动动画
 
+@keyframes moveUpIn {
+    0% {
+        transform: translateY(-100%);
+        transform-origin: 0 0;
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0%);
+        transform-origin: 0 0;
+        opacity: 1;
+    }
+}
+
+@keyframes moveUpOut {
+    0% {
+        transform: translateY(0%);
+        transform-origin: 0 0;
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-100%);
+        transform-origin: 0 0;
+        opacity: 0;
+    }
+}
+
 @keyframes moveDownIn {
     0% {
         transform: translateY(100%);
@@ -78,28 +104,3 @@
     }
 }
 
-@keyframes moveUpIn {
-    0% {
-        transform: translateY(-100%);
-        transform-origin: 0 0;
-        opacity: 0;
-    }
-    100% {
-        transform: translateY(0%);
-        transform-origin: 0 0;
-        opacity: 1;
-    }
-}
-
-@keyframes moveUpOut {
-    0% {
-        transform: translateY(0%);
-        transform-origin: 0 0;
-        opacity: 1;
-    }
-    100% {
-        transform: translateY(-100%);
-        transform-origin: 0 0;
-        opacity: 0;
-    }
-}

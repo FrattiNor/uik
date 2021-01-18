@@ -5,8 +5,8 @@ type add<T> = (v: T) => string
 type del = (key: string) => void
 type fun = <T>(v: T[]) => [{ [key: string]: T }, add<T>, del]
 
-// 存储引用类型数据存在问题
-const useArrayToObject: fun = (v) => {
+// 将数组转为object存储，key默认为随机数
+const useStateArrayToObject: fun = (v) => {
     const obj: anyObject = {}
 
     v.forEach((item, i) => {
@@ -35,4 +35,4 @@ const useArrayToObject: fun = (v) => {
     return [value, addValue, delValue]
 }
 
-export default useArrayToObject
+export default useStateArrayToObject

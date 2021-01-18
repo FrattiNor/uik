@@ -1,6 +1,8 @@
 /* eslint-disable no-unused-vars */
 import { MouseEventHandler } from 'react'
 
+export type buttonType = 'primary' | 'danger' | 'default'
+
 export type buttonProps = {
     // shape?: 'circle' | 'round'
     className?: string
@@ -8,7 +10,7 @@ export type buttonProps = {
     loading?: boolean
     htmlType?: 'submit' | 'reset' | 'button'
     size?: 'large' | 'middle' | 'small'
-    type?: 'primary' | 'danger' | 'default'
+    type?: buttonType
     onClick?: MouseEventHandler<HTMLButtonElement>
     [key: string]: any // button 其他属性
 }

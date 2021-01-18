@@ -7,7 +7,8 @@ type res = [v, setV, setV]
 type fun = (v: v) => res
 
 // 存储引用类型数据存在问题
-const useArray: fun = (v) => {
+// 将数组储存为Set，提供add和del
+const useStateArray: fun = (v) => {
     const [value, setValue] = useState(new Set(v))
 
     const addValue = (newV: v) => {
@@ -32,4 +33,4 @@ const useArray: fun = (v) => {
     return [resV, addValue, delValue]
 }
 
-export default useArray
+export default useStateArray
