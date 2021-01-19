@@ -7,8 +7,8 @@ const TerserPlugin = require('terser-webpack-plugin')
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin')
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 // const path = require('path')
-// const PrerenderSPAPlugin = require('prerender-spa-plugin')
-const { entry, output, htmlWebpackPlugin, styleRule } = require('./default.const')
+const PrerenderSPAPlugin = require('prerender-spa-plugin')
+const { entry, outPath, htmlWebpackPlugin, styleRule } = require('./default.const')
 
 const prodConfig = {
     mode: 'production',
@@ -17,7 +17,7 @@ const prodConfig = {
     output: {
         filename: 'js/[name].[chunkhash].js',
         publicPath: '/uik',
-        ...output
+        path: outPath
     },
     module: {
         rules: [
@@ -51,17 +51,17 @@ const prodConfig = {
         new ScriptExtHtmlWebpackPlugin({
             //`runtime` must same as runtimeChunk name. default is `runtime`
             inline: /runtime\..*\.js$/
-        })
+        }),
         // webpack打包之后输出文件的大小占比
         // new BundleAnalyzerPlugin(),
         // 预渲染插件
-        // new PrerenderSPAPlugin({
-        //     routes: ['/', '/doc'],
-        //     staticDir: path.join(__dirname, '../dist')
-        //     // renderer: new Renderer({
-        //     //     renderAfterTime: 50000
-        //     // })
-        // })
+        new PrerenderSPAPlugin({
+            routes: ['/404'],
+            staticDir: outPath
+            // renderer: new Renderer({
+            //     renderAfterTime: 50000
+            // })
+        })
     ],
     optimization: {
         // 性能配置

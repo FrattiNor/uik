@@ -4,7 +4,7 @@ const baseConfig = require('./webpack.common')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin')
 const portfinder = require('portfinder')
-const { entry, output, htmlWebpackPlugin, styleRule } = require('./default.const')
+const { entry, outPath, htmlWebpackPlugin, styleRule } = require('./default.const')
 
 const devConfig = (port) => ({
     mode: 'development',
@@ -13,7 +13,7 @@ const devConfig = (port) => ({
     output: {
         filename: 'js/[name].[hash].js',
         publicPath: '/',
-        ...output
+        path: outPath
     },
     plugins: [
         // 热加载插件，用于启用局部模块热重载方便我们开发

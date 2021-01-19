@@ -10,3 +10,5 @@ const Icon = IconFC as IconInterFace
 Icon.config = config
 
 export default Icon
+
+export * from './types'

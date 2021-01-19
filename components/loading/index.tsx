@@ -10,3 +10,5 @@ const Loading = LoadingFC as LoadingInterFace
 
 Loading.LoadingIcon = LoadingIcon
 export default Loading
+
+export * from './types'

@@ -7,9 +7,7 @@ const path = require('path')
 const entry = path.join(__dirname, '../src/index.tsx')
 
 // output
-const output = {
-    path: path.join(__dirname, '../docs')
-}
+const outPath = path.join(__dirname, '../docs')
 
 // html
 const htmlWebpackPlugin = {
@@ -49,4 +47,4 @@ const styleRule = ({ styleLoader, cssLoaderModules }) => [
     }
 ]
 
-module.exports = { entry, output, htmlWebpackPlugin, styleRule }
+module.exports = { entry, outPath, htmlWebpackPlugin, styleRule }
