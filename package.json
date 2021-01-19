@@ -41,7 +41,7 @@
         "types:cjs": "tsc -p tsconfig.build.json --outDir lib",
         "types:esm": "tsc -p tsconfig.build.json --outDir esm",
         "types:umd": "tsc -p tsconfig.build.json --outDir umd",
-        "build:doc": "yarn clean:doc && webpack --config webpack/webpack.prod.js && sh scripts/cp404.sh",
+        "build:doc": "yarn clean:doc && webpack --config webpack/webpack.prod.js && sh scripts/cpIndexTo404.sh",
         "build:uik": "yarn gulp:cjs && yarn types:cjs && yarn gulp:esm && yarn types:esm && yarn gulp:umd && yarn types:umd",
         "package": "sh scripts/publish.sh",
         "test": "jest",
