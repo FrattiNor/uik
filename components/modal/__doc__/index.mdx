@@ -5,64 +5,79 @@ import DemoNormal from './demo-normal'
 import descNormal from './demo-normal/desc.md'
 import codeNormal from '!raw-loader!./demo-normal'
 
-import DemoType from './demo-type'
-import descType from './demo-type/desc.md'
-import codeType from '!raw-loader!./demo-type'
+import DemoPosition from './demo-position'
+import descPosition from './demo-position/desc.md'
+import codePosition from '!raw-loader!./demo-position'
 
-# message 消息提示
+# Modal 弹窗
 
-message 用于全局展示操作的反馈信息。
+模态弹窗。
 
 ## 何时使用
 
-可提供成功、警告和错误等反馈信息。
-
-显示并自动消失，是一种不打断用户操作的轻量级提示方式。
+需要用户处理事务，又不希望跳转页面以致打断工作流程时，可以使用 Modal 在当前页面正中打开一个浮层，承载相应的操作。
 
 ## 代码演示
 
-<CodeBox title="普通提示" desc={descNormal} code={codeNormal}>
+<CodeBox title="基本弹窗" desc={descNormal} code={codeNormal}>
     <DemoNormal />
 </CodeBox>
 
-<CodeBox title="特殊提示类型" desc={descType} code={codeType}>
-    <DemoType />
+<CodeBox title="定位弹窗" desc={descPosition} code={codePosition}>
+    <DemoPosition />
 </CodeBox>
 
 ## API
 
-组件提供了一些静态方法，使用方式和参数如下：
-
--   `message.open(content, options)`
--   `message.config(config)`
--   `message.destory()`
-
 <div className="api">
 
-| 属性    | 说明     | 类型                | 默认值 | 版本 |
-| :------ | :------- | :------------------ | :----- | :--- |
-| content | 反馈信息 | string \| ReactNode | -      | -    |
+| 属性            | 说明                            | 类型                                   | 默认值           | 版本 |
+| :-------------- | :------------------------------ | :------------------------------------- | :--------------- | :--- |
+| position        | 弹窗定位                        | `position` \| [`position`, `positionOption`] | center           |
+| visible         | 弹窗是否可见                    | boolean                                | false            | -    |
+| destroyOnClose  | 弹窗不可见时是否销毁            | boolean                                | false            | -    |
+| title           | 弹窗标题                        | string                                 | -                |
+| hiddenCloseIcon | 隐藏弹窗关闭按钮                | boolean                                | false            | -    |
+| head            | 弹窗 head                       | ReactNode \| null                      | (标题和关闭按钮) | -    |
+| foot            | 弹窗 foot                       | ReactNode \| null                      | (确定取消按钮)   | -    |
+| onCancel        | 取消按钮 蒙层 关闭按钮 点回回调 | function(e)                            | -                | -    |
+| onOk            | 确认按钮 点击回调               | function(e)                            | -                | -    |
+| mask            | 弹窗蒙层                        | boolean                                | true             | -    |
+| maskClosable    | 弹窗蒙层是否点击关闭            | boolean                                | false            | -    |
+| zIndex          | 弹窗的 z-index 样式属性         | number                                 | -                | -    |
+| cancelBtnProps  | 弹窗取消按钮的 props            | BtnProps                               | -                | -    |
+| okBtnProps      | 弹窗确认按钮的 props            | BtnProps                               | -                | -    |
 
 </div>
 
-`options` 对象属性如下：
+`position` 为 `center` 时弹窗居中 `positionOption` 属性如下：
 
 <div className="api">
 
-| 属性 | 说明     | 类型                                        | 默认值  | 版本 |
-| :--- | :------- | :------------------------------------------ | :------ | :--- |
-| type | 消息类型 | success \| error \| warn \| info \| default | default | -    |
+| 属性   | 说明           | 类型   | 默认值 | 版本 |
+| :----- | :------------- | :----- | :----- | :--- |
+| top    | 弹窗距上方距离 | number | 150    |
+| width  | 弹窗宽度       | number | 500    | -    |
+| height | 弹窗高度       | number | -      | -    |
 
 </div>
 
-`config` 对象属性如下：
+`position` 为 `top` 时弹窗从上方弹出，为 `bottom` 时弹窗从下方弹出， `positionOption` 属性如下：
 
 <div className="api">
 
-| 属性     | 说明                                          | 类型                                                 | 默认值              | 版本 |
-| :------- | :-------------------------------------------- | :--------------------------------------------------- | :------------------ | :--- |
-| position | 弹出消息的位置                                | [ 'top' \| 'bottom', 'center' \| 'left' \| 'right' ] | [ 'top', 'center' ] | -    |
-| maxCount | 最大弹出消息数量                              | number                                               | Infinity            | -    |
-| duration | 弹出消息显示时长秒数`（设为 0 时不自动关闭）` | number                                               | 3                   | -    |
+| 属性   | 说明     | 类型   | 默认值 | 版本 |
+| :----- | :------- | :----- | :----- | :--- |
+| height | 弹窗高度 | number | -      | -    |
+
+</div>
+
+`position` 为 `left` 时弹窗从左方弹出，为 `right` 时弹窗从右方弹出， `positionOption` 属性如下：
+
+<div className="api">
+
+| 属性  | 说明     | 类型   | 默认值 | 版本 |
+| :---- | :------- | :----- | :----- | :--- |
+| width | 弹窗宽度 | number | 500    | -    |
 
 </div>

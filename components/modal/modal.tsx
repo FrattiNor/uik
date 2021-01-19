@@ -14,15 +14,15 @@ const getModalStyle = (position: modalPosition, baseStyle: CSSProperties) => {
 
     switch (type) {
         case 'center': {
-            const { width = 500, height = 500, top = 150 } = positionOptions
+            const { width = 500, height, top = 150 } = positionOptions
             return { width, height, top, left: `calc(50% - ${width / 2}px)`, ...baseStyle }
         }
         case 'top': {
-            const { height = 500 } = positionOptions
+            const { height } = positionOptions
             return { width: '100vw', height, top: 0, left: 0, borderTopLeftRadius: 0, borderTopRightRadius: 0, ...baseStyle }
         }
         case 'bottom': {
-            const { height = 500 } = positionOptions
+            const { height } = positionOptions
             return { width: '100vw', height, bottom: 0, left: 0, borderBottomLeftRadius: 0, borderBottomRightRadius: 0, ...baseStyle }
         }
         case 'left': {

@@ -1,10 +1,18 @@
-import React, { FC } from 'react'
-import { Button, message } from 'uik'
+import React, { FC, Fragment, useState } from 'react'
+import { Button, Modal } from 'uik'
 
 const Demo: FC = () => {
-    const openMessage = () => message.open('This is a normal message')
+    const [visible, setVisible] = useState(false)
 
-    return <Button onClick={openMessage}>normal</Button>
+    return (
+        <Fragment>
+            <Button onClick={() => setVisible(true)}>基本弹窗</Button>
+            <Modal visible={visible} title="Basic Modal" onCancel={() => setVisible(false)}>
+                <p>Some contents...</p>
+                <p>Some contents...</p>
+            </Modal>
+        </Fragment>
+    )
 }
 
 export default Demo

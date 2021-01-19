@@ -21,6 +21,10 @@ const menu = [
                 name: 'message',
                 desc: 'message 消息反馈'
             },
+            {
+                name: 'modal',
+                desc: 'Modal 弹窗'
+            },
         ]
     }
 ]
