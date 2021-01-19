@@ -2,14 +2,21 @@
 import { CSSProperties, MouseEventHandler } from 'react'
 import { buttonProps } from '../button/types'
 
+type positionCenter = 'center' | ['center', { top?: number; width?: number; height?: number }]
+type positionTop = 'top' | ['top', { height?: number }]
+type positionBottom = 'bottom' | ['bottom', { height?: number }]
+type positionLeft = 'left' | ['left', { width?: number }]
+type positionRight = 'right' | ['right', { width?: number }]
+
+export type modalPosition = positionCenter | positionTop | positionBottom | positionLeft | positionRight
+
 export type modalProps = {
-    top?: number
-    width?: number
+    position?: modalPosition
     visible?: boolean
     destroyOnClose?: boolean
     style?: CSSProperties
     title?: string | JSX.Element
-    hiddenClose?: boolean
+    hiddenCloseIcon?: boolean
     head?: JSX.Element | null
     foot?: JSX.Element | null
     onCancel?: MouseEventHandler<HTMLElement>

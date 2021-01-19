@@ -1,5 +1,6 @@
 @import '../_style/theme.less';
 @import '../_style/zoom.less';
+@import '../_style/move.less';
 
 .uik {
     &-modal {
@@ -34,14 +35,8 @@
         background-color: #fff;
         pointer-events: auto;
         transition: width 0.3s, left 0.3s, top 0.3s;
-
-        &.show {
-            animation: zoomIn 0.3s forwards;
-        }
-
-        &.hidden {
-            animation: zoomOut 0.3s forwards;
-        }
+        display: flex;
+        flex-direction: column;
 
         &-head {
             padding: 10px 24px;
@@ -63,7 +58,6 @@
 
         &-content {
             padding: 10px 24px;
-            max-height: 50vh;
             overflow: auto;
         }
 
@@ -75,6 +69,41 @@
             & > button + button {
                 margin-left: 15px;
             }
+        }
+
+        &.center.show {
+            animation: zoomIn 0.3s forwards;
+        }
+        &.center.hidden {
+            animation: zoomOut 0.3s forwards;
+        }
+
+        &.top.show {
+            animation: moveUpIn 0.3s forwards;
+        }
+        &.top.hidden {
+            animation: moveUpOut 0.3s forwards;
+        }
+
+        &.bottom.show {
+            animation: moveDownIn 0.3s forwards;
+        }
+        &.bottom.hidden {
+            animation: moveDownOut 0.3s forwards;
+        }
+
+        &.left.show {
+            animation: moveLeftIn 0.3s forwards;
+        }
+        &.left.hidden {
+            animation: moveLeftOut 0.3s forwards;
+        }
+
+        &.right.show {
+            animation: moveRightIn 0.3s forwards;
+        }
+        &.right.hidden {
+            animation: moveRightOut 0.3s forwards;
         }
     }
 }

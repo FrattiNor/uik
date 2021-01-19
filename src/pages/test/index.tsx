@@ -15,7 +15,7 @@ const ModalInner: FC = () => {
         }
     }, [num])
 
-    return <div style={{height: 10000}}>{num}</div>
+    return <div style={{height: 10000, width: 10000}}>{num}</div>
 }
 
 const Test: FC = () => {
@@ -39,7 +39,7 @@ const Test: FC = () => {
     }
 
     return (
-        <div style={{ margin: 15 }}>
+        <div style={{ margin: 15, height: 1000 }}>
             <Button loading={loading}>Loading</Button>
             <Button type={type} onClick={onClick}>
                 ADD1
@@ -48,7 +48,7 @@ const Test: FC = () => {
                 ADD2
             </Button>
 
-            <Modal zIndex={1} style={{zIndex: 1}} title="okk1" destroyOnClose width={width} visible={visible} onCancel={() => setVisible(false)} onOk={() => setWidth(width + 100)}>
+            <Modal head={null} foot={null} zIndex={1} style={{zIndex: 1}} title="okk1" destroyOnClose width={width} visible={visible} onCancel={() => setVisible(false)} onOk={() => setWidth(width + 100)}>
                 <ModalInner />
             </Modal>
             <Modal zIndex={2} style={{zIndex: 2}} title="okk2" visible={visible2} onCancel={() => setVisible2(false)} onOk={() => setWidth(width + 100)}>

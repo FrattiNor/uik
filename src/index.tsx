@@ -1,20 +1,14 @@
 import React from 'react'
 import ReactDom from 'react-dom'
 import Routes from '@/routes'
-import { Icon, message } from 'uik'
+import { message } from 'uik'
 import './index.less'
-
-Icon.config({
-    fontFamily: 'iconfont',
-    url: '//at.alicdn.com/t/font_2300539_ay4u5ems9a.css'
-})
 
 message.config({
     duration: 3
 })
 
 ReactDom.render(<Routes />, document.getElementById('root'))
-
 
 // import { Provider } from 'react-redux'
 // import dva from '@/utils/dva'
