@@ -1,0 +1,1 @@
+cp -v public/404.html docs

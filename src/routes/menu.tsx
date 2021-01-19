@@ -22,11 +22,6 @@ const routes = [
                 component: require('@/pages/test'),
             },
             {
-                path: '/404',
-                title: '404',
-                component: require('@/pages/error/404'),
-            },
-            {
                 redirect: '/uik'
             }
         ]
