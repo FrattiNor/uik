@@ -7,20 +7,20 @@
             var segmentCount = 0
             var l = window.location
             console.log('l', l)
-            l.replace(
-                l.protocol +
-                    '//' +
-                    l.hostname +
-                    (l.port ? ':' + l.port : '') +
-                    l.pathname
-                        .split('/')
-                        .slice(0, 1 + segmentCount)
-                        .join('/') +
-                    '/' +
-                    l.pathname.slice(1).split('/').slice(segmentCount).join('/').replace(/&/g, '~and~') +
-                    (l.search ? '&q=' + l.search.slice(1).replace(/&/g, '~and~') : '') +
-                    l.hash
-            )
+            // l.replace(
+            //     l.protocol +
+            //         '//' +
+            //         l.hostname +
+            //         (l.port ? ':' + l.port : '') +
+            //         l.pathname
+            //             .split('/')
+            //             .slice(0, 1 + segmentCount)
+            //             .join('/') +
+            //         '/' +
+            //         l.pathname.slice(1).split('/').slice(segmentCount).join('/').replace(/&/g, '~and~') +
+            //         (l.search ? '&q=' + l.search.slice(1).replace(/&/g, '~and~') : '') +
+            //         l.hash
+            // )
         </script>
     </head>
     <body></body>
