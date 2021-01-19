@@ -50,11 +50,6 @@ function inputNewVersion() {
 
 }
 
-# 更新changelog
-function updateLog() {
-    yarn log:all
-}
-
 # git提交
 function gitAddCommitPush() {
     while [ "$pushGitIsTrue" == false ]; do
@@ -90,7 +85,6 @@ function main() {
     build
     showOldVersion
     inputNewVersion
-    updateLog
     gitAddCommitPush
     publish
 }
