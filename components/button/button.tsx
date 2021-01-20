@@ -22,7 +22,7 @@ const classList = {
 
 // 按钮
 const Button: ForwardRefRenderFunction<unknown, buttonProps> = (props, ref) => {
-    const { className = false, children, disabled = false, loading = false, htmlType = 'button', size = 'middle', type = 'default', onClick } = props
+    const { className = false, children, disabled = false, loading = false, htmlType = 'button', size = 'middle', type = 'default', onClick, ...rest } = props
     const componentRef = useRef(null)
     const btnRef = (ref as any) || componentRef
 
@@ -73,7 +73,7 @@ const Button: ForwardRefRenderFunction<unknown, buttonProps> = (props, ref) => {
     }
 
     return (
-        <button ref={btnRef} type={htmlType} className={getClassName()} onClick={onClickFun}>
+        <button ref={btnRef} type={htmlType} className={getClassName()} onClick={onClickFun} {...rest}>
             <ButtonLoading visible={loading} />
             {children}
         </button>

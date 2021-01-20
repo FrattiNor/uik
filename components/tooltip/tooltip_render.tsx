@@ -6,7 +6,7 @@ import Tooltip from './tooltip'
 
 // 获取容器 tooltip 容器
 const getTooltipContainer = (containerZIndex?: number): HTMLElement => {
-    const zIndex = containerZIndex || 1000
+    const zIndex = containerZIndex || 1001
 
     const container = getContainer({
         id: `uik-tooltip-${zIndex}`,
@@ -18,20 +18,38 @@ const getTooltipContainer = (containerZIndex?: number): HTMLElement => {
 }
 
 // tooltip render 组件
-const TooltipRender: FC<tooltipRenderProps> = ({ children, ...restProps }) => {
+const TooltipRender: FC<tooltipRenderProps> = ({ children, visible: outVisible, containerZIndex, ...restProps }) => {
     const componentRef: MutableRefObject<HTMLElement | null> = useRef(null)
-    const { visible = false, containerZIndex } = restProps
+    const [componentVisible, setComponentVisible] = useState(false)
+    const visible = typeof outVisible === 'boolean' ? outVisible : componentVisible // 实际的visible在有传visible时用visible
     const [render, setRender] = useState(false)
     const [div, setDiv]: [HTMLDivElement | null, any] = useState(null)
     const [position, setPosition] = useState({ x: -1, y: -1, width: -1, height: -1 })
-    const DOM = useMemo(() => <Tooltip {...restProps} position={position} />, [restProps, position])
+    const DOM = useMemo(() => <Tooltip {...restProps} visible={visible} position={position} />, [restProps, visible, position])
 
     // 获取child
     const getChild = () => {
         if (children !== null) {
             const firstElement = Array.isArray(children) ? children[0] : children
             const element = isValidElement(firstElement) ? firstElement : <span>{firstElement}</span>
-            return cloneElement(element, { ref: componentRef })
+
+            const cloneE = cloneElement(element, {
+                ref: componentRef,
+                onMouseOver: (e: MouseEvent) => {
+                    const { onMouseOver } = element.props
+                    if (onMouseOver) onMouseOver(e)
+                    setComponentVisible(true)
+                },
+                onMouseOut: (e: MouseEvent) => {
+                    const { onMouseOut } = element.props
+                    if (onMouseOut) onMouseOut(e)
+                    setTimeout(() => {
+                        setComponentVisible(false)
+                    }, 200)
+                }
+            })
+
+            return cloneE
         }
         return null
     }
@@ -68,7 +86,10 @@ const TooltipRender: FC<tooltipRenderProps> = ({ children, ...restProps }) => {
     useEffect(() => {
         return () => {
             if (div !== null) {
-                unmountComponentAtNode(div)
+                ReactDOM.render(<Tooltip {...restProps} visible={false} position={position} />, div)
+                setTimeout(() => {
+                    unmountComponentAtNode(div)
+                }, 200)
             }
         }
     }, [div])

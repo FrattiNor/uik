@@ -5,7 +5,6 @@ const Test: FC = () => {
     const [v, setV] = useState(false)
     const [v2, setV2] = useState(false)
 
-
     const btn1 = () => {
         setV(!v)
     }
@@ -17,19 +16,18 @@ const Test: FC = () => {
 
     return (
         <div style={{ margin: 15, height: 1000 }}>
-            <Button type="primary" onClick={btn1}>
-                Loading
-            </Button>
+            <Tooltip title="777">
+                <Button type="primary" onClick={btn1}>
+                    Loading
+                </Button>
+            </Tooltip>
 
             <Modal visible={v} onCancel={() => setV(false)}>
-                <Tooltip visible={v2} title="666">
+                <Tooltip title="888">
                     <Button type="primary" onClick={btn2}>
                         Loading
                     </Button>
                 </Tooltip>
-                {/* <Modal visible={v2} onCancel={() => setV2(false)}>
-                    6666
-                </Modal> */}
             </Modal>
         </div>
     )
