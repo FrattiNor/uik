@@ -89,6 +89,7 @@ const Modal: FC<modalProps> = (props) => {
                 connect(
                     setTimeout(() => {
                         setShow(false)
+                        setClassname('')
                     }, 350)
                 )
             }

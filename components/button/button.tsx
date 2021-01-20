@@ -1,4 +1,4 @@
-import React, { FC, MouseEvent, useRef, MutableRefObject } from 'react'
+import React, { FC, MouseEvent, useRef, forwardRef, ForwardRefRenderFunction } from 'react'
 import classnames from 'classnames'
 import ButtonLoading from './button_loading'
 import { buttonProps } from './types'
@@ -21,9 +21,10 @@ const classList = {
 }
 
 // 按钮
-const Button: FC<buttonProps> = (props) => {
+const Button: ForwardRefRenderFunction<unknown, buttonProps> = (props, ref) => {
     const { className = false, children, disabled = false, loading = false, htmlType = 'button', size = 'middle', type = 'default', onClick } = props
-    const btnRef: MutableRefObject<HTMLButtonElement | null> = useRef(null)
+    const componentRef = useRef(null)
+    const btnRef = (ref as any) || componentRef
 
     // btn的class
     const getClassName = (): string => {
@@ -79,4 +80,4 @@ const Button: FC<buttonProps> = (props) => {
     )
 }
 
-export default Button
+export default forwardRef(Button) as FC<buttonProps>

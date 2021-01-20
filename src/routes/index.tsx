@@ -9,12 +9,9 @@ interface RouteList {
 
 import React from 'react'
 import ReactDocumentTitle from 'react-document-title'
-import { createBrowserHistory } from 'history'
-import { Route, Switch, Redirect, Router } from 'react-router-dom'
+import { Route, Switch, Redirect, BrowserRouter } from 'react-router-dom'
 import { loadModel, getComponent } from './utils'
 import menu from './menu'
-
-const history = createBrowserHistory()
 
 // 递归渲染路由
 const Routes = ({ app }: { app?: any }): JSX.Element => {
@@ -58,7 +55,7 @@ const Routes = ({ app }: { app?: any }): JSX.Element => {
         return <Switch>{renderRouteDom}</Switch>
     }
 
-    return <Router history={history}>{renderRoute(menu)}</Router>
+    return <BrowserRouter>{renderRoute(menu)}</BrowserRouter>
 }
 
 export default Routes

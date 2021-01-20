@@ -24,7 +24,7 @@ const getMessageContainer = (): HTMLElement => {
     const messageContainer = document.getElementById(id)
 
     if (!messageContainer) {
-        const container = getContainer()
+        const container = getContainer('fixed')
 
         const messageContainer = document.createElement('div')
         messageContainer.setAttribute('class', classname)

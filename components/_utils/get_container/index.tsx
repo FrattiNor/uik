@@ -1,12 +1,16 @@
 import './index.less'
 
-const getContainer = (): HTMLElement => {
-    const id = 'uik-container'
+type containerType = 'fixed'
+
+const getContainer = (type?: containerType): HTMLElement => {
+    const id = type ? `uik-${type}-container` : 'uik-container'
     const containerOut = document.getElementById(id)
     if (!containerOut) {
         const containerOut = document.createElement('div')
         containerOut.setAttribute('id', id)
-        containerOut.setAttribute('class', 'uik-container')
+        if (type) {
+            containerOut.setAttribute('class', id)
+        }
         return containerOut
     }
     return containerOut

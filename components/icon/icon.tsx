@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, ForwardRefRenderFunction, useRef, forwardRef } from 'react'
 import classnames from 'classnames'
 import { iconProps, iconConfig, newIconConfig } from './types'
 import './icon.less'
@@ -9,6 +9,7 @@ let _iconConfig: iconConfig = {
     url: ''
 }
 
+// 获取icon的css
 const getIconCss = (url: string): void => {
     const id = 'uik-icon-css'
     const style = document.getElementById(id)
@@ -22,6 +23,7 @@ const getIconCss = (url: string): void => {
     }
 }
 
+// 配置icon
 const config = (newConfig: newIconConfig): void => {
     _iconConfig = { ..._iconConfig, ...newConfig }
     if (newConfig.url) {
@@ -30,12 +32,17 @@ const config = (newConfig: newIconConfig): void => {
 }
 
 // icon 组件
-const Icon: FC<iconProps> = ({ name = '', className, style = {}, uik = false, ...rest }) => {
+const Icon: ForwardRefRenderFunction<unknown, iconProps> = (props, ref) => {
+    const componentRef = useRef(null)
+    const iconRef = (ref as any) || componentRef
+
+    const { name = '', className, style = {}, uik = false, ...rest } = props
     const { fontFamily, classPrefix } = _iconConfig
     const iconStyle = { fontFamily: uik ? 'uik-iconfont' : fontFamily, ...style }
 
     return (
         <i
+            ref={iconRef}
             className={classnames(`uik-iconfont ${uik ? 'uik-icon-' : classPrefix}${name}`, { [`${className}`]: className })}
             style={iconStyle}
             {...rest}
@@ -44,4 +51,4 @@ const Icon: FC<iconProps> = ({ name = '', className, style = {}, uik = false, ..
 }
 
 export { config }
-export default Icon
+export default forwardRef(Icon) as FC<iconProps>

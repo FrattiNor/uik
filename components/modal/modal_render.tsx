@@ -10,7 +10,7 @@ const getModalContainer = (): HTMLElement => {
     const modalContainer = document.getElementById(id)
 
     if (!modalContainer) {
-        const container = getContainer()
+        const container = getContainer('fixed')
         const modalContainer = document.createElement('div')
         modalContainer.setAttribute('id', id)
 
