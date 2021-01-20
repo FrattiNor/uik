@@ -24,8 +24,8 @@ const TooltipRender: FC<tooltipRenderProps> = ({ children, visible: outVisible, 
     const visible = typeof outVisible === 'boolean' ? outVisible : componentVisible // 实际的visible在有传visible时用visible
     const [render, setRender] = useState(false)
     const [div, setDiv]: [HTMLDivElement | null, any] = useState(null)
-    const [position, setPosition] = useState({ x: -1, y: -1, width: -1, height: -1 })
-    const DOM = useMemo(() => <Tooltip {...restProps} visible={visible} position={position} />, [restProps, visible, position])
+    const [point, setPoint] = useState({ x: -1, y: -1, width: -1, height: -1 })
+    const DOM = useMemo(() => <Tooltip {...restProps} visible={visible} point={point} />, [restProps, visible, point])
 
     // 获取child
     const getChild = () => {
@@ -78,7 +78,7 @@ const TooltipRender: FC<tooltipRenderProps> = ({ children, visible: outVisible, 
         const target = componentRef.current
         if (target !== null && visible) {
             const { x, y, width, height } = target.getBoundingClientRect()
-            setPosition({ x, y, width, height })
+            setPoint({ x, y, width, height })
         }
     }, [componentRef, visible])
 
@@ -86,7 +86,7 @@ const TooltipRender: FC<tooltipRenderProps> = ({ children, visible: outVisible, 
     useEffect(() => {
         return () => {
             if (div !== null) {
-                ReactDOM.render(<Tooltip {...restProps} visible={false} position={position} />, div)
+                ReactDOM.render(<Tooltip {...restProps} visible={false} point={point} />, div)
                 setTimeout(() => {
                     unmountComponentAtNode(div)
                 }, 200)

@@ -16,7 +16,7 @@ const Test: FC = () => {
 
     return (
         <div style={{ margin: 15, height: 1000 }}>
-            <Tooltip title="777">
+            <Tooltip title={<div style={{ height: 100 }}>777787777</div>}>
                 <Button type="primary" onClick={btn1}>
                     Loading
                 </Button>

@@ -3,21 +3,214 @@
 .uik {
     &-tooltip {
         position: absolute;
-        transform: translate(-50%, -100%);
         pointer-events: auto;
 
-        &.show {
-            animation: tooltipMoveIn 0.15s forwards;
+        &.topLeft {
+            transform: translate(0, -100%);
+            transform-origin: 0 100%;
+            &.show {
+                animation: tooltipTopLeftIn 0.15s forwards;
+            }
+            &.hidden {
+                animation: tooltipTopLeftOut 0.15s forwards;
+            }
+
+            .uik-tooltip-arrow {
+                top: 100%;
+                left: 10px;
+            }
         }
-        &.hidden {
-            animation: tooltipMoveOut 0.15s forwards;
+        &.topCenter {
+            transform: translate(-50%, -100%);
+            transform-origin: 50% 100%;
+            &.show {
+                animation: tooltipTopCenterIn 0.15s forwards;
+            }
+            &.hidden {
+                animation: tooltipTopCenterOut 0.15s forwards;
+            }
+
+            .uik-tooltip-arrow {
+                top: 100%;
+                left: calc(~'50% - 8px');
+            }
+        }
+        &.topRight {
+            transform: translate(-100%, -100%);
+            transform-origin: 100% 100%;
+            &.show {
+                animation: tooltipTopRightIn 0.15s forwards;
+            }
+            &.hidden {
+                animation: tooltipTopRightOut 0.15s forwards;
+            }
+
+            .uik-tooltip-arrow {
+                top: 100%;
+                right: 10px;
+            }
+        }
+
+        &.bottomLeft {
+            transform: translate(0, 0);
+            transform-origin: 0 0;
+            &.show {
+                animation: tooltipBottomLeftIn 0.15s forwards;
+            }
+            &.hidden {
+                animation: tooltipBottomLeftOut 0.15s forwards;
+            }
+
+            .uik-tooltip-arrow {
+                top: 0;
+                left: 10px;
+                transform: rotate(180deg);
+                transform-origin: 50% 0;
+            }
+        }
+        &.bottomCenter {
+            transform: translate(-50%, 0);
+            transform-origin: 50% 0;
+            &.show {
+                animation: tooltipBottomCenterIn 0.15s forwards;
+            }
+            &.hidden {
+                animation: tooltipBottomCenterOut 0.15s forwards;
+            }
+
+            .uik-tooltip-arrow {
+                top: 0;
+                left: calc(~'50% - 8px');
+                transform: rotate(180deg);
+                transform-origin: 50% 0;
+            }
+        }
+        &.bottomRight {
+            transform: translate(-100%, 0);
+            transform-origin: 100% 0;
+            &.show {
+                animation: tooltipBottomRightIn 0.15s forwards;
+            }
+            &.hidden {
+                animation: tooltipBottomRightOut 0.15s forwards;
+            }
+
+            .uik-tooltip-arrow {
+                top: 0;
+                right: 10px;
+                transform: rotate(180deg);
+                transform-origin: 50% 0;
+            }
+        }
+
+        &.leftTop {
+            transform: translate(-100%, 0);
+            transform-origin: 100% 0;
+            &.show {
+                animation: tooltipLeftTopIn 0.15s forwards;
+            }
+            &.hidden {
+                animation: tooltipLeftTopOut 0.15s forwards;
+            }
+
+            .uik-tooltip-arrow {
+                top: 10px;
+                right: 0;
+                transform: rotate(270deg);
+                transform-origin: 100% 0;
+            }
+        }
+        &.leftCenter {
+            transform: translate(-100%, -50%);
+            transform-origin: 100% 50%;
+            &.show {
+                animation: tooltipLeftCenterIn 0.15s forwards;
+            }
+            &.hidden {
+                animation: tooltipLeftCenterOut 0.15s forwards;
+            }
+
+            .uik-tooltip-arrow {
+                top: calc(~'50% - 8px');
+                right: 0;
+                transform: rotate(270deg);
+                transform-origin: 100% 0;
+            }
+        }
+        &.leftBottom {
+            transform: translate(-100%, -100%);
+            transform-origin: 100% 100%;
+            &.show {
+                animation: tooltipLeftBottomIn 0.15s forwards;
+            }
+            &.hidden {
+                animation: tooltipLeftBottomOut 0.15s forwards;
+            }
+
+
+            .uik-tooltip-arrow {
+                bottom: 18px;
+                right: 0;
+                transform: rotate(270deg);
+                transform-origin: 100% 0;
+            }
+        }
+
+        &.rightTop {
+            transform: translate(0, 0);
+            transform-origin: 0 0;
+            &.show {
+                animation: tooltipRightTopIn 0.15s forwards;
+            }
+            &.hidden {
+                animation: tooltipRightTopOut 0.15s forwards;
+            }
+
+            .uik-tooltip-arrow {
+                top: 10px;
+                left: 0;
+                transform: rotate(90deg);
+                transform-origin: 0 0;
+            }
+        }
+        &.rightCenter {
+            transform: translate(0, -50%);
+            transform-origin: 0 50%;
+            &.show {
+                animation: tooltipRightCenterIn 0.15s forwards;
+            }
+            &.hidden {
+                animation: tooltipRightCenterOut 0.15s forwards;
+            }
+
+            .uik-tooltip-arrow {
+                top: calc(~'50% - 8px');
+                left: 0;
+                transform: rotate(90deg);
+                transform-origin: 0 0;
+            }
+        }
+        &.rightBottom {
+            transform: translate(0, -100%);
+            transform-origin: 0 100%;
+            &.show {
+                animation: tooltipRightBottomIn 0.15s forwards;
+            }
+            &.hidden {
+                animation: tooltipRightBottomOut 0.15s forwards;
+            }
+
+            .uik-tooltip-arrow {
+                bottom: 18px;
+                left: 0;
+                transform: rotate(90deg);
+                transform-origin: 0 0;
+            }
         }
 
         &-arrow {
             overflow: hidden;
             position: absolute;
-            top: 100%;
-            left: calc(~'50% - 8px');
             pointer-events: none;
             width: 16px;
             height: 6px;
@@ -25,7 +218,7 @@
             &-content {
                 position: absolute;
                 top: 4px;
-                left: 5px;
+                left: 4.5px;
                 width: 5px;
                 height: 5px;
                 transform: translateY(-6.5px) rotate(45deg);
@@ -43,28 +236,268 @@
     }
 }
 
-@keyframes tooltipMoveIn {
+// ================
+
+@keyframes tooltipTopLeftIn {
     0% {
-        transform-origin: 50% 100%;
+        transform: translate(0, -100%) scale(0.8);
+        opacity: 0;
+    }
+    100% {
+        transform: translate(0, -100%) scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes tooltipTopLeftOut {
+    0% {
+        transform: translate(0, -100%) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(0, -100%) scale(0.8);
+        opacity: 0;
+    }
+}
+
+@keyframes tooltipTopCenterIn {
+    0% {
         transform: translate(-50%, -100%) scale(0.8);
         opacity: 0;
     }
     100% {
-        transform-origin: 50% 100%;
         transform: translate(-50%, -100%) scale(1);
         opacity: 1;
     }
 }
 
-@keyframes tooltipMoveOut {
+@keyframes tooltipTopCenterOut {
     0% {
-        transform-origin: 50% 100%;
         transform: translate(-50%, -100%) scale(1);
         opacity: 1;
     }
     100% {
-        transform-origin: 50% 100%;
         transform: translate(-50%, -100%) scale(0.8);
+        opacity: 0;
+    }
+}
+
+@keyframes tooltipTopRightIn {
+    0% {
+        transform: translate(-100%, -100%) scale(0.8);
+        opacity: 0;
+    }
+    100% {
+        transform: translate(-100%, -100%) scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes tooltipTopRightOut {
+    0% {
+        transform: translate(-100%, -100%) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(-100%, -100%) scale(0.8);
+        opacity: 0;
+    }
+}
+
+@keyframes tooltipBottomLeftIn {
+    0% {
+        transform: translate(0, 0) scale(0.8);
+        opacity: 0;
+    }
+    100% {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes tooltipBottomLeftOut {
+    0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(0, 0) scale(0.8);
+        opacity: 0;
+    }
+}
+
+@keyframes tooltipBottomCenterIn {
+    0% {
+        transform: translate(-50%, 0) scale(0.8);
+        opacity: 0;
+    }
+    100% {
+        transform: translate(-50%, 0) scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes tooltipBottomCenterOut {
+    0% {
+        transform: translate(-50%, 0) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(-50%, 0) scale(0.8);
+        opacity: 0;
+    }
+}
+
+@keyframes tooltipBottomRightIn {
+    0% {
+        transform: translate(-100%, 0) scale(0.8);
+        opacity: 0;
+    }
+    100% {
+        transform: translate(-100%, 0) scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes tooltipBottomRightOut {
+    0% {
+        transform: translate(-100%, 0) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(-100%, 0) scale(0.8);
+        opacity: 0;
+    }
+}
+
+@keyframes tooltipLeftTopIn {
+    0% {
+        transform: translate(-100%, 0) scale(0.8);
+        opacity: 0;
+    }
+    100% {
+        transform: translate(-100%, 0) scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes tooltipLeftTopOut {
+    0% {
+        transform: translate(-100%, 0) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(-100%, 0) scale(0.8);
+        opacity: 0;
+    }
+}
+
+@keyframes tooltipLeftCenterIn {
+    0% {
+        transform: translate(-100%, -50%) scale(0.8);
+        opacity: 0;
+    }
+    100% {
+        transform: translate(-100%, -50%) scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes tooltipLeftCenterOut {
+    0% {
+        transform: translate(-100%, -50%) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(-100%, -50%) scale(0.8);
+        opacity: 0;
+    }
+}
+
+@keyframes tooltipLeftBottomIn {
+    0% {
+        transform: translate(-100%, -100%) scale(0.8);
+        opacity: 0;
+    }
+    100% {
+        transform: translate(-100%, -100%) scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes tooltipLeftBottomOut {
+    0% {
+        transform: translate(-100%, -100%) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(-100%, -100%) scale(0.8);
+        opacity: 0;
+    }
+}
+
+@keyframes tooltipRightTopIn {
+    0% {
+        transform: translate(0, 0) scale(0.8);
+        opacity: 0;
+    }
+    100% {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes tooltipRightTopOut {
+    0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(0, 0) scale(0.8);
+        opacity: 0;
+    }
+}
+
+@keyframes tooltipRightCenterIn {
+    0% {
+        transform: translate(0, -50%) scale(0.8);
+        opacity: 0;
+    }
+    100% {
+        transform: translate(0, -50%) scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes tooltipRightCenterOut {
+    0% {
+        transform: translate(0, -50%) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(0, -50%) scale(0.8);
+        opacity: 0;
+    }
+}
+
+@keyframes tooltipRightBottomIn {
+    0% {
+        transform: translate(0, -100%) scale(0.8);
+        opacity: 0;
+    }
+    100% {
+        transform: translate(0, -100%) scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes tooltipRightBottomOut {
+    0% {
+        transform: translate(0, -100%) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(0, -100%) scale(0.8);
         opacity: 0;
     }
 }
