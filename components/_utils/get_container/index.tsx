@@ -1,19 +1,40 @@
 import './index.less'
 
-type containerType = 'fixed'
+type containerProps = {
+    id?: string
+    classname?: string
+    containerType?: 'fixed' | 'absolute'
+    zIndex?: number
+}
 
-const getContainer = (type?: containerType): HTMLElement => {
-    const id = type ? `uik-${type}-container` : 'uik-container'
-    const containerOut = document.getElementById(id)
-    if (!containerOut) {
-        const containerOut = document.createElement('div')
-        containerOut.setAttribute('id', id)
-        if (type) {
-            containerOut.setAttribute('class', id)
+const getContainer = ({ id, classname, containerType, zIndex }: containerProps): HTMLElement => {
+    const container = id && document.getElementById(id)
+
+    if (!container) {
+        const container = document.createElement('div')
+
+        if (id) {
+            container.setAttribute('id', id)
         }
-        return containerOut
+        if (classname) {
+            container.setAttribute('class', classname)
+        }
+        if (containerType) {
+            const containerOut = document.createElement('div')
+            containerOut.setAttribute('class', `uik-${containerType}-container`)
+            if (zIndex) {
+                containerOut.setAttribute('style', `z-index:${zIndex}`)
+            }
+            containerOut.append(container)
+            document.body.append(containerOut)
+        } else {
+            document.body.append(container)
+        }
+
+        return container
     }
-    return containerOut
+
+    return container
 }
 
 export default getContainer

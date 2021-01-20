@@ -4,22 +4,17 @@ import Modal from './modal'
 import { getContainer } from '../_utils'
 import { modalProps } from './types'
 
-// 获取容器 message 容器
+// 获取容器 modal 容器
 const getModalContainer = (): HTMLElement => {
     const id = 'uik-modal'
-    const modalContainer = document.getElementById(id)
 
-    if (!modalContainer) {
-        const container = getContainer('fixed')
-        const modalContainer = document.createElement('div')
-        modalContainer.setAttribute('id', id)
+    const container = getContainer({
+        id,
+        containerType: 'fixed',
+        zIndex: 1000 // modal 1000, tooltip 1001 ,message 1002
+    })
 
-        container.append(modalContainer)
-        document.body.append(container)
-        return modalContainer
-    }
-
-    return modalContainer
+    return container
 }
 
 // 渲染组件

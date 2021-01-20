@@ -4,28 +4,23 @@ import { tooltipRenderProps } from './types'
 import { getContainer } from '../_utils'
 import Tooltip from './tooltip'
 
-// 获取容器 message 容器
-const getTooltipContainer = (): HTMLElement => {
-    const id = 'uik-tooltip'
-    const tooltipContainer = document.getElementById(id)
+// 获取容器 tooltip 容器
+const getTooltipContainer = (containerZIndex?: number): HTMLElement => {
+    const zIndex = containerZIndex || 1000
 
-    if (!tooltipContainer) {
-        const container = getContainer()
-        const tooltipContainer = document.createElement('div')
-        tooltipContainer.setAttribute('id', id)
+    const container = getContainer({
+        id: `uik-tooltip-${zIndex}`,
+        containerType: 'absolute',
+        zIndex // modal 1000, tooltip 1001 ,message 1002
+    })
 
-        container.append(tooltipContainer)
-        document.body.append(container)
-        return tooltipContainer
-    }
-
-    return tooltipContainer
+    return container
 }
 
 // tooltip render 组件
 const TooltipRender: FC<tooltipRenderProps> = ({ children, ...restProps }) => {
     const componentRef: MutableRefObject<HTMLElement | null> = useRef(null)
-    const { visible = false } = restProps
+    const { visible = false, containerZIndex } = restProps
     const [render, setRender] = useState(false)
     const [div, setDiv]: [HTMLDivElement | null, any] = useState(null)
     const [position, setPosition] = useState({ x: -1, y: -1, width: -1, height: -1 })
@@ -44,7 +39,7 @@ const TooltipRender: FC<tooltipRenderProps> = ({ children, ...restProps }) => {
     // 只创建一次div
     useEffect(() => {
         if (visible && !render) {
-            const container = getTooltipContainer()
+            const container = getTooltipContainer(containerZIndex)
             const div = document.createElement('div')
             div.setAttribute
             container.append(div)
@@ -63,11 +58,11 @@ const TooltipRender: FC<tooltipRenderProps> = ({ children, ...restProps }) => {
     // 获取定位
     useEffect(() => {
         const target = componentRef.current
-        if (target !== null) {
+        if (target !== null && visible) {
             const { x, y, width, height } = target.getBoundingClientRect()
             setPosition({ x, y, width, height })
         }
-    }, [componentRef])
+    }, [componentRef, visible])
 
     // 卸载时unmountComponentAtNode，想把visible:false传入的话需要再ReactDOM.render一次，因为卸载后不会再执行useEffect了
     useEffect(() => {

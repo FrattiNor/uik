@@ -21,21 +21,15 @@ const getMessageContainer = (): HTMLElement => {
     const id = 'uik-message'
     const { position } = _messageConfig
     const classname = classnames('uik-message-container', position.map((text) => `uik-message-container-${text}`).join(' '))
-    const messageContainer = document.getElementById(id)
 
-    if (!messageContainer) {
-        const container = getContainer('fixed')
+    const container = getContainer({
+        id,
+        classname,
+        containerType: 'fixed',
+        zIndex: 1002 // modal 1000, tooltip 1001 ,message 1002
+    })
 
-        const messageContainer = document.createElement('div')
-        messageContainer.setAttribute('class', classname)
-        messageContainer.setAttribute('id', id)
-
-        container.append(messageContainer)
-        document.body.append(container)
-        return messageContainer
-    }
-
-    return messageContainer
+    return container
 }
 
 // 销毁

@@ -23,7 +23,7 @@ export type modalProps = {
     onOk?: MouseEventHandler<HTMLElement>
     mask?: boolean
     maskClosable?: boolean
-    zIndex?: number
+    zIndex?: number // modal 和 modal 之间的层次关系
     cancelBtnProps?: buttonProps
     okBtnProps?: buttonProps
 }

@@ -81,8 +81,8 @@ const Modal: FC<modalProps> = (props) => {
         (connect) => {
             if (visible) {
                 setClassname('show')
-                setBodyScroll(false)
                 setShow(true)
+                setBodyScroll(false)
             } else {
                 setClassname('hidden')
                 setBodyScroll(true)
