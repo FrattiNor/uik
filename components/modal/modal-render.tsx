@@ -1,5 +1,6 @@
 import React, { FC, useState, useEffect, Fragment, useMemo } from 'react'
 import ReactDOM, { unmountComponentAtNode } from 'react-dom'
+import { useEffectOnce } from '../_hooks'
 import Modal from './modal'
 import { getContainer } from '../_utils'
 import { modalProps } from './types'
@@ -22,20 +23,22 @@ const ModalRender: FC<modalProps> = (props) => {
     const { visible = false } = props
 
     const [div, setDiv]: [HTMLDivElement | null, any] = useState(null)
-    const [render, setRender] = useState(false)
     const DOM = useMemo(() => <Modal {...props} />, [props])
 
     // 只创建一次div
-    useEffect(() => {
-        if (visible && !render) {
-            const container = getModalContainer()
-            const div = document.createElement('div')
-            div.setAttribute
-            container.append(div)
-            setDiv(div)
-            setRender(true)
-        }
-    }, [visible])
+    useEffectOnce(
+        visible,
+        () => {
+            if (visible) {
+                const container = getModalContainer()
+                const div = document.createElement('div')
+                div.setAttribute
+                container.append(div)
+                setDiv(div)
+            }
+        },
+        [visible]
+    )
 
     // 根据props更新Modal
     useEffect(() => {

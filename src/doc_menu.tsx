@@ -25,6 +25,10 @@ const menu = [
                 name: 'modal',
                 desc: 'Modal 弹窗'
             },
+            {
+                name: 'tooltip',
+                desc: 'Tooltip 文字提示'
+            },
         ]
     }
 ]

@@ -1,6 +1,6 @@
 import React, { FC, MouseEvent, useRef, forwardRef, ForwardRefRenderFunction } from 'react'
 import classnames from 'classnames'
-import ButtonLoading from './button_loading'
+import ButtonLoading from './button-loading'
 import { buttonProps } from './types'
 import './button.less'
 

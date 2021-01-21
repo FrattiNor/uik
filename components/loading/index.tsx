@@ -1,5 +1,5 @@
 import LoadingFC from './loading'
-import LoadingIcon from './loading_icon'
+import LoadingIcon from './loading-icon'
 
 type LoadingType = typeof LoadingFC
 interface LoadingInterFace extends LoadingType {

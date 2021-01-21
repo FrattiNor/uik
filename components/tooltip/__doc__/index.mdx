@@ -9,21 +9,21 @@ import DemoPosition from './demo-position'
 import descPosition from './demo-position/desc.md'
 import codePosition from '!raw-loader!./demo-position'
 
-# Modal 弹窗
+# Tooltip 文字提示
 
-模态弹窗。
+简单的文字提示气泡框。
 
 ## 何时使用
 
-需要用户处理事务，又不希望跳转页面以致打断工作流程时，可以使用 Modal 在当前页面正中打开一个浮层，承载相应的操作。
+鼠标移入则显示提示，移出消失，气泡浮层不承载复杂文本和操作。
 
 ## 代码演示
 
-<CodeBox title="基本弹窗" desc={descNormal} code={codeNormal}>
+<CodeBox title="基本" desc={descNormal} code={codeNormal}>
     <DemoNormal />
 </CodeBox>
 
-<CodeBox title="定位弹窗" desc={descPosition} code={codePosition}>
+<CodeBox title="定位" desc={descPosition} code={codePosition}>
     <DemoPosition />
 </CodeBox>
 
@@ -31,53 +31,11 @@ import codePosition from '!raw-loader!./demo-position'
 
 <div className="api">
 
-| 属性            | 说明                            | 类型                                   | 默认值           | 版本 |
-| :-------------- | :------------------------------ | :------------------------------------- | :--------------- | :--- |
-| position        | 弹窗定位                        | `position` \| [`position`, `positionOption`] | center           |
-| visible         | 弹窗是否可见                    | boolean                                | false            | -    |
-| destroyOnClose  | 弹窗不可见时是否销毁            | boolean                                | false            | -    |
-| title           | 弹窗标题                        | string                                 | -                |
-| hiddenCloseIcon | 隐藏弹窗关闭按钮                | boolean                                | false            | -    |
-| head            | 弹窗 head                       | ReactNode \| null                      | (标题和关闭按钮) | -    |
-| foot            | 弹窗 foot                       | ReactNode \| null                      | (确定取消按钮)   | -    |
-| onCancel        | 取消按钮 蒙层 关闭按钮 点回回调 | function(e)                            | -                | -    |
-| onOk            | 确认按钮 点击回调               | function(e)                            | -                | -    |
-| mask            | 弹窗蒙层                        | boolean                                | true             | -    |
-| maskClosable    | 弹窗蒙层是否点击关闭            | boolean                                | false            | -    |
-| zIndex          | 弹窗的 z-index 样式属性         | number                                 | -                | -    |
-| cancelBtnProps  | 弹窗取消按钮的 props            | BtnProps                               | -                | -    |
-| okBtnProps      | 弹窗确认按钮的 props            | BtnProps                               | -                | -    |
-
-</div>
-
-`position` 为 `center` 时弹窗居中 `positionOption` 属性如下：
-
-<div className="api">
-
-| 属性   | 说明           | 类型   | 默认值 | 版本 |
-| :----- | :------------- | :----- | :----- | :--- |
-| top    | 弹窗距上方距离 | number | 150    |
-| width  | 弹窗宽度       | number | 500    | -    |
-| height | 弹窗高度       | number | -      | -    |
-
-</div>
-
-`position` 为 `top` 时弹窗从上方弹出，为 `bottom` 时弹窗从下方弹出， `positionOption` 属性如下：
-
-<div className="api">
-
-| 属性   | 说明     | 类型   | 默认值 | 版本 |
-| :----- | :------- | :----- | :----- | :--- |
-| height | 弹窗高度 | number | -      | -    |
-
-</div>
-
-`position` 为 `left` 时弹窗从左方弹出，为 `right` 时弹窗从右方弹出， `positionOption` 属性如下：
-
-<div className="api">
-
-| 属性  | 说明     | 类型   | 默认值 | 版本 |
-| :---- | :------- | :----- | :----- | :--- |
-| width | 弹窗宽度 | number | 500    | -    |
+| 属性            | 说明                                       | 类型                                                                                                                                                           | 默认值    | 版本 |
+| :-------------- | :----------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------- | :-------- | :--- |
+| position        | 定位                                       | topLeft \| topCenter \| topRight \| bottomLeft \| bottomCenter \| bottomRight \| leftTop \| leftCenter \| leftBottom \| rightTop \| rightCenter \| rightBottom | topCenter | -    |
+| visible         | 是否可见                                   | boolean                                                                                                                                                        | false     | -    |
+| title           | 内容                                       | string \｜ ReactNode                                                                                                                                           | -         | -    |
+| containerZIndex | 容器的 zIndex， 用于和其他悬浮内容比较层次 | number                                                                                                                                                         | -         | -    |
 
 </div>

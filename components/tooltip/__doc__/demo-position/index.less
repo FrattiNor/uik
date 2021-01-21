@@ -1,8 +1,30 @@
 .wrapper {
     display: flex;
+    flex-direction: column;
     align-items: center;
     
-    & > button + button {
-        margin-left: 10px;
+    .top,
+    .bottom {
+        display: flex;
+
+        & > button + button {
+            margin-left: 10px;
+        }
+    }
+
+    .left-right {
+        display: flex;
+        justify-content: space-between;
+        width: 300px;
+        margin: 10px 0;
+
+        .left, .right {
+            display: flex;
+            flex-direction: column;
+
+            & > button + button {
+                margin-top: 10px;
+            }
+        }
     }
 }

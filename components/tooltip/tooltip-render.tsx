@@ -2,16 +2,18 @@ import React, { FC, Fragment, useEffect, useState, useMemo, isValidElement, useR
 import ReactDOM, { unmountComponentAtNode } from 'react-dom'
 import { tooltipRenderProps } from './types'
 import { getContainer } from '../_utils'
+import { useEffectOnce } from '../_hooks'
 import Tooltip from './tooltip'
 
 // 获取容器 tooltip 容器
-const getTooltipContainer = (containerZIndex?: number): HTMLElement => {
+const getTooltipContainer = (containerZIndex?: number, getRootContainer?: () => HTMLElement | null): HTMLElement => {
     const zIndex = containerZIndex || 1001
 
     const container = getContainer({
         id: `uik-tooltip-${zIndex}`,
         containerType: 'absolute',
-        zIndex // modal 1000, tooltip 1001 ,message 1002
+        zIndex, // modal 1000, tooltip 1001 ,message 1002
+        getRootContainer
     })
 
     return container
@@ -19,10 +21,10 @@ const getTooltipContainer = (containerZIndex?: number): HTMLElement => {
 
 // tooltip render 组件
 const TooltipRender: FC<tooltipRenderProps> = ({ children, visible: outVisible, containerZIndex, ...restProps }) => {
+    const { getRootContainer } = restProps
     const componentRef: MutableRefObject<HTMLElement | null> = useRef(null)
     const [componentVisible, setComponentVisible] = useState(false)
     const visible = typeof outVisible === 'boolean' ? outVisible : componentVisible // 实际的visible在有传visible时用visible
-    const [render, setRender] = useState(false)
     const [div, setDiv]: [HTMLDivElement | null, any] = useState(null)
     const [point, setPoint] = useState({ x: -1, y: -1, width: -1, height: -1 })
     const DOM = useMemo(() => <Tooltip {...restProps} visible={visible} point={point} />, [restProps, visible, point])
@@ -55,16 +57,19 @@ const TooltipRender: FC<tooltipRenderProps> = ({ children, visible: outVisible, 
     }
 
     // 只创建一次div
-    useEffect(() => {
-        if (visible && !render) {
-            const container = getTooltipContainer(containerZIndex)
-            const div = document.createElement('div')
-            div.setAttribute
-            container.append(div)
-            setDiv(div)
-            setRender(true)
-        }
-    }, [visible])
+    useEffectOnce(
+        visible,
+        () => {
+            if (visible) {
+                const container = getTooltipContainer(containerZIndex, getRootContainer)
+                const div = document.createElement('div')
+                div.setAttribute
+                container.append(div)
+                setDiv(div)
+            }
+        },
+        [visible]
+    )
 
     // 根据props更新Tooltip
     useEffect(() => {
@@ -80,7 +85,7 @@ const TooltipRender: FC<tooltipRenderProps> = ({ children, visible: outVisible, 
             const { x, y, width, height } = target.getBoundingClientRect()
             setPoint({ x, y, width, height })
         }
-    }, [componentRef, visible])
+    }, [visible])
 
     // 卸载时unmountComponentAtNode，想把visible:false传入的话需要再ReactDOM.render一次，因为卸载后不会再执行useEffect了
     useEffect(() => {

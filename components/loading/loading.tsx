@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 import classnames from 'classnames'
-import LoadingIcon from './loading_icon'
+import LoadingIcon from './loading-icon'
 import { loadingProps } from './types'
 import './loading.less'
 

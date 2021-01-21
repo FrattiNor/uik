@@ -3,7 +3,7 @@ import classnames from 'classnames'
 import Loading from '../loading'
 import { useEffectAfterFirst } from '../_hooks'
 import { buttonLoadingProps } from './types'
-import './button_loading.less'
+import './button-loading.less'
 
 // 按钮loading
 const ButtonLoading: FC<buttonLoadingProps> = ({ visible }) => {

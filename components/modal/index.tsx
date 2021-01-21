@@ -1,4 +1,4 @@
-import Modal from './modal_render'
+import Modal from './modal-render'
 
 export default Modal
 

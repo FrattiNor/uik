@@ -1,16 +1,12 @@
-import React, { FC, Fragment, useState } from 'react'
-import { Button, Modal } from 'uik'
+import React, { FC, Fragment } from 'react'
+import { Button, Tooltip } from 'uik'
 
 const Demo: FC = () => {
-    const [visible, setVisible] = useState(false)
-
     return (
         <Fragment>
-            <Button onClick={() => setVisible(true)}>基本弹窗</Button>
-            <Modal visible={visible} title="Basic Modal" onCancel={() => setVisible(false)}>
-                <p>Some contents...</p>
-                <p>Some contents...</p>
-            </Modal>
+            <Tooltip title="prompt text">
+                <Button>Tooltip will show on mouse enter.</Button>
+            </Tooltip>
         </Fragment>
     )
 }
