@@ -1,20 +1,17 @@
 /* eslint-disable no-unused-vars */
-import { CSSProperties } from 'react'
-import { getRoot } from '../_utils'
 import { tooltipPoint, tooltipPosition } from './types'
 
 type point2 = { clientHeight: number; clientWidth: number }
-type fun = (point: tooltipPoint, position: tooltipPosition, point2: point2, getRootContainer?: () => HTMLElement | null) => CSSProperties
+type res = { top: number; left: number }
+type fun = (point: tooltipPoint, position: tooltipPosition, point2: point2, root: HTMLElement) => res
 
-const getTooltipPositionStyle: fun = (point, position, point2, getRootContainer) => {
-    const root = getRoot(getRootContainer)
-
+const getTooltipPositionStyle: fun = (point, position, point2, root) => {
     const scrollTop = root.scrollTop || document.documentElement.scrollTop
     const scrollLeft = root.scrollLeft || document.documentElement.scrollTop
 
     const { x, y, width, height } = point
     const { clientHeight, clientWidth } = point2
-    let resStyle = {}
+    let resStyle = { top: 0, left: 0 }
 
     switch (position) {
         case 'topLeft':
