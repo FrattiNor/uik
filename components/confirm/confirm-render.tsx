@@ -1,7 +1,4 @@
-import React, { FC } from 'react'
+import noticeRenderHoc from '../_hocs/notice/notice-render-hoc'
+import Notice from './confirm'
 
-const ConfirmRender: FC = () => {
-    return <>ConfirmRender</>
-}
-
-export default ConfirmRender
+export default noticeRenderHoc({ Component: Notice, name: 'notice' })

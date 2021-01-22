@@ -1,5 +1,3 @@
-import Confirm from './confirm'
+import Notice from './confirm-render'
 
-export default Confirm
-
-export * from './types'
+export default Notice

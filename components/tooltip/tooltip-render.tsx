@@ -12,7 +12,7 @@ const getTooltipContainer = (containerZIndex?: number, rootId?: string): HTMLEle
     const container = getContainer({
         id: `uik-tooltip-${zIndex}`,
         containerType: 'absolute',
-        zIndex, // modal 1000, tooltip 1001 ,message 1002
+        zIndex, // modal 1000, tooltip 1001, confirm 1001 ,message 1002
         rootId
     })
 
