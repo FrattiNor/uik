@@ -17,7 +17,7 @@ const Test: FC = () => {
     return (
         <div style={{ margin: 150, height: 500, width: 500, background: 'rgba(0,0,0,0.3)', overflow: 'auto', position: 'relative' }} id="coc">
             <div style={{ margin: 50, height: 1000, width: 1000 }}>
-                <Tooltip autoAdjust rootId="coc" title={<div style={{ height: 100 }}>777787777</div>}>
+                <Tooltip autoAdjust rootId="coc" title={<div style={{ height: 20, width:100 }}>777787777</div>}>
                     <Button type="primary" onClick={btn1}>
                         Loading
                     </Button>

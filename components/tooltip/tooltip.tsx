@@ -59,7 +59,7 @@ const Tooltip: FC<tooltipProps> = ({ title, target, visible, position: outPositi
                 setTopLeftstyle({ top, left })
             }
         }
-    }, [position, target, tooltipRef, show, autoAdjust, rootId])
+    }, [position, target, tooltipRef, show, autoAdjust, rootId, count])
 
     return (
         <div

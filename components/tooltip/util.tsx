@@ -127,51 +127,57 @@ const getTooltipPositionStyle: getLeftTopError = (position, target, tooltip, roo
 
 // 获取自动定位
 const autoAdjustPosition: getPosition = (position, error) => {
-    if(['top','bottom'].every(item => error.includes(item as errorType))) {
+    if (['top', 'bottom'].every((item) => error.includes(item as errorType))) {
         return false
     }
-    if(['left','right'].every(item => error.includes(item as errorType))) {
+    if (['left', 'right'].every((item) => error.includes(item as errorType))) {
         return false
     }
 
     let newPosition = position
-
     error.forEach((err) => {
         switch (err) {
             case 'top':
                 {
                     newPosition = newPosition.replace('top', 'bottom') as tooltipPosition
-                    newPosition = newPosition.replace('Center', 'Bottom') as tooltipPosition
-                    newPosition = newPosition.replace('Top', 'Center') as tooltipPosition
+                    if (!newPosition.includes('bottom')) {
+                        newPosition = newPosition.replace('Center', 'Top') as tooltipPosition
+                    }
+                    newPosition = newPosition.replace('Bottom', 'Center') as tooltipPosition
                 }
                 break
             case 'bottom':
                 {
                     newPosition = newPosition.replace('bottom', 'top') as tooltipPosition
-                    newPosition = newPosition.replace('Center', 'Top') as tooltipPosition
-                    newPosition = newPosition.replace('Bottom', 'Center') as tooltipPosition
+                    if (!newPosition.includes('top')) {
+                        newPosition = newPosition.replace('Center', 'Bottom') as tooltipPosition
+                    }
+                    newPosition = newPosition.replace('Top', 'Center') as tooltipPosition
                 }
                 break
             case 'left':
                 {
                     newPosition = newPosition.replace('left', 'right') as tooltipPosition
-                    newPosition = newPosition.replace('Center', 'Right') as tooltipPosition
-                    newPosition = newPosition.replace('Left', 'Center') as tooltipPosition
-                    
+                    if (!newPosition.includes('right')) {
+                        newPosition = newPosition.replace('Center', 'Left') as tooltipPosition
+                    }
+                    newPosition = newPosition.replace('Right', 'Center') as tooltipPosition
                 }
                 break
             case 'right':
                 {
                     newPosition = newPosition.replace('right', 'left') as tooltipPosition
-                    newPosition = newPosition.replace('Center', 'Left') as tooltipPosition
-                    newPosition = newPosition.replace('Right', 'Center') as tooltipPosition
+                    if (!newPosition.includes('left')) {
+                        newPosition = newPosition.replace('Center', 'Right') as tooltipPosition
+                    }
+                    newPosition = newPosition.replace('Left', 'Center') as tooltipPosition
                 }
                 break
             default:
                 break
         }
     })
-    return 'bottomCenter'
+    return newPosition
 }
 
 export { getTooltipPositionStyle, autoAdjustPosition }
