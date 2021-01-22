@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { FC, useRef, useEffect } from 'react'
 import ResizeObserver from 'resize-observer-polyfill'
 

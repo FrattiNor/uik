@@ -4,16 +4,19 @@
     white-space: pre;
     overflow-x: auto;
 
-    // 覆盖掉 format_markdown 的code样式
-    code {
-        background-color: unset !important;
-        padding: 0 !important;
-        margin: 0 !important;
-        font-size: 14px !important;
-        border-radius: 0 !important;
+    & > .code {
+        background-color: unset;
+        padding: 0;
+        margin: 0;
+        font-size: 14px;
+        border-radius: 0;
 
         display: inline-block;
         line-height: 1.5;
         min-width: 100%;
+
+        & > div {
+            min-height: 21px; // 保证空行
+        }
     }
 }

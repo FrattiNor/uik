@@ -4,7 +4,7 @@
 const routes = [
     {
         path: '/',
-        component: require('@/layouts/basic_layout'),
+        component: require('@/layouts/basic-layout'),
         routes: [
             {
                 path: '/uik',

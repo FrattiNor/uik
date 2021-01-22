@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import EmptyComponent from '@/components/empty_component'
+import EmptyComponent from '@/components/empty-component'
 
 const menu = [
     {

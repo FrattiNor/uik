@@ -1,7 +1,7 @@
 import { ComponentType, FC } from 'react'
-import Empty from '@/components/empty_component'
-import ReactLoadable from './react_loadable'
-import ReactLazyLoad from './react_lazy'
+import Empty from '@/components/empty-component'
+import ReactLoadable from './react-loadable'
+import ReactLazyLoad from './react-lazy'
 
 const LazyLoad = (loader: () => Promise<{ default: ComponentType<any> }>, type: 'react' | 'loadable', Loading?: FC): FC => {
     switch (type) {

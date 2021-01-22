@@ -1,6 +1,6 @@
 import React, { FC, useState } from 'react'
 import copy from 'copy-to-clipboard'
-import CodeBlock from '@/components/code_block'
+import CodeBlock from '@/components/code-block'
 import { message, Icon } from 'uik'
 import styles from './index.less'
 

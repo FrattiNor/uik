@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 import classnames from 'classnames'
 import { MDXProvider } from '@mdx-js/react'
-import CodeBlock from '@/components/code_block'
+import CodeBlock from '@/components/code-block'
 import styles from './index.less'
 
 type props = {

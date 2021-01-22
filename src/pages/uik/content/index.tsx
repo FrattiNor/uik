@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 import { useLocation } from 'react-router-dom'
-import FormatMarkDown from '@/components/format_markdown'
-import { getDoc } from '@/doc_menu'
+import FormatMarkDown from '@/components/format-markdown'
+import { getDoc } from '@/doc-menu'
 import styles from './index.less'
 
 const Content: FC = () => {
