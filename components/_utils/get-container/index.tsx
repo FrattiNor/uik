@@ -1,4 +1,3 @@
-import { getRoot } from '../index'
 import './index.less'
 
 type containerProps = {
@@ -6,18 +5,24 @@ type containerProps = {
     classname?: string
     containerType?: 'fixed' | 'absolute'
     zIndex?: number
-    getRootContainer?: () => HTMLElement | null
+    rootId?: string
 }
 
-const getContainer = ({ id, classname, containerType, zIndex, getRootContainer }: containerProps): HTMLElement => {
-    const root = getRoot(getRootContainer)
-    const container = id && document.getElementById(id)
+const getRoot = (rootId?: string): HTMLElement => {
+    return rootId ? document.getElementById(rootId) || document.body : document.body
+}
+
+const getContainer = ({ id, classname, containerType, zIndex, rootId }: containerProps): HTMLElement => {
+    const root = getRoot(rootId)
+    const newId = id ? (rootId ? `${id}-${rootId}` : id) : false
+
+    const container = newId && document.getElementById(newId)
 
     if (!container) {
         const container = document.createElement('div')
 
-        if (id) {
-            container.setAttribute('id', id)
+        if (newId) {
+            container.setAttribute('id', newId)
         }
         if (classname) {
             container.setAttribute('class', classname)

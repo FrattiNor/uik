@@ -3,10 +3,10 @@ import { useState } from 'react'
 
 type add<T> = (v: T) => string
 type del = (key: string) => void
-type fun = <T>(v: T[]) => [{ [key: string]: T }, add<T>, del]
+type res<T> = [{ [key: string]: T }, add<T>, del]
 
 // 将数组转为object存储，key默认为随机数
-const useStateArrayToObject: fun = (v) => {
+function useStateArrayToObject<T>(v: T[]): res<T> {
     const obj: anyObject = {}
 
     v.forEach((item, i) => {
@@ -15,7 +15,7 @@ const useStateArrayToObject: fun = (v) => {
 
     const [value, setValue] = useState(obj)
 
-    const addValue = (newV: any) => {
+    const addValue = (newV: T) => {
         const newKey = Math.random().toString()
 
         setValue({

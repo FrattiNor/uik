@@ -2,32 +2,41 @@ import React, { FC, Fragment, useEffect, useState, useMemo, isValidElement, useR
 import ReactDOM, { unmountComponentAtNode } from 'react-dom'
 import { tooltipRenderProps } from './types'
 import { getContainer } from '../_utils'
-import { useEffectOnce } from '../_hooks'
+import { useDebounce, useEffectOnce } from '../_hooks'
 import Tooltip from './tooltip'
 
 // 获取容器 tooltip 容器
-const getTooltipContainer = (containerZIndex?: number, getRootContainer?: () => HTMLElement | null): HTMLElement => {
+const getTooltipContainer = (containerZIndex?: number, rootId?: string): HTMLElement => {
     const zIndex = containerZIndex || 1001
 
     const container = getContainer({
         id: `uik-tooltip-${zIndex}`,
         containerType: 'absolute',
         zIndex, // modal 1000, tooltip 1001 ,message 1002
-        getRootContainer
+        rootId
     })
 
     return container
 }
 
 // tooltip render 组件
-const TooltipRender: FC<tooltipRenderProps> = ({ children, visible: outVisible, containerZIndex, ...restProps }) => {
-    const { getRootContainer } = restProps
-    const componentRef: MutableRefObject<HTMLElement | null> = useRef(null)
-    const [componentVisible, setComponentVisible] = useState(false)
-    const visible = typeof outVisible === 'boolean' ? outVisible : componentVisible // 实际的visible在有传visible时用visible
+const TooltipRender: FC<tooltipRenderProps> = ({ children, visible: outVisible, containerZIndex, trigger = 'hover', ...restProps }) => {
+    const { rootId } = restProps
+    // target
+    const targetRef: MutableRefObject<HTMLElement | null> = useRef(null)
+    // 虚拟visible
+    const [virtualVisible, setVirtualVisible] = useState(false)
+    // 实际的visible在有传visible时用visible
+    const visible = typeof outVisible === 'boolean' ? outVisible : virtualVisible
+    // 挂载的div
     const [div, setDiv]: [HTMLDivElement | null, any] = useState(null)
-    const [point, setPoint] = useState({ x: -1, y: -1, width: -1, height: -1 })
-    const DOM = useMemo(() => <Tooltip {...restProps} visible={visible} point={point} />, [restProps, visible, point])
+    // 防抖设置Visible
+    const debounceSetVisible = useDebounce(setVirtualVisible, 200)
+    // DOM
+    const DOM = useMemo(
+        () => <Tooltip {...restProps} visible={visible} target={targetRef.current} trigger={trigger} setVisible={debounceSetVisible} />,
+        [restProps, visible, targetRef, trigger, debounceSetVisible]
+    )
 
     // 获取child
     const getChild = () => {
@@ -35,21 +44,48 @@ const TooltipRender: FC<tooltipRenderProps> = ({ children, visible: outVisible, 
             const firstElement = Array.isArray(children) ? children[0] : children
             const element = isValidElement(firstElement) ? firstElement : <span>{firstElement}</span>
 
-            const cloneE = cloneElement(element, {
-                ref: componentRef,
-                onMouseOver: (e: MouseEvent) => {
-                    const { onMouseOver } = element.props
-                    if (onMouseOver) onMouseOver(e)
-                    setComponentVisible(true)
-                },
-                onMouseOut: (e: MouseEvent) => {
-                    const { onMouseOut } = element.props
-                    if (onMouseOut) onMouseOut(e)
-                    setTimeout(() => {
-                        setComponentVisible(false)
-                    }, 200)
+            const childFun = () => {
+                switch (trigger) {
+                    case 'hover':
+                        return {
+                            onMouseEnter: (e: MouseEvent) => {
+                                const { onMouseEnter } = element.props
+                                if (onMouseEnter) onMouseEnter(e)
+                                debounceSetVisible(true)
+                            },
+                            onMouseLeave: (e: MouseEvent) => {
+                                const { onMouseLeave } = element.props
+                                if (onMouseLeave) onMouseLeave(e)
+                                debounceSetVisible(false)
+                            }
+                        }
+                    case 'focus':
+                        return {
+                            onFocus: (e: MouseEvent) => {
+                                const { onFocus } = element.props
+                                if (onFocus) onFocus(e)
+                                debounceSetVisible(true)
+                            },
+                            onBulr: (e: MouseEvent) => {
+                                const { onBulr } = element.props
+                                if (onBulr) onBulr(e)
+                                debounceSetVisible(false)
+                            }
+                        }
+                    case 'click':
+                        return {
+                            onClick: (e: MouseEvent) => {
+                                const { onClick } = element.props
+                                if (onClick) onClick(e)
+                                debounceSetVisible(!virtualVisible)
+                            }
+                        }
+                    default:
+                        return {}
                 }
-            })
+            }
+
+            const cloneE = cloneElement(element, { ref: targetRef, ...childFun() })
 
             return cloneE
         }
@@ -61,7 +97,7 @@ const TooltipRender: FC<tooltipRenderProps> = ({ children, visible: outVisible, 
         visible,
         () => {
             if (visible) {
-                const container = getTooltipContainer(containerZIndex, getRootContainer)
+                const container = getTooltipContainer(containerZIndex, rootId)
                 const div = document.createElement('div')
                 div.setAttribute
                 container.append(div)
@@ -78,23 +114,11 @@ const TooltipRender: FC<tooltipRenderProps> = ({ children, visible: outVisible, 
         }
     }, [div, DOM])
 
-    // 获取定位
-    useEffect(() => {
-        const target = componentRef.current
-        if (target !== null && visible) {
-            const { x, y, width, height } = target.getBoundingClientRect()
-            setPoint({ x, y, width, height })
-        }
-    }, [visible])
-
-    // 卸载时unmountComponentAtNode，想把visible:false传入的话需要再ReactDOM.render一次，因为卸载后不会再执行useEffect了
+    // 卸载时unmountComponentAtNode
     useEffect(() => {
         return () => {
             if (div !== null) {
-                ReactDOM.render(<Tooltip {...restProps} visible={false} point={point} />, div)
-                setTimeout(() => {
-                    unmountComponentAtNode(div)
-                }, 200)
+                unmountComponentAtNode(div)
             }
         }
     }, [div])

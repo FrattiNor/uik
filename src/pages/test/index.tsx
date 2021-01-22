@@ -15,20 +15,22 @@ const Test: FC = () => {
     }
 
     return (
-        <div style={{ margin: 15, height: 1000 }}>
-            <Tooltip title={<div style={{ height: 100 }}>777787777</div>}>
-                <Button type="primary" onClick={btn1}>
-                    Loading
-                </Button>
-            </Tooltip>
-
-            <Modal visible={v} onCancel={() => setV(false)}>
-                <Tooltip title="888">
-                    <Button type="primary" onClick={btn2}>
+        <div style={{ margin: 150, height: 1000, width: 500, background: 'rgba(0,0,0,0.3)', overflow: 'auto', position: 'relative' }} id="coc">
+            <div style={{ margin: 50, height: 2000, width: 1000 }}>
+                <Tooltip rootId="coc" title={<div style={{ height: 100 }}>777787777</div>}>
+                    <Button type="primary" onClick={btn1}>
                         Loading
                     </Button>
                 </Tooltip>
-            </Modal>
+
+                <Modal visible={v} onCancel={() => setV(false)}>
+                    <Tooltip title="888">
+                        <Button type="primary" onClick={btn2}>
+                            Loading
+                        </Button>
+                    </Tooltip>
+                </Modal>
+            </div>
         </div>
     )
 }
