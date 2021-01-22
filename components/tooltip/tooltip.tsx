@@ -1,11 +1,13 @@
-import React, { FC, useState, useRef, MutableRefObject, useLayoutEffect } from 'react'
+import React, { FC, useState, useRef, MutableRefObject, useEffect } from 'react'
 import classnames from 'classnames'
-import { useEffectTimeout } from '../_hooks'
+import { useEffectTimeout, useStateFromValue } from '../_hooks'
 import { tooltipProps } from './types'
-import { getTooltipPositionStyle } from './util'
+import { getTooltipPositionStyle, autoAdjustPosition } from './util'
 import './tooltip.less'
 
-const Tooltip: FC<tooltipProps> = ({ title, target, visible, position = 'topCenter', trigger, setVisible }) => {
+const Tooltip: FC<tooltipProps> = ({ title, target, visible, position: outPosition = 'topCenter', trigger, setVisible, autoAdjust, rootId }) => {
+    const [count, setCount] = useState(0)
+    const [position, setPosition] = useStateFromValue(outPosition)
     const [classname, setClassname] = useState(visible ? 'show' : 'hidden')
     const [show, setShow] = useState(!!visible)
     const [topLeftstyle, setTopLeftstyle] = useState({})
@@ -42,12 +44,22 @@ const Tooltip: FC<tooltipProps> = ({ title, target, visible, position = 'topCent
         [visible]
     )
 
-    useLayoutEffect(() => {
+    useEffect(() => {
         if (show) {
-            const style = getTooltipPositionStyle(position, target, tooltipRef.current)
-            setTopLeftstyle(style)
+            const { top, left, error } = getTooltipPositionStyle(position, target, tooltipRef.current, rootId)
+
+            // 限制调整次数
+            if (autoAdjust && error && count < 5) {
+                setCount(count + 1)
+                const newPosition = autoAdjustPosition(position, error)
+                if(newPosition) {
+                    setPosition(newPosition)
+                }
+            } else {
+                setTopLeftstyle({ top, left })
+            }
         }
-    }, [position, target, tooltipRef, show])
+    }, [position, target, tooltipRef, show, autoAdjust, rootId])
 
     return (
         <div

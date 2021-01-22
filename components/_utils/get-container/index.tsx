@@ -45,4 +45,5 @@ const getContainer = ({ id, classname, containerType, zIndex, rootId }: containe
     return container
 }
 
+export { getRoot }
 export default getContainer

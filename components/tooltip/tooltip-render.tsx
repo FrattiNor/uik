@@ -104,7 +104,7 @@ const TooltipRender: FC<tooltipRenderProps> = ({ children, visible: outVisible, 
                 setDiv(div)
             }
         },
-        [visible]
+        [visible, containerZIndex, rootId]
     )
 
     // 根据props更新Tooltip
