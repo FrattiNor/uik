@@ -29,7 +29,7 @@ export type messageProps = {
     content: string | ReactNode
     type?: messageType
     id?: string
-    destroyFun: messageDestroyFun,
-    messageConfig: messageConfig
+    // destroyFun: messageDestroyFun,
+    // messageConfig: messageConfig
 }
 

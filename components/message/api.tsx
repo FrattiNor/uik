@@ -18,8 +18,8 @@ const destroyFun: messageDestroyFun = {}
 
 // 获取容器 message 容器
 const getMessageContainer = (): HTMLElement => {
-    const id = 'uik-message'
     const { position } = _messageConfig
+    const id = `uik-message-${position.join('-')}` // 不同定位需要不同的容器
     const classname = classnames('uik-message-container', position.map((text) => `uik-message-container-${text}`).join(' '))
 
     const container = getContainer({
@@ -55,10 +55,10 @@ const open = (content: messageContent, options?: { type?: messageType; id?: stri
     const container = getMessageContainer()
     const div = document.createElement('div')
     const ReactNode = (
-        <Message id={id} father={div} container={container} content={content} type={type} destroyFun={destroyFun} messageConfig={_messageConfig} />
+        <Message id={id} father={div} container={container} content={content} type={type} />
     )
     container.append(div)
     ReactDOM.render(ReactNode, div)
 }
 
-export { open, config, destroy }
+export { open, config, destroy, _messageConfig, destroyFun }

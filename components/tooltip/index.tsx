@@ -1,4 +1,4 @@
-import Tooltip from './tooltip-render'
+import Tooltip from './tooltip'
 
 export default Tooltip
 

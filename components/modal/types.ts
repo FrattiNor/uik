@@ -19,11 +19,13 @@ export type modalProps = {
     hiddenCloseIcon?: boolean
     head?: JSX.Element | null
     foot?: JSX.Element | null
-    onCancel?: MouseEventHandler<HTMLElement>
-    onOk?: MouseEventHandler<HTMLElement>
     mask?: boolean
     maskClosable?: boolean
     zIndex?: number // modal 和 modal 之间的层次关系
-    cancelBtnProps?: buttonProps
+    okBtnText?: string
+    cancelBtnText?: string
     okBtnProps?: buttonProps
+    cancelBtnProps?: buttonProps
+    onOk?: MouseEventHandler<HTMLElement>
+    onCancel?: MouseEventHandler<HTMLElement>
 }

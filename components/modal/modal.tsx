@@ -45,8 +45,6 @@ const Modal: FC<modalProps> = (props) => {
         destroyOnClose = false,
         visible = false,
         children,
-        onCancel,
-        onOk,
         style = {},
         title = '',
         hiddenCloseIcon = false,
@@ -55,15 +53,19 @@ const Modal: FC<modalProps> = (props) => {
         mask = true,
         maskClosable = true,
         zIndex,
+        onOk,
+        onCancel,
+        okBtnProps = {},
         cancelBtnProps = {},
-        okBtnProps = {}
+        okBtnText,
+        cancelBtnText
     } = props
 
     const type = Array.isArray(position) ? position[0] : position
     const baseStyle = zIndex ? { zIndex, ...style } : style
 
     const [show, setShow] = useState(true)
-    const [classname, setClassname] = useState('show')
+    const [animateClassname, setAnimateClassname] = useState('show')
 
     const trueCancel = (e: MouseEvent<HTMLElement>) => {
         if (onCancel) {
@@ -80,16 +82,16 @@ const Modal: FC<modalProps> = (props) => {
     useEffectTimeout(
         (connect) => {
             if (visible) {
-                setClassname('show')
+                setAnimateClassname('show')
                 setShow(true)
                 setBodyScroll(false)
             } else {
-                setClassname('hidden')
+                setAnimateClassname('hidden')
                 setBodyScroll(true)
                 connect(
                     setTimeout(() => {
                         setShow(false)
-                        setClassname('')
+                        setAnimateClassname('')
                     }, 350)
                 )
             }
@@ -99,8 +101,8 @@ const Modal: FC<modalProps> = (props) => {
 
     const DOM = (
         <div style={{ display: show ? 'block' : 'none' }}>
-            {mask && <div className={classnames('uik-modal-mask', classname)} onClick={(e) => maskClosable && trueCancel(e)} />}
-            <div className={classnames('uik-modal', type, classname)} style={getModalStyle(position, baseStyle)}>
+            {mask && <div className={classnames('uik-modal-mask', animateClassname)} onClick={(e) => maskClosable && trueCancel(e)} />}
+            <div className={classnames('uik-modal', type, animateClassname)} style={getModalStyle(position, baseStyle)}>
                 {head !== undefined ? (
                     head
                 ) : (
@@ -115,10 +117,10 @@ const Modal: FC<modalProps> = (props) => {
                 ) : (
                     <div className="uik-modal-foot">
                         <Button onClick={trueCancel} {...cancelBtnProps}>
-                            取消
+                            {cancelBtnText || '取消'}
                         </Button>
                         <Button type="primary" onClick={trueOk} {...okBtnProps}>
-                            确认
+                            {okBtnText || '确认'}
                         </Button>
                     </div>
                 )}

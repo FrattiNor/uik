@@ -2,12 +2,14 @@ import React, { FC, useEffect, useState, useRef, MutableRefObject, useLayoutEffe
 import { unmountComponentAtNode } from 'react-dom'
 import classnames from 'classnames'
 import Icon from '../icon'
+import { _messageConfig, destroyFun } from './api'
 import { messageProps } from './types'
 import './message.less'
 
 // Message组件
-const Message: FC<messageProps> = ({ father, container, content, type = 'default', id, messageConfig, destroyFun }) => {
-    const { duration, maxCount, overAnimate } = messageConfig
+const Message: FC<messageProps> = (props) => {
+    const { father, container, content, type = 'default', id } = props
+    const { duration, maxCount, overAnimate } = _messageConfig
     const list = Object.values(destroyFun) // 卸载列表
     const isOver = list.length >= maxCount // 是否超长
     const key = id || Math.random().toString() // 记录卸载方法的唯一key

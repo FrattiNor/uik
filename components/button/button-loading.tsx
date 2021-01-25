@@ -6,22 +6,24 @@ import { buttonLoadingProps } from './types'
 import './button-loading.less'
 
 // 按钮loading
-const ButtonLoading: FC<buttonLoadingProps> = ({ visible }) => {
+const ButtonLoading: FC<buttonLoadingProps> = (props) => {
+    const { visible } = props
     const { LoadingIcon } = Loading
     const [show, setShow] = useState(visible)
-    const [classname, setClassname] = useState(visible ? 'show' : 'hidden')
+    const [animateClassname, setAnimateClassname] = useState(visible ? 'show' : 'hidden')
     const timeout: MutableRefObject<NodeJS.Timeout | null> = useRef(null)
 
     useEffectAfterFirst(() => {
         if (visible) {
             setShow(true)
             timeout.current = setTimeout(() => {
-                setClassname('show')
+                setAnimateClassname('show')
             }, 50)
         } else {
-            setClassname('hidden')
+            setAnimateClassname('hidden')
             timeout.current = setTimeout(() => {
                 setShow(false)
+                setAnimateClassname('')
             }, 350)
         }
 
@@ -33,7 +35,7 @@ const ButtonLoading: FC<buttonLoadingProps> = ({ visible }) => {
     }, [visible])
 
     return show ? (
-        <span className={classnames('uik-btn-loading-icon', classname)}>
+        <span className={classnames('uik-btn-loading-icon', animateClassname)}>
             <LoadingIcon />
         </span>
     ) : (

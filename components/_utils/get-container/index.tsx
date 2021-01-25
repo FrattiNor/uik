@@ -1,7 +1,7 @@
 import './index.less'
 
 type containerProps = {
-    id?: string
+    id: string
     classname?: string
     containerType?: 'fixed' | 'absolute'
     zIndex?: number
@@ -14,16 +14,14 @@ const getRoot = (rootId?: string): HTMLElement => {
 
 const getContainer = ({ id, classname, containerType, zIndex, rootId }: containerProps): HTMLElement => {
     const root = getRoot(rootId)
-    const newId = id ? (rootId ? `${id}-${rootId}` : id) : false
 
-    const container = newId && document.getElementById(newId)
+    const container = document.getElementById(id)
 
     if (!container) {
         const container = document.createElement('div')
 
-        if (newId) {
-            container.setAttribute('id', newId)
-        }
+        container.setAttribute('id', id)
+
         if (classname) {
             container.setAttribute('class', classname)
         }

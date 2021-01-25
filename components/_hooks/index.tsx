@@ -8,6 +8,7 @@ export { default as useStateFromValue } from './use-state-from-value'
 export { default as useEffectAfterFirst } from './use-effect-after-first'
 export { default as useEffectTimeout } from './use-effect-timeout'
 export { default as useEffectOnce } from './use-effect-once'
+export { default as useEffectByCount } from './use-effect-by-count'
 // debounce throttle
 export { default as useDebounce } from './use-debounce'
 export { default as useThrottle } from './use-throttle'

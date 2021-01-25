@@ -30,17 +30,28 @@ import codePosition from '!raw-loader!./demo-position'
 
 <div className="api">
 
-| 属性            | 说明                                       | 类型                                                                                                                                                           | 默认值    | 版本 |
-| :-------------- | :----------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------- | :-------- | :--- |
-| position        | 定位                                       | topLeft \| topCenter \| topRight \| bottomLeft \| bottomCenter \| bottomRight \| leftTop \| leftCenter \| leftBottom \| rightTop \| rightCenter \| rightBottom | topCenter | -    |
-| visible         | 是否可见                                   | boolean                                                                                                                                                        | false     | -    |
-| title           | 内容                                       | string \｜ ReactNode                                                                                                                                           | -         | -    |
-| containerZIndex | 容器的 zIndex， 用于和其他悬浮内容比较层次 | number                                                                                                                                                         | -         | -    |
-| rootId          | 挂载容器的容器的 id                        | string                                                                                                                                                         | body      | -    |
-| trigger         | 不设置 visible 时，设置触发 visible 的方式 | hover \| focus \| click                                                                                                                                        | hover     | -    |
-| autoAdjust      | 自动调整 tooltip 位置不被遮挡              | boolean                                                                                                                                                        | false     | -    |
+| 属性  | 说明 | 类型                 | 默认值 | 版本 |
+| :---- | :--- | :------------------- | :----- | :--- |
+| title | 内容 | string \｜ ReactNode | -      | -    |
+
+</div>
+
+## 通用 API
+
+<div className="api">
+
+| 属性            | 说明                                       | 类型                                                                                                                                                           | 默认值           | 版本 |
+| :-------------- | :----------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------- | :--------------- | :--- |
+| position        | 定位                                       | topLeft \| topCenter \| topRight \| bottomLeft \| bottomCenter \| bottomRight \| leftTop \| leftCenter \| leftBottom \| rightTop \| rightCenter \| rightBottom | topCenter        | -    |
+| visible         | 是否可见                                   | boolean                                                                                                                                                        | false            | -    |
+| containerZIndex | 容器的 zIndex， 用于和其他悬浮内容比较层次 | number                                                                                                                                                         | -                | -    |
+| rootId          | 挂载容器的容器的 id                        | string                                                                                                                                                         | body             | -    |
+| trigger         | 不设置 visible 时，设置触发 visible 的方式 | hover \| focus \| click                                                                                                                                        | tooltip 为 hover | -    |
+| autoAdjust      | 自动调整 tooltip 位置不被遮挡              | boolean                                                                                                                                                        | false            | -    |
+| disabled        | 阻止 trigger 触发 visible 修改             | boolean                                                                                                                                                        | false            | -    |
 
 </div>
 
 ## 注意
+
 请确保 Tooltip 的子元素能接受 `onMouseEnter`、`onMouseLeave`、`onFocus`、`onClick` 事件。

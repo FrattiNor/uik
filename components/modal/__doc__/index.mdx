@@ -30,22 +30,24 @@ import codePosition from '!raw-loader!./demo-position'
 
 <div className="api">
 
-| 属性            | 说明                            | 类型                                   | 默认值           | 版本 |
-| :-------------- | :------------------------------ | :------------------------------------- | :--------------- | :--- |
+| 属性            | 说明                            | 类型                                         | 默认值           | 版本 |
+| :-------------- | :------------------------------ | :------------------------------------------- | :--------------- | :--- |
 | position        | 弹窗定位                        | `position` \| [`position`, `positionOption`] | center           |
-| visible         | 弹窗是否可见                    | boolean                                | false            | -    |
-| destroyOnClose  | 弹窗不可见时是否销毁            | boolean                                | false            | -    |
-| title           | 弹窗标题                        | string                                 | -                |
-| hiddenCloseIcon | 隐藏弹窗关闭按钮                | boolean                                | false            | -    |
-| head            | 弹窗 head                       | ReactNode \| null                      | (标题和关闭按钮) | -    |
-| foot            | 弹窗 foot                       | ReactNode \| null                      | (确定取消按钮)   | -    |
-| onCancel        | 取消按钮 蒙层 关闭按钮 点回回调 | function(e)                            | -                | -    |
-| onOk            | 确认按钮 点击回调               | function(e)                            | -                | -    |
-| mask            | 弹窗蒙层                        | boolean                                | true             | -    |
-| maskClosable    | 弹窗蒙层是否点击关闭            | boolean                                | false            | -    |
-| zIndex          | 弹窗的 z-index 样式属性         | number                                 | -                | -    |
-| cancelBtnProps  | 弹窗取消按钮的 props            | BtnProps                               | -                | -    |
-| okBtnProps      | 弹窗确认按钮的 props            | BtnProps                               | -                | -    |
+| visible         | 弹窗是否可见                    | boolean                                      | false            | -    |
+| destroyOnClose  | 弹窗不可见时是否销毁            | boolean                                      | false            | -    |
+| title           | 弹窗标题                        | string                                       | -                |
+| hiddenCloseIcon | 隐藏弹窗关闭按钮                | boolean                                      | false            | -    |
+| head            | 弹窗 head                       | ReactNode \| null                            | (标题和关闭按钮) | -    |
+| foot            | 弹窗 foot                       | ReactNode \| null                            | (确定取消按钮)   | -    |
+| mask            | 弹窗蒙层                        | boolean                                      | true             | -    |
+| maskClosable    | 弹窗蒙层是否点击关闭            | boolean                                      | false            | -    |
+| zIndex          | 弹窗的 z-index 样式属性         | number                                       | -                | -    |
+| onOk            | 确认按钮 点击回调               | function(e)                                  | -                | -    |
+| onCancel        | 取消按钮 蒙层 关闭按钮 点回回调 | function(e)                                  | -                | -    |
+| okBtnText       | 弹窗确认按钮的 text             | string                                       | 确认             | -    |
+| cancelBtnText   | 弹窗取消按钮的 text             | string                                       | 取消             | -    |
+| okBtnProps      | 弹窗确认按钮的 props            | BtnProps                                     | -                | -    |
+| cancelBtnProps  | 弹窗取消按钮的 props            | BtnProps                                     | -                | -    |
 
 </div>
 

@@ -6,39 +6,41 @@ type res = { top: number; left: number }
 type current = HTMLElement | null
 type errorType = 'top' | 'bottom' | 'left' | 'right'
 type error = errorType[] | false
-type getLeftTop = (position: noticePosition, target: HTMLElement, tooltip: HTMLElement, root: HTMLElement) => res
-type getLeftTopError = (position: noticePosition, target: current, tooltip: current, rootId?: string) => res & { error: error }
+type getLeftTop = (position: noticePosition, target: HTMLElement, notice: HTMLElement, root: HTMLElement) => res
+type getLeftTopError = (position: noticePosition, target: current, notice: current, containerId: string, rootId?: string) => res & { error: error }
 type getPosition = (position: noticePosition, error: errorType[]) => noticePosition | false
 
-// 根据 position 获取样式
-const getLeftTopStyle: getLeftTop = (position, target, tooltip, root) => {
+// 根据 position 目标元素，notice本身，容器本身 获取 top left
+const getLeftTopStyle: getLeftTop = (position, target, notice, container) => {
+    
     let top = 0
     let left = 0
+    
+    // 容器的视窗距离
+    const { x: containerX, y: containerY } = container.getBoundingClientRect()
 
-    // root的视窗距离
-    const { x: rootX, y: rootY } = root.getBoundingClientRect()
     // 触发点的视窗距离
     const { x: targetX, y: targetY, width: targetWidth, height: targetHeight } = target.getBoundingClientRect()
-    // tooltip本体的宽和高
-    const tooltipHeight = tooltip.clientHeight
-    const tooltipWidth = tooltip.clientWidth
-    // tooltip实际的x，y距离
-    const trueX = targetX - rootX
-    const trueY = targetY - rootY
+    // notice本体的宽和高
+    const noticeHeight = notice.clientHeight
+    const noticeWidth = notice.clientWidth
+
+    // notice实际的x，y距离
+    const trueX = targetX - containerX 
+    const trueY = targetY - containerY 
 
     switch (position) {
         case 'topLeft':
-            top = trueY - tooltipHeight
+            top = trueY - noticeHeight
             left = trueX
             break
         case 'topCenter':
-            top = trueY - tooltipHeight
-            left = trueX + targetWidth / 2 - tooltipWidth / 2
-
+            top = trueY - noticeHeight
+            left = trueX + targetWidth / 2 - noticeWidth / 2
             break
         case 'topRight':
-            top = trueY - tooltipHeight
-            left = trueX + targetWidth - tooltipWidth
+            top = trueY - noticeHeight
+            left = trueX + targetWidth - noticeWidth
             break
         case 'bottomLeft':
             top = trueY + targetHeight
@@ -46,39 +48,39 @@ const getLeftTopStyle: getLeftTop = (position, target, tooltip, root) => {
             break
         case 'bottomCenter':
             top = trueY + targetHeight
-            left = trueX + targetWidth / 2 - tooltipWidth / 2
+            left = trueX + targetWidth / 2 - noticeWidth / 2
             break
         case 'bottomRight':
             top = trueY + targetHeight
-            left = trueX + targetWidth - tooltipWidth
+            left = trueX + targetWidth - noticeWidth
             break
         case 'leftTop':
             top = trueY
-            left = trueX - tooltipWidth
+            left = trueX - noticeWidth
             break
         case 'leftCenter':
-            top = trueY + targetHeight / 2 - tooltipHeight / 2
-            left = trueX - tooltipWidth
+            top = trueY + targetHeight / 2 - noticeHeight / 2
+            left = trueX - noticeWidth
             break
         case 'leftBottom':
-            top = trueY + targetHeight - tooltipHeight
-            left = trueX - tooltipWidth
+            top = trueY + targetHeight - noticeHeight
+            left = trueX - noticeWidth
             break
         case 'rightTop':
             top = trueY
             left = trueX + targetWidth
             break
         case 'rightCenter':
-            top = trueY + targetHeight / 2 - tooltipHeight / 2
+            top = trueY + targetHeight / 2 - noticeHeight / 2
             left = trueX + targetWidth
             break
         case 'rightBottom':
-            top = trueY + targetHeight - tooltipHeight
+            top = trueY + targetHeight - noticeHeight
             left = trueX + targetWidth
             break
         default:
-            top = trueY - tooltipHeight
-            left = trueX + targetWidth / 2 - tooltipWidth / 2
+            top = trueY - noticeHeight
+            left = trueX + targetWidth / 2 - noticeWidth / 2
             break
     }
 
@@ -86,29 +88,30 @@ const getLeftTopStyle: getLeftTop = (position, target, tooltip, root) => {
 }
 
 // 根据 autoAdjust 调整样式
-const getPositionStyle: getLeftTopError = (position, target, tooltip, rootId) => {
+const getPositionStyle: getLeftTopError = (position, target, notice, containerId, rootId) => {
     let resStyle = { top: 0, left: 0 }
     const error: error = []
     const root = getRoot(rootId)
+    const container = document.getElementById(containerId)
 
-    if (tooltip !== null && target !== null) {
+    if (notice !== null && target !== null && container !== null) {
         // 容器的滚动高宽和本体高宽
         const rootScrollTop = root.scrollTop
         const rootScrollLeft = root.scrollLeft
         const { width: rootWidth, height: rootHeight } = root.getBoundingClientRect()
-        // tooltip本体的宽和高
-        const tooltipHeight = tooltip.clientHeight
-        const tooltipWidth = tooltip.clientWidth
+        // notice本体的宽和高
+        const noticeHeight = notice.clientHeight
+        const noticeWidth = notice.clientWidth
 
         // 获取 top left
-        resStyle = getLeftTopStyle(position, target, tooltip, root)
+        resStyle = getLeftTopStyle(position, target, notice, container)
 
         // 获取error
         if (resStyle.top < rootScrollTop) {
             // 上方不可见
             error.push('top')
         }
-        if (rootScrollTop + rootHeight < resStyle.top + tooltipHeight) {
+        if (rootScrollTop + rootHeight < resStyle.top + noticeHeight) {
             // 下方不可见
             error.push('bottom')
         }
@@ -116,7 +119,7 @@ const getPositionStyle: getLeftTopError = (position, target, tooltip, rootId) =>
             // 左侧不可见
             error.push('left')
         }
-        if (rootScrollLeft + rootWidth < resStyle.left + tooltipWidth) {
+        if (rootScrollLeft + rootWidth < resStyle.left + noticeWidth) {
             // 右侧不可见
             error.push('right')
         }

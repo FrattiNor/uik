@@ -1,19 +1,18 @@
 import React, { FC, Fragment, useEffect, useState, useMemo, isValidElement, useRef, cloneElement, MutableRefObject } from 'react'
 import ReactDOM, { unmountComponentAtNode } from 'react-dom'
-import { noticeRenderProps, noticeRenderHocProps } from './types'
+import { noticeRenderProps, noticeRenderHocComponent } from './types'
 import { getContainer } from '../../_utils'
 import { useDebounce, useEffectOnce } from '../../_hooks'
 
-const noticeRenderHoc = ({ Component, name }: noticeRenderHocProps): FC<noticeRenderProps> =>  {
-
+// 获取参数
+const noticeRenderHoc: noticeRenderHocComponent = ({ Component, name, defaultTrigger }) => {
+    
     // 获取容器 notice 容器
-    const getNoticeContainer = (containerZIndex?: number, rootId?: string): HTMLElement => {
-        const zIndex = containerZIndex || 1001
-
+    const getNoticeContainer = (containerId: string, containerZIndex: number, rootId?: string): HTMLElement => {
         const container = getContainer({
-            id: `uik-${name}-${zIndex}`,
+            id: containerId,
             containerType: 'absolute',
-            zIndex, // modal 1000, tooltip 1001, confirm 1001 ,message 1002
+            zIndex: containerZIndex, // modal 1000, tooltip 1001, confirm 1001 ,message 1002
             rootId
         })
 
@@ -21,22 +20,35 @@ const noticeRenderHoc = ({ Component, name }: noticeRenderHocProps): FC<noticeRe
     }
 
     // notice render 组件
-    const NoticeRender: FC<noticeRenderProps> = ({ children, visible: outVisible, containerZIndex, trigger = 'hover', ...restProps }) => {
+    const NoticeRender: FC<noticeRenderProps> = (props) => {
+        const { children, visible: outVisible, containerZIndex = 1001, trigger = defaultTrigger, disabled = false, ...restProps } = props
+        // 根Id（装容器）
         const { rootId } = restProps
+        // 容器Id（装div）
+        const containerId = rootId ? `uik-${name}-${containerZIndex}-${rootId}` : `uik-${name}-${containerZIndex}`
+        // 挂载的div
+        const [div, setDiv]: [HTMLDivElement | null, any] = useState(null)
         // target
         const targetRef: MutableRefObject<HTMLElement | null> = useRef(null)
         // 虚拟visible
         const [virtualVisible, setVirtualVisible] = useState(false)
         // 实际的visible在有传visible时用visible
         const visible = typeof outVisible === 'boolean' ? outVisible : virtualVisible
-        // 挂载的div
-        const [div, setDiv]: [HTMLDivElement | null, any] = useState(null)
         // 防抖设置Visible
         const debounceSetVisible = useDebounce(setVirtualVisible, 200)
         // DOM
         const DOM = useMemo(
-            () => <Component {...restProps} visible={visible} target={targetRef.current} trigger={trigger} setVisible={debounceSetVisible} />,
-            [restProps, visible, targetRef, trigger, debounceSetVisible]
+            () => (
+                <Component
+                    target={targetRef.current}
+                    setVirtualVisible={debounceSetVisible}
+                    trigger={trigger}
+                    visible={visible}
+                    containerId={containerId}
+                    {...restProps}
+                />
+            ),
+            [restProps, visible, targetRef, trigger, debounceSetVisible, containerId]
         )
 
         // 获取child
@@ -52,12 +64,12 @@ const noticeRenderHoc = ({ Component, name }: noticeRenderHocProps): FC<noticeRe
                                 onMouseEnter: (e: MouseEvent) => {
                                     const { onMouseEnter } = element.props
                                     if (onMouseEnter) onMouseEnter(e)
-                                    debounceSetVisible(true)
+                                    if (!disabled) debounceSetVisible(true)
                                 },
                                 onMouseLeave: (e: MouseEvent) => {
                                     const { onMouseLeave } = element.props
                                     if (onMouseLeave) onMouseLeave(e)
-                                    debounceSetVisible(false)
+                                    if (!disabled) debounceSetVisible(false)
                                 }
                             }
                         case 'focus':
@@ -65,12 +77,12 @@ const noticeRenderHoc = ({ Component, name }: noticeRenderHocProps): FC<noticeRe
                                 onFocus: (e: MouseEvent) => {
                                     const { onFocus } = element.props
                                     if (onFocus) onFocus(e)
-                                    debounceSetVisible(true)
+                                    if (!disabled) debounceSetVisible(true)
                                 },
                                 onBulr: (e: MouseEvent) => {
                                     const { onBulr } = element.props
                                     if (onBulr) onBulr(e)
-                                    debounceSetVisible(false)
+                                    if (!disabled) debounceSetVisible(false)
                                 }
                             }
                         case 'click':
@@ -78,7 +90,7 @@ const noticeRenderHoc = ({ Component, name }: noticeRenderHocProps): FC<noticeRe
                                 onClick: (e: MouseEvent) => {
                                     const { onClick } = element.props
                                     if (onClick) onClick(e)
-                                    debounceSetVisible(!virtualVisible)
+                                    if (!disabled) debounceSetVisible(!virtualVisible)
                                 }
                             }
                         default:
@@ -98,7 +110,7 @@ const noticeRenderHoc = ({ Component, name }: noticeRenderHocProps): FC<noticeRe
             visible,
             () => {
                 if (visible) {
-                    const container = getNoticeContainer(containerZIndex, rootId)
+                    const container = getNoticeContainer(containerId, containerZIndex, rootId)
                     const div = document.createElement('div')
                     div.setAttribute
                     container.append(div)

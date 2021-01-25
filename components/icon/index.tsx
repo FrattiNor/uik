@@ -1,4 +1,5 @@
-import IconFC, { config } from './icon'
+import IconFC from './icon'
+import { config } from './config'
 
 type IconType = typeof IconFC
 interface IconInterFace extends IconType {
