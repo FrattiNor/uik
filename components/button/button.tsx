@@ -22,7 +22,17 @@ const classList = {
 
 // 按钮
 const Button: ForwardRefRenderFunction<unknown, buttonProps> = (props, ref) => {
-    const { className = false, children, disabled = false, loading = false, htmlType = 'button', size = 'middle', type = 'default', onClick, ...rest } = props
+    const {
+        className = false,
+        children,
+        disabled = false,
+        loading = false,
+        htmlType = 'button',
+        size = 'middle',
+        type = 'default',
+        onClick,
+        ...rest
+    } = props
     const componentRef = useRef(null)
     const btnRef = (ref as any) || componentRef
 
@@ -53,6 +63,10 @@ const Button: ForwardRefRenderFunction<unknown, buttonProps> = (props, ref) => {
             ball.setAttribute('class', 'uik-btn-animate-ball')
             ball.setAttribute('style', style)
             ball.addEventListener('animationend', () => {
+                target.removeChild(ballWrapper)
+            })
+            // dispaly：none会终止动画，但不会触发 animationend
+            ball.addEventListener('animationcancel', () => {
                 target.removeChild(ballWrapper)
             })
 

@@ -19,9 +19,9 @@ const Demo: FC = () => {
             <Button onClick={() => open('bottom')}>bottom</Button>
             <Button onClick={() => open('left')}>left</Button>
             <Button onClick={() => open('right')}>right</Button>
-            <Modal visible={visible} title="Basic Modal" onCancel={() => setVisible(false)} position={position}>
-                <p>Some contents...</p>
-                <p>Some contents...</p>
+            <Modal visible={visible} title="弹窗标题" onCancel={() => setVisible(false)} position={position}>
+                <p>弹窗内容...</p>
+                <p>弹窗内容...</p>
             </Modal>
         </div>
     )

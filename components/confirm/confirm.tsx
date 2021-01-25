@@ -7,7 +7,6 @@ import Button from '../button'
 import './confirm.less'
 
 const Confirm: FC<confirmProps> = (props) => {
-
     const { content, okBtnProps = {}, cancelBtnProps = {}, okBtnText, cancelBtnText, onConfrim, onCancel } = props
 
     const trueCancel = (e: MouseEvent<HTMLElement>) => {

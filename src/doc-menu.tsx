@@ -29,6 +29,10 @@ const menu = [
                 name: 'tooltip',
                 desc: 'Tooltip 文字提示'
             },
+            {
+                name: 'confirm',
+                desc: 'Confirm 确认弹窗'
+            },
         ]
     }
 ]

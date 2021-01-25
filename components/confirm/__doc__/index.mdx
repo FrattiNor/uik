@@ -8,13 +8,13 @@ import DemoPosition from './demo-position'
 import descPosition from './demo-position/desc.md'
 import codePosition from '!raw-loader!./demo-position'
 
-# Tooltip 文字提示
+# Confirm 确认弹窗
 
-简单的文字提示气泡框。
+点击元素，弹出气泡式的确认框。
 
 ## 何时使用
 
-鼠标移入则显示提示，移出消失，气泡浮层不承载复杂文本和操作。
+目标元素的操作需要用户进一步的确认时，在目标元素附近弹出浮层提示，询问用户。
 
 ## 代码演示
 
@@ -30,9 +30,15 @@ import codePosition from '!raw-loader!./demo-position'
 
 <div className="api">
 
-| 属性  | 说明 | 类型                 | 默认值 | 版本 |
-| :---- | :--- | :------------------- | :----- | :--- |
-| title | 内容 | string \｜ ReactNode | -      | -    |
+| 属性           | 说明                 | 类型                 | 默认值 | 版本 |
+| :------------- | :------------------- | :------------------- | :----- | :--- |
+| content        | 内容                 | string \｜ ReactNode | -      | -    |
+| okBtnText      | 弹窗确认按钮的 text  | 确认                 | -      | -    |
+| cancelBtnText  | 弹窗取消按钮的 text  | 取消                 | -      | -    |
+| okBtnProps     | 弹窗确认按钮的 props | -                    | -      | -    |
+| cancelBtnProps | 弹窗取消按钮的 props | -                    | -      | -    |
+| onConfrim      | 确认按钮 点击回调    | function(e)          | -      | -    |
+| onCancel       | 取消按钮 点回回调    | function(e)          | -      | -    |
 
 </div>
 
@@ -47,7 +53,7 @@ import codePosition from '!raw-loader!./demo-position'
 | containerZIndex | 容器的 zIndex， 用于和其他悬浮内容比较层次 | number                                                                                                                                                         | -                | -    |
 | rootId          | 挂载容器的容器的 id                        | string                                                                                                                                                         | body             | -    |
 | trigger         | 不设置 visible 时，设置触发 visible 的方式 | hover \| focus \| click                                                                                                                                        | tooltip 为 hover | -    |
-| autoAdjust      | 自动调整 Tooltip 位置不被遮挡              | boolean                                                                                                                                                        | false            | -    |
+| autoAdjust      | 自动调整 Confirm 位置不被遮挡              | boolean                                                                                                                                                        | false            | -    |
 | disabled        | 阻止 trigger 触发 visible 修改             | boolean                                                                                                                                                        | false            | -    |
 | onVisibleChange | trigger 触发的 visible 改变的回调          | (visible) => void                                                                                                                                              | -                | -    |
 
@@ -55,4 +61,4 @@ import codePosition from '!raw-loader!./demo-position'
 
 ## 注意
 
-请确保 Tooltip 的子元素能接受 `onMouseEnter`、`onMouseLeave`、`onFocus`、`onClick` 事件。
+请确保 Confirm 的子元素能接受 `onMouseEnter`、`onMouseLeave`、`onFocus`、`onClick` 事件。

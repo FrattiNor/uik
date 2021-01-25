@@ -4,8 +4,8 @@ import { Button, Tooltip } from 'uik'
 const Demo: FC = () => {
     return (
         <Fragment>
-            <Tooltip title="prompt text">
-                <Button>Tooltip will show on mouse enter.</Button>
+            <Tooltip title="tooltip文本">
+                <Button>鼠标移入触发tooltip</Button>
             </Tooltip>
         </Fragment>
     )

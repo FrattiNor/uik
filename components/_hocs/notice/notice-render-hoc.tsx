@@ -1,8 +1,8 @@
-import React, { FC, Fragment, useEffect, useState, useMemo, isValidElement, useRef, cloneElement, MutableRefObject } from 'react'
+import React, { FC, Fragment, useEffect, useState, useMemo, isValidElement, useRef, cloneElement, MutableRefObject, MouseEvent } from 'react'
 import ReactDOM, { unmountComponentAtNode } from 'react-dom'
 import { noticeRenderProps, noticeRenderHocComponent } from './types'
 import { getContainer } from '../../_utils'
-import { useDebounce, useEffectOnce } from '../../_hooks'
+import { useDebounce, useEffectAfterFirst, useEffectOnce, useStateFromValue } from '../../_hooks'
 
 // 获取参数
 const noticeRenderHoc: noticeRenderHocComponent = ({ Component, name, defaultTrigger }) => {
@@ -12,7 +12,7 @@ const noticeRenderHoc: noticeRenderHocComponent = ({ Component, name, defaultTri
         const container = getContainer({
             id: containerId,
             containerType: 'absolute',
-            zIndex: containerZIndex, // modal 1000, tooltip 1001, confirm 1001 ,message 1002
+            zIndex: containerZIndex, // modal 1000, notice 1001, confirm 1001 ,message 1002
             rootId
         })
 
@@ -21,7 +21,7 @@ const noticeRenderHoc: noticeRenderHocComponent = ({ Component, name, defaultTri
 
     // notice render 组件
     const NoticeRender: FC<noticeRenderProps> = (props) => {
-        const { children, visible: outVisible, containerZIndex = 1001, trigger = defaultTrigger, disabled = false, ...restProps } = props
+        const { children, visible = false, containerZIndex = 1001, trigger = defaultTrigger, disabled = false, onVisibleChange, ...restProps } = props
         // 根Id（装容器）
         const { rootId } = restProps
         // 容器Id（装div）
@@ -31,9 +31,7 @@ const noticeRenderHoc: noticeRenderHocComponent = ({ Component, name, defaultTri
         // target
         const targetRef: MutableRefObject<HTMLElement | null> = useRef(null)
         // 虚拟visible
-        const [virtualVisible, setVirtualVisible] = useState(false)
-        // 实际的visible在有传visible时用visible
-        const visible = typeof outVisible === 'boolean' ? outVisible : virtualVisible
+        const [virtualVisible, setVirtualVisible] = useStateFromValue(visible)
         // 防抖设置Visible
         const debounceSetVisible = useDebounce(setVirtualVisible, 200)
         // DOM
@@ -104,6 +102,14 @@ const noticeRenderHoc: noticeRenderHocComponent = ({ Component, name, defaultTri
             }
             return null
         }
+
+        // 当 visible 改变触发
+        useEffectAfterFirst(() => {
+            if(onVisibleChange) {
+                // 内部虚拟的visible触发改变时触发
+                onVisibleChange(virtualVisible)
+            }
+        }, [virtualVisible])
 
         // 只创建一次div
         useEffectOnce(

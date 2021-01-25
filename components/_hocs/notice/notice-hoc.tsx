@@ -1,5 +1,4 @@
-/* eslint-disable no-unused-vars */
-import React, { FC, useState, useRef, MutableRefObject, Fragment } from 'react'
+import React, { FC, useState, useRef, MutableRefObject, Fragment, useEffect } from 'react'
 import classnames from 'classnames'
 import { useEffectTimeout, useStateFromValue, useEffectByCount } from '../../_hooks'
 import { noticeProps, noticeHocInnerComponent, noticeHocComponent } from './types'
@@ -15,7 +14,7 @@ const noticeHoc: noticeHocComponent = ({ backgroundColor, emptyKey }) => {
             const _props = props as anyObject
             // 获取是否为空
             const isEmpty = emptyKey ? !_props[emptyKey] : false
-            // 
+            //
             const { target, visible, position: outPosition = 'topCenter', trigger, setVirtualVisible, autoAdjust, rootId, containerId } = props
             // 使用的定位，根据外部传入和内部自动调整获得
             const [position, setPosition] = useStateFromValue(outPosition)
@@ -44,6 +43,28 @@ const noticeHoc: noticeHocComponent = ({ backgroundColor, emptyKey }) => {
                     setVirtualVisible(false)
                 }
             }
+            // trigger 为 click 时，点击空白关闭弹窗
+            useEffect(() => {
+                const clickClose = (event: MouseEvent) => {
+                    const notice = noticeRef.current
+                    const clickNode = event.target as Node
+                    // 点击其他区域时, 隐藏指定区域
+                    // 点击区域不为children，点击区域不为弹出部分，点击区域不为弹出部分的子元素
+                    if (target !== null && notice !== null && clickNode !== null) {
+                        if (!(target === clickNode || notice === clickNode || notice.contains(clickNode))) {
+                            setVirtualVisible(false)
+                        }
+                    }
+                }
+
+                if (trigger === 'click') {
+                    document.addEventListener('click', clickClose)
+                }
+
+                return () => {
+                    document.removeEventListener('click', clickClose)
+                }
+            }, [noticeRef, target, trigger])
 
             // 根据visible设置动画和展示
             useEffectTimeout(
@@ -100,7 +121,7 @@ const noticeHoc: noticeHocComponent = ({ backgroundColor, emptyKey }) => {
                         <div className="uik-notice-arrow">
                             <div className="uik-notice-arrow-content" style={backgroundColorStyle} />
                         </div>
-                        <WrapperComponent {...props} />
+                        <WrapperComponent {...props} setVirtualVisible={setVirtualVisible} />
                     </div>
                 </div>
             ) : (

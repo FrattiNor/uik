@@ -3,7 +3,7 @@ import { Button, message } from 'uik'
 import styles from './index.less'
 
 const Demo: FC = () => {
-    const openMessage = (type: 'success' | 'error' | 'warn' | 'info') => message.open(`This is a ${type} message`, { type })
+    const openMessage = (type: 'success' | 'error' | 'warn' | 'info') => message.open(`这是一条type为${type}的message`, { type })
 
     return (
         <div className={styles['wrapper']}>
