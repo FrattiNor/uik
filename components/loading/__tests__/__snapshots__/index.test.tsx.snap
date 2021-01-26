@@ -37,3 +37,38 @@ exports[`<Button /> should render default 1`] = `
   </button>
 </div>
 `;
+
+exports[`<Loading /> should render default 1`] = `
+<div>
+  <div>
+    loading
+  </div>
+</div>
+`;
+
+exports[`<Loading /> should render loading 1`] = `
+<div>
+  <div
+    class="uik-loading"
+    style="display: block;"
+  >
+    <div>
+      <div
+        class="uik-loading-mask"
+      >
+        <i
+          class="uik-iconfont uik-icon-loading uik-loading-icon"
+          style="font-family: uik-iconfont;"
+        />
+      </div>
+    </div>
+    <div
+      class="uik-loading-content"
+    >
+      <div>
+        loading
+      </div>
+    </div>
+  </div>
+</div>
+`;

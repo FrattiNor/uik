@@ -37,3 +37,60 @@ exports[`<Button /> should render default 1`] = `
   </button>
 </div>
 `;
+
+exports[`<Button /> should render disabled 1`] = `
+<div>
+  <button
+    class="uik-btn uik-btn-default uik-btn-middle uik-btn-disabled"
+    type="button"
+  >
+    disabled
+  </button>
+</div>
+`;
+
+exports[`<Button /> should render loading 1`] = `
+<div>
+  <button
+    class="uik-btn uik-btn-default uik-btn-middle uik-btn-loading"
+    type="button"
+  >
+    <span
+      class="uik-btn-loading-icon show"
+    >
+      <i
+        class="uik-iconfont uik-icon-loading uik-loading-icon"
+        style="font-family: uik-iconfont;"
+      />
+    </span>
+    loading
+  </button>
+</div>
+`;
+
+exports[`<Button /> should render with type 1`] = `
+<button
+  class="uik-btn uik-btn-default uik-btn-middle"
+  type="button"
+>
+  default
+</button>
+`;
+
+exports[`<Button /> should render with type 2`] = `
+<button
+  class="uik-btn uik-btn-default uik-btn-middle"
+  type="button"
+>
+  primary
+</button>
+`;
+
+exports[`<Button /> should render with type 3`] = `
+<button
+  class="uik-btn uik-btn-default uik-btn-middle"
+  type="button"
+>
+  danger
+</button>
+`;
