@@ -17,17 +17,22 @@ export type noticePosition =
 
 export type noticeTrigger = 'hover' | 'focus' | 'click'
 
-// == noticeRenderHoc ==
-export type noticeRenderProps = {
+// notice notice-render 共同的参数
+export type noticeAndRenderProps = {
     position?: noticePosition
     visible?: boolean
-    containerZIndex?: number // notice容器的zIndex，用于和其他悬浮内容比较层次（例如tooltip默认是在modal上方的，所以tooltip会显示在mask上方）【只能首次设置切不可更改，因为容器只会创造一次】
-    rootId?: string
     trigger?: noticeTrigger // 默认的触发方式
     autoAdjust?: boolean
+}
+
+// == noticeRenderHoc ==
+export type noticeRenderProps = {
+    containerZIndex?: number // notice容器的zIndex，用于和其他悬浮内容比较层次（例如tooltip默认是在modal上方的，所以tooltip会显示在mask上方）【只能首次设置切不可更改，因为容器只会创造一次】
+    rootId?: string
+    getRoot?: () => HTMLElement | null
     disabled?: boolean
     onVisibleChange?: (v: boolean) => void
-}
+} & noticeAndRenderProps
 
 export type noticeRenderHocProps = {
     Component: FC<noticeProps>
@@ -39,11 +44,12 @@ export type noticeRenderHocComponent = (props: noticeRenderHocProps) => FC<notic
 // == noticeRenderHoc ==
 
 // == noticeHoc ==
-export type noticeProps = noticeRenderProps & {
+export type noticeProps = {
     target: HTMLElement | null
-    containerId: string
+    container: HTMLElement | null
     setVirtualVisible: (v: boolean) => void
-}
+    root: HTMLElement
+} & noticeAndRenderProps
 
 export type noticeHocProps = {
     backgroundColor: string

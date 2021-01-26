@@ -1,5 +1,5 @@
-import React, { FC, useState } from 'react'
-import { Button, Tooltip, Modal, message, Confirm, Icon } from 'uik'
+import React, { FC, useState, useRef } from 'react'
+import { Button, Confirm } from 'uik'
 
 const Test: FC = () => {
     const [v, setV] = useState(false)
@@ -8,11 +8,18 @@ const Test: FC = () => {
         setV(!v)
     }
 
+    const ref = useRef(null)
+
     return (
         <>
-            <div style={{ margin: 150, height: 500, width: 500, background: 'rgba(0,0,0,0.3)', overflow: 'auto', position: 'relative' }} id="coc">
+            <div ref={ref} style={{ margin: 150, height: 500, width: 500, background: 'rgba(0,0,0,0.3)', overflow: 'auto', position: 'relative' }} id="coc">
                 <div style={{ margin: 50, height: 1000, width: 1000 }}>
-                    <Confirm autoAdjust content="kalsjldkajslkfjlakjflshfklajskld">
+                    <Confirm getRoot={() => ref.current} autoAdjust content="kalsjldkajslkfjlakjflshfklajskld">
+                        <Button type="primary" onClick={btn1}>
+                            Loading
+                        </Button>
+                    </Confirm>
+                    <Confirm getRoot={() => ref.current} autoAdjust content="kalsjldkajslkfjlakjflshfklajskld">
                         <Button type="primary" onClick={btn1}>
                             Loading
                         </Button>

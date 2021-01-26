@@ -15,7 +15,7 @@ const noticeHoc: noticeHocComponent = ({ backgroundColor, emptyKey }) => {
             // 获取是否为空
             const isEmpty = emptyKey ? !_props[emptyKey] : false
             //
-            const { target, visible, position: outPosition = 'topCenter', trigger, setVirtualVisible, autoAdjust, rootId, containerId } = props
+            const { target, visible, position: outPosition = 'topCenter', trigger, setVirtualVisible, autoAdjust, root, container } = props
             // 使用的定位，根据外部传入和内部自动调整获得
             const [position, setPosition] = useStateFromValue(outPosition)
             // 承载动画的类名
@@ -91,7 +91,7 @@ const noticeHoc: noticeHocComponent = ({ backgroundColor, emptyKey }) => {
                 () => {
                     if (show) {
                         // 根据 定位 目标元素 notice本身 容器节点 根节点 获取 top left 和 是否存在遮挡
-                        const { top, left, error } = getPositionStyle(position, target, noticeRef.current, containerId, rootId)
+                        const { top, left, error } = getPositionStyle(position, target, noticeRef.current, root, container)
 
                         if (autoAdjust && error) {
                             // 根据 存在遮挡的error 和 当前定位 进行 定位调整
@@ -105,7 +105,7 @@ const noticeHoc: noticeHocComponent = ({ backgroundColor, emptyKey }) => {
                         }
                     }
                 },
-                [position, target, noticeRef, show, autoAdjust, rootId, containerId],
+                [position, target, noticeRef, show, autoAdjust, container, root],
                 5
             )
 

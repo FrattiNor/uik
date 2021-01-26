@@ -3,17 +3,20 @@ import ReactDOM, { unmountComponentAtNode } from 'react-dom'
 import { noticeRenderProps, noticeRenderHocComponent } from './types'
 import { getContainer } from '../../_utils'
 import { useDebounce, useEffectAfterFirst, useEffectOnce, useStateFromValue } from '../../_hooks'
+import { getRootById, getDefaultRoot } from '../../_utils/get-container'
 
 // 获取参数
 const noticeRenderHoc: noticeRenderHocComponent = ({ Component, name, defaultTrigger }) => {
-    
     // 获取容器 notice 容器
-    const getNoticeContainer = (containerId: string, containerZIndex: number, rootId?: string): HTMLElement => {
+    const getNoticeContainer = (containerZIndex: number, root: HTMLElement): HTMLElement => {
+        // root 为根目录时才有id
+        const id = root === getDefaultRoot() ? `uik-${name}-${containerZIndex}` : undefined
+
         const container = getContainer({
-            id: containerId,
+            id,
+            root,
             containerType: 'absolute',
-            zIndex: containerZIndex, // modal 1000, notice 1001, confirm 1001 ,message 1002
-            rootId
+            zIndex: containerZIndex // modal 1000, notice 1001, confirm 1001 ,message 1002
         })
 
         return container
@@ -21,11 +24,21 @@ const noticeRenderHoc: noticeRenderHocComponent = ({ Component, name, defaultTri
 
     // notice render 组件
     const NoticeRender: FC<noticeRenderProps> = (props) => {
-        const { children, visible: outVisible, containerZIndex = 1001, trigger = defaultTrigger, disabled = false, onVisibleChange, ...restProps } = props
-        // 根Id（装容器）
-        const { rootId } = restProps
-        // 容器Id（装div）
-        const containerId = rootId ? `uik-${name}-${containerZIndex}-${rootId}` : `uik-${name}-${containerZIndex}`
+        const {
+            children,
+            visible: outVisible,
+            containerZIndex = 1001,
+            trigger = defaultTrigger,
+            disabled = false,
+            onVisibleChange,
+            rootId,
+            getRoot,
+            ...restProps
+        } = props
+        // 根（装容器）
+        const root = getRoot ? getRoot() || getDefaultRoot() : getRootById(rootId)
+        // 挂载的容器 (装div)
+        const [container, setContainer]: [HTMLDivElement | null, any] = useState(null)
         // 挂载的div
         const [div, setDiv]: [HTMLDivElement | null, any] = useState(null)
         // target
@@ -35,20 +48,23 @@ const noticeRenderHoc: noticeRenderHocComponent = ({ Component, name, defaultTri
         // 实际的visible
         const visible = typeof outVisible === 'boolean' ? outVisible : virtualVisible
         // 防抖设置visible
-        const debounceSetVisible = useDebounce(setVirtualVisible, 200)
+        const debounceSetVisible = useDebounce((v: boolean) => {
+            if (!disabled) setVirtualVisible(v)
+        }, 200)
         // DOM
         const DOM = useMemo(
             () => (
                 <Component
+                    {...restProps}
                     target={targetRef.current}
                     setVirtualVisible={debounceSetVisible}
                     trigger={trigger}
                     visible={visible}
-                    containerId={containerId}
-                    {...restProps}
+                    container={container}
+                    root={root}
                 />
             ),
-            [restProps, visible, targetRef, trigger, debounceSetVisible, containerId]
+            [restProps, visible, targetRef, trigger, debounceSetVisible, container, root]
         )
 
         // 获取child
@@ -64,12 +80,12 @@ const noticeRenderHoc: noticeRenderHocComponent = ({ Component, name, defaultTri
                                 onMouseEnter: (e: MouseEvent) => {
                                     const { onMouseEnter } = element.props
                                     if (onMouseEnter) onMouseEnter(e)
-                                    if (!disabled) debounceSetVisible(true)
+                                    debounceSetVisible(true)
                                 },
                                 onMouseLeave: (e: MouseEvent) => {
                                     const { onMouseLeave } = element.props
                                     if (onMouseLeave) onMouseLeave(e)
-                                    if (!disabled) debounceSetVisible(false)
+                                    debounceSetVisible(false)
                                 }
                             }
                         case 'focus':
@@ -77,12 +93,12 @@ const noticeRenderHoc: noticeRenderHocComponent = ({ Component, name, defaultTri
                                 onFocus: (e: MouseEvent) => {
                                     const { onFocus } = element.props
                                     if (onFocus) onFocus(e)
-                                    if (!disabled) debounceSetVisible(true)
+                                    debounceSetVisible(true)
                                 },
                                 onBulr: (e: MouseEvent) => {
                                     const { onBulr } = element.props
                                     if (onBulr) onBulr(e)
-                                    if (!disabled) debounceSetVisible(false)
+                                    debounceSetVisible(false)
                                 }
                             }
                         case 'click':
@@ -90,7 +106,7 @@ const noticeRenderHoc: noticeRenderHocComponent = ({ Component, name, defaultTri
                                 onClick: (e: MouseEvent) => {
                                     const { onClick } = element.props
                                     if (onClick) onClick(e)
-                                    if (!disabled) debounceSetVisible(!visible)
+                                    debounceSetVisible(!visible)
                                 }
                             }
                         default:
@@ -107,7 +123,7 @@ const noticeRenderHoc: noticeRenderHocComponent = ({ Component, name, defaultTri
 
         // 当 visible 改变触发
         useEffectAfterFirst(() => {
-            if(onVisibleChange) {
+            if (onVisibleChange) {
                 // 内部虚拟的visible触发改变时触发
                 onVisibleChange(virtualVisible)
             }
@@ -118,14 +134,15 @@ const noticeRenderHoc: noticeRenderHocComponent = ({ Component, name, defaultTri
             visible,
             () => {
                 if (visible) {
-                    const container = getNoticeContainer(containerId, containerZIndex, rootId)
+                    const container = getNoticeContainer(containerZIndex, root)
+                    setContainer(container)
                     const div = document.createElement('div')
                     div.setAttribute
                     container.append(div)
                     setDiv(div)
                 }
             },
-            [visible, containerZIndex, rootId]
+            [visible, containerZIndex, root]
         )
 
         // 根据props更新dom

@@ -1,30 +1,37 @@
 import './index.less'
 
 type containerProps = {
-    id: string
+    id?: string
     classname?: string
     containerType?: 'fixed' | 'absolute'
     zIndex?: number
-    rootId?: string
+    root?: HTMLElement
 }
 
-const getRoot = (rootId?: string): HTMLElement => {
-    return rootId ? document.getElementById(rootId) || document.body : document.body
+const getDefaultRoot = (): HTMLElement => {
+    return document.body
 }
 
-const getContainer = ({ id, classname, containerType, zIndex, rootId }: containerProps): HTMLElement => {
-    const root = getRoot(rootId)
+const getRootById = (rootId?: string): HTMLElement => {
+    return rootId ? document.getElementById(rootId) || getDefaultRoot() : getDefaultRoot()
+}
 
-    const container = document.getElementById(id)
+const getContainer = ({ id, classname, containerType, zIndex, root }: containerProps): HTMLElement => {
+    const trueRoot = root || getRootById()
+
+    const container = id && document.getElementById(id)
 
     if (!container) {
         const container = document.createElement('div')
 
-        container.setAttribute('id', id)
+        if (id) {
+            container.setAttribute('id', id)
+        }
 
         if (classname) {
             container.setAttribute('class', classname)
         }
+
         if (containerType) {
             const containerOut = document.createElement('div')
             containerOut.setAttribute('class', `uik-${containerType}-container`)
@@ -32,9 +39,9 @@ const getContainer = ({ id, classname, containerType, zIndex, rootId }: containe
                 containerOut.setAttribute('style', `z-index:${zIndex}`)
             }
             containerOut.append(container)
-            root.append(containerOut)
+            trueRoot.append(containerOut)
         } else {
-            root.append(container)
+            trueRoot.append(container)
         }
 
         return container
@@ -43,5 +50,5 @@ const getContainer = ({ id, classname, containerType, zIndex, rootId }: containe
     return container
 }
 
-export { getRoot }
+export { getRootById, getDefaultRoot }
 export default getContainer

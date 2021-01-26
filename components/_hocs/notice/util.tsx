@@ -1,21 +1,19 @@
 /* eslint-disable no-unused-vars */
 import { noticePosition } from './types'
-import { getRoot } from '../../_utils/get-container'
 
 type res = { top: number; left: number }
 type current = HTMLElement | null
 type errorType = 'top' | 'bottom' | 'left' | 'right'
 type error = errorType[] | false
 type getLeftTop = (position: noticePosition, target: HTMLElement, notice: HTMLElement, root: HTMLElement) => res
-type getLeftTopError = (position: noticePosition, target: current, notice: current, containerId: string, rootId?: string) => res & { error: error }
+type getLeftTopError = (position: noticePosition, target: current, notice: current, root: HTMLElement, container: current) => res & { error: error }
 type getPosition = (position: noticePosition, error: errorType[]) => noticePosition | false
 
 // 根据 position 目标元素，notice本身，容器本身 获取 top left
 const getLeftTopStyle: getLeftTop = (position, target, notice, container) => {
-    
     let top = 0
     let left = 0
-    
+
     // 容器的视窗距离
     const { x: containerX, y: containerY } = container.getBoundingClientRect()
 
@@ -26,8 +24,8 @@ const getLeftTopStyle: getLeftTop = (position, target, notice, container) => {
     const noticeWidth = notice.clientWidth
 
     // notice实际的x，y距离
-    const trueX = targetX - containerX 
-    const trueY = targetY - containerY 
+    const trueX = targetX - containerX
+    const trueY = targetY - containerY
 
     switch (position) {
         case 'topLeft':
@@ -88,11 +86,9 @@ const getLeftTopStyle: getLeftTop = (position, target, notice, container) => {
 }
 
 // 根据 autoAdjust 调整样式
-const getPositionStyle: getLeftTopError = (position, target, notice, containerId, rootId) => {
+const getPositionStyle: getLeftTopError = (position, target, notice, root, container) => {
     let resStyle = { top: 0, left: 0 }
     const error: error = []
-    const root = getRoot(rootId)
-    const container = document.getElementById(containerId)
 
     if (notice !== null && target !== null && container !== null) {
         // 容器的滚动高宽和本体高宽

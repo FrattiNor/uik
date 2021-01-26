@@ -46,16 +46,17 @@ import codePosition from '!raw-loader!./demo-position'
 
 <div className="api">
 
-| 属性            | 说明                                       | 类型                                                                                                                                                           | 默认值           | 版本 |
-| :-------------- | :----------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------- | :--------------- | :--- |
-| position        | 定位                                       | topLeft \| topCenter \| topRight \| bottomLeft \| bottomCenter \| bottomRight \| leftTop \| leftCenter \| leftBottom \| rightTop \| rightCenter \| rightBottom | topCenter        | -    |
-| visible         | 是否可见                                   | boolean                                                                                                                                                        | false            | -    |
-| containerZIndex | 容器的 zIndex， 用于和其他悬浮内容比较层次 | number                                                                                                                                                         | -                | -    |
-| rootId          | 挂载容器的容器的 id                        | string                                                                                                                                                         | body             | -    |
-| trigger         | 不设置 visible 时，设置触发 visible 的方式 | hover \| focus \| click                                                                                                                                        | tooltip 为 hover | -    |
-| autoAdjust      | 自动调整 Confirm 位置不被遮挡              | boolean                                                                                                                                                        | false            | -    |
-| disabled        | 阻止 trigger 触发 visible 修改             | boolean                                                                                                                                                        | false            | -    |
-| onVisibleChange | trigger 触发的 visible 改变的回调          | (visible) => void                                                                                                                                              | -                | -    |
+| 属性            | 说明                                                     | 类型                                                                                                                                                           | 默认值           | 版本 |
+| :-------------- | :------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------- | :--------------- | :--- |
+| position        | 定位                                                     | topLeft \| topCenter \| topRight \| bottomLeft \| bottomCenter \| bottomRight \| leftTop \| leftCenter \| leftBottom \| rightTop \| rightCenter \| rightBottom | topCenter        | -    |
+| visible         | 是否可见                                                 | boolean                                                                                                                                                        | false            | -    |
+| containerZIndex | 容器的 zIndex， 用于和其他悬浮内容比较层次               | number                                                                                                                                                         | -                | -    |
+| rootId          | 挂载容器的容器的 id                                      | string                                                                                                                                                         | -                | -    |
+| getRoot         | 获取挂载的容器（用于 ref 获取 dom）（优先级高于 rootId） | () => HTMLElement \| null                                                                                                                                      | body             | -    |
+| trigger         | 不设置 visible 时，设置触发 visible 的方式               | hover \| focus \| click                                                                                                                                        | tooltip 为 hover | -    |
+| autoAdjust      | 自动调整 Confirm 位置不被遮挡                            | boolean                                                                                                                                                        | false            | -    |
+| disabled        | 阻止 trigger 触发 visible 修改                           | boolean                                                                                                                                                        | false            | -    |
+| onVisibleChange | trigger 触发的 visible 改变的回调                        | (visible) => void                                                                                                                                              | -                | -    |
 
 </div>
 
