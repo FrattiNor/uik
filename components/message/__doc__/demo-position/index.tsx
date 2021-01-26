@@ -5,20 +5,20 @@ import styles from './index.less'
 
 const Demo: FC = () => {
     const openMessage = (position: messagePosition) => {
-        message.open(`这是一条message`, { position })
+        message.open(`这是一条message`, { position, duration: 0, desc: 'askfjailskdflasflsjakfajlkfjkal', showClose: true })
     }
 
     return (
         <>
             <div className={styles['wrapper']}>
-                <Button onClick={() => openMessage(['top', 'left'])}>TL</Button>
-                <Button onClick={() => openMessage(['top', 'center'])}>TC</Button>
-                <Button onClick={() => openMessage(['top', 'right'])}>TR</Button>
+                <Button onClick={() => openMessage('topLeft')}>TL</Button>
+                <Button onClick={() => openMessage('topCenter')}>TC</Button>
+                <Button onClick={() => openMessage('topRight')}>TR</Button>
             </div>
             <div className={styles['wrapper']}>
-                <Button onClick={() => openMessage(['bottom', 'left'])}>BL</Button>
-                <Button onClick={() => openMessage(['bottom', 'center'])}>BC</Button>
-                <Button onClick={() => openMessage(['bottom', 'right'])}>BR</Button>
+                <Button onClick={() => openMessage('bottomLeft')}>BL</Button>
+                <Button onClick={() => openMessage('bottomCenter')}>BC</Button>
+                <Button onClick={() => openMessage('bottomRight')}>BR</Button>
             </div>
         </>
     )

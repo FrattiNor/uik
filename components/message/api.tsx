@@ -18,7 +18,7 @@ const destroyFun: messageDestroyFun = {}
 // 获取容器 message 容器
 const getMessageContainer = (position: messagePosition): HTMLElement => {
     // 小写的列表
-    const positionList = position.split(/(?=[A-Z])/).map(item => item.toLowerCase())
+    const positionList = position.split(/(?=[A-Z])/).map((item) => item.toLowerCase())
 
     const id = `uik-message-${positionList.join('-')}` // 不同定位需要不同的容器
     const classname = classnames('uik-message-container', positionList.map((text) => `uik-message-container-${text}`).join(' '))
@@ -51,11 +51,11 @@ const config = (newConfig: newMessageConfig): void => {
 }
 
 // 插入Message
-const open: messageOpen = (content, options) => {
-    const { type, id, position = 'topCenter' } = options || {}
+const open: messageOpen = (title, options) => {
+    const { position = 'topCenter', ...restOptions } = options || {}
     const container = getMessageContainer(position)
     const div = document.createElement('div')
-    const ReactNode = <Message id={id} father={div} container={container} content={content} type={type} />
+    const ReactNode = <Message father={div} container={container} title={title} {...restOptions} />
     container.append(div)
     ReactDOM.render(ReactNode, div)
 }

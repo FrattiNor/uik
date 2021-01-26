@@ -8,13 +8,20 @@ import './message.less'
 
 // Message组件
 const Message: FC<messageProps> = (props) => {
-    const { father, container, content, type = 'default', id } = props
-    const { duration, maxCount, overAnimate } = _messageConfig
-    const list = Object.values(destroyFun) // 卸载列表
-    const isOver = list.length >= maxCount // 是否超长
-    const key = id || Math.random().toString() // 记录卸载方法的唯一key
-    const timeout: MutableRefObject<NodeJS.Timeout | null> = useRef(null) // 记录自动卸载的setTimeout，避免二次卸载
+    const { father, container, title, type = 'default', id, duration: propsDuration, showClose = false, desc, width } = props
+    const { duration: configDuration, maxCount, overAnimate } = _messageConfig
+    // 延迟关闭
+    const duration = typeof propsDuration === 'number' ? propsDuration : configDuration
+    // 卸载列表
+    const list = Object.values(destroyFun)
+    // 是否超长
+    const isOver = list.length >= maxCount
+    // 记录卸载方法的唯一key
+    const key = id || Math.random().toString()
+    // 记录自动卸载的setTimeout，避免二次卸载
+    const timeout: MutableRefObject<NodeJS.Timeout | null> = useRef(null)
     const messageRef: MutableRefObject<HTMLDivElement | null> = useRef(null)
+    // visible默认显示
     const [visible, setVisible] = useState(true)
 
     // 配置动画，如果超长并且overAnimate为false，则没有进场动画
@@ -74,9 +81,15 @@ const Message: FC<messageProps> = (props) => {
     }, [])
 
     return (
-        <div ref={messageRef} className={classnames('uik-message', classname)}>
-            {type !== 'default' && <Icon uik name={type} className={classnames('uik-message-icon', type)} />}
-            {content}
+        <div ref={messageRef} className={classnames('uik-message', classname)} style={{ width }}>
+            <div className="uik-message-title">
+                <div className="uik-message-left">
+                    {type !== 'default' && <Icon uik name={type} className={classnames('uik-message-title-icon', type)} />}
+                    {title}
+                </div>
+                {showClose && <Icon uik name="close" className="uik-message-title-close" onClick={() => hidden_Unmount()} />}
+            </div>
+            {desc && <div className="uik-message-desc">{desc}</div>}
         </div>
     )
 }

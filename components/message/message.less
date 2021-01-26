@@ -46,7 +46,7 @@
     &-message {
         color: @font-color;
         background-color: #fff;
-        transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, transform 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+        // transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, transform 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
         // 默认阴影向下
         box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
         border-radius: @border-radius;
@@ -55,21 +55,49 @@
         max-width: 80vw;
         pointer-events: auto;
 
-        &-icon {
-            margin-right: 10px;
+        &-title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
 
-            &.success {
-                color: @success-color;
+            &-left {
+                display: flex;
+                align-items: center;
             }
-            &.error {
-                color: @error-color;
+
+            &-icon {
+                margin-right: 10px;
+
+                &.success {
+                    color: @success-color;
+                }
+                &.error {
+                    color: @error-color;
+                }
+                &.warn {
+                    color: @warn-color;
+                }
+                &.info {
+                    color: @info-color;
+                }
             }
-            &.warn {
-                color: @warn-color;
+
+            &-close {
+                margin-left: 10px;
+                color: @disabled-color;
+                transition: color 0.3s;
+                cursor: pointer;
+
+                &:hover {
+                    color: @font-color;
+                }
             }
-            &.info {
-                color: @info-color;
-            }
+        }
+
+        &-desc {
+            margin-top: 8px;
+            word-break: break-all;
+            white-space: pre-wrap;
         }
     }
 }
