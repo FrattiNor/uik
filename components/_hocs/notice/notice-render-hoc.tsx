@@ -21,7 +21,7 @@ const noticeRenderHoc: noticeRenderHocComponent = ({ Component, name, defaultTri
 
     // notice render 组件
     const NoticeRender: FC<noticeRenderProps> = (props) => {
-        const { children, visible = false, containerZIndex = 1001, trigger = defaultTrigger, disabled = false, onVisibleChange, ...restProps } = props
+        const { children, visible: outVisible, containerZIndex = 1001, trigger = defaultTrigger, disabled = false, onVisibleChange, ...restProps } = props
         // 根Id（装容器）
         const { rootId } = restProps
         // 容器Id（装div）
@@ -30,9 +30,11 @@ const noticeRenderHoc: noticeRenderHocComponent = ({ Component, name, defaultTri
         const [div, setDiv]: [HTMLDivElement | null, any] = useState(null)
         // target
         const targetRef: MutableRefObject<HTMLElement | null> = useRef(null)
-        // 虚拟visible
-        const [virtualVisible, setVirtualVisible] = useStateFromValue(visible)
-        // 防抖设置Visible
+        // 虚拟visible，和外部的visible保持一致（避免出现2个visible不一致的情况，保证onVisibleChange传的visible没问题）
+        const [virtualVisible, setVirtualVisible] = useStateFromValue(!!outVisible)
+        // 实际的visible
+        const visible = typeof outVisible === 'boolean' ? outVisible : virtualVisible
+        // 防抖设置visible
         const debounceSetVisible = useDebounce(setVirtualVisible, 200)
         // DOM
         const DOM = useMemo(
@@ -88,7 +90,7 @@ const noticeRenderHoc: noticeRenderHocComponent = ({ Component, name, defaultTri
                                 onClick: (e: MouseEvent) => {
                                     const { onClick } = element.props
                                     if (onClick) onClick(e)
-                                    if (!disabled) debounceSetVisible(!virtualVisible)
+                                    if (!disabled) debounceSetVisible(!visible)
                                 }
                             }
                         default:
