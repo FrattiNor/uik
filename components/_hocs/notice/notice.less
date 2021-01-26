@@ -4,244 +4,242 @@
 @arrow-juli: 10px;
 @no-arrow-juli: 5px;
 
-.uik {
-    &-notice {
-        position: absolute;
-        pointer-events: auto;
+.uik-notice {
+    position: absolute;
+    pointer-events: auto;
 
-        & > div {
-            position: relative;
+    & > div {
+        position: relative;
+    }
+
+    .show {
+        transform-origin: inherit;
+        animation: noticeScaleIn 0.15s forwards;
+    }
+
+    .hidden {
+        transform-origin: inherit;
+        animation: noticeScaleOut 0.15s forwards;
+    }
+
+    &.topLeft {
+        padding-bottom: @padding-juli;
+        transform-origin: @arrow-juli 100%;
+
+        &.no-arrow {
+            padding-bottom: @no-arrow-juli;
         }
 
-        .show {
-            transform-origin: inherit;
-            animation: noticeScaleIn 0.15s forwards;
+        .uik-notice-arrow {
+            top: 100%;
+            left: @arrow-juli;
+        }
+        .uik-notice-arrow-content {
+            top: -4px;
+        }
+    }
+    &.topCenter {
+        padding-bottom: @padding-juli;
+        transform-origin: 50% 100%;
+
+        &.no-arrow {
+            padding-bottom: @no-arrow-juli;
         }
 
-        .hidden {
-            transform-origin: inherit;
-            animation: noticeScaleOut 0.15s forwards;
+        .uik-notice-arrow {
+            top: 100%;
+            left: calc(~'50% - 4px');
+        }
+        .uik-notice-arrow-content {
+            top: -4px;
+        }
+    }
+    &.topRight {
+        padding-bottom: @padding-juli;
+        transform-origin: calc(~'100% - @{arrow-juli}') 100%;
+
+        &.no-arrow {
+            padding-bottom: @no-arrow-juli;
         }
 
-        &.topLeft {
-            padding-bottom: @padding-juli;
-            transform-origin: @arrow-juli 100%;
-
-            &.no-arrow {
-                padding-bottom: @no-arrow-juli;
-            }
-
-            .uik-notice-arrow {
-                top: 100%;
-                left: @arrow-juli;
-            }
-            .uik-notice-arrow-content {
-                top: -4px;
-            }
+        .uik-notice-arrow {
+            top: 100%;
+            right: @arrow-juli;
         }
-        &.topCenter {
-            padding-bottom: @padding-juli;
-            transform-origin: 50% 100%;
-
-            &.no-arrow {
-                padding-bottom: @no-arrow-juli;
-            }
-
-            .uik-notice-arrow {
-                top: 100%;
-                left: calc(~'50% - 4px');
-            }
-            .uik-notice-arrow-content {
-                top: -4px;
-            }
+        .uik-notice-arrow-content {
+            top: -4px;
         }
-        &.topRight {
-            padding-bottom: @padding-juli;
-            transform-origin: calc(~'100% - @{arrow-juli}') 100%;
+    }
 
-            &.no-arrow {
-                padding-bottom: @no-arrow-juli;
-            }
+    &.bottomLeft {
+        padding-top: @padding-juli;
+        transform-origin: @arrow-juli 0;
 
-            .uik-notice-arrow {
-                top: 100%;
-                right: @arrow-juli;
-            }
-            .uik-notice-arrow-content {
-                top: -4px;
-            }
+        &.no-arrow {
+            padding-top: @no-arrow-juli;
         }
 
-        &.bottomLeft {
-            padding-top: @padding-juli;
-            transform-origin: @arrow-juli 0;
-
-            &.no-arrow {
-                padding-top: @no-arrow-juli;
-            }
-
-            .uik-notice-arrow {
-                top: -8px;
-                left: @arrow-juli;
-            }
-            .uik-notice-arrow-content {
-                bottom: -4px;
-            }
+        .uik-notice-arrow {
+            top: -8px;
+            left: @arrow-juli;
         }
-        &.bottomCenter {
-            padding-top: @padding-juli;
-            transform-origin: 50% 0;
-
-            &.no-arrow {
-                padding-top: @no-arrow-juli;
-            }
-
-            .uik-notice-arrow {
-                top: -8px;
-                left: calc(~'50% - 4px');
-            }
-            .uik-notice-arrow-content {
-                bottom: -4px;
-            }
+        .uik-notice-arrow-content {
+            bottom: -4px;
         }
-        &.bottomRight {
-            padding-top: @padding-juli;
-            transform-origin: calc(~'100% - @{arrow-juli}') 0;
+    }
+    &.bottomCenter {
+        padding-top: @padding-juli;
+        transform-origin: 50% 0;
 
-            &.no-arrow {
-                padding-top: @no-arrow-juli;
-            }
-
-            .uik-notice-arrow {
-                top: -8px;
-                right: @arrow-juli;
-            }
-            .uik-notice-arrow-content {
-                bottom: -4px;
-            }
+        &.no-arrow {
+            padding-top: @no-arrow-juli;
         }
 
-        &.leftTop {
-            padding-right: @padding-juli;
-            transform-origin: 100% @arrow-juli;
-
-            &.no-arrow {
-                padding-right: @no-arrow-juli;
-            }
-
-            .uik-notice-arrow {
-                top: @arrow-juli;
-                right: -8px;
-            }
-            .uik-notice-arrow-content {
-                left: -4px;
-            }
+        .uik-notice-arrow {
+            top: -8px;
+            left: calc(~'50% - 4px');
         }
-        &.leftCenter {
-            padding-right: @padding-juli;
-            transform-origin: 100% 50%;
-
-            &.no-arrow {
-                padding-right: @no-arrow-juli;
-            }
-
-            .uik-notice-arrow {
-                top: calc(~'50% - 4px');
-                right: -8px;
-            }
-            .uik-notice-arrow-content {
-                left: -4px;
-            }
+        .uik-notice-arrow-content {
+            bottom: -4px;
         }
-        &.leftBottom {
-            padding-right: @padding-juli;
-            transform-origin: 100% calc(~'100% - @{arrow-juli}');
+    }
+    &.bottomRight {
+        padding-top: @padding-juli;
+        transform-origin: calc(~'100% - @{arrow-juli}') 0;
 
-            &.no-arrow {
-                padding-right: @no-arrow-juli;
-            }
-
-            .uik-notice-arrow {
-                bottom: @arrow-juli;
-                right: -8px;
-            }
-            .uik-notice-arrow-content {
-                left: -4px;
-            }
+        &.no-arrow {
+            padding-top: @no-arrow-juli;
         }
 
-        &.rightTop {
-            padding-left: @padding-juli;
-            transform-origin: 0 @arrow-juli;
-
-            &.no-arrow {
-                padding-left: @no-arrow-juli;
-            }
-
-            .uik-notice-arrow {
-                top: @arrow-juli;
-                left: -8px;
-            }
-            .uik-notice-arrow-content {
-                right: -4px;
-            }
+        .uik-notice-arrow {
+            top: -8px;
+            right: @arrow-juli;
         }
-        &.rightCenter {
-            padding-left: @padding-juli;
-            transform-origin: 0 50%;
-
-            &.no-arrow {
-                padding-left: @no-arrow-juli;
-            }
-
-            .uik-notice-arrow {
-                top: calc(~'50% - 4px');
-                left: -8px;
-            }
-            .uik-notice-arrow-content {
-                right: -4px;
-            }
+        .uik-notice-arrow-content {
+            bottom: -4px;
         }
-        &.rightBottom {
-            padding-left: @padding-juli;
-            transform-origin: 0 calc(~'100% - @{arrow-juli}');
+    }
 
-            &.no-arrow {
-                padding-left: @no-arrow-juli;
-            }
+    &.leftTop {
+        padding-right: @padding-juli;
+        transform-origin: 100% @arrow-juli;
 
-            .uik-notice-arrow {
-                bottom: @arrow-juli;
-                left: -8px;
-            }
-            .uik-notice-arrow-content {
-                right: -4px;
-            }
+        &.no-arrow {
+            padding-right: @no-arrow-juli;
         }
 
-        &-inner {
-            color: #fff;
-            background-color: rgba(0, 0, 0, 0.75);
-            border-radius: @border-radius;
-            box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.2), 0 6px 16px 0 rgba(0, 0, 0, 0.1), 0 9px 28px 8px rgba(0, 0, 0, 0.08);
+        .uik-notice-arrow {
+            top: @arrow-juli;
+            right: -8px;
+        }
+        .uik-notice-arrow-content {
+            left: -4px;
+        }
+    }
+    &.leftCenter {
+        padding-right: @padding-juli;
+        transform-origin: 100% 50%;
 
-            .uik-notice-arrow {
-                overflow: hidden;
-                position: absolute;
-                pointer-events: none;
-                width: 8px;
-                height: 8px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
+        &.no-arrow {
+            padding-right: @no-arrow-juli;
+        }
 
-                &-content {
-                    position: relative;
-                    width: 6px;
-                    height: 6px;
-                    transform: rotate(45deg);
-                    background-color: rgba(0, 0, 0, 0.75);
-                }
+        .uik-notice-arrow {
+            top: calc(~'50% - 4px');
+            right: -8px;
+        }
+        .uik-notice-arrow-content {
+            left: -4px;
+        }
+    }
+    &.leftBottom {
+        padding-right: @padding-juli;
+        transform-origin: 100% calc(~'100% - @{arrow-juli}');
+
+        &.no-arrow {
+            padding-right: @no-arrow-juli;
+        }
+
+        .uik-notice-arrow {
+            bottom: @arrow-juli;
+            right: -8px;
+        }
+        .uik-notice-arrow-content {
+            left: -4px;
+        }
+    }
+
+    &.rightTop {
+        padding-left: @padding-juli;
+        transform-origin: 0 @arrow-juli;
+
+        &.no-arrow {
+            padding-left: @no-arrow-juli;
+        }
+
+        .uik-notice-arrow {
+            top: @arrow-juli;
+            left: -8px;
+        }
+        .uik-notice-arrow-content {
+            right: -4px;
+        }
+    }
+    &.rightCenter {
+        padding-left: @padding-juli;
+        transform-origin: 0 50%;
+
+        &.no-arrow {
+            padding-left: @no-arrow-juli;
+        }
+
+        .uik-notice-arrow {
+            top: calc(~'50% - 4px');
+            left: -8px;
+        }
+        .uik-notice-arrow-content {
+            right: -4px;
+        }
+    }
+    &.rightBottom {
+        padding-left: @padding-juli;
+        transform-origin: 0 calc(~'100% - @{arrow-juli}');
+
+        &.no-arrow {
+            padding-left: @no-arrow-juli;
+        }
+
+        .uik-notice-arrow {
+            bottom: @arrow-juli;
+            left: -8px;
+        }
+        .uik-notice-arrow-content {
+            right: -4px;
+        }
+    }
+
+    &-inner {
+        color: #fff;
+        background-color: rgba(0, 0, 0, 0.75);
+        border-radius: @border-radius;
+        box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.2), 0 6px 16px 0 rgba(0, 0, 0, 0.1), 0 9px 28px 8px rgba(0, 0, 0, 0.08);
+
+        .uik-notice-arrow {
+            overflow: hidden;
+            position: absolute;
+            pointer-events: none;
+            width: 8px;
+            height: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            &-content {
+                position: relative;
+                width: 6px;
+                height: 6px;
+                transform: rotate(45deg);
+                background-color: rgba(0, 0, 0, 0.75);
             }
         }
     }

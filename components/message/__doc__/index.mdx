@@ -1,4 +1,5 @@
 import CodeBox from '@/components/code-box'
+import CodeWrapper from '@/components/code-wrapper'
 
 import DemoNormal from './demo-normal'
 import descNormal from './demo-normal/desc.md'
@@ -24,17 +25,17 @@ message 用于全局展示操作的反馈信息。
 
 ## 代码演示
 
-<CodeBox title="普通提示" desc={descNormal} code={codeNormal}>
-    <DemoNormal />
-</CodeBox>
-
-<CodeBox title="特殊提示类型" desc={descType} code={codeType}>
-    <DemoType />
-</CodeBox>
-
-<CodeBox title="定位" desc={descPosition} code={codePosition}>
-    <DemoPosition />
-</CodeBox>
+<CodeWrapper>
+    <CodeBox title="普通提示" desc={descNormal} code={codeNormal}>
+        <DemoNormal />
+    </CodeBox>
+    <CodeBox title="特殊提示类型" desc={descType} code={codeType}>
+        <DemoType />
+    </CodeBox>
+    <CodeBox title="定位" desc={descPosition} code={codePosition}>
+        <DemoPosition />
+    </CodeBox>
+</CodeWrapper>
 
 ## API
 

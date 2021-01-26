@@ -1,4 +1,5 @@
 import CodeBox from '@/components/code-box'
+import CodeWrapper from '@/components/code-wrapper'
 
 import DemoIcon from './demo-icon'
 import descIcon from './demo-icon/desc.md'
@@ -12,9 +13,11 @@ import codeIcon from '!raw-loader!./demo-icon'
 
 ## 代码演示
 
-<CodeBox title="图标" desc={descIcon} code={codeIcon}>
-    <DemoIcon />
-</CodeBox>
+<CodeWrapper>
+    <CodeBox title="图标" desc={descIcon} code={codeIcon}>
+        <DemoIcon />
+    </CodeBox>
+</CodeWrapper>
 
 ## API
 

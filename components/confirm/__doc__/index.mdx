@@ -1,4 +1,5 @@
 import CodeBox from '@/components/code-box'
+import CodeWrapper from '@/components/code-wrapper'
 
 import DemoNormal from './demo-normal'
 import descNormal from './demo-normal/desc.md'
@@ -18,13 +19,14 @@ import codePosition from '!raw-loader!./demo-position'
 
 ## 代码演示
 
-<CodeBox title="基本" desc={descNormal} code={codeNormal}>
-    <DemoNormal />
-</CodeBox>
-
-<CodeBox title="定位" desc={descPosition} code={codePosition}>
-    <DemoPosition />
-</CodeBox>
+<CodeWrapper>
+    <CodeBox title="基本" desc={descNormal} code={codeNormal}>
+        <DemoNormal />
+    </CodeBox>
+    <CodeBox title="定位" desc={descPosition} code={codePosition}>
+        <DemoPosition />
+    </CodeBox>
+</CodeWrapper>
 
 ## API
 

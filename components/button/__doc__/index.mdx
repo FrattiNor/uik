@@ -1,4 +1,5 @@
 import CodeBox from '@/components/code-box'
+import CodeWrapper from '@/components/code-wrapper'
 
 import DemoSize from './demo-size'
 import descSize from './demo-size/desc.md'
@@ -33,19 +34,17 @@ import codeStatus from '!raw-loader!./demo-status'
 
 ## 代码演示
 
-<CodeBox title="按钮大小" desc={descSize} code={codeSize}>
-    <DemoSize />
-</CodeBox>
-
-<CodeBox title="按钮类型" desc={descType} code={codeType}>
-    <DemoType />
-</CodeBox>
-
-<CodeBox title="按钮状态" desc={descStatus} code={codeStatus}>
-    <DemoStatus />
-</CodeBox>
-
-
+<CodeWrapper>
+    <CodeBox title="按钮大小" desc={descSize} code={codeSize}>
+        <DemoSize />
+    </CodeBox>
+    <CodeBox title="按钮类型" desc={descType} code={codeType}>
+        <DemoType />
+    </CodeBox>
+    <CodeBox title="按钮状态" desc={descStatus} code={codeStatus}>
+        <DemoStatus />
+    </CodeBox>
+</CodeWrapper>
 
 ## API
 

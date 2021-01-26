@@ -1,105 +1,101 @@
 @import '../_style/theme.less';
 @import '../_style/animate/move.less';
 
-.uik {
-    &-message {
-        &-container {
-            display: flex;
-            flex-direction: column;
-            position: absolute;
+.uik-message {
+    &-container {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
 
-            // 解决div覆盖问题，原因未知
-            & > div {
-                position: relative;
-                z-index: 1;
-            }
+        // 解决div覆盖问题，原因未知
+        & > div {
+            position: relative;
+            z-index: 1;
+        }
 
-            &-top {
-                top: 10px;
-            }
+        &-top {
+            top: 10px;
+        }
 
-            &-bottom {
-                bottom: 10px;
-                flex-direction: column-reverse;
-            }
+        &-bottom {
+            bottom: 10px;
+            flex-direction: column-reverse;
+        }
 
-            &-left {
-                left: 10px;
-                align-items: flex-start;
-            }
+        &-left {
+            left: 10px;
+            align-items: flex-start;
+        }
 
-            &-right {
-                right: 10px;
-                align-items: flex-end;
-            }
+        &-right {
+            right: 10px;
+            align-items: flex-end;
+        }
 
-            &-center {
-                left: 50%;
-                transform: translate(-50%);
-                align-items: center;
-            }
+        &-center {
+            left: 50%;
+            transform: translate(-50%);
+            align-items: center;
         }
     }
 }
 
-.uik {
-    &-message {
-        font-size: @font-size-middle;
-        color: @font-color;
-        background-color: #fff;
-        // 默认阴影向下
-        box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
-        border-radius: @border-radius;
-        padding: 10px 20px;
-        margin: 6px;
-        max-width: 80vw;
-        pointer-events: auto;
+.uik-message {
+    font-size: @font-size-middle;
+    color: @font-color;
+    background-color: #fff;
+    // 默认阴影向下
+    box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
+    border-radius: @border-radius;
+    padding: 10px 20px;
+    margin: 6px;
+    max-width: 80vw;
+    pointer-events: auto;
 
-        &-title {
+    &-title {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        &-left {
             display: flex;
             align-items: center;
-            justify-content: space-between;
+        }
 
-            &-left {
-                display: flex;
-                align-items: center;
+        &-icon {
+            margin-right: 10px;
+
+            &.success {
+                color: @success-color;
             }
-
-            &-icon {
-                margin-right: 10px;
-
-                &.success {
-                    color: @success-color;
-                }
-                &.error {
-                    color: @error-color;
-                }
-                &.warn {
-                    color: @warn-color;
-                }
-                &.info {
-                    color: @info-color;
-                }
+            &.error {
+                color: @error-color;
             }
-
-            &-close {
-                margin-left: 10px;
-                color: @disabled-color;
-                transition: color 0.3s;
-                cursor: pointer;
-
-                &:hover {
-                    color: @font-color;
-                }
+            &.warn {
+                color: @warn-color;
+            }
+            &.info {
+                color: @info-color;
             }
         }
 
-        &-desc {
-            margin-top: 8px;
-            word-break: break-all;
-            white-space: pre-wrap;
-            font-size: 0.8em;
+        &-close {
+            margin-left: 10px;
+            color: @disabled-color;
+            transition: color 0.3s;
+            cursor: pointer;
+
+            &:hover {
+                color: @font-color;
+            }
         }
+    }
+
+    &-desc {
+        margin-top: 8px;
+        word-break: break-all;
+        white-space: pre-wrap;
+        font-size: 0.8em;
     }
 }
 

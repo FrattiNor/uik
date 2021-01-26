@@ -1,0 +1,14 @@
+.code-wrapper {
+    display: flex;
+    justify-content: space-between;
+
+    &-item {
+        width: calc(~'50% - 10px');
+        display: flex;
+        flex-direction: column;
+
+        & > div + div {
+            margin-top: 20px;
+        }
+    }
+}

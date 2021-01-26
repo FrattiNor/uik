@@ -2,110 +2,106 @@
 @import '../_style/animate/zoom.less';
 @import '../_style/animate/move.less';
 
-.uik {
-    &-modal {
-        &-mask {
-            position: fixed;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background-color: rgba(0, 0, 0, 0.3);
-            pointer-events: auto;
+.uik-modal {
+    &-mask {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: rgba(0, 0, 0, 0.3);
+        pointer-events: auto;
 
-            &.show {
-                animation: maskIn 0.3s forwards;
-            }
+        &.show {
+            animation: maskIn 0.3s forwards;
+        }
 
-            &.hidden {
-                animation: maskOut 0.3s forwards;
-            }
+        &.hidden {
+            animation: maskOut 0.3s forwards;
         }
     }
 }
 
-.uik {
-    &-modal {
-        position: absolute;
-        width: 100%;
-        color: @font-color;
-        border-radius: @border-radius;
-        box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
-        background-color: #fff;
-        pointer-events: auto;
-        transition: all 0.3s;
+.uik-modal {
+    position: absolute;
+    width: 100%;
+    color: @font-color;
+    border-radius: @border-radius;
+    box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
+    background-color: #fff;
+    pointer-events: auto;
+    transition: all 0.3s;
+    display: flex;
+    flex-direction: column;
+    font-size: @font-size-middle;
+
+    &-head {
+        padding: 10px 24px;
+        border-bottom: @border-width solid @border-color;
         display: flex;
-        flex-direction: column;
-        font-size: @font-size-middle;
+        justify-content: space-between;
+        align-items: center;
 
-        &-head {
-            padding: 10px 24px;
-            border-bottom: @border-width solid @border-color;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        &-close {
+            cursor: pointer;
+            color: @disabled-color;
+            transition: color 0.3s;
 
-            &-close {
-                cursor: pointer;
-                color: @disabled-color;
-                transition: color 0.3s;
-
-                &:hover {
-                    color: @font-color;
-                }
+            &:hover {
+                color: @font-color;
             }
         }
+    }
 
-        &-content {
-            padding: 10px 24px;
-            overflow: auto;
-            flex-grow: 1;
-        }
+    &-content {
+        padding: 10px 24px;
+        overflow: auto;
+        flex-grow: 1;
+    }
 
-        &-foot {
-            text-align: right;
-            padding: 10px 24px;
-            border-top: @border-width solid @border-color;
+    &-foot {
+        text-align: right;
+        padding: 10px 24px;
+        border-top: @border-width solid @border-color;
 
-            & > button + button {
-                margin-left: 15px;
-            }
+        & > button + button {
+            margin-left: 15px;
         }
+    }
 
-        &.center.show {
-            animation: zoomIn 0.3s forwards;
-        }
-        &.center.hidden {
-            animation: zoomOut 0.3s forwards;
-        }
+    &.center.show {
+        animation: zoomIn 0.3s forwards;
+    }
+    &.center.hidden {
+        animation: zoomOut 0.3s forwards;
+    }
 
-        &.top.show {
-            animation: moveUpIn 0.3s forwards;
-        }
-        &.top.hidden {
-            animation: moveUpOut 0.3s forwards;
-        }
+    &.top.show {
+        animation: moveUpIn 0.3s forwards;
+    }
+    &.top.hidden {
+        animation: moveUpOut 0.3s forwards;
+    }
 
-        &.bottom.show {
-            animation: moveDownIn 0.3s forwards;
-        }
-        &.bottom.hidden {
-            animation: moveDownOut 0.3s forwards;
-        }
+    &.bottom.show {
+        animation: moveDownIn 0.3s forwards;
+    }
+    &.bottom.hidden {
+        animation: moveDownOut 0.3s forwards;
+    }
 
-        &.left.show {
-            animation: moveLeftIn 0.3s forwards;
-        }
-        &.left.hidden {
-            animation: moveLeftOut 0.3s forwards;
-        }
+    &.left.show {
+        animation: moveLeftIn 0.3s forwards;
+    }
+    &.left.hidden {
+        animation: moveLeftOut 0.3s forwards;
+    }
 
-        &.right.show {
-            animation: moveRightIn 0.3s forwards;
-        }
-        &.right.hidden {
-            animation: moveRightOut 0.3s forwards;
-        }
+    &.right.show {
+        animation: moveRightIn 0.3s forwards;
+    }
+    &.right.hidden {
+        animation: moveRightOut 0.3s forwards;
     }
 }
 

@@ -1,107 +1,105 @@
 @import '../_style/theme.less';
 
-.uik {
-    &-btn {
-        position: relative;
-        cursor: pointer;
-        white-space: nowrap;
-        user-select: none;
-        box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.03), 0px 1px 5px 0px rgba(0, 0, 0, 0.03);
-        outline: 0;
-        padding: 0;
-        border-radius: @border-radius;
-        border-width: @border-width;
-        border-style: solid;
-        transition: border-color 0.3s, color 0.3s, background-color 0.3s;
-        // overflow: hidden;
+.uik-btn {
+    position: relative;
+    cursor: pointer;
+    white-space: nowrap;
+    user-select: none;
+    box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.03), 0px 1px 5px 0px rgba(0, 0, 0, 0.03);
+    outline: 0;
+    padding: 0;
+    border-radius: @border-radius;
+    border-width: @border-width;
+    border-style: solid;
+    transition: border-color 0.3s, color 0.3s, background-color 0.3s;
+    // overflow: hidden;
 
-        // ================= status ================
+    // ================= status ================
 
-        // == type
-        &-primary {
-            background-color: @primary-color;
+    // == type
+    &-primary {
+        background-color: @primary-color;
+        border-color: @primary-color;
+        color: #fff;
+
+        .uik-btn-animate-ball {
+            background: #fff;
+        }
+    }
+    &-danger {
+        background-color: @danger-color;
+        border-color: @danger-color;
+        color: #fff;
+
+        .uik-btn-animate-ball {
+            background: #fff;
+        }
+    }
+    &-default {
+        background-color: #fff;
+        border-color: @border-color;
+        color: @font-color;
+
+        .uik-btn-animate-ball {
+            background: @primary-color;
+        }
+
+        :not(.uik-btn-disabled):not(.uik-btn-loading)&:hover {
             border-color: @primary-color;
-            color: #fff;
-
-            .uik-btn-animate-ball {
-                background: #fff;
-            }
+            color: @primary-color;
         }
-        &-danger {
-            background-color: @danger-color;
-            border-color: @danger-color;
-            color: #fff;
+    }
 
-            .uik-btn-animate-ball {
-                background: #fff;
-            }
-        }
-        &-default {
-            background-color: #fff;
-            border-color: @border-color;
-            color: @font-color;
+    // == large
+    &-large {
+        height: @height-large;
+        font-size: @font-size-large;
+        padding: 0 25px;
+    }
+    &-middle {
+        height: @height-middle;
+        font-size: @font-size-middle;
+        padding: 0 15px;
+    }
+    &-small {
+        height: @height-small;
+        font-size: @font-size-small;
+        padding: 0 7px;
+    }
 
-            .uik-btn-animate-ball {
-                background: @primary-color;
-            }
+    // == loading
+    &-loading {
+        cursor: default;
+        opacity: 0.7;
+    }
 
-            :not(.uik-btn-disabled):not(.uik-btn-loading)&:hover {
-                border-color: @primary-color;
-                color: @primary-color;
-            }
-        }
+    // == disabled
+    &-disabled {
+        cursor: not-allowed;
+        background-color: @disabled-bg-color;
+        color: @disabled-color;
+        border-color: @border-color;
+        opacity: 1;
+    }
 
-        // == large
-        &-large {
-            height: @height-large;
-            font-size: @font-size-large;
-            padding: 0 25px;
-        }
-        &-middle {
-            height: @height-middle;
-            font-size: @font-size-middle;
-            padding: 0 15px;
-        }
-        &-small {
-            height: @height-small;
-            font-size: @font-size-small;
-            padding: 0 7px;
-        }
+    // ================= status ================
 
-        // == loading
-        &-loading {
-            cursor: default;
-            opacity: 0.7;
-        }
+    &-animate {
+        position: absolute;
+        width: calc(~'100% + 2px');
+        height: calc(~'100% + 2px');
+        overflow: hidden;
+        top: -1px;
+        left: -1px;
+        pointer-events: none;
 
-        // == disabled
-        &-disabled {
-            cursor: not-allowed;
-            background-color: @disabled-bg-color;
-            color: @disabled-color;
-            border-color: @border-color;
-            opacity: 1;
-        }
-
-        // ================= status ================
-
-        &-animate {
+        /* 实现水波纹效果的小球样式 */
+        &-ball {
             position: absolute;
-            width: calc(~'100% + 2px');
-            height: calc(~'100% + 2px');
-            overflow: hidden;
-            top: -1px;
-            left: -1px;
-            pointer-events: none;
-
-            /* 实现水波纹效果的小球样式 */
-            &-ball {
-                position: absolute;
-                display: block;
-                border-radius: 50%;
-                animation: buttonnAnimateBall 1s;
-                opacity: 0.2;
-            }
+            display: block;
+            border-radius: 50%;
+            animation: buttonnAnimateBall 1s;
+            opacity: 0.2;
         }
     }
 }
