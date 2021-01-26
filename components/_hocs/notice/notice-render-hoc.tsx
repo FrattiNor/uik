@@ -135,10 +135,10 @@ const noticeRenderHoc: noticeRenderHocComponent = ({ Component, name, defaultTri
             () => {
                 if (visible) {
                     const container = getNoticeContainer(containerZIndex, root)
-                    setContainer(container)
                     const div = document.createElement('div')
                     div.setAttribute
                     container.append(div)
+                    setContainer(container)
                     setDiv(div)
                 }
             },

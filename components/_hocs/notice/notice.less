@@ -2,6 +2,7 @@
 
 @padding-juli: 8px;
 @arrow-juli: 10px;
+@no-arrow-juli: 5px;
 
 .uik {
     &-notice {
@@ -26,6 +27,10 @@
             padding-bottom: @padding-juli;
             transform-origin: @arrow-juli 100%;
 
+            &.no-arrow {
+                padding-bottom: @no-arrow-juli;
+            }
+
             .uik-notice-arrow {
                 top: 100%;
                 left: @arrow-juli;
@@ -38,6 +43,10 @@
             padding-bottom: @padding-juli;
             transform-origin: 50% 100%;
 
+            &.no-arrow {
+                padding-bottom: @no-arrow-juli;
+            }
+
             .uik-notice-arrow {
                 top: 100%;
                 left: calc(~'50% - 4px');
@@ -49,6 +58,10 @@
         &.topRight {
             padding-bottom: @padding-juli;
             transform-origin: calc(~'100% - @{arrow-juli}') 100%;
+
+            &.no-arrow {
+                padding-bottom: @no-arrow-juli;
+            }
 
             .uik-notice-arrow {
                 top: 100%;
@@ -63,6 +76,10 @@
             padding-top: @padding-juli;
             transform-origin: @arrow-juli 0;
 
+            &.no-arrow {
+                padding-top: @no-arrow-juli;
+            }
+
             .uik-notice-arrow {
                 top: -8px;
                 left: @arrow-juli;
@@ -75,6 +92,10 @@
             padding-top: @padding-juli;
             transform-origin: 50% 0;
 
+            &.no-arrow {
+                padding-top: @no-arrow-juli;
+            }
+
             .uik-notice-arrow {
                 top: -8px;
                 left: calc(~'50% - 4px');
@@ -86,6 +107,10 @@
         &.bottomRight {
             padding-top: @padding-juli;
             transform-origin: calc(~'100% - @{arrow-juli}') 0;
+
+            &.no-arrow {
+                padding-top: @no-arrow-juli;
+            }
 
             .uik-notice-arrow {
                 top: -8px;
@@ -100,6 +125,10 @@
             padding-right: @padding-juli;
             transform-origin: 100% @arrow-juli;
 
+            &.no-arrow {
+                padding-right: @no-arrow-juli;
+            }
+
             .uik-notice-arrow {
                 top: @arrow-juli;
                 right: -8px;
@@ -112,6 +141,10 @@
             padding-right: @padding-juli;
             transform-origin: 100% 50%;
 
+            &.no-arrow {
+                padding-right: @no-arrow-juli;
+            }
+
             .uik-notice-arrow {
                 top: calc(~'50% - 4px');
                 right: -8px;
@@ -123,6 +156,10 @@
         &.leftBottom {
             padding-right: @padding-juli;
             transform-origin: 100% calc(~'100% - @{arrow-juli}');
+
+            &.no-arrow {
+                padding-right: @no-arrow-juli;
+            }
 
             .uik-notice-arrow {
                 bottom: @arrow-juli;
@@ -137,6 +174,10 @@
             padding-left: @padding-juli;
             transform-origin: 0 @arrow-juli;
 
+            &.no-arrow {
+                padding-left: @no-arrow-juli;
+            }
+
             .uik-notice-arrow {
                 top: @arrow-juli;
                 left: -8px;
@@ -149,6 +190,10 @@
             padding-left: @padding-juli;
             transform-origin: 0 50%;
 
+            &.no-arrow {
+                padding-left: @no-arrow-juli;
+            }
+
             .uik-notice-arrow {
                 top: calc(~'50% - 4px');
                 left: -8px;
@@ -160,6 +205,10 @@
         &.rightBottom {
             padding-left: @padding-juli;
             transform-origin: 0 calc(~'100% - @{arrow-juli}');
+
+            &.no-arrow {
+                padding-left: @no-arrow-juli;
+            }
 
             .uik-notice-arrow {
                 bottom: @arrow-juli;

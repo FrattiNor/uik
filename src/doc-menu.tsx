@@ -12,6 +12,10 @@ const menu = [
             {
                 name: 'icon',
                 desc: 'Icon 图标'
+            },
+            {
+                name: 'menu',
+                desc: 'Menu 菜单'
             }
         ]
     },
@@ -37,6 +41,10 @@ const menu = [
             {
                 name: 'confirm',
                 desc: 'Confirm 确认弹窗'
+            },
+            {
+                name: 'dropdown',
+                desc: 'DropDown 下拉菜单'
             }
         ]
     }

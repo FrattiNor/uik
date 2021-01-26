@@ -6,7 +6,7 @@ import { getPositionStyle, autoAdjustPosition } from './util'
 import './notice.less'
 
 // 获取参数
-const noticeHoc: noticeHocComponent = ({ backgroundColor, emptyKey }) => {
+const noticeHoc: noticeHocComponent = ({ backgroundColor, emptyKey, needArrow = true, defaultPosition = 'topCenter' }) => {
     // 获取组件
     const noticeHocInner: noticeHocInnerComponent = (WrapperComponent) => {
         // 修改组件
@@ -15,7 +15,7 @@ const noticeHoc: noticeHocComponent = ({ backgroundColor, emptyKey }) => {
             // 获取是否为空
             const isEmpty = emptyKey ? !_props[emptyKey] : false
             //
-            const { target, visible, position: outPosition = 'topCenter', trigger, setVirtualVisible, autoAdjust, root, container } = props
+            const { target, visible, position: outPosition = defaultPosition, trigger, setVirtualVisible, autoAdjust, root, container } = props
             // 使用的定位，根据外部传入和内部自动调整获得
             const [position, setPosition] = useStateFromValue(outPosition)
             // 承载动画的类名
@@ -114,13 +114,15 @@ const noticeHoc: noticeHocComponent = ({ backgroundColor, emptyKey }) => {
                     onMouseEnter={onMouseEnter}
                     onMouseLeave={onMouseLeave}
                     ref={noticeRef}
-                    className={classnames('uik-notice', position)}
+                    className={classnames('uik-notice', position, { 'no-arrow': !needArrow })}
                     style={{ ...baseStyle, ...topLeftstyle }}
                 >
                     <div className={classnames('uik-notice-inner', animateClassname)} style={backgroundColorStyle}>
-                        <div className="uik-notice-arrow">
-                            <div className="uik-notice-arrow-content" style={backgroundColorStyle} />
-                        </div>
+                        {needArrow && (
+                            <div className="uik-notice-arrow">
+                                <div className="uik-notice-arrow-content" style={backgroundColorStyle} />
+                            </div>
+                        )}
                         <WrapperComponent {...props} setVirtualVisible={setVirtualVisible} />
                     </div>
                 </div>

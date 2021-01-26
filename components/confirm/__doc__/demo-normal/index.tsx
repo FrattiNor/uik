@@ -1,4 +1,4 @@
-import React, { FC, Fragment, useState } from 'react'
+import React, { FC, useState } from 'react'
 import { Button, Confirm, message } from 'uik'
 
 const Demo: FC = () => {
@@ -17,17 +17,9 @@ const Demo: FC = () => {
     }
 
     return (
-        <Fragment>
-            <Confirm
-                content="确认弹窗，你确认要关闭吗？"
-                visible={visible}
-                onConfrim={confirm}
-                onCancel={cancel}
-                onVisibleChange={(v) => setVisible(v)}
-            >
-                <Button>点击触发弹窗</Button>
-            </Confirm>
-        </Fragment>
+        <Confirm content="确认弹窗，你确认要关闭吗？" visible={visible} onConfrim={confirm} onCancel={cancel} onVisibleChange={(v) => setVisible(v)}>
+            <Button>点击触发弹窗</Button>
+        </Confirm>
     )
 }
 

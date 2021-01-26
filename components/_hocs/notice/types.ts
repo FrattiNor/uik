@@ -54,6 +54,8 @@ export type noticeProps = {
 export type noticeHocProps = {
     backgroundColor: string
     emptyKey?: string
+    needArrow?: boolean
+    defaultPosition?: noticePosition
 }
 
 export type noticeHocComponent = (props: noticeHocProps) => noticeHocInnerComponent

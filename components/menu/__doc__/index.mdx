@@ -1,0 +1,26 @@
+import CodeBox from '@/components/code-box'
+
+import DemoNormal from './demo-normal'
+import descNormal from './demo-normal/desc.md'
+import codeNormal from '!raw-loader!./demo-normal'
+
+# Menu 菜单
+
+为页面提供菜单列表。
+
+## 代码演示
+
+<CodeBox title="基本" desc={descNormal} code={codeNormal}>
+    <DemoNormal />
+</CodeBox>
+
+## API
+
+<div className="api">
+
+| 属性    | 说明         | 类型                            | 默认值 | 版本 |
+| :------ | :----------- | :------------------------------ | :----- | :--- |
+| list    | 列表内容     | { name , key } []                  | -      | -    |
+| onClick | 列表点击事件 | ({ event: e, name, key }) => void | -      | -    |
+
+</div>
