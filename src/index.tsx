@@ -5,7 +5,7 @@ import { message } from 'uik'
 import './index.less'
 
 message.config({
-    duration: 3
+    duration: 3,
 })
 
 ReactDom.render(<Routes />, document.getElementById('root'))

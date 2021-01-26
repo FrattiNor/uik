@@ -1,0 +1,12 @@
+.wrapper {
+    display: flex;
+    align-items: center;
+    
+    & > button + button {
+        margin-left: 10px;
+    }
+
+    & + .wrapper {
+        margin-top: 10px;
+    }
+}

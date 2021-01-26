@@ -8,6 +8,10 @@ import DemoType from './demo-type'
 import descType from './demo-type/desc.md'
 import codeType from '!raw-loader!./demo-type'
 
+import DemoPosition from './demo-position'
+import descPosition from './demo-position/desc.md'
+import codePosition from '!raw-loader!./demo-position'
+
 # message 消息提示
 
 message 用于全局展示操作的反馈信息。
@@ -26,6 +30,10 @@ message 用于全局展示操作的反馈信息。
 
 <CodeBox title="特殊提示类型" desc={descType} code={codeType}>
     <DemoType />
+</CodeBox>
+
+<CodeBox title="定位" desc={descPosition} code={codePosition}>
+    <DemoPosition />
 </CodeBox>
 
 ## API
@@ -48,9 +56,11 @@ message 用于全局展示操作的反馈信息。
 
 <div className="api">
 
-| 属性 | 说明     | 类型                                        | 默认值  | 版本 |
-| :--- | :------- | :------------------------------------------ | :------ | :--- |
-| type | 消息类型 | success \| error \| warn \| info \| default | default | -    |
+| 属性     | 说明                                          | 类型                                                                              | 默认值    | 版本 |
+| :------- | :-------------------------------------------- | :-------------------------------------------------------------------------------- | :-------- | :--- |
+| type     | 消息类型                                      | success \| error \| warn \| info \| default                                       | default   | -    |
+| id       | 消息的唯一标识，用于 destory 关闭特定 message | number                                                                            | -         | -    |
+| position | 弹出消息的位置                                | topLeft \| topCenter \| topRight \| 'bottomLeft \| 'bottomCenter \| 'bottomRight' | topCenter | -    |
 
 </div>
 
@@ -58,10 +68,10 @@ message 用于全局展示操作的反馈信息。
 
 <div className="api">
 
-| 属性     | 说明                                          | 类型                                                 | 默认值              | 版本 |
-| :------- | :-------------------------------------------- | :--------------------------------------------------- | :------------------ | :--- |
-| position | 弹出消息的位置                                | [ 'top' \| 'bottom', 'center' \| 'left' \| 'right' ] | [ 'top', 'center' ] | -    |
-| maxCount | 最大弹出消息数量                              | number                                               | Infinity            | -    |
-| duration | 弹出消息显示时长秒数`（设为 0 时不自动关闭）` | number                                               | 3                   | -    |
+| 属性        | 说明                                              | 类型    | 默认值   | 版本 |
+| :---------- | :------------------------------------------------ | :------ | :------- | :--- |
+| maxCount    | 最大弹出消息数量                                  | number  | Infinity | -    |
+| duration    | 弹出消息显示时长秒数`（设为 0 时不自动关闭）`     | number  | 3        | -    |
+| overAnimate | 超出 maxCount 后的新增的 message 是否需要 animate | boolean | false    | -    |
 
 </div>

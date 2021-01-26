@@ -12,7 +12,12 @@ const menu = [
             {
                 name: 'icon',
                 desc: 'Icon 图标'
-            },
+            }
+        ]
+    },
+    {
+        title: '反馈',
+        components: [
             {
                 name: 'loading',
                 desc: 'Loading 加载中'
@@ -32,7 +37,7 @@ const menu = [
             {
                 name: 'confirm',
                 desc: 'Confirm 确认弹窗'
-            },
+            }
         ]
     }
 ]

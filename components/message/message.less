@@ -47,6 +47,7 @@
         color: @font-color;
         background-color: #fff;
         transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, transform 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+        // 默认阴影向下
         box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
         border-radius: @border-radius;
         padding: 10px 20px;
@@ -73,17 +74,44 @@
     }
 }
 
+// 阴影
+.uik-message-container-top {
+    .uik-message {
+        box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 6px 16px 0 rgba(0, 0, 0, 0.06), 0 9px 28px 8px rgba(0, 0, 0, 0.04);
+    }
+}
+
+.uik-message-container-bottom {
+    .uik-message {
+        box-shadow: 0 -3px 6px -4px rgba(0, 0, 0, 0.12), 0 -6px 16px 0 rgba(0, 0, 0, 0.06), 0 -9px 28px 8px rgba(0, 0, 0, 0.04);
+    }
+}
+
+// 动画配置
+
 .uik-message.hidden {
     animation: messageMoveOut 0.3s forwards;
 }
 
-.uik-message-container-top {
+.uik-message-container-left {
+    .uik-message.show {
+        animation: moveLeftIn 0.3s forwards;
+    }
+}
+
+.uik-message-container-right {
+    .uik-message.show {
+        animation: moveRightIn 0.3s forwards;
+    }
+}
+
+.uik-message-container-top.uik-message-container-center {
     .uik-message.show {
         animation: moveUpIn 0.3s forwards;
     }
 }
 
-.uik-message-container-bottom {
+.uik-message-container-bottom.uik-message-container-center {
     .uik-message.show {
         animation: moveDownIn 0.3s forwards;
     }
