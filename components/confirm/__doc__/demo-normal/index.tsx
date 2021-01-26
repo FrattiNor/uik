@@ -19,7 +19,7 @@ const Demo: FC = () => {
     return (
         <Fragment>
             <Confirm
-                content="确认弹窗，你确认要关闭嘛？"
+                content="确认弹窗，你确认要关闭吗？"
                 visible={visible}
                 onConfrim={confirm}
                 onCancel={cancel}

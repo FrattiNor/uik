@@ -5,7 +5,7 @@ import styles from './index.less'
 
 const Demo: FC = () => {
     const openMessage = (position: messagePosition) => {
-        message.open(`这是一条message`, { position, duration: 0, desc: 'askfjailskdflasflsjakfajlkfjkal', showClose: true })
+        message.open(`这是一条message`, { position })
     }
 
     return (
