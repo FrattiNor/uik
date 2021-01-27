@@ -6,7 +6,7 @@ import './icon.less'
 
 // icon 组件
 const Icon: ForwardRefRenderFunction<unknown, iconProps> = (props, ref) => {
-    const componentRef = useRef(null)
+    const componentRef = useRef<HTMLElement>(null)
     const iconRef = (ref as any) || componentRef
 
     const { name = '', className, style = {}, uik = false, ...rest } = props

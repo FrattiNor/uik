@@ -1,4 +1,4 @@
-import React, { FC, Fragment, useState, useRef, MutableRefObject } from 'react'
+import React, { FC, Fragment, useState, useRef } from 'react'
 import classnames from 'classnames'
 import Loading from '../loading'
 import { useEffectAfterFirst } from '../_hooks'
@@ -11,7 +11,7 @@ const ButtonLoading: FC<buttonLoadingProps> = (props) => {
     const { LoadingIcon } = Loading
     const [show, setShow] = useState(visible)
     const [animateClassname, setAnimateClassname] = useState(visible ? 'show' : 'hidden')
-    const timeout: MutableRefObject<NodeJS.Timeout | null> = useRef(null)
+    const timeout = useRef<NodeJS.Timeout | null>(null)
 
     useEffectAfterFirst(() => {
         if (visible) {

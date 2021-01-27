@@ -1,9 +1,8 @@
-import React, { FC, Fragment, useEffect, useState, useMemo, isValidElement, useRef, cloneElement, MutableRefObject, MouseEvent } from 'react'
+import React, { FC, Fragment, useEffect, useState, useMemo, isValidElement, useRef, cloneElement, MouseEvent } from 'react'
 import ReactDOM, { unmountComponentAtNode } from 'react-dom'
 import { noticeRenderProps, noticeRenderHocComponent } from './types'
-import { getContainer } from '../../_utils'
+import { getContainer, getRootById, getDefaultRoot } from '../../_utils'
 import { useDebounce, useEffectAfterFirst, useEffectOnce, useStateFromValue } from '../../_hooks'
-import { getRootById, getDefaultRoot } from '../../_utils/get-container'
 
 // 获取参数
 const noticeRenderHoc: noticeRenderHocComponent = ({ Component, name, defaultTrigger }) => {
@@ -36,13 +35,13 @@ const noticeRenderHoc: noticeRenderHocComponent = ({ Component, name, defaultTri
             ...restProps
         } = props
         // 根（装容器）
-        const root = getRoot ? getRoot() || getDefaultRoot() : getRootById(rootId)
+        const [root, setRoot]: [HTMLDivElement | null, any] = useState(null)
         // 挂载的容器 (装div)
         const [container, setContainer]: [HTMLDivElement | null, any] = useState(null)
         // 挂载的div
         const [div, setDiv]: [HTMLDivElement | null, any] = useState(null)
         // target
-        const targetRef: MutableRefObject<HTMLElement | null> = useRef(null)
+        const targetRef = useRef<HTMLElement>(null)
         // 虚拟visible，和外部的visible保持一致（避免出现2个visible不一致的情况，保证onVisibleChange传的visible没问题）
         const [virtualVisible, setVirtualVisible] = useStateFromValue(!!outVisible)
         // 实际的visible
@@ -56,15 +55,15 @@ const noticeRenderHoc: noticeRenderHocComponent = ({ Component, name, defaultTri
             () => (
                 <Component
                     {...restProps}
-                    target={targetRef.current}
                     setVirtualVisible={debounceSetVisible}
-                    trigger={trigger}
                     visible={visible}
+                    trigger={trigger}
+                    target={targetRef.current}
                     container={container}
                     root={root}
                 />
             ),
-            [restProps, visible, targetRef, trigger, debounceSetVisible, container, root]
+            [restProps, visible, trigger, debounceSetVisible, container, root]
         )
 
         // 获取child
@@ -134,15 +133,18 @@ const noticeRenderHoc: noticeRenderHocComponent = ({ Component, name, defaultTri
             visible,
             () => {
                 if (visible) {
+                    const root = getRoot ? getRoot() || getDefaultRoot() : getRootById(rootId)
                     const container = getNoticeContainer(containerZIndex, root)
                     const div = document.createElement('div')
                     div.setAttribute
                     container.append(div)
+
+                    setRoot(root)
                     setContainer(container)
                     setDiv(div)
                 }
             },
-            [visible, containerZIndex, root]
+            [visible, containerZIndex, getRoot, rootId]
         )
 
         // 根据props更新dom

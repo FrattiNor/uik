@@ -1,40 +1,48 @@
-import React, { FC, useState, useRef } from 'react'
-import { Button, DropDown } from 'uik'
+import React, { FC, useRef, useState } from 'react'
+import { Sticky, Button, Tooltip } from 'uik'
 
 const Test: FC = () => {
-    const [v, setV] = useState(false)
-
-    const btn1 = () => {
-        setV(!v)
-    }
-
     const ref = useRef(null)
 
-    const list = [
-        {
-            name: '1st menu item',
-            key: '111'
-        },
-        {
-            name: '1st menu item',
-            key: '222'
-        }
-    ]
+    const [b, setB] = useState(true)
+    const [a, setA] = useState(10)
+
+    const click = () => {
+        setB(!b)
+        console.log(a === 10 ? 100 : 10)
+        setA(a === 10 ? 100 : 10)
+    }
 
     return (
         <>
+            {/* <Sticky offsetTop={a} getRoot={() => ref.current}>
+                <Button type="primary">Button3</Button>
+            </Sticky> */}
             <div
                 ref={ref}
-                style={{ margin: 150, height: 500, width: 500, background: 'rgba(0,0,0,0.3)', overflow: 'auto', position: 'relative' }}
-                id="coc"
+                style={{
+                    height: 500,
+                    width: 500,
+                    padding: 24,
+                    margin: 24,
+                    backgroundColor: 'rgba(0,0,0,0.3)',
+                    display: 'flex',
+                    overflow: 'auto',
+                    position: 'relative'
+                }}
             >
-                <div style={{ margin: 50, height: 1000, width: 1000 }}>
-                    <DropDown visible getRoot={() => ref.current} autoAdjust overlay={list}>
-                        <Button type="primary" onClick={btn1}>
-                            Loading
-                        </Button>
-                    </DropDown>
-                </div>
+                <Tooltip autoAdjust title="666" getRoot={() => (b ? ref.current : document.body)}>
+                    <Button type="primary">Button1</Button>
+                </Tooltip>
+                <Button type="primary" onClick={click}>
+                    Button2
+                </Button>
+                <Sticky offsetTop={a} getRoot={() => ref.current}>
+                    <Button type="primary">
+                        Button3
+                    </Button>
+                </Sticky>
+                <div style={{ width: 2500, height: 2500 }} />
             </div>
         </>
     )

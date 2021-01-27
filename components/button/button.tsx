@@ -33,7 +33,7 @@ const Button: ForwardRefRenderFunction<unknown, buttonProps> = (props, ref) => {
         onClick,
         ...rest
     } = props
-    const componentRef = useRef(null)
+    const componentRef = useRef<HTMLElement>(null)
     const btnRef = (ref as any) || componentRef
 
     // btn的class

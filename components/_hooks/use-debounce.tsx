@@ -1,10 +1,10 @@
 /* eslint-disable no-unused-vars */
-import { useRef, MutableRefObject, useEffect } from 'react'
+import { useRef, useEffect } from 'react'
 
 type func<T> = (v: T) => void
 
 function useDebounce<T>(func: func<T>, time: number): func<T> {
-    const timeout: MutableRefObject<null | NodeJS.Timeout> = useRef(null)
+    const timeout = useRef<NodeJS.Timeout | null>(null)
 
     const clear = () => {
         if (timeout.current !== null) {

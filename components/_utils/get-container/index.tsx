@@ -1,3 +1,4 @@
+import { getRootById } from '../get-root'
 import './index.less'
 
 type containerProps = {
@@ -6,14 +7,6 @@ type containerProps = {
     containerType?: 'fixed' | 'absolute'
     zIndex?: number
     root?: HTMLElement
-}
-
-const getDefaultRoot = (): HTMLElement => {
-    return document.body
-}
-
-const getRootById = (rootId?: string): HTMLElement => {
-    return rootId ? document.getElementById(rootId) || getDefaultRoot() : getDefaultRoot()
 }
 
 const getContainer = ({ id, classname, containerType, zIndex, root }: containerProps): HTMLElement => {
@@ -50,5 +43,4 @@ const getContainer = ({ id, classname, containerType, zIndex, root }: containerP
     return container
 }
 
-export { getRootById, getDefaultRoot }
 export default getContainer

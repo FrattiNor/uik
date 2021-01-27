@@ -2,11 +2,11 @@
 import { noticePosition } from './types'
 
 type res = { top: number; left: number }
-type current = HTMLElement | null
+type elementOrNull = HTMLElement | null
 type errorType = 'top' | 'bottom' | 'left' | 'right'
 type error = errorType[] | false
 type getLeftTop = (position: noticePosition, target: HTMLElement, notice: HTMLElement, root: HTMLElement) => res
-type getLeftTopError = (position: noticePosition, target: current, notice: current, root: HTMLElement, container: current) => res & { error: error }
+type getLeftTopError = (position: noticePosition, target: elementOrNull, notice: elementOrNull, root: elementOrNull, container: elementOrNull) => res & { error: error }
 type getPosition = (position: noticePosition, error: errorType[]) => noticePosition | false
 
 // 根据 position 目标元素，notice本身，容器本身 获取 top left
@@ -90,7 +90,7 @@ const getPositionStyle: getLeftTopError = (position, target, notice, root, conta
     let resStyle = { top: 0, left: 0 }
     const error: error = []
 
-    if (notice !== null && target !== null && container !== null) {
+    if (root !== null && notice !== null && target !== null && container !== null) {
         // 容器的滚动高宽和本体高宽
         const rootScrollTop = root.scrollTop
         const rootScrollLeft = root.scrollLeft

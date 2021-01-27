@@ -1,4 +1,4 @@
-import React, { FC, useState, useRef, MutableRefObject, Fragment, useEffect } from 'react'
+import React, { FC, useState, useRef, Fragment, useEffect } from 'react'
 import classnames from 'classnames'
 import { useEffectTimeout, useStateFromValue, useEffectByCount } from '../../_hooks'
 import { noticeProps, noticeHocInnerComponent, noticeHocComponent } from './types'
@@ -15,7 +15,7 @@ const noticeHoc: noticeHocComponent = ({ backgroundColor, emptyKey, needArrow = 
             // 获取是否为空
             const isEmpty = emptyKey ? !_props[emptyKey] : false
             //
-            const { target, visible, position: outPosition = defaultPosition, trigger, setVirtualVisible, autoAdjust, root, container } = props
+            const { visible, position: outPosition = defaultPosition, trigger, setVirtualVisible, autoAdjust, root, container, target } = props
             // 使用的定位，根据外部传入和内部自动调整获得
             const [position, setPosition] = useStateFromValue(outPosition)
             // 承载动画的类名
@@ -25,7 +25,7 @@ const noticeHoc: noticeHocComponent = ({ backgroundColor, emptyKey, needArrow = 
             // notice的top，left定位
             const [topLeftstyle, setTopLeftstyle] = useState({})
             // notice本身的ref
-            const noticeRef: MutableRefObject<null | HTMLDivElement> = useRef(null)
+            const noticeRef = useRef<HTMLDivElement>(null)
             // 基础样式
             const baseStyle = { display: show ? 'block' : 'none' }
             // 外部传入的backgroundColor样式
@@ -64,7 +64,7 @@ const noticeHoc: noticeHocComponent = ({ backgroundColor, emptyKey, needArrow = 
                 return () => {
                     document.removeEventListener('click', clickClose)
                 }
-            }, [noticeRef, target, trigger])
+            }, [setVirtualVisible, target, trigger])
 
             // 根据visible设置动画和展示
             useEffectTimeout(
@@ -105,7 +105,7 @@ const noticeHoc: noticeHocComponent = ({ backgroundColor, emptyKey, needArrow = 
                         }
                     }
                 },
-                [position, target, noticeRef, show, autoAdjust, container, root],
+                [position, noticeRef.current, target, show, autoAdjust, container, root],
                 5
             )
 

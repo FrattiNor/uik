@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState, useRef, MutableRefObject, useLayoutEffect } from 'react'
+import React, { FC, useEffect, useState, useRef, useLayoutEffect } from 'react'
 import { unmountComponentAtNode } from 'react-dom'
 import classnames from 'classnames'
 import Icon from '../icon'
@@ -19,8 +19,8 @@ const Message: FC<messageProps> = (props) => {
     // 记录卸载方法的唯一key
     const key = id || Math.random().toString()
     // 记录自动卸载的setTimeout，避免二次卸载
-    const timeout: MutableRefObject<NodeJS.Timeout | null> = useRef(null)
-    const messageRef: MutableRefObject<HTMLDivElement | null> = useRef(null)
+    const timeout = useRef<NodeJS.Timeout | null>(null)
+    const messageRef = useRef<HTMLDivElement>(null)
     // visible默认显示
     const [visible, setVisible] = useState(true)
 

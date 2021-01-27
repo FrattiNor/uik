@@ -47,8 +47,8 @@ export type noticeRenderHocComponent = (props: noticeRenderHocProps) => FC<notic
 export type noticeProps = {
     target: HTMLElement | null
     container: HTMLElement | null
+    root: HTMLElement | null
     setVirtualVisible: (v: boolean) => void
-    root: HTMLElement
 } & noticeAndRenderProps
 
 export type noticeHocProps = {

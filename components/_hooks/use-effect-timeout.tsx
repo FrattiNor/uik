@@ -2,8 +2,7 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { useEffect, useRef, MutableRefObject, useCallback } from 'react'
 
-type refCurrent = NodeJS.Timeout | null
-type Timeout = MutableRefObject<refCurrent>
+type Timeout = MutableRefObject<NodeJS.Timeout | null>
 type func = (change: (timeout: NodeJS.Timeout) => void) => void
 
 // connect的timeout自动清理掉
