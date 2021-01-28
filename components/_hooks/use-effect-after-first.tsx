@@ -1,11 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useEffect, useState, useCallback } from 'react'
-
-type returnFun = () => void
-type func = () => returnFun | void
+import { EffectCallback, useEffect, useState, useCallback } from 'react'
 
 // 第一次不执行的useEffect
-const useEffectAfterFirst = (fun: func, depend: anyArray): void => {
+const useEffectAfterFirst = (fun: EffectCallback, depend: anyArray): void => {
     const [first, setFirst] = useState(true)
 
     const trucFun = useCallback(() => fun(), depend)

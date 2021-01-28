@@ -9,7 +9,7 @@ const routes = [
             {
                 path: '/uik',
                 title: '组件',
-                component: require('@/pages/uik'),
+                component: require('@/pages/ui-doc'),
                 routes: [
                     {
                         path: '/uik/:id'

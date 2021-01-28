@@ -1,6 +1,6 @@
 import React, { FC, useState, useRef, Fragment, useEffect } from 'react'
 import classnames from 'classnames'
-import { useEffectTimeout, useStateFromValue, useEffectByCount } from '../../_hooks'
+import { useEffectTimeout, useStateFromValue } from '../../_hooks'
 import { noticeProps, noticeHocInnerComponent, noticeHocComponent } from './types'
 import { getPositionStyle, autoAdjustPosition } from './util'
 import './notice.less'
@@ -86,28 +86,23 @@ const noticeHoc: noticeHocComponent = ({ backgroundColor, emptyKey, needArrow = 
             )
 
             // 根据 autoAdjust 和 position 获取 调整后的position 和 top left
-            // 设置调整次数为5次，避免出现无限调整定位的bug
-            useEffectByCount(
-                () => {
-                    if (show) {
-                        // 根据 定位 目标元素 notice本身 容器节点 根节点 获取 top left 和 是否存在遮挡
-                        const { top, left, error } = getPositionStyle(position, target, noticeRef.current, root, container)
+            useEffect(() => {
+                if (show) {
+                    // 根据 定位 目标元素 notice本身 容器节点 根节点 获取 top left 和 是否存在遮挡
+                    const { top, left, error } = getPositionStyle(position, target, noticeRef.current, root, container)
 
-                        if (autoAdjust && error) {
-                            // 根据 存在遮挡的error 和 当前定位 进行 定位调整
-                            const newPosition = autoAdjustPosition(position, error)
+                    if (autoAdjust && error) {
+                        // 根据 存在遮挡的error 和 当前定位 进行 定位调整
+                        const newPosition = autoAdjustPosition(position, error)
 
-                            if (newPosition) {
-                                setPosition(newPosition)
-                            }
-                        } else {
-                            setTopLeftstyle({ top, left })
+                        if (newPosition) {
+                            setPosition(newPosition)
                         }
+                    } else {
+                        setTopLeftstyle({ top, left })
                     }
-                },
-                [position, noticeRef.current, target, show, autoAdjust, container, root],
-                5
-            )
+                }
+            }, [position, target, show, autoAdjust, container, root, setPosition])
 
             return !isEmpty ? (
                 <div

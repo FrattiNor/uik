@@ -22,7 +22,7 @@ const getModalContainer = (): HTMLElement => {
 const ModalRender: FC<modalProps> = (props) => {
     const { visible = false } = props
 
-    const [div, setDiv]: [HTMLDivElement | null, any] = useState(null)
+    const [div, setDiv] = useState<HTMLDivElement | null>(null)
     const DOM = useMemo(() => <Modal {...props} />, [props])
 
     // 只创建一次div

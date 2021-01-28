@@ -16,6 +16,10 @@ const menu = [
             {
                 name: 'menu',
                 desc: 'Menu 菜单'
+            },
+            {
+                name: 'sticky',
+                desc: 'Sticky 固钉'
             }
         ]
     },

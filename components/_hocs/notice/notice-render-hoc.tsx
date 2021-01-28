@@ -35,11 +35,11 @@ const noticeRenderHoc: noticeRenderHocComponent = ({ Component, name, defaultTri
             ...restProps
         } = props
         // 根（装容器）
-        const [root, setRoot]: [HTMLDivElement | null, any] = useState(null)
+        const [root, setRoot] = useState<HTMLElement | null>(null)
         // 挂载的容器 (装div)
-        const [container, setContainer]: [HTMLDivElement | null, any] = useState(null)
+        const [container, setContainer] = useState<HTMLElement | null>(null)
         // 挂载的div
-        const [div, setDiv]: [HTMLDivElement | null, any] = useState(null)
+        const [div, setDiv] = useState<HTMLElement | null>(null)
         // target
         const targetRef = useRef<HTMLElement>(null)
         // 虚拟visible，和外部的visible保持一致（避免出现2个visible不一致的情况，保证onVisibleChange传的visible没问题）
@@ -50,9 +50,10 @@ const noticeRenderHoc: noticeRenderHocComponent = ({ Component, name, defaultTri
         const debounceSetVisible = useDebounce((v: boolean) => {
             if (!disabled) setVirtualVisible(v)
         }, 200)
+
         // DOM
-        const DOM = useMemo(
-            () => (
+        const DOM = useMemo(() => {
+            return (
                 <Component
                     {...restProps}
                     setVirtualVisible={debounceSetVisible}
@@ -62,9 +63,8 @@ const noticeRenderHoc: noticeRenderHocComponent = ({ Component, name, defaultTri
                     container={container}
                     root={root}
                 />
-            ),
-            [restProps, visible, trigger, debounceSetVisible, container, root]
-        )
+            )
+        }, [restProps, visible, trigger, debounceSetVisible, container, root])
 
         // 获取child
         const getChild = () => {

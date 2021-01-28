@@ -3,6 +3,7 @@ import { useRef, useEffect } from 'react'
 
 type func<T> = (v: T) => void
 
+// 防抖
 function useDebounce<T>(func: func<T>, time: number): func<T> {
     const timeout = useRef<NodeJS.Timeout | null>(null)
 

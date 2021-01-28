@@ -1,8 +1,7 @@
 /* eslint-disable no-unused-vars */
-import { useEffect, useState } from 'react'
+import { useEffect, useState, EffectCallback } from 'react'
 
-type func = () => void
-type fun = (func: func, depend: anyArray, count: number) => void
+type fun = (func: EffectCallback, depend: anyArray, count: number) => void
 
 const useEffectByCount: fun = (func, depend, count) => {
     const [num, setNum] = useState(0)

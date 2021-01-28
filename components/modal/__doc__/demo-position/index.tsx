@@ -5,7 +5,7 @@ import styles from './index.less'
 
 const Demo: FC = () => {
     const [visible, setVisible] = useState(false)
-    const [position, setPosition]: [modalPosition, any] = useState('center')
+    const [position, setPosition] = useState<modalPosition>('center')
 
     const open = (p:modalPosition) => {
         setPosition(p)

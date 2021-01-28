@@ -3,7 +3,7 @@
 import { useEffect, useRef, MutableRefObject, useCallback } from 'react'
 
 type Timeout = MutableRefObject<NodeJS.Timeout | null>
-type func = (change: (timeout: NodeJS.Timeout) => void) => void
+type func = (connect: (timeout: NodeJS.Timeout) => void) => void
 
 // connect的timeout自动清理掉
 const useTimeout = (fun: func, depend: anyArray): void => {

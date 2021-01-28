@@ -1,71 +1,67 @@
-import React, { FC, useEffect, useRef, useState, isValidElement, cloneElement } from 'react'
-import { getRootById, getDefaultRoot } from '../_utils'
+import React, { FC, useEffect, useRef, useState, useCallback, CSSProperties } from 'react'
+import { useResizeObserver } from '../_hooks'
 import { stickyProps } from './types'
-import './sticky.less'
 
 const Sticky: FC<stickyProps> = (props) => {
-    const { children, rootId, getRoot, offsetTop } = props
-    const target = useRef<HTMLDivElement>(null)
-    const targetOut = useRef<HTMLDivElement>(null)
-    const [isFixed, setIsFixed] = useState(false)
-    const [style, setStyle] = useState({})
+    const { children, rootId, getRoot, offsetTop, offsetBottom, style = {}, className } = props
+    const targetOutRef = useRef<HTMLDivElement>(null)
+    const targetRef = useRef<HTMLDivElement>(null)
+    const [targetOutStyle, setTargetOutStyle] = useState<CSSProperties>({})
+    const [targetStyle, setTargetStyle] = useState<CSSProperties>({})
+    const [fixedStyle, setFixedStyle] = useState<CSSProperties>({})
 
-    useEffect(() => {
-        if (target.current !== null) {
-            setStyle({
-                height: target.current.offsetHeight,
-                width: target.current.offsetWidth,
-                display: target.current.style.display
-            })
-        }
-    }, [])
+    // 监测元素高宽
+    useResizeObserver(targetRef.current, setTargetStyle, [])
+    useResizeObserver(targetOutRef.current, setTargetOutStyle, [])
 
-    useEffect(() => {
-        console.log('target', target.current)
-        const root = getRoot ? getRoot() || getDefaultRoot() : getRootById(rootId)
+    // 监控滚动事件
+    const scrollFun = useCallback(
+        (root: HTMLElement | Document) => {
+            const haveOffsetTop = typeof offsetTop === 'number'
+            const haveOffsetBottom = typeof offsetBottom === 'number'
+            const top = typeof offsetTop === 'number' ? offsetTop : 0
+            const bottom = typeof offsetBottom === 'number' ? offsetBottom : 0
 
-        const options = {
-            root,
-            rootMargin: `${offsetTop}px 0px 0px 0px`,
-            threshold: 1.0
-        }
+            if (targetOutRef.current !== null) {
+                const targetRect = targetOutRef.current.getBoundingClientRect()
+                const rootRect = root === document ? { x: 0, y: 0, height: window.innerHeight } : (root as HTMLElement).getBoundingClientRect()
+                const fixedBaseStyle = { transform: 'translateZ(0px)', position: 'fixed', width: targetOutStyle.width }
 
-        const callback = (entries: any) => {
-            entries.forEach((entry: any) => {
-                console.log('entry', entry)
-                if (entry.isIntersecting) {
-                    setIsFixed(false)
+                if (haveOffsetTop && targetRect.y < rootRect.y + top) {
+                    setFixedStyle({ ...fixedBaseStyle, top: rootRect.y + top, left: targetRect.x } as CSSProperties)
+                } else if (haveOffsetBottom && targetRect.y > rootRect.y + rootRect.height - bottom) {
+                    setFixedStyle({
+                        ...fixedBaseStyle,
+                        top: rootRect.y + rootRect.height - targetRect.height - bottom,
+                        left: targetRect.x
+                    } as CSSProperties)
                 } else {
-                    setIsFixed(true)
+                    setFixedStyle({})
                 }
-            })
-        }
+            }
+        },
+        [offsetBottom, offsetTop, targetOutStyle.width]
+    )
 
-        const observer = new IntersectionObserver(callback, options)
+    // 添加滚动事件
+    useEffect(() => {
+        const _root = getRoot ? getRoot() : rootId ? document.getElementById(rootId) : null
+        const root = _root === null ? document : _root
+        const getFixed = () => scrollFun(root)
 
-        if (targetOut.current !== null) {
-            observer.observe(targetOut.current)
-        }
+        getFixed()
+        root.addEventListener('scroll', getFixed)
 
         return () => {
-            observer.disconnect()
+            root.removeEventListener('scroll', getFixed)
         }
-    }, [offsetTop, rootId, getRoot])
-
-    const getChild = () => {
-        if (children !== null) {
-            const firstElement = Array.isArray(children) ? children[0] : children
-            const element = isValidElement(firstElement) ? firstElement : <span>{firstElement}</span>
-            const newPosition = isFixed ? 'fixed' : element.props?.style?.position
-            const cloneE = cloneElement(element, { ref: target, style: { ...element.props.style, position: newPosition } })
-            return cloneE
-        }
-        return null
-    }
+    }, [getRoot, rootId, scrollFun])
 
     return (
-        <div className="uik-sticky" style={style} ref={targetOut}>
-            {getChild()}
+        <div ref={targetOutRef} className={className} style={{ minHeight: targetStyle.height, ...style }}>
+            <div ref={targetRef} style={fixedStyle}>
+                {children}
+            </div>
         </div>
     )
 }

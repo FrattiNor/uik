@@ -2,7 +2,7 @@ import React, { FC, Fragment, useEffect, useState } from 'react'
 import classnames from 'classnames'
 import { useHistory, useLocation } from 'react-router-dom'
 import Title from 'react-document-title'
-import Sticky from 'react-sticky-el'
+import { Sticky } from 'uik'
 import { menu, getTitle, judgeName } from '@/doc-menu'
 import styles from './index.less'
 
@@ -37,7 +37,7 @@ const Menu: FC = () => {
 
     return (
         <Title title={pageTitle}>
-            <Sticky className={styles['menu']}>
+            <Sticky offsetTop={0} className={styles['menu']}>
                 {menu.map(({ title, components }) => {
                     return (
                         <Fragment key={title}>

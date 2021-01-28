@@ -12,3 +12,5 @@ export { default as useEffectByCount } from './use-effect-by-count'
 // debounce throttle
 export { default as useDebounce } from './use-debounce'
 export { default as useThrottle } from './use-throttle'
+// ResizeObserver
+export { default as useResizeObserver } from './use-resize-observer'
