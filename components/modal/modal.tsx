@@ -64,8 +64,8 @@ const Modal: FC<modalProps> = (props) => {
     const type = Array.isArray(position) ? position[0] : position
     const baseStyle = zIndex ? { zIndex, ...style } : style
 
-    const [show, setShow] = useState(true)
-    const [animateClassname, setAnimateClassname] = useState('show')
+    const [show, setShow] = useState(!!visible)
+    const [animateClassname, setAnimateClassname] = useState(visible ? 'show' : 'hidden')
 
     const trueCancel = (e: MouseEvent<HTMLElement>) => {
         if (onCancel) {

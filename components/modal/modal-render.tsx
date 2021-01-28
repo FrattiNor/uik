@@ -1,9 +1,9 @@
 import React, { FC, useState, useEffect, Fragment, useMemo } from 'react'
 import ReactDOM, { unmountComponentAtNode } from 'react-dom'
-import { useEffectOnce } from '../_hooks'
 import Modal from './modal'
 import { getContainer } from '../_utils'
 import { modalProps } from './types'
+import { useEffectOnce } from '../_hooks'
 
 // 获取容器 modal 容器
 const getModalContainer = (): HTMLElement => {
@@ -21,21 +21,20 @@ const getModalContainer = (): HTMLElement => {
 // 渲染组件
 const ModalRender: FC<modalProps> = (props) => {
     const { visible = false } = props
-
     const [div, setDiv] = useState<HTMLDivElement | null>(null)
+    const [container, setContainer] = useState<HTMLElement | null>(null)
     const DOM = useMemo(() => <Modal {...props} />, [props])
 
-    // 只创建一次div
+    // 只创建一次 挂载点（div）
     useEffectOnce(
         visible,
         () => {
-            if (visible) {
-                const container = getModalContainer()
-                const div = document.createElement('div')
-                div.setAttribute
-                container.append(div)
-                setDiv(div)
-            }
+            const container = getModalContainer()
+            const div = document.createElement('div')
+            div.setAttribute
+            container.append(div)
+            setDiv(div)
+            setContainer(container)
         },
         [visible]
     )
@@ -47,14 +46,14 @@ const ModalRender: FC<modalProps> = (props) => {
         }
     }, [div, DOM])
 
-    // 卸载时unmountComponentAtNode，想把visible:false传入的话需要再ReactDOM.render一次，因为卸载后不会再执行useEffect了
+    // 挂载点发生变化时，取消挂载
     useEffect(() => {
         return () => {
             if (div !== null) {
-                ReactDOM.render(<Modal {...props} visible={false} />, div)
-                setTimeout(() => {
-                    unmountComponentAtNode(div)
-                }, 350)
+                unmountComponentAtNode(div)
+                if (container !== null) {
+                    container.removeChild(div)
+                }
             }
         }
     }, [div])

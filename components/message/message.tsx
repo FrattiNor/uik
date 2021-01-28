@@ -8,7 +8,7 @@ import './message.less'
 
 // Message组件
 const Message: FC<messageProps> = (props) => {
-    const { father, container, title, type = 'default', id, duration: propsDuration, showClose = false, desc, width } = props
+    const { div, container, title, type = 'default', id, duration: propsDuration, showClose = false, desc, width } = props
     const { duration: configDuration, maxCount, overAnimate } = _messageConfig
     // 延迟关闭
     const duration = typeof propsDuration === 'number' ? propsDuration : configDuration
@@ -29,10 +29,8 @@ const Message: FC<messageProps> = (props) => {
 
     // 卸载方法 取消挂载以及移除dom
     const unmount = () => {
-        if (father && container) {
-            unmountComponentAtNode(father)
-            container.removeChild(father)
-        }
+        unmountComponentAtNode(div)
+        container.removeChild(div)
     }
 
     // 执行隐藏动画 后 卸载 并 移除destroyFun

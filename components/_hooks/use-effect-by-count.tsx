@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
-import { useEffect, useState, EffectCallback } from 'react'
+import { useEffect, useState } from 'react'
 
-type fun = (func: EffectCallback, depend: anyArray, count: number) => void
+type fun = (func: () => void, depend: anyArray, count: number) => void
 
 const useEffectByCount: fun = (func, depend, count) => {
     const [num, setNum] = useState(0)
@@ -11,7 +11,7 @@ const useEffectByCount: fun = (func, depend, count) => {
             setNum(num + 1)
             func()
         }
-    }, [...depend])
+    }, depend)
 }
 
 export default useEffectByCount

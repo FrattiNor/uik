@@ -31,8 +31,8 @@ export type messagePropsAndOptions = {
 }
 
 export type messageProps = {
-    container: HTMLElement | null // 这个用来干掉container这个可以常驻
-    father: Element | DocumentFragment // 这个是挂载点 要unmount卸载 完毕后卸载挂载点
+    container: HTMLElement // 挂载点 容器
+    div: HTMLDivElement // 完毕后卸载挂载点
     title: messageTitle
 } & messagePropsAndOptions
 

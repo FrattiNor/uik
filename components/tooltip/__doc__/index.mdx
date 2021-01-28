@@ -47,7 +47,7 @@ import codePosition from '!raw-loader!./demo-position'
 | position        | 定位                                                     | topLeft \| topCenter \| topRight \| bottomLeft \| bottomCenter \| bottomRight \| leftTop \| leftCenter \| leftBottom \| rightTop \| rightCenter \| rightBottom | topCenter        | -    |
 | visible         | 是否可见                                                 | boolean                                                                                                                                                        | false            | -    |
 | containerZIndex | 容器的 zIndex， 用于和其他悬浮内容比较层次               | number                                                                                                                                                         | -                | -    |
-| rootId          | 挂载容器的容器的 id                                      | string                                                                                                                                                         | body             | -    |
+| rootId          | 挂载容器的 id                                            | string                                                                                                                                                         | body             | -    |
 | getRoot         | 获取挂载的容器（用于 ref 获取 dom）（优先级高于 rootId） | () => HTMLElement \| null                                                                                                                                      | body             | -    |
 | trigger         | 不设置 visible 时，设置触发 visible 的方式               | hover \| focus \| click                                                                                                                                        | tooltip 为 hover | -    |
 | autoAdjust      | 自动调整 Tooltip 位置不被遮挡                            | boolean                                                                                                                                                        | false            | -    |
@@ -59,3 +59,7 @@ import codePosition from '!raw-loader!./demo-position'
 ## 注意
 
 请确保 Tooltip 的子元素能接受 `onMouseEnter`、`onMouseLeave`、`onFocus`、`onClick` 事件。
+
+请确保 挂载容器 的定位存在（不存在定位，不会跟随滑动）
+
+挂载容器确定后不可更改

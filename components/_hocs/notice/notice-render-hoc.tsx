@@ -1,7 +1,7 @@
 import React, { FC, Fragment, useEffect, useState, useMemo, isValidElement, useRef, cloneElement, MouseEvent } from 'react'
 import ReactDOM, { unmountComponentAtNode } from 'react-dom'
 import { noticeRenderProps, noticeRenderHocComponent } from './types'
-import { getContainer, getRootById, getDefaultRoot } from '../../_utils'
+import { getContainer, getRootById, getDefaultRoot, getElementUUID } from '../../_utils'
 import { useDebounce, useEffectAfterFirst, useEffectOnce, useStateFromValue } from '../../_hooks'
 
 // 获取参数
@@ -9,7 +9,7 @@ const noticeRenderHoc: noticeRenderHocComponent = ({ Component, name, defaultTri
     // 获取容器 notice 容器
     const getNoticeContainer = (containerZIndex: number, root: HTMLElement): HTMLElement => {
         // root 为根目录时才有id
-        const id = root === getDefaultRoot() ? `uik-${name}-${containerZIndex}` : undefined
+        const id = root === getDefaultRoot() ? `uik-${name}-${containerZIndex}` : `uik-${name}-${containerZIndex}-${getElementUUID(root)}`
 
         const container = getContainer({
             id,
@@ -49,7 +49,7 @@ const noticeRenderHoc: noticeRenderHocComponent = ({ Component, name, defaultTri
         // 防抖设置visible
         const debounceSetVisible = useDebounce((v: boolean) => {
             if (!disabled) setVirtualVisible(v)
-        }, 200)
+        }, 100)
 
         // DOM
         const DOM = useMemo(() => {
@@ -128,23 +128,21 @@ const noticeRenderHoc: noticeRenderHocComponent = ({ Component, name, defaultTri
             }
         }, [virtualVisible])
 
-        // 只创建一次div
+        // 只创建一次挂载点（div）
         useEffectOnce(
             visible,
             () => {
-                if (visible) {
-                    const root = getRoot ? getRoot() || getDefaultRoot() : getRootById(rootId)
-                    const container = getNoticeContainer(containerZIndex, root)
-                    const div = document.createElement('div')
-                    div.setAttribute
-                    container.append(div)
+                const root = getRoot ? getRoot() || getDefaultRoot() : getRootById(rootId)
+                const container = getNoticeContainer(containerZIndex, root)
+                const div = document.createElement('div')
+                div.setAttribute
+                container.append(div)
 
-                    setRoot(root)
-                    setContainer(container)
-                    setDiv(div)
-                }
+                setRoot(root)
+                setContainer(container)
+                setDiv(div)
             },
-            [visible, containerZIndex, getRoot, rootId]
+            [visible]
         )
 
         // 根据props更新dom
@@ -154,11 +152,14 @@ const noticeRenderHoc: noticeRenderHocComponent = ({ Component, name, defaultTri
             }
         }, [div, DOM])
 
-        // 卸载时unmountComponentAtNode
+        // 挂载点发生改变，取消挂载
         useEffect(() => {
             return () => {
                 if (div !== null) {
                     unmountComponentAtNode(div)
+                    if (container !== null) {
+                        container.removeChild(div)
+                    }
                 }
             }
         }, [div])

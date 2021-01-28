@@ -55,7 +55,7 @@ const open: messageOpen = (title, options) => {
     const { position = 'topCenter', ...restOptions } = options || {}
     const container = getMessageContainer(position)
     const div = document.createElement('div')
-    const ReactNode = <Message father={div} container={container} title={title} {...restOptions} />
+    const ReactNode = <Message div={div} container={container} title={title} {...restOptions} />
     container.append(div)
     ReactDOM.render(ReactNode, div)
 }

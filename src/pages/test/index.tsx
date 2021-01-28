@@ -1,30 +1,27 @@
 import React, { FC, useRef, useState } from 'react'
-import { StickyObserver, Button } from 'uik'
+import { Confirm, Button, Modal } from 'uik'
 import styles from './index.less'
 
 const Test: FC = () => {
-    const [text, setText] = useState('Sticky')
     const ref = useRef<HTMLDivElement>(null)
 
+    const [root, setRoot] = useState(true)
+
     const change = () => {
-        setText(text === 'Sticky' ? 'StickySticky' : 'Sticky')
+        setRoot(!root)
     }
 
     return (
         <>
             <div className={styles['wrapper']} ref={ref}>
                 <div className={styles['wrapper-inner']}>
-                    <StickyObserver offsetTop={10}>
-                        <Button type="primary">{text}</Button>
-                    </StickyObserver>
+                    <Confirm content="confirm ok?" getRoot={() => (root ? document.body : ref.current)}>
+                        <Button type="primary">Button</Button>
+                    </Confirm>
+                    <Button onClick={change}>Button</Button>
                 </div>
             </div>
-            <div style={{ height: 2000 }}></div>
-            {/* <div style={{ height: 2000 }}></div>
-            <Sticky offsetBottom={10}>
-                <Button type="primary">Sticky</Button>
-            </Sticky>
-            <div style={{ height: 2000 }}></div> */}
+            <div style={{ height: 2000 }} />
         </>
     )
 }
