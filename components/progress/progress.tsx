@@ -29,11 +29,10 @@ const Progress: FC<progressProps> = (props) => {
     // circle
     const getCircle = () => {
         const trueWidth = width || 200 // 方块宽度
-        const roundline = Math.PI * 170 * 2 // 圆环周长
-        const percentLine = (roundline / 100) * truePercent / 2 // 占据的百分比周长
-        const sameCircleStyle = { cx: trueWidth / 2, cy: trueWidth / 2, r: trueWidth / 2 - barWidth, fill: 'none', strokeWidth: barWidth }
-
-        console.log('truePercent', truePercent, roundline, percentLine)
+        const r = trueWidth / 2 - barWidth // 半径
+        const roundline = 2 * Math.PI * r // 圆环周长
+        const percentLine = (roundline / 100) * truePercent // 占据的百分比周长
+        const sameCircleStyle = { cx: trueWidth / 2, cy: trueWidth / 2, r, fill: 'none', strokeWidth: barWidth }
 
         return (
             <svg className="uik-progress-circle" height={trueWidth} width={trueWidth}>

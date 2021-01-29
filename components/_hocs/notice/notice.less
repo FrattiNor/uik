@@ -1,17 +1,17 @@
 @import '../../_style/theme.less';
 @import '../../_style/animate/slider.less';
 
-@padding-juli: 8px;
-@arrow-juli: 10px;
-@no-arrow-juli: 5px;
+@padding-distance: 8px;
+@arrow-distance: 10px;
+@no-arrow-distance: 5px;
 
 .top {
-    padding-bottom: @padding-juli;
+    padding-bottom: @padding-distance;
 
     // 无箭头，修改padding距离，以及触发动画的中心
     // 无箭头触发动画一律从当前主定位的中间触发
     &.no-arrow {
-        padding-bottom: @no-arrow-juli;
+        padding-bottom: @no-arrow-distance;
         transform-origin: 50% 100%;
     }
     
@@ -32,10 +32,10 @@
 }
 
 .bottom {
-    padding-top: @padding-juli;
+    padding-top: @padding-distance;
 
     &.no-arrow {
-        padding-top: @no-arrow-juli;
+        padding-top: @no-arrow-distance;
         transform-origin: 50% 0;
     }
 
@@ -54,10 +54,10 @@
 }
 
 .left {
-    padding-right: @padding-juli;
+    padding-right: @padding-distance;
 
     &.no-arrow {
-        padding-right: @no-arrow-juli;
+        padding-right: @no-arrow-distance;
         transform-origin: 100% 50%;
     }
 
@@ -76,10 +76,10 @@
 }
 
 .right {
-    padding-left: @padding-juli;
+    padding-left: @padding-distance;
 
     &.no-arrow {
-        padding-left: @no-arrow-juli;
+        padding-left: @no-arrow-distance;
         transform-origin: 0 50%;
     }
 
@@ -127,12 +127,12 @@
 
     // == 定位 ==
     &.topLeft {
-        transform-origin: @arrow-juli 100%;
+        transform-origin: @arrow-distance 100%;
         .top();
         // 当前定位下的箭头容器位置修改
         .uik-notice-arrow {
             top: 100%;
-            left: @arrow-juli;
+            left: @arrow-distance;
         }
     }
     &.topCenter {
@@ -145,22 +145,22 @@
         }
     }
     &.topRight {
-        transform-origin: calc(~'100% - @{arrow-juli}') 100%;
+        transform-origin: calc(~'100% - @{arrow-distance}') 100%;
         .top();
 
         .uik-notice-arrow {
             top: 100%;
-            right: @arrow-juli;
+            right: @arrow-distance;
         }
     }
 
     &.bottomLeft {
-        transform-origin: @arrow-juli 0;
+        transform-origin: @arrow-distance 0;
         .bottom();
 
         .uik-notice-arrow {
             top: -8px;
-            left: @arrow-juli;
+            left: @arrow-distance;
         }
     }
     &.bottomCenter {
@@ -173,21 +173,21 @@
         }
     }
     &.bottomRight {
-        transform-origin: calc(~'100% - @{arrow-juli}') 0;
+        transform-origin: calc(~'100% - @{arrow-distance}') 0;
         .bottom();
 
         .uik-notice-arrow {
             top: -8px;
-            right: @arrow-juli;
+            right: @arrow-distance;
         }
     }
 
     &.leftTop {
-        transform-origin: 100% @arrow-juli;
+        transform-origin: 100% @arrow-distance;
         .left();
 
         .uik-notice-arrow {
-            top: @arrow-juli;
+            top: @arrow-distance;
             right: -8px;
         }
     }
@@ -201,21 +201,21 @@
         }
     }
     &.leftBottom {
-        transform-origin: 100% calc(~'100% - @{arrow-juli}');
+        transform-origin: 100% calc(~'100% - @{arrow-distance}');
         .left();
 
         .uik-notice-arrow {
-            bottom: @arrow-juli;
+            bottom: @arrow-distance;
             right: -8px;
         }
     }
 
     &.rightTop {
-        transform-origin: 0 @arrow-juli;
+        transform-origin: 0 @arrow-distance;
         .right();
 
         .uik-notice-arrow {
-            top: @arrow-juli;
+            top: @arrow-distance;
             left: -8px;
         }
     }
@@ -229,11 +229,11 @@
         }
     }
     &.rightBottom {
-        transform-origin: 0 calc(~'100% - @{arrow-juli}');
+        transform-origin: 0 calc(~'100% - @{arrow-distance}');
         .right();
 
         .uik-notice-arrow {
-            bottom: @arrow-juli;
+            bottom: @arrow-distance;
             left: -8px;
         }
     }

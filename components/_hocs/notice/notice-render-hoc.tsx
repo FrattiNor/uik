@@ -53,6 +53,7 @@ const noticeRenderHoc: noticeRenderHocComponent = ({ Component, name, defaultTri
 
         // DOM
         const DOM = useMemo(() => {
+            // console.log(targetRef.current)
             return (
                 <Component
                     {...restProps}

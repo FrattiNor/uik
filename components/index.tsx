@@ -11,6 +11,12 @@ export { default as Sticky } from './sticky'
 // 固钉 sticky2 使用 IntersectionObserver（缺陷是不能使用在超过可视区域大小的元素上）
 export { default as StickyObserver } from './sticky-observer' 
 
+// == 输入 ==
+
+// 输入框
+export { default as Input } from './input' 
+// 滑块
+export { default as Slider } from './slider' 
 
 // == 状态 ==
 

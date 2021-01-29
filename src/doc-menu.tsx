@@ -24,6 +24,19 @@ const menu = [
         ]
     },
     {
+        title: '输入',
+        components: [
+            {
+                name: 'input',
+                desc: 'Input 输入框'
+            },
+            {
+                name: 'slider',
+                desc: 'Slider 滑块'
+            }
+        ]
+    },
+    {
         title: '状态',
         components: [
             {
