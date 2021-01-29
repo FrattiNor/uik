@@ -25,10 +25,10 @@ import codeNormal from '!raw-loader!./demo-normal'
 
 <div className="api">
 
-| 属性        | 说明         | 类型                              | 默认值 | 版本 |
-| :---------- | :----------- | :-------------------------------- | :----- | :--- |
-| overlayList | 列表内容     | { name , key } []                 | -      | -    |
-| onClick     | 列表点击事件 | ({ event: e, name, key }) => void | -      | -    |
+| 属性    | 说明         | 类型                              | 默认值 | 版本 |
+| :------ | :----------- | :-------------------------------- | :----- | :--- |
+| list    | 列表内容     | { name , key } []                 | -      | -    |
+| onClick | 列表点击事件 | ({ event: e, name, key }) => void | -      | -    |
 
 </div>
 
@@ -47,6 +47,7 @@ import codeNormal from '!raw-loader!./demo-normal'
 | autoAdjust      | 自动调整 Confirm 位置不被遮挡                            | boolean                                                                                                                                                        | false            | -    |
 | disabled        | 阻止 trigger 触发 visible 修改                           | boolean                                                                                                                                                        | false            | -    |
 | onVisibleChange | trigger 触发的 visible 改变的回调                        | (visible) => void                                                                                                                                              | -                | -    |
+| popSameWidth    | 弹出层最小宽度和触发元素的宽度一致                       | boolean                                                                                                                                                        | false            | -    |
 
 </div>
 

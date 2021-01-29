@@ -19,7 +19,7 @@ const Demo: FC = () => {
 
     return (
         <Dropdown list={list}>
-            <Button>鼠标移入触发DropDown</Button>
+            <Button>鼠标移入触发Dropdown</Button>
         </Dropdown>
     )
 }

@@ -6,7 +6,7 @@ import { getPositionStyle, autoAdjustPosition } from './util'
 import './notice.less'
 
 // 获取参数
-const noticeHoc: noticeHocComponent = ({ backgroundColor, emptyKey, needArrow = true, defaultPosition = 'topCenter' }) => {
+const noticeHoc: noticeHocComponent = ({ backgroundColor, emptyKey, needArrow = true, defaultPosition = 'topCenter', isDropdown = false }) => {
     // 获取组件
     const noticeHocInner: noticeHocInnerComponent = (WrapperComponent) => {
         // 修改组件
@@ -15,7 +15,17 @@ const noticeHoc: noticeHocComponent = ({ backgroundColor, emptyKey, needArrow = 
             // 获取是否为空
             const isEmpty = emptyKey ? !_props[emptyKey] : false
             //
-            const { visible, position: outPosition = defaultPosition, trigger, setVirtualVisible, autoAdjust, root, container, target } = props
+            const {
+                visible,
+                position: outPosition = defaultPosition,
+                trigger,
+                setVirtualVisible,
+                autoAdjust,
+                root,
+                container,
+                target,
+                popSameWidth
+            } = props
             // 使用的定位，根据外部传入和内部自动调整获得
             const [position, setPosition] = useStateFromValue(outPosition)
             // 承载动画的类名
@@ -27,7 +37,7 @@ const noticeHoc: noticeHocComponent = ({ backgroundColor, emptyKey, needArrow = 
             // notice本身的ref
             const noticeRef = useRef<HTMLDivElement>(null)
             // 基础样式
-            const baseStyle = { display: show ? 'block' : 'none' }
+            const baseStyle = { display: show ? 'block' : 'none', minWidth: popSameWidth ? target?.clientWidth : undefined }
             // 外部传入的backgroundColor样式
             const backgroundColorStyle = { backgroundColor }
 
@@ -77,7 +87,7 @@ const noticeHoc: noticeHocComponent = ({ backgroundColor, emptyKey, needArrow = 
                         connect(
                             setTimeout(() => {
                                 setShow(false)
-                                setAnimateClassname('')
+                                // setAnimateClassname('')
                             }, 200)
                         )
                     }
@@ -109,7 +119,7 @@ const noticeHoc: noticeHocComponent = ({ backgroundColor, emptyKey, needArrow = 
                     onMouseEnter={onMouseEnter}
                     onMouseLeave={onMouseLeave}
                     ref={noticeRef}
-                    className={classnames('uik-notice', position, { 'no-arrow': !needArrow })}
+                    className={classnames('uik-notice', position, { 'no-arrow': !needArrow, 'is-dropdown': isDropdown })}
                     style={{ ...baseStyle, ...topLeftstyle }}
                 >
                     <div className={classnames('uik-notice-inner', animateClassname)} style={backgroundColorStyle}>

@@ -1,8 +1,101 @@
 @import '../../_style/theme.less';
+@import '../../_style/animate/slider.less';
 
 @padding-juli: 8px;
 @arrow-juli: 10px;
 @no-arrow-juli: 5px;
+
+.top {
+    padding-bottom: @padding-juli;
+
+    // 无箭头，修改padding距离，以及触发动画的中心
+    // 无箭头触发动画一律从当前主定位的中间触发
+    &.no-arrow {
+        padding-bottom: @no-arrow-juli;
+        transform-origin: 50% 100%;
+    }
+    
+    // 当前定位下的箭头位置修改
+    .uik-notice-arrow-content {
+        top: -4px;
+    }
+
+    // is-dropdown 的 动画修改
+    &.is-dropdown {
+        .show {
+            animation: slideDownIn 0.15s forwards;
+        }
+        .hidden {
+            animation: slideDownOut 0.15s forwards;
+        }
+    }
+}
+
+.bottom {
+    padding-top: @padding-juli;
+
+    &.no-arrow {
+        padding-top: @no-arrow-juli;
+        transform-origin: 50% 0;
+    }
+
+    .uik-notice-arrow-content {
+        bottom: -4px;
+    }
+
+    &.is-dropdown {
+        .show {
+            animation: slideUpIn 0.15s forwards;
+        }
+        .hidden {
+            animation: slideUpOut 0.15s forwards;
+        }
+    }
+}
+
+.left {
+    padding-right: @padding-juli;
+
+    &.no-arrow {
+        padding-right: @no-arrow-juli;
+        transform-origin: 100% 50%;
+    }
+
+    .uik-notice-arrow-content {
+        left: -4px;
+    }
+
+    &.is-dropdown {
+        .show {
+            animation: slideRightIn 0.15s forwards;
+        }
+        .hidden {
+            animation: slideRightOut 0.15s forwards;
+        }
+    }
+}
+
+.right {
+    padding-left: @padding-juli;
+
+    &.no-arrow {
+        padding-left: @no-arrow-juli;
+        transform-origin: 0 50%;
+    }
+
+    .uik-notice-arrow-content {
+        right: -4px;
+    }
+
+    &.is-dropdown {
+        .show {
+            animation: slideLeftIn 0.15s forwards;
+        }
+        .hidden {
+            animation: slideLeftOut 0.15s forwards;
+        }
+    }
+}
 
 .uik-notice {
     position: absolute;
@@ -12,211 +105,139 @@
         position: relative;
     }
 
+    // 触发 显示 animation
     .show {
         transform-origin: inherit;
         animation: noticeScaleIn 0.15s forwards;
+
+        // &.is-dropdown {
+        //     animation: noticeSlideUpIn 0.15s forwards;
+        // }
     }
 
+    // 触发 隐藏 animation
     .hidden {
         transform-origin: inherit;
         animation: noticeScaleOut 0.15s forwards;
+
+        // &.is-dropdown {
+        //     animation: noticeSlideUpOut 0.15s forwards;
+        // }
     }
 
+    // == 定位 ==
     &.topLeft {
-        padding-bottom: @padding-juli;
         transform-origin: @arrow-juli 100%;
-
-        &.no-arrow {
-            padding-bottom: @no-arrow-juli;
-        }
-
+        .top();
+        // 当前定位下的箭头容器位置修改
         .uik-notice-arrow {
             top: 100%;
             left: @arrow-juli;
         }
-        .uik-notice-arrow-content {
-            top: -4px;
-        }
     }
     &.topCenter {
-        padding-bottom: @padding-juli;
         transform-origin: 50% 100%;
-
-        &.no-arrow {
-            padding-bottom: @no-arrow-juli;
-        }
+        .top();
 
         .uik-notice-arrow {
             top: 100%;
             left: calc(~'50% - 4px');
         }
-        .uik-notice-arrow-content {
-            top: -4px;
-        }
     }
     &.topRight {
-        padding-bottom: @padding-juli;
         transform-origin: calc(~'100% - @{arrow-juli}') 100%;
-
-        &.no-arrow {
-            padding-bottom: @no-arrow-juli;
-        }
+        .top();
 
         .uik-notice-arrow {
             top: 100%;
             right: @arrow-juli;
-        }
-        .uik-notice-arrow-content {
-            top: -4px;
         }
     }
 
     &.bottomLeft {
-        padding-top: @padding-juli;
         transform-origin: @arrow-juli 0;
-
-        &.no-arrow {
-            padding-top: @no-arrow-juli;
-        }
+        .bottom();
 
         .uik-notice-arrow {
             top: -8px;
             left: @arrow-juli;
         }
-        .uik-notice-arrow-content {
-            bottom: -4px;
-        }
     }
     &.bottomCenter {
-        padding-top: @padding-juli;
         transform-origin: 50% 0;
-
-        &.no-arrow {
-            padding-top: @no-arrow-juli;
-        }
+        .bottom();
 
         .uik-notice-arrow {
             top: -8px;
             left: calc(~'50% - 4px');
         }
-        .uik-notice-arrow-content {
-            bottom: -4px;
-        }
     }
     &.bottomRight {
-        padding-top: @padding-juli;
         transform-origin: calc(~'100% - @{arrow-juli}') 0;
-
-        &.no-arrow {
-            padding-top: @no-arrow-juli;
-        }
+        .bottom();
 
         .uik-notice-arrow {
             top: -8px;
             right: @arrow-juli;
         }
-        .uik-notice-arrow-content {
-            bottom: -4px;
-        }
     }
 
     &.leftTop {
-        padding-right: @padding-juli;
         transform-origin: 100% @arrow-juli;
-
-        &.no-arrow {
-            padding-right: @no-arrow-juli;
-        }
+        .left();
 
         .uik-notice-arrow {
             top: @arrow-juli;
             right: -8px;
         }
-        .uik-notice-arrow-content {
-            left: -4px;
-        }
     }
     &.leftCenter {
-        padding-right: @padding-juli;
         transform-origin: 100% 50%;
-
-        &.no-arrow {
-            padding-right: @no-arrow-juli;
-        }
+        .left();
 
         .uik-notice-arrow {
             top: calc(~'50% - 4px');
             right: -8px;
         }
-        .uik-notice-arrow-content {
-            left: -4px;
-        }
     }
     &.leftBottom {
-        padding-right: @padding-juli;
         transform-origin: 100% calc(~'100% - @{arrow-juli}');
-
-        &.no-arrow {
-            padding-right: @no-arrow-juli;
-        }
+        .left();
 
         .uik-notice-arrow {
             bottom: @arrow-juli;
             right: -8px;
-        }
-        .uik-notice-arrow-content {
-            left: -4px;
         }
     }
 
     &.rightTop {
-        padding-left: @padding-juli;
         transform-origin: 0 @arrow-juli;
-
-        &.no-arrow {
-            padding-left: @no-arrow-juli;
-        }
+        .right();
 
         .uik-notice-arrow {
             top: @arrow-juli;
             left: -8px;
         }
-        .uik-notice-arrow-content {
-            right: -4px;
-        }
     }
     &.rightCenter {
-        padding-left: @padding-juli;
         transform-origin: 0 50%;
-
-        &.no-arrow {
-            padding-left: @no-arrow-juli;
-        }
+        .right();
 
         .uik-notice-arrow {
             top: calc(~'50% - 4px');
             left: -8px;
         }
-        .uik-notice-arrow-content {
-            right: -4px;
-        }
     }
     &.rightBottom {
-        padding-left: @padding-juli;
         transform-origin: 0 calc(~'100% - @{arrow-juli}');
-
-        &.no-arrow {
-            padding-left: @no-arrow-juli;
-        }
+        .right();
 
         .uik-notice-arrow {
             bottom: @arrow-juli;
             left: -8px;
         }
-        .uik-notice-arrow-content {
-            right: -4px;
-        }
     }
+    // == 定位 ==
 
     &-inner {
         color: #fff;
@@ -245,7 +266,7 @@
     }
 }
 
-// ================
+// == animate ================
 
 @keyframes noticeScaleIn {
     0% {

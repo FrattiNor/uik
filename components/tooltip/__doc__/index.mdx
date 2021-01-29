@@ -32,9 +32,9 @@ import codePosition from '!raw-loader!./demo-position'
 
 <div className="api">
 
-| 属性  | 说明 | 类型                 | 默认值 | 版本 |
-| :---- | :--- | :------------------- | :----- | :--- |
-| title | 内容 | string \｜ ReactNode | -      | -    |
+| 属性  | 说明 | 类型                | 默认值 | 版本 |
+| :---- | :--- | :------------------ | :----- | :--- |
+| title | 内容 | string \| ReactNode | -      | -    |
 
 </div>
 
@@ -53,6 +53,7 @@ import codePosition from '!raw-loader!./demo-position'
 | autoAdjust      | 自动调整 Tooltip 位置不被遮挡                            | boolean                                                                                                                                                        | false            | -    |
 | disabled        | 阻止 trigger 触发 visible 修改                           | boolean                                                                                                                                                        | false            | -    |
 | onVisibleChange | trigger 触发的 visible 改变的回调                        | (visible) => void                                                                                                                                              | -                | -    |
+| popSameWidth    | 弹出层最小宽度和触发元素的宽度一致                       | boolean                                                                                                                                                        | false            | -    |
 
 </div>
 

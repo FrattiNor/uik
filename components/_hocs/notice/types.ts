@@ -1,6 +1,7 @@
+/* eslint-disable no-unused-vars */
 import { FC } from 'react'
 
-/* eslint-disable no-unused-vars */
+// 定位
 export type noticePosition =
     | 'topLeft'
     | 'topCenter'
@@ -15,17 +16,27 @@ export type noticePosition =
     | 'rightCenter'
     | 'rightBottom'
 
+// 触发方式
 export type noticeTrigger = 'hover' | 'focus' | 'click'
 
-// notice notice-render 共同的参数
+// notice-props notice-render-props 共同的参数
 export type noticeAndRenderProps = {
     position?: noticePosition
     visible?: boolean
     trigger?: noticeTrigger // 默认的触发方式
     autoAdjust?: boolean
+    popSameWidth?: boolean // 弹出层和触发元素一样宽，用于dropdown
 }
 
 // == noticeRenderHoc ==
+// render-hoc 配置参数
+export type noticeRenderHocProps = {
+    Component: FC<noticeProps>
+    name: string
+    defaultTrigger: noticeTrigger
+}
+
+// render 组件参数
 export type noticeRenderProps = {
     containerZIndex?: number // notice容器的zIndex，用于和其他悬浮内容比较层次（例如tooltip默认是在modal上方的，所以tooltip会显示在mask上方）【只能首次设置切不可更改，因为容器只会创造一次】
     rootId?: string
@@ -34,16 +45,22 @@ export type noticeRenderProps = {
     onVisibleChange?: (v: boolean) => void
 } & noticeAndRenderProps
 
-export type noticeRenderHocProps = {
-    Component: FC<noticeProps>
-    name: string
-    defaultTrigger: noticeTrigger
-}
-
+// render-hoc 高阶组件本身
 export type noticeRenderHocComponent = (props: noticeRenderHocProps) => FC<noticeRenderProps>
-// == noticeRenderHoc ==
+
 
 // == noticeHoc ==
+
+// notice-hoc 配置参数
+export type noticeHocProps = {
+    backgroundColor: string
+    emptyKey?: string
+    needArrow?: boolean
+    defaultPosition?: noticePosition,
+    isDropdown?: boolean // 是否
+}
+
+// notice 组件参数
 export type noticeProps = {
     target: HTMLElement | null
     container: HTMLElement | null
@@ -51,18 +68,14 @@ export type noticeProps = {
     setVirtualVisible: (v: boolean) => void
 } & noticeAndRenderProps
 
-export type noticeHocProps = {
-    backgroundColor: string
-    emptyKey?: string
-    needArrow?: boolean
-    defaultPosition?: noticePosition
-}
-
+// notice-hoc 高阶组件本身
 export type noticeHocComponent = (props: noticeHocProps) => noticeHocInnerComponent
 
 // any 代表组件本身的props参数
+// notice-hoc-inner 高阶组件本身
 export type noticeHocInnerComponent = (WrapperComponent: FC<any>) => FC<noticeProps & any>
-// == noticeHoc ==
+
 
 // == back FC ==
+// 返回的组件
 export type noticeBackFC<T> = FC<T & noticeRenderProps>

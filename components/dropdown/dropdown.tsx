@@ -14,6 +14,6 @@ const DropDonw: FC<dropdownProps> = (props) => {
     return <div className="uik-dropdown">{truelist.length > 0 && <MenuInner list={truelist} onClick={onClick} />}</div>
 }
 
-const Component = noticeHoc({ backgroundColor: '#fff', emptyKey: 'list', needArrow: false, defaultPosition: 'bottomCenter' })(DropDonw)
+const Component = noticeHoc({ backgroundColor: '#fff', emptyKey: 'list', needArrow: false, defaultPosition: 'bottomLeft', isDropdown: true })(DropDonw)
 
 export default noticeRenderHoc({ Component, name: 'dropdown', defaultTrigger: 'hover' }) as noticeBackFC<dropdownProps>
