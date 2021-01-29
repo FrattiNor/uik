@@ -24,12 +24,21 @@ const menu = [
         ]
     },
     {
-        title: '反馈',
+        title: '状态',
         components: [
             {
                 name: 'loading',
                 desc: 'Loading 加载中'
             },
+            {
+                name: 'progress',
+                desc: 'Progress 进度条'
+            }
+        ]
+    },
+    {
+        title: '反馈',
+        components: [
             {
                 name: 'message',
                 desc: 'message 消息反馈'
@@ -48,7 +57,7 @@ const menu = [
             },
             {
                 name: 'dropdown',
-                desc: 'DropDown 下拉菜单'
+                desc: 'Dropdown 下拉菜单'
             }
         ]
     }

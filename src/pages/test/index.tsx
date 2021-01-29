@@ -1,27 +1,24 @@
-import React, { FC, useRef, useState } from 'react'
-import { Confirm, Button, Modal } from 'uik'
-import styles from './index.less'
+import React, { FC, useState } from 'react'
+import { Progress, Button } from 'uik'
 
 const Test: FC = () => {
-    const ref = useRef<HTMLDivElement>(null)
+    const [precent, setPrecent] = useState(50)
 
-    const [root, setRoot] = useState(true)
+    const add = () => {
+        setPrecent(precent + 10)
+    }
 
-    const change = () => {
-        setRoot(!root)
+    const del = () => {
+        setPrecent(precent - 10)
     }
 
     return (
         <>
-            <div className={styles['wrapper']} ref={ref}>
-                <div className={styles['wrapper-inner']}>
-                    <Confirm content="confirm ok?" getRoot={() => (root ? document.body : ref.current)}>
-                        <Button type="primary">Button</Button>
-                    </Confirm>
-                    <Button onClick={change}>Button</Button>
-                </div>
+            <div style={{ margin: 24 }}>
+                <Progress type='circle' percent={precent} />
             </div>
-            <div style={{ height: 2000 }} />
+            <Button onClick={add}>add</Button>
+            <Button onClick={del}>del</Button>
         </>
     )
 }

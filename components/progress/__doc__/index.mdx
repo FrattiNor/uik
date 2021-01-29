@@ -1,0 +1,42 @@
+import CodeBox from '@/components/code-box'
+import CodeWrapper from '@/components/code-wrapper'
+
+import DemoNormal from './demo-normal'
+import descNormal from './demo-normal/desc.md'
+import codeNormal from '!raw-loader!./demo-normal'
+
+import DemoCircle from './demo-circle'
+import descCircle from './demo-circle/desc.md'
+import codeCircle from '!raw-loader!./demo-circle'
+
+# Progress 进度条
+
+展示当前进度。
+
+## 何时使用
+
+在长流程或者耗时长的场景，展示进度条可以给予更好的体验。
+
+## 代码演示
+
+<CodeWrapper>
+    <CodeBox title="基本进度条" desc={descNormal} code={codeNormal}>
+        <DemoNormal />
+    </CodeBox>
+    <CodeBox title="环型进度条" desc={descCircle} code={codeCircle}>
+        <DemoCircle />
+    </CodeBox>
+</CodeWrapper>
+
+## API
+
+<div className="api">
+
+| 属性     | 说明                                                                           | 类型           | 默认值       | 版本 |
+| :------- | :----------------------------------------------------------------------------- | :------------- | :----------- | :--- |
+| percent  | 当前进度                                                                       | [0 - 100]      | 0            | -    |
+| barWidth | 进度条宽度                                                                     | number         | 8            | -    |
+| type     | 进度条类型，分条型和环型                                                       | line \| circle | line         | -    |
+| width    | 条型进度条默认块元素，设置宽度后转为行内元素，环型进度条默认行内元素，宽度 200 | number         | circle： 200 | -    |
+
+</div>

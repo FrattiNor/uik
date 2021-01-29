@@ -11,11 +11,11 @@ import codePosition from '!raw-loader!./demo-position'
 
 # Tooltip 文字提示
 
-简单的文字提示气泡框。
+文字提示气泡框。
 
 ## 何时使用
 
-鼠标移入则显示提示，移出消失，气泡浮层不承载复杂文本和操作。
+鼠标移入则显示提示，移出消失，承载普通文本。
 
 ## 代码演示
 
@@ -58,8 +58,8 @@ import codePosition from '!raw-loader!./demo-position'
 
 ## 注意
 
-请确保 Tooltip 的子元素能接受 `onMouseEnter`、`onMouseLeave`、`onFocus`、`onClick` 事件。
+请确保 `子元素` 能接受 `onMouseEnter`、`onMouseLeave`、`onFocus`、`onBlur`, `onClick` 事件。
 
-请确保 挂载容器 的定位存在（不存在定位，不会跟随滑动）
+请确保 `挂载容器` 的定位存在（不存在定位，不会跟随滑动）
 
-挂载容器确定后不可更改
+`挂载容器` 确定后不可更改

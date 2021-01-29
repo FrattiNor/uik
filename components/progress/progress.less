@@ -1,0 +1,23 @@
+@import '../_style/theme.less';
+
+.uik-progress {
+    &-line {
+        overflow: hidden;
+        background-color: #f5f5f5;
+
+        &-precent {
+            height: 8px;
+            background-color: @primary-color;
+            transition: width 0.3s;
+        }
+    }
+
+    &-circle {
+        display: inline-block;
+        
+        circle {
+            //圆环的过渡动画
+            transition: stroke-dasharray 0.3s;
+        }
+    }
+}

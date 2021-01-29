@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import { Button, DropDown } from 'uik'
+import { Button, Dropdown } from 'uik'
 
 const Demo: FC = () => {
     const list = [
@@ -18,9 +18,9 @@ const Demo: FC = () => {
     ]
 
     return (
-        <DropDown overlayList={list}>
+        <Dropdown list={list}>
             <Button>鼠标移入触发DropDown</Button>
-        </DropDown>
+        </Dropdown>
     )
 }
 

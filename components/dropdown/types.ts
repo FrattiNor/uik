@@ -2,6 +2,6 @@
 import {menuList, menuClick} from '../menu/types'
 
 export type dropdownProps = {
-    overlayList?: menuList
+    list?: menuList
     onClick?: menuClick
 }

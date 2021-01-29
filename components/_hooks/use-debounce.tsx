@@ -7,19 +7,21 @@ type func<T> = (v: T) => void
 function useDebounce<T>(func: func<T>, time: number): func<T> {
     const timeout = useRef<NodeJS.Timeout | null>(null)
 
+    const clear = () => {
+        if (timeout.current !== null) {
+            clearTimeout(timeout.current)
+        }
+    }
+
     // 取消挂载后clear
     useEffect(() => {
         return () => {
-            if (timeout.current !== null) {
-                clearTimeout(timeout.current)
-            }
+            clear()
         }
     }, [])
 
     const resFun = (v: T) => {
-        if (timeout.current !== null) {
-            clearTimeout(timeout.current)
-        }
+        clear()
         timeout.current = setTimeout(() => func(v), time)
     }
 

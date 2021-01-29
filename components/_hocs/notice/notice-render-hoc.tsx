@@ -94,9 +94,9 @@ const noticeRenderHoc: noticeRenderHocComponent = ({ Component, name, defaultTri
                                     if (onFocus) onFocus(e)
                                     debounceSetVisible(true)
                                 },
-                                onBulr: (e: MouseEvent) => {
-                                    const { onBulr } = element.props
-                                    if (onBulr) onBulr(e)
+                                onBlur: (e: MouseEvent) => {
+                                    const { onBlur } = element.props
+                                    if (onBlur) onBlur(e)
                                     debounceSetVisible(false)
                                 }
                             }
