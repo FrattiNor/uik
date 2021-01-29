@@ -15,7 +15,7 @@ const Test: FC = () => {
                 <Progress type="circle" percent={percent} />
             </div>
             <div style={{ margin: 24 }}>
-                <Slider start={10} end={110} max={100} min={20} value={percent} step={1} onChange={a} />
+                <Slider start={10} end={110} max={100} min={20} step={1} onChange={a} />
             </div>
         </>
     )

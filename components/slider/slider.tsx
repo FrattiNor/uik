@@ -21,6 +21,7 @@ const getValueFromMaxMin = (value: number, start: number, end: number, max: numb
 }
 
 const Slider: FC<sliderProps> = (props) => {
+    const [tooltipAddLeft, setTooltipAddLeft] = useState(0)
     const [tooltipVisible, setTooltipVisible] = useState(false)
     // props
     const { value, start = 0, end = 100, min = start, max = end, disabled = false, onChange, step } = props
@@ -62,11 +63,7 @@ const Slider: FC<sliderProps> = (props) => {
     }
     // 实际change方法
     const trueOnchange = (v: number) => {
-        // 根据 max min 设置值
-        const newV = getValueFromMaxMin(v, start, end, max, min)
-        // 取整2位小数
-        const fixed2V = Number(newV.toFixed(2))
-        if (onChange) onChange(fixed2V)
+        if (onChange) onChange(v)
     }
     // 鼠标点下事件
     const onMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -74,24 +71,33 @@ const Slider: FC<sliderProps> = (props) => {
             setStartX(e.clientX)
         }
     }
+    const getNewValue = (v: number) => {
+        // 根据 max min 设置值
+        const newV = getValueFromMaxMin(v, start, end, max, min)
+        // 取整2位小数
+        const fixed2V = Number(newV.toFixed(2))
+        return fixed2V
+    }
     // 当鼠标点下时给 document 设置 鼠标松开和鼠标移动事件
     useEffect(() => {
         if (startX > 0 && !disabled) {
             const onMouseMove = (e: MouseEvent) => {
                 // 滑块自身长度
-                const allDistance = sliderRef.current !== null ? sliderRef.current.clientWidth : 1
+                const targetDistance = sliderRef.current !== null ? sliderRef.current.clientWidth : 1
                 // 移动距离
                 const distance = e.clientX - startX
                 // 移动百分比
-                const stepPercent = distance / allDistance
+                const stepPercent = distance / targetDistance
                 // 移动的value
                 const stepValue = stepPercent * length
                 // 存在步长时，只有达到步长才触发change
                 if (step) {
                     const stepValueFloor = stepValue > 0 ? Math.floor(stepValue / step) * step : Math.ceil(stepValue / step) * step
-                    setVirtualValue(_value + stepValueFloor)
+                    const newV = getNewValue(_value + stepValueFloor)
+                    setVirtualValue(newV)
                 } else {
-                    setVirtualValue(_value + stepValue)
+                    const newV = getNewValue(_value + stepValue)
+                    setVirtualValue(newV)
                 }
             }
 
@@ -120,9 +126,10 @@ const Slider: FC<sliderProps> = (props) => {
             <div className="uik-slider-line-selected" style={selectedLineStyle} />
             <div className="uik-slider-line-min" style={minLineStyle} />
             <div className="uik-slider-line-max" style={maxLineStyle} />
-            <Tooltip title={`${virtualValue}`} visible={tooltipVisible || startX > 0} onVisibleChange={setTooltipVisible} visible>
+            {/* <Tooltip title={`${_value}`} visible={tooltipVisible || startX > 0} onVisibleChange={setTooltipVisible} overlayStyle={({left, ...rest}) => ({left: Number(left) + tooltipAddLeft, ...rest})}>
                 <div className="uik-slider-dot" style={dotStyle} onMouseDown={onMouseDown} />
-            </Tooltip>
+            </Tooltip> */}
+            <div className="uik-slider-dot" style={dotStyle} onMouseDown={onMouseDown} />
         </div>
     )
 }

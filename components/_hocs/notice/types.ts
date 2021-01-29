@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { FC } from 'react'
+import { CSSProperties, FC } from 'react'
 
 // 定位
 export type noticePosition =
@@ -26,6 +26,8 @@ export type noticeAndRenderProps = {
     trigger?: noticeTrigger // 默认的触发方式
     autoAdjust?: boolean
     popSameWidth?: boolean // 弹出层和触发元素一样宽，用于dropdown
+    overlayStyle?: CSSProperties | ((style: CSSProperties) => CSSProperties) // 弹出层的样式
+    overlayClass?: string // 弹出层的样式
 }
 
 // == noticeRenderHoc ==

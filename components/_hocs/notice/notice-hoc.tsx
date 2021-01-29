@@ -24,7 +24,9 @@ const noticeHoc: noticeHocComponent = ({ backgroundColor, emptyKey, needArrow = 
                 root,
                 container,
                 target,
-                popSameWidth
+                popSameWidth,
+                overlayStyle = {},
+                overlayClass,
             } = props
             // 使用的定位，根据外部传入和内部自动调整获得
             const [position, setPosition] = useStateFromValue(outPosition)
@@ -38,6 +40,7 @@ const noticeHoc: noticeHocComponent = ({ backgroundColor, emptyKey, needArrow = 
             const noticeRef = useRef<HTMLDivElement>(null)
             // 基础样式
             const baseStyle = { display: show ? 'block' : 'none', minWidth: popSameWidth ? target?.clientWidth : undefined }
+            const lastStyle = typeof overlayStyle === 'function' ? overlayStyle({ ...baseStyle, ...topLeftstyle }) : { ...baseStyle, ...topLeftstyle, ...overlayStyle }
             // 外部传入的backgroundColor样式
             const backgroundColorStyle = { backgroundColor }
 
@@ -119,8 +122,8 @@ const noticeHoc: noticeHocComponent = ({ backgroundColor, emptyKey, needArrow = 
                     onMouseEnter={onMouseEnter}
                     onMouseLeave={onMouseLeave}
                     ref={noticeRef}
-                    className={classnames('uik-notice', position, { 'no-arrow': !needArrow, 'is-dropdown': isDropdown })}
-                    style={{ ...baseStyle, ...topLeftstyle }}
+                    className={classnames('uik-notice', position, { 'no-arrow': !needArrow, 'is-dropdown': isDropdown }, overlayClass)}
+                    style={lastStyle}
                 >
                     <div className={classnames('uik-notice-inner', animateClassname)} style={backgroundColorStyle}>
                         {needArrow && (
