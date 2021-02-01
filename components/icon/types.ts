@@ -1,9 +1,7 @@
-import { AllHTMLAttributes, CSSProperties } from 'react'
+import { AllHTMLAttributes } from 'react'
 
 export type iconProps = {
     name: string
-    className?: string
-    style?: CSSProperties
     uik?: boolean
 } & AllHTMLAttributes<HTMLElement>
 
@@ -19,10 +17,6 @@ export type newIconConfig = {
     url?: string
 }
 
-export type loadingIconProps = {
-    className?: string
-} & AllHTMLAttributes<HTMLElement>
+export type loadingIconProps = AllHTMLAttributes<HTMLElement>
 
-export type closeIconProps = {
-    className?: string
-} & AllHTMLAttributes<HTMLElement>
+export type closeIconProps = AllHTMLAttributes<HTMLElement>

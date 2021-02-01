@@ -9,5 +9,4 @@ export type inputProps = {
     size?: uikSize
     onChange?: (v: string) => void
     onEnter?: (v: string) => void
-    className?: string
 } & AllHTMLAttributes<HTMLInputElement>

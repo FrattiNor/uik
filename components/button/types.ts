@@ -5,7 +5,6 @@ export type buttonType = 'primary' | 'danger' | 'default'
 
 export type buttonProps = {
     // shape?: 'circle' | 'round'
-    className?: string
     disabled?: boolean
     loading?: boolean
     htmlType?: 'submit' | 'reset' | 'button'

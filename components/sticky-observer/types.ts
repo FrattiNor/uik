@@ -1,10 +1,8 @@
-import { CSSProperties } from 'react'
+import { AllHTMLAttributes } from 'react'
 
 export type stickyProps = {
     offsetTop?: number
     offsetBottom?: number
     rootId?: string
     getRoot?: () => HTMLElement | null
-    style?: CSSProperties
-    className?: string
-}
+} & AllHTMLAttributes<HTMLDivElement>

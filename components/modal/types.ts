@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { CSSProperties, MouseEventHandler } from 'react'
+import { AllHTMLAttributes, CSSProperties, MouseEventHandler } from 'react'
 import { buttonProps } from '../button/types'
 
 type positionCenter = 'center' | ['center', { top?: number; width?: number; height?: number }]
@@ -14,7 +14,6 @@ export type modalProps = {
     position?: modalPosition
     visible?: boolean
     destroyOnClose?: boolean
-    style?: CSSProperties
     title?: string | JSX.Element
     hiddenCloseIcon?: boolean
     head?: JSX.Element | null
@@ -28,4 +27,4 @@ export type modalProps = {
     cancelBtnProps?: buttonProps
     onOk?: MouseEventHandler<HTMLElement>
     onCancel?: MouseEventHandler<HTMLElement>
-}
+} & AllHTMLAttributes<HTMLDivElement>
