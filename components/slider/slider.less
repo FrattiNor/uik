@@ -20,7 +20,7 @@
         .uik-slider-line-selected {
             background-color: @disabled-color;
         }
-        .uik-slider-dot {
+        .uik-slider-dot-content {
             border-color: @disabled-color;
         }
     }
@@ -28,11 +28,13 @@
     &-line-bg {
         .line();
         background-color: @primary-bg-color;
+        cursor: pointer;
     }
 
     &-line-selected {
         .line();
         background-color: @primary-color;
+        cursor: pointer;
     }
 
     &-line-max {
@@ -51,13 +53,16 @@
         top: 50%;
         left: 0;
         transform: translate(-50%, -50%);
-        border: 2px solid @primary-color;
-        background-color: #fff;
-        box-sizing: border-box;
-        width: 14px;
-        height: 14px;
-        border-radius: 50%;
         cursor: pointer;
-        transition: border-color 0.3s;
+
+        &-content {
+            border: 2px solid @primary-color;
+            background-color: #fff;
+            box-sizing: border-box;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            transition: border-color 0.3s;
+        }
     }
 }

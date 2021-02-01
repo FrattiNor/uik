@@ -21,7 +21,7 @@ const getValueFromMaxMin = (value: number, start: number, end: number, max: numb
 }
 
 const Slider: FC<sliderProps> = (props) => {
-    const [tooltipAddLeft, setTooltipAddLeft] = useState(0)
+    const contianerRef = useRef(null)
     const [tooltipVisible, setTooltipVisible] = useState(false)
     // props
     const { value, start = 0, end = 100, min = start, max = end, disabled = false, onChange, step } = props
@@ -71,12 +71,31 @@ const Slider: FC<sliderProps> = (props) => {
             setStartX(e.clientX)
         }
     }
-    const getNewValue = (v: number) => {
+    // 获取保留2位小数的value
+    const getFixed2Value = (v: number) => {
         // 根据 max min 设置值
         const newV = getValueFromMaxMin(v, start, end, max, min)
         // 取整2位小数
         const fixed2V = Number(newV.toFixed(2))
         return fixed2V
+    }
+    // 滑块点击
+    const sliderLineClick = (e: React.MouseEvent) => {
+        // 滑块自身
+        const target = sliderRef.current !== null ? sliderRef.current.getBoundingClientRect() : { x: 0, width: 1 }
+        // 鼠标
+        const x = e.clientX
+        const distance = x - target.x
+        const percent = distance / target.width
+        const stepValue = percent * length
+        if (step) {
+            const stepValueFloor = stepValue > 0 ? Math.floor(stepValue / step) * step : Math.ceil(stepValue / step) * step
+            const newV = getFixed2Value(start + stepValueFloor)
+            setVirtualValue(newV)
+        } else {
+            const newV = getFixed2Value(start + stepValue)
+            setVirtualValue(newV)
+        }
     }
     // 当鼠标点下时给 document 设置 鼠标松开和鼠标移动事件
     useEffect(() => {
@@ -85,18 +104,18 @@ const Slider: FC<sliderProps> = (props) => {
                 // 滑块自身长度
                 const targetDistance = sliderRef.current !== null ? sliderRef.current.clientWidth : 1
                 // 移动距离
-                const distance = e.clientX - startX
+                const stepDistance = e.clientX - startX
                 // 移动百分比
-                const stepPercent = distance / targetDistance
+                const stepPercent = stepDistance / targetDistance
                 // 移动的value
                 const stepValue = stepPercent * length
-                // 存在步长时，只有达到步长才触发change
+
                 if (step) {
                     const stepValueFloor = stepValue > 0 ? Math.floor(stepValue / step) * step : Math.ceil(stepValue / step) * step
-                    const newV = getNewValue(_value + stepValueFloor)
+                    const newV = getFixed2Value(_value + stepValueFloor)
                     setVirtualValue(newV)
                 } else {
-                    const newV = getNewValue(_value + stepValue)
+                    const newV = getFixed2Value(_value + stepValue)
                     setVirtualValue(newV)
                 }
             }
@@ -122,14 +141,20 @@ const Slider: FC<sliderProps> = (props) => {
 
     return (
         <div className={classnames('uik-slider', { disabled: disabled })} ref={sliderRef}>
-            <div className="uik-slider-line-bg" />
-            <div className="uik-slider-line-selected" style={selectedLineStyle} />
+            <div className="uik-slider-line-bg" onClick={sliderLineClick} />
+            <div className="uik-slider-line-selected" style={selectedLineStyle} onClick={sliderLineClick} />
             <div className="uik-slider-line-min" style={minLineStyle} />
             <div className="uik-slider-line-max" style={maxLineStyle} />
-            {/* <Tooltip title={`${_value}`} visible={tooltipVisible || startX > 0} onVisibleChange={setTooltipVisible} overlayStyle={({left, ...rest}) => ({left: Number(left) + tooltipAddLeft, ...rest})}>
-                <div className="uik-slider-dot" style={dotStyle} onMouseDown={onMouseDown} />
-            </Tooltip> */}
-            <div className="uik-slider-dot" style={dotStyle} onMouseDown={onMouseDown} />
+            <div className="uik-slider-dot" ref={contianerRef} style={dotStyle} onMouseDown={onMouseDown}>
+                <Tooltip
+                    getRoot={() => contianerRef.current}
+                    title={`${_value}`}
+                    visible={tooltipVisible || startX > 0}
+                    onVisibleChange={setTooltipVisible}
+                >
+                    <div className="uik-slider-dot-content" />
+                </Tooltip>
+            </div>
         </div>
     )
 }

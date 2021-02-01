@@ -59,7 +59,8 @@ export type noticeHocProps = {
     emptyKey?: string
     needArrow?: boolean
     defaultPosition?: noticePosition,
-    isDropdown?: boolean // 是否
+    isDropdown?: boolean // 是否是dropdwon，触发的动画不同
+    getPositionProps?: string[] // 会触发重新获取定位的props参数
 }
 
 // notice 组件参数

@@ -6,7 +6,8 @@ import { getPositionStyle, autoAdjustPosition } from './util'
 import './notice.less'
 
 // 获取参数
-const noticeHoc: noticeHocComponent = ({ backgroundColor, emptyKey, needArrow = true, defaultPosition = 'topCenter', isDropdown = false }) => {
+const noticeHoc: noticeHocComponent = (hocProps) => {
+    const { backgroundColor, emptyKey, needArrow = true, defaultPosition = 'topCenter', isDropdown = false, getPositionProps = [] } = hocProps
     // 获取组件
     const noticeHocInner: noticeHocInnerComponent = (WrapperComponent) => {
         // 修改组件
@@ -14,7 +15,9 @@ const noticeHoc: noticeHocComponent = ({ backgroundColor, emptyKey, needArrow = 
             const _props = props as anyObject
             // 获取是否为空
             const isEmpty = emptyKey ? !_props[emptyKey] : false
-            //
+            // 触发重新获取position的props
+            const _getPositionProps = getPositionProps.map(key => _props[key])
+            // props
             const {
                 visible,
                 position: outPosition = defaultPosition,
@@ -90,7 +93,7 @@ const noticeHoc: noticeHocComponent = ({ backgroundColor, emptyKey, needArrow = 
                         connect(
                             setTimeout(() => {
                                 setShow(false)
-                                // setAnimateClassname('')
+                                setAnimateClassname('')
                             }, 200)
                         )
                     }
@@ -115,7 +118,7 @@ const noticeHoc: noticeHocComponent = ({ backgroundColor, emptyKey, needArrow = 
                         setTopLeftstyle({ top, left })
                     }
                 }
-            }, [position, target, show, autoAdjust, container, root, setPosition])
+            }, [position, target, show, autoAdjust, container, root, setPosition, ..._getPositionProps])
 
             return !isEmpty ? (
                 <div
