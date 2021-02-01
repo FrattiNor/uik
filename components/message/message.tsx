@@ -8,6 +8,7 @@ import './message.less'
 
 // Message组件
 const Message: FC<messageProps> = (props) => {
+    const {CloseIcon} = Icon
     const { div, container, title, type = 'default', id, duration: propsDuration, showClose = false, desc, width } = props
     const { duration: configDuration, maxCount, overAnimate } = _messageConfig
     // 延迟关闭
@@ -85,7 +86,7 @@ const Message: FC<messageProps> = (props) => {
                     {type !== 'default' && <Icon uik name={type} className={classnames('uik-message-title-icon', type)} />}
                     {title}
                 </div>
-                {showClose && <Icon uik name="close" className="uik-message-title-close" onClick={() => hidden_Unmount()} />}
+                {showClose && <CloseIcon className="uik-message-title-close" onClick={() => hidden_Unmount()} />}
             </div>
             {desc && <div className="uik-message-desc">{desc}</div>}
         </div>

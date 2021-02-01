@@ -4,8 +4,3 @@ export type loadingProps = {
     inline?: boolean,
     [key: string]: any
 }
-
-export type loadingIconProps = {
-    className?: string
-    [key: string]: any
-}

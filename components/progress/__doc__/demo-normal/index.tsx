@@ -6,11 +6,11 @@ const Demo: FC = () => {
     const [percent, setPercent] = useState(50)
 
     const add = () => {
-        setPercent(percent + 10)
+        setPercent(percent + 10 > 100 ? 100 : percent + 10)
     }
 
     const del = () => {
-        setPercent(percent - 10)
+        setPercent(percent - 10 < 0 ? 0 : percent - 10)
     }
 
     return (

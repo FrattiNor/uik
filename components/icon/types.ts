@@ -19,3 +19,13 @@ export type newIconConfig = {
     classPrefix: string
     url?: string
 }
+
+export type loadingIconProps = {
+    className?: string
+    [key: string]: any
+}
+
+export type closeIconProps = {
+    className?: string
+    [key: string]: any
+}

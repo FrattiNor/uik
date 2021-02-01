@@ -1,0 +1,34 @@
+import CodeBox from '@/components/code-box'
+import CodeWrapper from '@/components/code-wrapper'
+
+import DemoNormal from './demo-normal'
+import descNormal from './demo-normal/desc.md'
+import codeNormal from '!raw-loader!./demo-normal'
+
+# Input 输入框
+
+通过键盘输入内容，是最基础的输入控件。
+
+## 代码演示
+
+<CodeWrapper>
+    <CodeBox title="基础" desc={descNormal} code={codeNormal}>
+        <DemoNormal />
+    </CodeBox>
+</CodeWrapper>
+
+## API
+
+<div className="api">
+
+| 属性       | 说明                   | 类型                    | 默认值 | 版本 |
+| :--------- | :--------------------- | :---------------------- | :----- | :--- |
+| value      | input 的值             | string                  | -      | -    |
+| allowClear | 是否显示一键清除       | boolean                 | false  | -    |
+| disabled   | 是否禁用               | boolean                 | false  | -    |
+| maxLength  | input 的最大输入长度   | number                  | -      | -    |
+| size       | 设置 input 的大小      | arge \| middle \| small | middle | -    |
+| onChange   | 输入框内容变化时的回调 | (value: string) => void | -      | -    |
+| onEnter    | 按下回车的回调         | (value: string) => void | -      | -    |
+
+</div>

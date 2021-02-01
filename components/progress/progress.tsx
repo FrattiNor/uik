@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, SVGProps } from 'react'
 import { progressProps } from './types'
 import './progress.less'
 
@@ -34,10 +34,16 @@ const Progress: FC<progressProps> = (props) => {
         const percentLine = (roundline / 100) * truePercent // 占据的百分比周长
         const sameCircleStyle = { cx: trueWidth / 2, cy: trueWidth / 2, r, fill: 'none', strokeWidth: barWidth }
 
+        const circleProps: SVGProps<SVGCircleElement> = {
+            strokeDasharray: `${percentLine} ${roundline}`,
+            strokeLinecap: 'round',
+            opacity: truePercent === 0 ? 0 : 1
+        }
+
         return (
             <svg className="uik-progress-circle" height={trueWidth} width={trueWidth}>
                 <circle {...sameCircleStyle} stroke="#f5f5f5" />
-                <circle {...sameCircleStyle} stroke="#1890ff" strokeDasharray={`${percentLine} ${roundline}`} strokeLinecap="round" />
+                <circle {...sameCircleStyle} stroke="#1890ff" {...circleProps} />
             </svg>
         )
     }

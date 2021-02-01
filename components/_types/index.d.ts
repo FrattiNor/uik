@@ -5,3 +5,5 @@ type anyObject = {
 }
 
 type anyArray = any[]
+
+type uikSize = 'large' | 'middle' | 'small'

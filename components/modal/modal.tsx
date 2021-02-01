@@ -40,6 +40,7 @@ const getModalStyle = (position: modalPosition, baseStyle: CSSProperties) => {
 
 // 组件
 const Modal: FC<modalProps> = (props) => {
+    const {CloseIcon} = Icon
     const {
         position = 'center',
         destroyOnClose = false,
@@ -108,7 +109,7 @@ const Modal: FC<modalProps> = (props) => {
                 ) : (
                     <div className="uik-modal-head">
                         <span>{title}</span>
-                        {!hiddenCloseIcon && <Icon uik name="close" className="uik-modal-head-close" onClick={trueCancel} />}
+                        {!hiddenCloseIcon && <CloseIcon onClick={trueCancel} />}
                     </div>
                 )}
                 <div className="uik-modal-content">{children}</div>

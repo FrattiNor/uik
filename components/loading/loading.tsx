@@ -1,10 +1,11 @@
 import React, { FC } from 'react'
 import classnames from 'classnames'
-import LoadingIcon from './loading-icon'
+import Icon from '../icon'
 import { loadingProps } from './types'
 import './loading.less'
 
 const Loading: FC<loadingProps> = (props) => {
+    const { LoadingIcon } = Icon
     const { className = '', loading = false, inline = false, children, ...rest } = props
 
     const style = { display: inline ? 'inline-block' : 'block' }

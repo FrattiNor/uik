@@ -1,6 +1,6 @@
 import React, { FC, Fragment, useState, useRef } from 'react'
 import classnames from 'classnames'
-import Loading from '../loading'
+import Icon from '../icon'
 import { useEffectAfterFirst } from '../_hooks'
 import { buttonLoadingProps } from './types'
 import './button-loading.less'
@@ -8,7 +8,7 @@ import './button-loading.less'
 // 按钮loading
 const ButtonLoading: FC<buttonLoadingProps> = (props) => {
     const { visible } = props
-    const { LoadingIcon } = Loading
+    const { LoadingIcon } = Icon
     const [show, setShow] = useState(visible)
     const [animateClassname, setAnimateClassname] = useState(visible ? 'show' : 'hidden')
     const timeout = useRef<NodeJS.Timeout | null>(null)

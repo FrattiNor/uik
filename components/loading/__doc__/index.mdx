@@ -1,10 +1,6 @@
 import CodeBox from '@/components/code-box'
 import CodeWrapper from '@/components/code-wrapper'
 
-import DemoIcon from './demo-icon'
-import descIcon from './demo-icon/desc.md'
-import codeIcon from '!raw-loader!./demo-icon'
-
 import DemoBasic from './demo-basic'
 import descBasic from './demo-basic/desc.md'
 import codeBasic from '!raw-loader!./demo-basic'
@@ -24,9 +20,6 @@ import codeInline from '!raw-loader!./demo-inline'
 ## 代码演示
 
 <CodeWrapper>
-    <CodeBox title="加载按钮" desc={descIcon} code={codeIcon}>
-        <DemoIcon />
-    </CodeBox>
     <CodeBox title="基本用法" desc={descBasic} code={codeBasic}>
         <DemoBasic />
     </CodeBox>

@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react'
-import { Progress, Slider } from 'uik'
+import { Progress, Slider, Input } from 'uik'
 
 const Test: FC = () => {
     const [percent, setPercent] = useState(60)
@@ -12,10 +12,7 @@ const Test: FC = () => {
     return (
         <>
             <div style={{ margin: 24 }}>
-                <Progress type="circle" percent={percent} />
-            </div>
-            <div style={{ margin: 24 }}>
-                <Slider disabled start={10} end={110} max={100} min={20} step={5} value={percent} onChange={a} />
+                <Input />
             </div>
         </>
     )
