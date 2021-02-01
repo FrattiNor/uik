@@ -1,12 +1,12 @@
 import React, { FC, MouseEvent } from 'react'
 import noticeHoc from '../_hocs/notice/notice-hoc'
 import noticeRenderHoc from '../_hocs/notice/notice-render-hoc'
-import { noticeBackFC } from '../_hocs/notice/types'
+import { noticeRenderProps } from '../_hocs/notice/types'
 import { confirmProps } from './types'
 import Button from '../button'
 import './confirm.less'
 
-const Confirm: FC<confirmProps> = (props) => {
+const Confirm: FC<confirmProps & noticeRenderProps> = (props) => {
     const { content, okBtnProps = {}, cancelBtnProps = {}, okBtnText, cancelBtnText, onConfrim, onCancel } = props
 
     const trueCancel = (e: MouseEvent<HTMLElement>) => {
@@ -36,6 +36,6 @@ const Confirm: FC<confirmProps> = (props) => {
     )
 }
 
-const Component = noticeHoc({ backgroundColor: '#fff', emptyKey: 'content' })(Confirm)
+const Component = noticeHoc<confirmProps>({ backgroundColor: '#fff', emptyKey: 'content', updatePositionProps: ['content'] })(Confirm)
 
-export default noticeRenderHoc({ Component, name: 'confirm', defaultTrigger: 'click' }) as noticeBackFC<confirmProps>
+export default noticeRenderHoc<confirmProps>({ name: 'confirm', defaultTrigger: 'click' })(Component)

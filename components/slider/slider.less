@@ -14,14 +14,17 @@
     margin: 10px 12px;
 
     &.disabled {
-        .uik-slider-line {
+        .uik-slider-line-bg {
             background-color: @disabled-bg-color;
+            cursor: not-allowed;
         }
         .uik-slider-line-selected {
             background-color: @disabled-color;
+            cursor: not-allowed;
         }
         .uik-slider-dot-content {
             border-color: @disabled-color;
+            cursor: not-allowed;
         }
     }
 
@@ -41,11 +44,13 @@
         .line();
         background-color: @disabled-color;
         right: 0;
+        cursor: not-allowed;
     }
 
     &-line-min {
         .line();
         background-color: @disabled-color;
+        cursor: not-allowed;
     }
 
     &-dot {
@@ -53,7 +58,6 @@
         top: 50%;
         left: 0;
         transform: translate(-50%, -50%);
-        cursor: pointer;
 
         &-content {
             border: 2px solid @primary-color;
@@ -63,6 +67,7 @@
             height: 14px;
             border-radius: 50%;
             transition: border-color 0.3s;
+            cursor: pointer;
 
             &::before {
                 content: '';
@@ -92,7 +97,6 @@
         &-mousedown {
             &::before {
                 opacity: 0.2;
-                
             }
         }
     }

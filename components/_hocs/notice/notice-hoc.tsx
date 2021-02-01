@@ -1,24 +1,24 @@
 import React, { FC, useState, useRef, Fragment, useEffect } from 'react'
 import classnames from 'classnames'
 import { useEffectTimeout, useStateFromValue } from '../../_hooks'
-import { noticeProps, noticeHocInnerComponent, noticeHocComponent } from './types'
+import { noticeProps, noticeHocInner, noticeHocProps } from './types'
 import { getPositionStyle, autoAdjustPosition } from './util'
 import './notice.less'
 
 // 获取参数
-const noticeHoc: noticeHocComponent = (hocProps) => {
+function noticeHoc<T>(hocProps: noticeHocProps): noticeHocInner<T> {
     const {
         backgroundColor,
         emptyKey,
         needArrow = true,
         defaultPosition = 'topCenter',
         isDropdown = false,
-        defaultUpdatePositionProps = []
+        updatePositionProps = []
     } = hocProps
     // 获取组件
-    const noticeHocInner: noticeHocInnerComponent = (WrapperComponent) => {
+    const noticeHocInner: noticeHocInner<T> = (WrapperComponent) => {
         // 修改组件
-        const Notice: FC<noticeProps> = (props) => {
+        const Notice: FC<noticeProps & T> = (props) => {
             // props
             const {
                 visible,
@@ -38,7 +38,7 @@ const noticeHoc: noticeHocComponent = (hocProps) => {
             // 获取是否为空
             const isEmpty = emptyKey ? !_props[emptyKey] : false
             // 触发重新获取position的props
-            const _getPositionProps = [...defaultUpdatePositionProps].map((key) => _props[key])
+            const _getPositionProps = [...updatePositionProps].map((key) => _props[key])
             // 使用的定位，根据外部传入和内部自动调整获得
             const [position, setPosition] = useStateFromValue(outPosition)
             // 承载动画的类名
@@ -145,7 +145,7 @@ const noticeHoc: noticeHocComponent = (hocProps) => {
                                 <div className="uik-notice-arrow-content" style={backgroundColorStyle} />
                             </div>
                         )}
-                        <WrapperComponent {...props} setVirtualVisible={setVirtualVisible} />
+                        <WrapperComponent {...props} />
                     </div>
                 </div>
             ) : (

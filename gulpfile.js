@@ -18,7 +18,7 @@ const paths = {
         '!components/**/types.ts',
         '!components/**/__doc__/**',
         '!components/**/__tests__/*.{ts,tsx}'
-    ] // 脚本文件路径
+    ] // 文件路径
 }
 
 const { dest, styles, cssStyles, scripts } = paths

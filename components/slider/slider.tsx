@@ -16,9 +16,10 @@ const Slider: FC<sliderProps> = (props) => {
         disabled = false,
         onChange: outOnchange,
         step,
-        tooltip = true,
+        tooltipVisible: outTooltipVisible,
         stepSmooth = true
     } = props
+
     // 获取 max min
     const getTrueMaxMin = () => {
         const max = outMax > end ? end : outMax < start ? start : outMax
@@ -91,14 +92,16 @@ const Slider: FC<sliderProps> = (props) => {
     }
     // 滑块点击
     const sliderLineClick = (e: React.MouseEvent) => {
-        // 滑块自身
-        const target = sliderRef.current !== null ? sliderRef.current.getBoundingClientRect() : { x: 0, width: 1 }
-        // 鼠标
-        const x = e.clientX
-        const distance = x - target.x
-        const percent = distance / target.width
-        const stepValue = percent * length
-        setVirtualValue(getFixed2Value(start + stepValue))
+        if (!disabled) {
+            // 滑块自身
+            const target = sliderRef.current !== null ? sliderRef.current.getBoundingClientRect() : { x: 0, width: 1 }
+            // 鼠标
+            const x = e.clientX
+            const distance = x - target.x
+            const percent = distance / target.width
+            const stepValue = percent * length
+            setVirtualValue(getFixed2Value(start + stepValue))
+        }
     }
     // 当鼠标点下时给 document 设置 鼠标松开和鼠标移动事件
     useEffect(() => {
@@ -144,8 +147,6 @@ const Slider: FC<sliderProps> = (props) => {
         onchange(valueByStep)
     }, [valueByStep])
 
-    const dot = <div className={classnames('uik-slider-dot-content', { 'uik-slider-dot-mousedown': startX > -1 })} />
-
     return (
         <div className={classnames('uik-slider', { disabled: disabled })} ref={sliderRef}>
             <div className="uik-slider-line-bg" onClick={sliderLineClick} />
@@ -153,18 +154,14 @@ const Slider: FC<sliderProps> = (props) => {
             <div className="uik-slider-line-min" style={minLineStyle} />
             <div className="uik-slider-line-max" style={maxLineStyle} />
             <div className="uik-slider-dot" style={dotStyle} onMouseDown={onMouseDown}>
-                {tooltip ? (
-                    <Tooltip
-                        title={`${tooltipValue}`}
-                        visible={tooltipVisible || startX > 0}
-                        onVisibleChange={setTooltipVisible}
-                        updatePositionDepends={[value]}
-                    >
-                        {dot}
-                    </Tooltip>
-                ) : (
-                    dot
-                )}
+                <Tooltip
+                    title={`${tooltipValue}`}
+                    visible={typeof outTooltipVisible === 'boolean' ? outTooltipVisible : tooltipVisible || startX > 0}
+                    onVisibleChange={setTooltipVisible}
+                    updatePositionDepends={[value]}
+                >
+                    <div className={classnames('uik-slider-dot-content', { 'uik-slider-dot-mousedown': startX > -1 })} />
+                </Tooltip>
             </div>
         </div>
     )

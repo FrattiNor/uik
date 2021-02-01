@@ -1,0 +1,41 @@
+import CodeBox from '@/components/code-box'
+import CodeWrapper from '@/components/code-wrapper'
+
+import DemoNormal from './demo-normal'
+import descNormal from './demo-normal/desc.md'
+import codeNormal from '!raw-loader!./demo-normal'
+
+# Slider 滑块
+
+在可选范围内滑动输入
+
+## 何时使用
+
+当需要在一定区间内选择大小时使用，例：音量调节。
+
+## 代码演示
+
+<CodeWrapper>
+    <CodeBox title="基本" desc={descNormal} code={codeNormal}>
+        <DemoNormal />
+    </CodeBox>
+</CodeWrapper>
+
+## API
+
+<div className="api">
+
+| 属性           | 说明                                    | 类型                    | 默认值 | 版本 |
+| :------------- | :-------------------------------------- | :---------------------- | :----- | :--- |
+| value          | 滑块的值                                | number                  | 0      | -    |
+| start          | 滑块的左区间壁                          | number                  | 0      | -    |
+| end            | 滑块的右区间壁                          | number                  | 100    | -    |
+| min            | 滑块最小值（ min >= start ）            | number                  | -      | -    |
+| max            | 滑块最大值（ max <= end ）              | number                  | -      | -    |
+| onChange       | 滑块的值发生改变时触发                  | (value: number) => void | -      | -    |
+| step           | 滑块的步长（滑块的值默认保留 2 位小数） | number                  | -      | -    |
+| tooltipVisible | 文字提示是否显示                        | boolean                 | -      | -    |
+| stepSmooth     | 滑块的步长是否顺滑                      | boolean                 | true   | -    |
+| disabled       | 滑块是否禁用                            | boolean                 | false  | -    |
+
+</div>

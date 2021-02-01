@@ -19,7 +19,8 @@ export type noticePosition =
 // 触发方式
 export type noticeTrigger = 'hover' | 'focus' | 'click'
 
-// notice-props notice-render-props 共同的参数
+// =============== notice-props notice-render-props 共同的参数 ===============
+
 export type noticeAndRenderProps = {
     position?: noticePosition
     visible?: boolean
@@ -31,10 +32,34 @@ export type noticeAndRenderProps = {
     updatePositionDepends?: any[] // 会触发重新获取定位的props参数
 }
 
-// == noticeRenderHoc ==
+// =============== noticeHoc ===============
+
+// notice-hoc 配置参数
+export type noticeHocProps = {
+    backgroundColor: string
+    emptyKey?: string
+    needArrow?: boolean
+    defaultPosition?: noticePosition
+    isDropdown?: boolean // 是否是dropdwon，触发的动画不同
+    updatePositionProps?: string[] // 会触发重新获取定位的props参数
+}
+
+// notice 组件参数
+export type noticeProps = {
+    target: HTMLElement | null
+    container: HTMLElement | null
+    root: HTMLElement | null
+    setVirtualVisible: (v: boolean) => void
+} & noticeAndRenderProps
+
+// any 代表组件本身的props参数
+// notice-hoc-inner 高阶组件本身
+export type noticeHocInner<T> = (WrapperComponent: FC<noticeRenderProps & T>) => FC<noticeProps & T>
+
+// =============== noticeRenderHoc ===============
+
 // render-hoc 配置参数
 export type noticeRenderHocProps = {
-    Component: FC<noticeProps>
     name: string
     defaultTrigger: noticeTrigger
 }
@@ -48,38 +73,5 @@ export type noticeRenderProps = {
     onVisibleChange?: (v: boolean) => void
 } & noticeAndRenderProps
 
-// render-hoc 高阶组件本身
-export type noticeRenderHocComponent = (props: noticeRenderHocProps) => FC<noticeRenderProps>
-
-
-// == noticeHoc ==
-
-// notice-hoc 配置参数
-export type noticeHocProps = {
-    backgroundColor: string
-    emptyKey?: string
-    needArrow?: boolean
-    defaultPosition?: noticePosition,
-    isDropdown?: boolean // 是否是dropdwon，触发的动画不同
-    defaultUpdatePositionProps?: string[] // 会触发重新获取定位的props参数
-}
-
-// notice 组件参数
-export type noticeProps = {
-    target: HTMLElement | null
-    container: HTMLElement | null
-    root: HTMLElement | null
-    setVirtualVisible: (v: boolean) => void
-} & noticeAndRenderProps
-
-// notice-hoc 高阶组件本身
-export type noticeHocComponent = (props: noticeHocProps) => noticeHocInnerComponent
-
-// any 代表组件本身的props参数
 // notice-hoc-inner 高阶组件本身
-export type noticeHocInnerComponent = (WrapperComponent: FC<any>) => FC<noticeProps & any>
-
-
-// == back FC ==
-// 返回的组件
-export type noticeBackFC<T> = FC<T & noticeRenderProps>
+export type noticeRenderHocInner<T> = (WrapperComponent: FC<noticeProps & T>) => FC<noticeRenderProps & T>
