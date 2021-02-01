@@ -11,6 +11,6 @@ const Notice: FC<tooltipProps> = (props) => {
     return <div className="uik-tooltip">{title}</div>
 }
 
-const Component = noticeHoc({ backgroundColor: 'rgba(0, 0, 0, 0.75)', emptyKey: 'title', getPositionProps: ['title'] })(Notice)
+const Component = noticeHoc({ backgroundColor: 'rgba(0, 0, 0, 0.75)', emptyKey: 'title', defaultUpdatePositionProps: ['title'] })(Notice)
 
 export default noticeRenderHoc({ Component, name: 'tooltip', defaultTrigger: 'hover' }) as noticeBackFC<tooltipProps>

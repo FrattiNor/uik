@@ -7,16 +7,18 @@ import './notice.less'
 
 // 获取参数
 const noticeHoc: noticeHocComponent = (hocProps) => {
-    const { backgroundColor, emptyKey, needArrow = true, defaultPosition = 'topCenter', isDropdown = false, getPositionProps = [] } = hocProps
+    const {
+        backgroundColor,
+        emptyKey,
+        needArrow = true,
+        defaultPosition = 'topCenter',
+        isDropdown = false,
+        defaultUpdatePositionProps = []
+    } = hocProps
     // 获取组件
     const noticeHocInner: noticeHocInnerComponent = (WrapperComponent) => {
         // 修改组件
         const Notice: FC<noticeProps> = (props) => {
-            const _props = props as anyObject
-            // 获取是否为空
-            const isEmpty = emptyKey ? !_props[emptyKey] : false
-            // 触发重新获取position的props
-            const _getPositionProps = getPositionProps.map(key => _props[key])
             // props
             const {
                 visible,
@@ -30,7 +32,13 @@ const noticeHoc: noticeHocComponent = (hocProps) => {
                 popSameWidth,
                 overlayStyle = {},
                 overlayClass,
+                updatePositionDepends = []
             } = props
+            const _props = props as anyObject
+            // 获取是否为空
+            const isEmpty = emptyKey ? !_props[emptyKey] : false
+            // 触发重新获取position的props
+            const _getPositionProps = [...defaultUpdatePositionProps].map((key) => _props[key])
             // 使用的定位，根据外部传入和内部自动调整获得
             const [position, setPosition] = useStateFromValue(outPosition)
             // 承载动画的类名
@@ -43,7 +51,10 @@ const noticeHoc: noticeHocComponent = (hocProps) => {
             const noticeRef = useRef<HTMLDivElement>(null)
             // 基础样式
             const baseStyle = { display: show ? 'block' : 'none', minWidth: popSameWidth ? target?.clientWidth : undefined }
-            const lastStyle = typeof overlayStyle === 'function' ? overlayStyle({ ...baseStyle, ...topLeftstyle }) : { ...baseStyle, ...topLeftstyle, ...overlayStyle }
+            const lastStyle =
+                typeof overlayStyle === 'function'
+                    ? overlayStyle({ ...baseStyle, ...topLeftstyle })
+                    : { ...baseStyle, ...topLeftstyle, ...overlayStyle }
             // 外部传入的backgroundColor样式
             const backgroundColorStyle = { backgroundColor }
 
@@ -118,7 +129,7 @@ const noticeHoc: noticeHocComponent = (hocProps) => {
                         setTopLeftstyle({ top, left })
                     }
                 }
-            }, [position, target, show, autoAdjust, container, root, setPosition, ..._getPositionProps])
+            }, [position, target, show, autoAdjust, container, root, setPosition, ..._getPositionProps, ...updatePositionDepends])
 
             return !isEmpty ? (
                 <div

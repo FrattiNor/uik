@@ -5,53 +5,71 @@ import { useEffectAfterFirst } from '../_hooks'
 import Tooltip from '../tooltip'
 import './slider.less'
 
-// 获取 max min
-const getTrueMaxMin = (start: number, end: number, max: number, min: number) => {
-    const trueMax = max > end ? end : max < start ? start : max
-    const trueMin = min > end ? end : min < start ? start : min > max ? max : min
-    return { trueMax, trueMin }
-}
-
-// 根据 max min 获取 value
-const getValueFromMaxMin = (value: number, start: number, end: number, max: number, min: number) => {
-    const { trueMax, trueMin } = getTrueMaxMin(start, end, max, min)
-    const trueValue = value > trueMax ? trueMax : value < trueMin ? trueMin : value
-
-    return trueValue
-}
-
 const Slider: FC<sliderProps> = (props) => {
-    const contianerRef = useRef(null)
-    const [tooltipVisible, setTooltipVisible] = useState(false)
     // props
-    const { value, start = 0, end = 100, min = start, max = end, disabled = false, onChange, step } = props
-    // 虚拟value
-    const [virtualValue, setVirtualValue] = useState(value || start)
-    // 如果不存在value则使用组件自己的虚拟value
-    const _value = typeof value === 'number' ? value : virtualValue
-    // 滑块本身
-    const sliderRef = useRef<HTMLDivElement>(null)
-    // 鼠标是否点下（-1为未点下）
-    const [startX, setStartX] = useState(-1)
+    const {
+        value: outValue,
+        start = 0,
+        end = 100,
+        min: outMin = start,
+        max: outMax = end,
+        disabled = false,
+        onChange: outOnchange,
+        step,
+        tooltip = true,
+        stepSmooth = true
+    } = props
+    // 获取 max min
+    const getTrueMaxMin = () => {
+        const max = outMax > end ? end : outMax < start ? start : outMax
+        const min = outMin > end ? end : outMin < start ? start : outMin > max ? max : outMin
+        return { max, min }
+    }
+    const { max, min } = getTrueMaxMin()
+    // 根据 max min 获取 value
+    const getValueFromMaxMin = (v: number) => {
+        const value = v > max ? max : v < min ? min : v
+        return value
+    }
+    // 获取保留2位小数的value
+    const getFixed2Value = (v: number) => {
+        // 根据 max min 设置值
+        const newV = getValueFromMaxMin(v)
+        // 取整2位小数
+        const fixed2V = Number(newV.toFixed(2))
+        return fixed2V
+    }
     // 滑块长度
     const length = end - start
-    // max 和 min
-    const { trueMax, trueMin } = getTrueMaxMin(start, end, max, min)
+    // 滑块本身
+    const sliderRef = useRef<HTMLDivElement>(null)
+    // tooltip visible
+    const [tooltipVisible, setTooltipVisible] = useState(false)
+    // 鼠标是否点下（-1为未点下）
+    const [startX, setStartX] = useState(-1)
+    // 虚拟value
+    const [virtualValue, setVirtualValue] = useState(outValue || min)
+    // step value
+    const [valueByStep, setValueByStep] = useState(virtualValue)
+    // tooltip 显示的 value，如果不存在 value 则使用组件自己的 step value
+    const tooltipValue = typeof outValue === 'number' ? outValue : valueByStep
+    // 实际组件的当前点位value，【如果开启step顺滑，点位按钮就不受控】
+    const value = stepSmooth ? virtualValue : tooltipValue
     // 从start到value的距离
-    const trueValue = getValueFromMaxMin(_value, start, end, max, min) - start
+    const start2Value = getValueFromMaxMin(value) - start
     // 从start到value的比例
-    const selectedPercent = trueValue / length
+    const start2ValuePercent = start2Value / length
     // 从start到min
-    const start2Min = trueMin - start
+    const start2Min = min - start
     // 从end到max
-    const end2Max = end - trueMax
+    const end2Max = end - max
     // 选中条的样式
     const selectedLineStyle = {
-        width: `${selectedPercent * 100}%`
+        width: `${start2ValuePercent * 100}%`
     }
     // 选择点的样式
     const dotStyle = {
-        left: `${selectedPercent * 100}%`
+        left: `${start2ValuePercent * 100}%`
     }
     // min条的样式
     const minLineStyle = {
@@ -62,22 +80,14 @@ const Slider: FC<sliderProps> = (props) => {
         width: `${(end2Max / length) * 100}%`
     }
     // 实际change方法
-    const trueOnchange = (v: number) => {
-        if (onChange) onChange(v)
+    const onchange = (v: number) => {
+        if (outOnchange) outOnchange(v)
     }
     // 鼠标点下事件
     const onMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
         if (!disabled) {
             setStartX(e.clientX)
         }
-    }
-    // 获取保留2位小数的value
-    const getFixed2Value = (v: number) => {
-        // 根据 max min 设置值
-        const newV = getValueFromMaxMin(v, start, end, max, min)
-        // 取整2位小数
-        const fixed2V = Number(newV.toFixed(2))
-        return fixed2V
     }
     // 滑块点击
     const sliderLineClick = (e: React.MouseEvent) => {
@@ -88,18 +98,11 @@ const Slider: FC<sliderProps> = (props) => {
         const distance = x - target.x
         const percent = distance / target.width
         const stepValue = percent * length
-        if (step) {
-            const stepValueFloor = stepValue > 0 ? Math.floor(stepValue / step) * step : Math.ceil(stepValue / step) * step
-            const newV = getFixed2Value(start + stepValueFloor)
-            setVirtualValue(newV)
-        } else {
-            const newV = getFixed2Value(start + stepValue)
-            setVirtualValue(newV)
-        }
+        setVirtualValue(getFixed2Value(start + stepValue))
     }
     // 当鼠标点下时给 document 设置 鼠标松开和鼠标移动事件
     useEffect(() => {
-        if (startX > 0 && !disabled) {
+        if (startX > -1 && !disabled) {
             const onMouseMove = (e: MouseEvent) => {
                 // 滑块自身长度
                 const targetDistance = sliderRef.current !== null ? sliderRef.current.clientWidth : 1
@@ -109,15 +112,7 @@ const Slider: FC<sliderProps> = (props) => {
                 const stepPercent = stepDistance / targetDistance
                 // 移动的value
                 const stepValue = stepPercent * length
-
-                if (step) {
-                    const stepValueFloor = stepValue > 0 ? Math.floor(stepValue / step) * step : Math.ceil(stepValue / step) * step
-                    const newV = getFixed2Value(_value + stepValueFloor)
-                    setVirtualValue(newV)
-                } else {
-                    const newV = getFixed2Value(_value + stepValue)
-                    setVirtualValue(newV)
-                }
+                setVirtualValue(getFixed2Value(value + stepValue))
             }
 
             const onMouseUp = () => {
@@ -134,10 +129,22 @@ const Slider: FC<sliderProps> = (props) => {
         }
     }, [startX, disabled])
 
-    // 组件触发改变会先改变 virtualValue，然后通过 virtualValue 改变 真实的 value
+    // stepValue 改变 真实的 value
     useEffectAfterFirst(() => {
-        trueOnchange(virtualValue)
-    }, [virtualValue])
+        if (step) {
+            const stepValue = virtualValue - start
+            const stepValueFloor = stepValue > 0 ? Math.floor(stepValue / step) * step : Math.ceil(stepValue / step) * step
+            setValueByStep(stepValueFloor + start)
+        } else {
+            setValueByStep(virtualValue)
+        }
+    }, [virtualValue, step, start])
+
+    useEffectAfterFirst(() => {
+        onchange(valueByStep)
+    }, [valueByStep])
+
+    const dot = <div className={classnames('uik-slider-dot-content', { 'uik-slider-dot-mousedown': startX > -1 })} />
 
     return (
         <div className={classnames('uik-slider', { disabled: disabled })} ref={sliderRef}>
@@ -145,15 +152,19 @@ const Slider: FC<sliderProps> = (props) => {
             <div className="uik-slider-line-selected" style={selectedLineStyle} onClick={sliderLineClick} />
             <div className="uik-slider-line-min" style={minLineStyle} />
             <div className="uik-slider-line-max" style={maxLineStyle} />
-            <div className="uik-slider-dot" ref={contianerRef} style={dotStyle} onMouseDown={onMouseDown}>
-                <Tooltip
-                    getRoot={() => contianerRef.current}
-                    title={`${_value}`}
-                    visible={tooltipVisible || startX > 0}
-                    onVisibleChange={setTooltipVisible}
-                >
-                    <div className="uik-slider-dot-content" />
-                </Tooltip>
+            <div className="uik-slider-dot" style={dotStyle} onMouseDown={onMouseDown}>
+                {tooltip ? (
+                    <Tooltip
+                        title={`${tooltipValue}`}
+                        visible={tooltipVisible || startX > 0}
+                        onVisibleChange={setTooltipVisible}
+                        updatePositionDepends={[value]}
+                    >
+                        {dot}
+                    </Tooltip>
+                ) : (
+                    dot
+                )}
             </div>
         </div>
     )

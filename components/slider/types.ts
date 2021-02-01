@@ -8,4 +8,6 @@ export type sliderProps = {
     onChange?: (v: number) => void
     disabled?: boolean
     step?: number
+    tooltip?: boolean
+    stepSmooth?: boolean
 }

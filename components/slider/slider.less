@@ -11,7 +11,7 @@
 .uik-slider {
     height: 4px;
     position: relative;
-    margin: 6px 8px;
+    margin: 10px 12px;
 
     &.disabled {
         .uik-slider-line {
@@ -63,6 +63,37 @@
             height: 14px;
             border-radius: 50%;
             transition: border-color 0.3s;
+
+            &::before {
+                content: '';
+                position: absolute;
+                top: -4px;
+                left: -4px;
+                width: 22px;
+                height: 22px;
+                border-radius: 50%;
+                background-color: @primary-color;
+                transition: opacity 0.3s;
+                opacity: 0;
+            }
+
+            &::after {
+                content: '';
+                position: absolute;
+                top: 2px;
+                left: 2px;
+                width: 10px;
+                height: 10px;
+                border-radius: 50%;
+                background-color: #fff;
+            }
+        }
+
+        &-mousedown {
+            &::before {
+                opacity: 0.2;
+                
+            }
         }
     }
 }

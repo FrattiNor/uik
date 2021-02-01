@@ -28,6 +28,7 @@ export type noticeAndRenderProps = {
     popSameWidth?: boolean // 弹出层和触发元素一样宽，用于dropdown
     overlayStyle?: CSSProperties | ((style: CSSProperties) => CSSProperties) // 弹出层的样式
     overlayClass?: string // 弹出层的样式
+    updatePositionDepends?: any[] // 会触发重新获取定位的props参数
 }
 
 // == noticeRenderHoc ==
@@ -60,7 +61,7 @@ export type noticeHocProps = {
     needArrow?: boolean
     defaultPosition?: noticePosition,
     isDropdown?: boolean // 是否是dropdwon，触发的动画不同
-    getPositionProps?: string[] // 会触发重新获取定位的props参数
+    defaultUpdatePositionProps?: string[] // 会触发重新获取定位的props参数
 }
 
 // notice 组件参数
