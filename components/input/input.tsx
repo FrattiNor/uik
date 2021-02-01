@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent, KeyboardEvent, forwardRef, ForwardRefRenderFunction, useRef } from 'react'
+import React, { useState, ChangeEvent, KeyboardEvent, forwardRef, ForwardRefRenderFunction, useRef, FocusEvent } from 'react'
 import classnames from 'classnames'
 import Icon from '../icon'
 import { inputProps } from './types'
@@ -17,8 +17,20 @@ const Input: ForwardRefRenderFunction<unknown, inputProps> = (props, ref) => {
     const componentRef = useRef<HTMLElement>(null)
     const inputRef = (ref as any) || componentRef
     const { CloseIcon } = Icon
-    const { value: outValue, allowClear = false, disabled = false, maxLength, size = 'middle', onChange: outOnChange, onEnter: outOnEnter } = props
+    const {
+        value: outValue,
+        allowClear = false,
+        disabled = false,
+        maxLength,
+        size = 'middle',
+        onChange: outOnChange,
+        onEnter: outOnEnter,
+        onFocus: outOnFocus,
+        onBlur: outOnBlur,
+        className
+    } = props
     const [virtualValue, setVirtualValue] = useState('')
+    const [focus, setFocus] = useState(false)
     const value = typeof outValue !== 'undefined' ? outValue : virtualValue
 
     const changeValue = (v: string) => {
@@ -42,9 +54,31 @@ const Input: ForwardRefRenderFunction<unknown, inputProps> = (props, ref) => {
         if (e.code === 'enter') onEnter((e as unknown) as ChangeEvent<HTMLInputElement>)
     }
 
+    const onFocus = (e: FocusEvent<HTMLInputElement>) => {
+        setFocus(true)
+        if (typeof outOnFocus === 'function') {
+            outOnFocus(e)
+        }
+    }
+
+    const onBlur = (e: FocusEvent<HTMLInputElement>) => {
+        setFocus(false)
+        if (typeof outOnBlur === 'function') {
+            outOnBlur(e)
+        }
+    }
+
     return (
-        <span className={classnames('uik-input', classList[size], { [classList['disabled']]: disabled })}>
-            <input ref={inputRef} className="uik-input-content" value={value} onChange={onChange} onKeyPress={onKeyPress} />
+        <span className={classnames('uik-input', classList[size], { [classList['disabled']]: disabled, 'uik-input-focus': focus }, className)}>
+            <input
+                ref={inputRef}
+                className="uik-input-content"
+                value={value}
+                onChange={onChange}
+                onKeyPress={onKeyPress}
+                onFocus={onFocus}
+                onBlur={onBlur}
+            />
             {allowClear && <CloseIcon className="uik-input-close" onClick={() => changeValue('')} />}
         </span>
     )

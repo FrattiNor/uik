@@ -1,12 +1,11 @@
-import { CSSProperties } from 'react'
+import { AllHTMLAttributes, CSSProperties } from 'react'
 
 export type iconProps = {
     name: string
     className?: string
     style?: CSSProperties
     uik?: boolean
-    [key: string]: any // 其他属性
-}
+} & AllHTMLAttributes<HTMLElement>
 
 export type iconConfig = {
     fontFamily: string
@@ -22,10 +21,8 @@ export type newIconConfig = {
 
 export type loadingIconProps = {
     className?: string
-    [key: string]: any
-}
+} & AllHTMLAttributes<HTMLElement>
 
 export type closeIconProps = {
     className?: string
-    [key: string]: any
-}
+} & AllHTMLAttributes<HTMLElement>
