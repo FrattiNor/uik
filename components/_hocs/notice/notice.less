@@ -5,7 +5,7 @@
 @arrow-distance: 10px;
 @no-arrow-distance: 5px;
 
-.top {
+.uik-notice-top {
     padding-bottom: @padding-distance;
 
     // 无箭头，修改padding距离，以及触发动画的中心
@@ -31,7 +31,7 @@
     }
 }
 
-.bottom {
+.uik-notice-bottom {
     padding-top: @padding-distance;
 
     &.no-arrow {
@@ -53,7 +53,7 @@
     }
 }
 
-.left {
+.uik-notice-left {
     padding-right: @padding-distance;
 
     &.no-arrow {
@@ -75,7 +75,7 @@
     }
 }
 
-.right {
+.uik-notice-right {
     padding-left: @padding-distance;
 
     &.no-arrow {
@@ -128,7 +128,7 @@
     // == 定位 ==
     &.topLeft {
         transform-origin: @arrow-distance 100%;
-        .top();
+        .uik-notice-top();
         // 当前定位下的箭头容器位置修改
         .uik-notice-arrow {
             top: 100%;
@@ -137,7 +137,7 @@
     }
     &.topCenter {
         transform-origin: 50% 100%;
-        .top();
+        .uik-notice-top();
 
         .uik-notice-arrow {
             top: 100%;
@@ -146,7 +146,7 @@
     }
     &.topRight {
         transform-origin: calc(~'100% - @{arrow-distance}') 100%;
-        .top();
+        .uik-notice-top();
 
         .uik-notice-arrow {
             top: 100%;
@@ -156,7 +156,7 @@
 
     &.bottomLeft {
         transform-origin: @arrow-distance 0;
-        .bottom();
+        .uik-notice-bottom();
 
         .uik-notice-arrow {
             top: -8px;
@@ -165,7 +165,7 @@
     }
     &.bottomCenter {
         transform-origin: 50% 0;
-        .bottom();
+        .uik-notice-bottom();
 
         .uik-notice-arrow {
             top: -8px;
@@ -174,7 +174,7 @@
     }
     &.bottomRight {
         transform-origin: calc(~'100% - @{arrow-distance}') 0;
-        .bottom();
+        .uik-notice-bottom();
 
         .uik-notice-arrow {
             top: -8px;
@@ -184,7 +184,7 @@
 
     &.leftTop {
         transform-origin: 100% @arrow-distance;
-        .left();
+        .uik-notice-left();
 
         .uik-notice-arrow {
             top: @arrow-distance;
@@ -193,7 +193,7 @@
     }
     &.leftCenter {
         transform-origin: 100% 50%;
-        .left();
+        .uik-notice-left();
 
         .uik-notice-arrow {
             top: calc(~'50% - 4px');
@@ -202,7 +202,7 @@
     }
     &.leftBottom {
         transform-origin: 100% calc(~'100% - @{arrow-distance}');
-        .left();
+        .uik-notice-left();
 
         .uik-notice-arrow {
             bottom: @arrow-distance;
@@ -212,7 +212,7 @@
 
     &.rightTop {
         transform-origin: 0 @arrow-distance;
-        .right();
+        .uik-notice-right();
 
         .uik-notice-arrow {
             top: @arrow-distance;
@@ -221,7 +221,7 @@
     }
     &.rightCenter {
         transform-origin: 0 50%;
-        .right();
+        .uik-notice-right();
 
         .uik-notice-arrow {
             top: calc(~'50% - 4px');
@@ -230,7 +230,7 @@
     }
     &.rightBottom {
         transform-origin: 0 calc(~'100% - @{arrow-distance}');
-        .right();
+        .uik-notice-right();
 
         .uik-notice-arrow {
             bottom: @arrow-distance;
