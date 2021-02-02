@@ -37,26 +37,30 @@ const Menu: FC = () => {
 
     return (
         <Title title={pageTitle}>
-            <Sticky offsetTop={0} className={styles['menu']}>
-                {menu.map(({ title, components }) => {
-                    return (
-                        <Fragment key={title}>
-                            <div className={styles['title']}>{title}</div>
-                            <>
-                                {components.map(({ desc, name }) => (
-                                    <div
-                                        onClick={(): void => push(name)}
-                                        key={name}
-                                        className={classnames(styles['text'], { [styles['selected']]: selectedName === name })}
-                                    >
-                                        {desc}
-                                    </div>
-                                ))}
-                            </>
-                        </Fragment>
-                    )
-                })}
-            </Sticky>
+            <div className={styles['menu']}>
+                <Sticky offsetTop={0}>
+                    <div className={styles['menu-inner']}>
+                        {menu.map(({ title, components }) => {
+                            return (
+                                <Fragment key={title}>
+                                    <div className={styles['title']}>{title}</div>
+                                    <>
+                                        {components.map(({ desc, name }) => (
+                                            <div
+                                                onClick={(): void => push(name)}
+                                                key={name}
+                                                className={classnames(styles['text'], { [styles['selected']]: selectedName === name })}
+                                            >
+                                                {desc}
+                                            </div>
+                                        ))}
+                                    </>
+                                </Fragment>
+                            )
+                        })}
+                    </div>
+                </Sticky>
+            </div>
         </Title>
     )
 }

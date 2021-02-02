@@ -59,7 +59,7 @@ const Sticky: FC<stickyProps> = (props) => {
 
     return (
         <div ref={targetOutRef} className={className} style={{ minHeight: targetStyle.height, ...style }} {...restProps}>
-            <div ref={targetRef} style={fixedStyle}>
+            <div ref={targetRef} style={fixedStyle} onScroll={() => console.log(777)}>
                 {children}
             </div>
         </div>

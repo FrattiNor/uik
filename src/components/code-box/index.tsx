@@ -58,7 +58,7 @@ const CodeBox: FC<props> = ({ children, code, title, desc }) => {
             {/* code */}
             {visible && (
                 <pre className={styles['pre']}>
-                    <CodeBlock code={noEndLineCode} backgroundColor="#fff" />
+                    <CodeBlock code={noEndLineCode} />
                 </pre>
             )}
         </div>
