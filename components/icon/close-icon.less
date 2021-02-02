@@ -6,8 +6,24 @@
         color: @disabled-color;
         transition: color 0.3s;
 
+        &.small {
+            font-size: @font-size-small;
+        }
+        &.middle {
+            font-size: @font-size-middle;
+        }
+        &.large {
+            font-size: @font-size-large;
+        }
+
         &:hover {
-            color: @font-color;
+            color: fade(@font-color, 60);
+        }
+
+        &.danger {
+            &:hover {
+                color: @danger-color;
+            }
         }
     }
 }

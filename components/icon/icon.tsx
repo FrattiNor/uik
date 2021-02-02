@@ -9,7 +9,7 @@ const Icon: ForwardRefRenderFunction<unknown, iconProps> = (props, ref) => {
     const componentRef = useRef<HTMLElement>(null)
     const iconRef = (ref as any) || componentRef
 
-    const { name = '', className, style = {}, uik = false, ...rest } = props
+    const { name = '', className, style = {}, uik = false, ...restProps } = props
     const { fontFamily, classPrefix } = _iconConfig
     const trueFontFamily = uik ? 'uik-iconfont' : fontFamily
     const trueClassPrefix = uik ? 'uik-icon-' : classPrefix
@@ -20,7 +20,7 @@ const Icon: ForwardRefRenderFunction<unknown, iconProps> = (props, ref) => {
             ref={iconRef}
             className={classnames(`uik-iconfont ${trueClassPrefix}${name}`, { [`${className}`]: className })}
             style={iconStyle}
-            {...rest}
+            {...restProps}
         />
     )
 }

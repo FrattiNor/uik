@@ -6,12 +6,12 @@ import './loading.less'
 
 const Loading: FC<loadingProps> = (props) => {
     const { LoadingIcon } = Icon
-    const { className = '', loading = false, inline = false, children, ...rest } = props
+    const { className, loading = false, inline = false, children, ...restProps } = props
 
     const style = { display: inline ? 'inline-block' : 'block' }
 
     const loadingState = (
-        <div className={classnames('uik-loading', className)} style={style} {...rest}>
+        <div className={classnames('uik-loading', className)} style={style} {...restProps}>
             <div>
                 <div className="uik-loading-mask">
                     <LoadingIcon />

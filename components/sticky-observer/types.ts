@@ -1,8 +1,8 @@
-import { AllHTMLAttributes } from 'react'
+import { HTMLAttributes } from 'react'
 
 export type stickyProps = {
     offsetTop?: number
     offsetBottom?: number
     rootId?: string
     getRoot?: () => HTMLElement | null
-} & AllHTMLAttributes<HTMLDivElement>
+} & HTMLAttributes<HTMLDivElement>

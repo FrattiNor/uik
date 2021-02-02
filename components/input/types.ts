@@ -1,4 +1,4 @@
-import { AllHTMLAttributes } from 'react'
+import { HTMLAttributes } from 'react'
 
 /* eslint-disable no-unused-vars */
 export type inputProps = {
@@ -9,4 +9,4 @@ export type inputProps = {
     size?: uikSize
     onChange?: (v: string) => void
     onEnter?: (v: string) => void
-} & AllHTMLAttributes<HTMLInputElement>
+} & HTMLAttributes<HTMLInputElement>

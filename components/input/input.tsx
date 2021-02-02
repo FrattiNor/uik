@@ -27,7 +27,8 @@ const Input: ForwardRefRenderFunction<unknown, inputProps> = (props, ref) => {
         onEnter: outOnEnter,
         onFocus: outOnFocus,
         onBlur: outOnBlur,
-        className
+        className,
+        ...restProps
     } = props
     const [virtualValue, setVirtualValue] = useState('')
     const [focus, setFocus] = useState(false)
@@ -78,8 +79,11 @@ const Input: ForwardRefRenderFunction<unknown, inputProps> = (props, ref) => {
                 onKeyPress={onKeyPress}
                 onFocus={onFocus}
                 onBlur={onBlur}
+                {...restProps}
             />
-            {allowClear && <CloseIcon className="uik-input-close" onClick={() => changeValue('')} />}
+            {allowClear && (
+                <CloseIcon circle size="small" className={classnames('uik-input-close', { show: value })} onClick={() => changeValue('')} />
+            )}
         </span>
     )
 }

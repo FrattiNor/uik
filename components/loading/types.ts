@@ -1,6 +1,6 @@
-import { AllHTMLAttributes } from 'react'
+import { HTMLAttributes } from 'react'
 
 export type loadingProps = {
     loading?: boolean
     inline?: boolean
-} & AllHTMLAttributes<HTMLDivElement>
+} & HTMLAttributes<HTMLDivElement>

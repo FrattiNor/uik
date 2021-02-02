@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { MouseEventHandler, AllHTMLAttributes } from 'react'
+import { MouseEventHandler, HTMLAttributes } from 'react'
 
 export type buttonType = 'primary' | 'danger' | 'default'
 
@@ -11,7 +11,7 @@ export type buttonProps = {
     size?: uikSize
     type?: buttonType
     onClick?: MouseEventHandler<HTMLButtonElement>
-} & AllHTMLAttributes<HTMLButtonElement>
+} & HTMLAttributes<HTMLButtonElement>
 
 export type buttonLoadingProps = {
     visible: boolean

@@ -1,9 +1,9 @@
-import { AllHTMLAttributes } from 'react'
+import { HTMLAttributes } from 'react'
 
 export type iconProps = {
     name: string
     uik?: boolean
-} & AllHTMLAttributes<HTMLElement>
+} & HTMLAttributes<HTMLElement>
 
 export type iconConfig = {
     fontFamily: string
@@ -17,6 +17,10 @@ export type newIconConfig = {
     url?: string
 }
 
-export type loadingIconProps = AllHTMLAttributes<HTMLElement>
+export type loadingIconProps = HTMLAttributes<HTMLElement>
 
-export type closeIconProps = AllHTMLAttributes<HTMLElement>
+export type closeIconProps = {
+    circle?: boolean
+    size?: uikSize
+    danger?: boolean
+} & HTMLAttributes<HTMLElement>

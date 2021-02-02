@@ -86,7 +86,7 @@ const Message: FC<messageProps> = (props) => {
                     {type !== 'default' && <Icon uik name={type} className={classnames('uik-message-title-icon', type)} />}
                     {title}
                 </div>
-                {showClose && <CloseIcon className="uik-message-title-close" onClick={() => hidden_Unmount()} />}
+                {showClose && <CloseIcon size="small" className="uik-message-title-close" onClick={() => hidden_Unmount()} />}
             </div>
             {desc && <div className="uik-message-desc">{desc}</div>}
         </div>

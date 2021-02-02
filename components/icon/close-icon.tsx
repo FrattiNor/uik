@@ -5,9 +5,9 @@ import { closeIconProps } from './types'
 import './close-icon.less'
 
 const CloseIcon: FC<closeIconProps> = (props) => {
-    const { className, ...rest } = props
+    const { className, size = 'middle', circle = false, danger = false, ...restProps } = props
 
-    return <Icon uik name="close" className={classnames('uik-close-icon', className)} {...rest} />
+    return <Icon uik name={circle ? 'error' : 'close'} className={classnames('uik-close-icon', className, size, { danger })} {...restProps} />
 }
 
 export default CloseIcon

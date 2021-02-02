@@ -3,7 +3,7 @@ import { useResizeObserver } from '../_hooks'
 import { stickyProps } from './types'
 
 const Sticky: FC<stickyProps> = (props) => {
-    const { children, rootId, getRoot, offsetTop, offsetBottom, style = {}, className } = props
+    const { children, rootId, getRoot, offsetTop, offsetBottom, style = {}, className, ...restProps } = props
     const targetOutRef = useRef<HTMLDivElement>(null)
     const targetRef = useRef<HTMLDivElement>(null)
     const [targetOutStyle, setTargetOutStyle] = useState<CSSProperties>({})
@@ -63,7 +63,7 @@ const Sticky: FC<stickyProps> = (props) => {
     }, [offsetTop, offsetBottom, rootId, getRoot, targetOutStyle.width])
 
     return (
-        <div ref={targetOutRef} className={className} style={{ minHeight: targetStyle.height, ...style }}>
+        <div ref={targetOutRef} className={className} style={{ minHeight: targetStyle.height, ...style }} {...restProps}>
             <div ref={targetRef} style={fixedStyle}>
                 {children}
             </div>

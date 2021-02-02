@@ -31,7 +31,7 @@ const Button: ForwardRefRenderFunction<unknown, buttonProps> = (props, ref) => {
         size = 'middle',
         type = 'default',
         onClick,
-        ...rest
+        ...restProps
     } = props
     const componentRef = useRef<HTMLElement>(null)
     const btnRef = (ref as any) || componentRef
@@ -87,7 +87,7 @@ const Button: ForwardRefRenderFunction<unknown, buttonProps> = (props, ref) => {
     }
 
     return (
-        <button ref={btnRef} type={htmlType} className={getClassName()} onClick={onClickFun} {...rest}>
+        <button ref={btnRef} type={htmlType} className={getClassName()} onClick={onClickFun} {...restProps}>
             <ButtonLoading visible={loading} />
             {children}
         </button>
