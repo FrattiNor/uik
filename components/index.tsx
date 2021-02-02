@@ -19,6 +19,8 @@ export { default as Input } from './input'
 export { default as Slider } from './slider'
 // 开关
 export { default as Switch } from './switch'
+// 多选框
+export { default as Checkbox } from './checkbox'
 
 // == 状态 ==
 

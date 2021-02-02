@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react'
-import { Progress, Slider, Input, message, Switch,  Button } from 'uik'
+import { Progress, Slider, Input, message, Switch,  Checkbox } from 'uik'
 
 const Test: FC = () => {
     const [percent, setPercent] = useState(60)
@@ -13,7 +13,8 @@ const Test: FC = () => {
     return (
         <>
             <div style={{ margin: 24 }}>
-                <Switch disabled />
+                <Switch />
+                <Checkbox>Checkbox</Checkbox>
             </div>
         </>
     )

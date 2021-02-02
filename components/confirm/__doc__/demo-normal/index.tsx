@@ -18,7 +18,7 @@ const Demo: FC = () => {
 
     return (
         <Confirm content="确认弹窗，你确认要关闭吗？" visible={visible} onConfrim={confirm} onCancel={cancel} onVisibleChange={(v) => setVisible(v)}>
-            <Button>点击触发弹窗</Button>
+            <Button type="primary">点击触发弹窗</Button>
         </Confirm>
     )
 }

@@ -5,7 +5,7 @@ const Demo: FC = () => {
     return (
         <Fragment>
             <Tooltip title="tooltip文本">
-                <Button>鼠标移入触发tooltip</Button>
+                <Button type="primary">鼠标移入触发tooltip</Button>
             </Tooltip>
         </Fragment>
     )

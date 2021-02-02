@@ -6,7 +6,7 @@ const Demo: FC = () => {
 
     return (
         <Fragment>
-            <Button onClick={() => setVisible(true)}>基本弹窗</Button>
+            <Button type="primary" onClick={() => setVisible(true)}>基本弹窗</Button>
             <Modal visible={visible} title="弹窗标题" onCancel={() => setVisible(false)}>
                 <p>弹窗内容...</p>
                 <p>弹窗内容...</p>

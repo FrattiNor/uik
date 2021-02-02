@@ -7,7 +7,7 @@ const Demo: FC = () => {
         <div className={styles['card']}>
             <span>加载中</span>
             <Loading loading inline>
-                加载中
+                Loading
             </Loading>
             <span>加载中</span>
         </div>
