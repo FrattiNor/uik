@@ -75,7 +75,8 @@ const Input: ForwardRefRenderFunction<unknown, inputProps> = (props, ref) => {
             className={classnames('uik-input', classList[size], className, {
                 [classList['disabled']]: disabled,
                 focus,
-                error
+                error,
+                'allow-clear': allowClear,
             })}
         >
             <span className={classnames('uik-input-content')}>
@@ -87,9 +88,10 @@ const Input: ForwardRefRenderFunction<unknown, inputProps> = (props, ref) => {
                     onKeyPress={onKeyPress}
                     onFocus={onFocus}
                     onBlur={onBlur}
+                    disabled={disabled}
                     {...restProps}
                 />
-                {allowClear && (
+                {allowClear && !disabled && (
                     <CloseIcon
                         circle
                         size="small"

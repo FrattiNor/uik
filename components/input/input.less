@@ -18,6 +18,10 @@
         box-shadow: 0 0 1px 2px fade(@primary-color, 20);
     }
 
+    &.allow-clear {
+        padding-right: 30px;
+    }
+
     &.error {
         &:hover {
             border-color: @danger-color;
@@ -25,6 +29,27 @@
         &.focus {
             border-color: @danger-color;
             box-shadow: 0 0 1px 2px fade(@danger-color, 20);
+        }
+    }
+
+    &-disabled {
+        color: @disabled-color;
+        background-color: @disabled-bg-color;
+        cursor: not-allowed;
+
+        & * {
+            cursor: not-allowed;
+        }
+        input::placeholder {
+            color: @disabled-color;
+        }
+
+        &:hover {
+            border-color: @border-color !important; // 覆盖error
+        }
+        &.focus {
+            border-color: @border-color !important;
+            box-shadow: none !important;
         }
     }
 
@@ -49,21 +74,27 @@
         align-items: center;
         transition: height 0.3s;
         height: 100%;
+        position: relative;
 
         &-component {
             border: 0;
             outline: none;
             padding: 0;
             font-size: inherit;
+            background-color: inherit;
+            color: inherit;
         }
 
         &-close {
-            margin-left: 5px;
             opacity: 0;
             transition: opacity 0.3s;
+            cursor: default;
+            position: absolute;
+            left: calc(~'100% + 5px');
 
             &.show {
                 opacity: 1;
+                cursor: pointer;
             }
         }
     }

@@ -1,0 +1,30 @@
+import CodeBox from '@/components/code-box'
+import CodeWrapper from '@/components/code-wrapper'
+
+import DemoNormal from './demo-normal'
+import descNormal from './demo-normal/desc.md'
+import codeNormal from '!raw-loader!./demo-normal'
+
+# Switch 开关
+
+选择开或者关
+
+## 代码演示
+
+<CodeWrapper>
+    <CodeBox title="基础" desc={descNormal} code={codeNormal}>
+        <DemoNormal />
+    </CodeBox>
+</CodeWrapper>
+
+## API
+
+<div className="api">
+
+| 属性     | 说明                   | 类型                       | 默认值 | 版本 |
+| :------- | :--------------------- | :------------------------- | :----- | :--- |
+| checked  | Switch 的值            | string                     | false      | -    |
+| disabled | 是否禁用               | boolean                    | false  | -    |
+| onChange | 输入框内容变化时的回调 | (checked: boolean) => void | -      | -    |
+
+</div>

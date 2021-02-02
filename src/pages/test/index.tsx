@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react'
-import { Progress, Slider, Input, message } from 'uik'
+import { Progress, Slider, Input, message, Switch,  Button } from 'uik'
 
 const Test: FC = () => {
     const [percent, setPercent] = useState(60)
@@ -13,8 +13,7 @@ const Test: FC = () => {
     return (
         <>
             <div style={{ margin: 24 }}>
-                <div onClick={a}>66</div>
-                <Input label="起飞" error placeholder="input password" allowClear />
+                <Switch disabled />
             </div>
         </>
     )

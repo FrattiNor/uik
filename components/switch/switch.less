@@ -1,0 +1,83 @@
+@import '../_style/theme.less';
+
+@not-checked-color: rgba(0, 0, 0, 0.25);
+
+.uik-switch {
+    height: 24px;
+    width: 48px;
+    border: 2px solid transparent;
+    outline: 0;
+    border-radius: 12px;
+    padding: 0;
+    cursor: pointer;
+    transition: background-color 0.3s, box-shadow 0.3s;
+    position: relative;
+
+    &.not-checked {
+        background-color: @not-checked-color;
+        box-shadow: 0 0 0 2px fade(@not-checked-color, 10);
+
+        &:hover {
+            box-shadow: none;
+        }
+    }
+    &.checked {
+        background-color: @primary-color;
+        box-shadow: 0 0 0 2px fade(@primary-color, 10);
+
+        &:hover {
+            box-shadow: none;
+        }
+    }
+
+    &.disabled {
+        cursor: not-allowed;
+        opacity: 0.5;
+        box-shadow: none;
+    }
+
+    &.changed {
+        animation: boxShadowOut 0.5s ease-in-out;
+    }
+
+    &-dot {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        display: flex;
+
+        &-content {
+            width: 20px;
+            height: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            position: relative;
+            left: 0;
+            transform: translateX(0);
+            transition: left 0.3s, transform 0.3s, width 0.2s;
+
+            &.checked {
+                left: 100%;
+                transform: translateX(-100%);
+            }
+
+            &.mouse-down {
+                width: 26px;
+            }
+        }
+    }
+}
+
+@keyframes boxShadowOut {
+    0% {
+        box-shadow: none;
+    }
+    30% {
+        box-shadow: 0 0 0 6px fade(@primary-color, 10);
+    }
+    100% {
+        box-shadow: 0 0 0 6px fade(@primary-color, 0);
+    }
+}

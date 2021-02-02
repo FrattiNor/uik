@@ -1,4 +1,4 @@
-import React, { FC, ForwardRefRenderFunction, useRef, forwardRef } from 'react'
+import React, { ForwardRefRenderFunction, useRef, forwardRef } from 'react'
 import classnames from 'classnames'
 import { iconProps } from './types'
 import { _iconConfig } from './config'
@@ -25,4 +25,4 @@ const Icon: ForwardRefRenderFunction<unknown, iconProps> = (props, ref) => {
     )
 }
 
-export default forwardRef(Icon) as FC<iconProps>
+export default forwardRef(Icon)

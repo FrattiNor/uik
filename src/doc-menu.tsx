@@ -33,6 +33,10 @@ const menu = [
             {
                 name: 'slider',
                 desc: 'Slider 滑块'
+            },
+            {
+                name: 'switch',
+                desc: 'Switch 开关'
             }
         ]
     },
