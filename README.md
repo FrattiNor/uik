@@ -1,4 +1,4 @@
-<h1 align="center">Ant Design</h1>
+<h1 align="center">UIK</h1>
 
 文档位置：https://frattinor.github.io/uik/
 
