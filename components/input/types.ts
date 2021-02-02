@@ -9,4 +9,5 @@ export type inputProps = {
     size?: uikSize
     onChange?: (v: string) => void
     onEnter?: (v: string) => void
+    error?: boolean
 } & HTMLAttributes<HTMLInputElement>

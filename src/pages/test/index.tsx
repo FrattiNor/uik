@@ -14,7 +14,7 @@ const Test: FC = () => {
         <>
             <div style={{ margin: 24 }}>
                 <div onClick={a}>66</div>
-                <Input placeholder="input password" />
+                <Input label="起飞" error placeholder="input password" allowClear />
             </div>
         </>
     )

@@ -28,6 +28,7 @@ const Input: ForwardRefRenderFunction<unknown, inputProps> = (props, ref) => {
         onFocus: outOnFocus,
         onBlur: outOnBlur,
         className,
+        error,
         ...restProps
     } = props
     const [virtualValue, setVirtualValue] = useState('')
@@ -70,20 +71,33 @@ const Input: ForwardRefRenderFunction<unknown, inputProps> = (props, ref) => {
     }
 
     return (
-        <span className={classnames('uik-input', classList[size], { [classList['disabled']]: disabled, 'uik-input-focus': focus }, className)}>
-            <input
-                ref={inputRef}
-                className="uik-input-content"
-                value={value}
-                onChange={onChange}
-                onKeyPress={onKeyPress}
-                onFocus={onFocus}
-                onBlur={onBlur}
-                {...restProps}
-            />
-            {allowClear && (
-                <CloseIcon circle size="small" className={classnames('uik-input-close', { show: value })} onClick={() => changeValue('')} />
-            )}
+        <span
+            className={classnames('uik-input', classList[size], className, {
+                [classList['disabled']]: disabled,
+                focus,
+                error
+            })}
+        >
+            <span className={classnames('uik-input-content')}>
+                <input
+                    ref={inputRef}
+                    className="uik-input-content-component"
+                    value={value}
+                    onChange={onChange}
+                    onKeyPress={onKeyPress}
+                    onFocus={onFocus}
+                    onBlur={onBlur}
+                    {...restProps}
+                />
+                {allowClear && (
+                    <CloseIcon
+                        circle
+                        size="small"
+                        className={classnames('uik-input-content-close', { show: value })}
+                        onClick={() => changeValue('')}
+                    />
+                )}
+            </span>
         </span>
     )
 }
