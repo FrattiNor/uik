@@ -83,7 +83,7 @@ const Message: FC<messageProps> = (props) => {
         <div ref={messageRef} className={classnames('uik-message', classname)} style={{ width }}>
             <div className="uik-message-title">
                 <div className="uik-message-left">
-                    {type !== 'default' && <Icon uik name={type} className={classnames('uik-message-title-icon', type)} />}
+                    {type !== 'default' && <Icon defaultIcon name={type} className={classnames('uik-message-title-icon', type)} />}
                     {title}
                 </div>
                 {showClose && <CloseIcon size="small" className="uik-message-title-close" onClick={() => hidden_Unmount()} />}

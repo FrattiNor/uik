@@ -44,14 +44,14 @@ const CodeBox: FC<props> = ({ children, code, title, desc }) => {
             <div className={styles['icon-box']}>
                 <Tooltip title={`${visible ? '隐藏代码' : '显示代码'}`}>
                     <Icon
-                        uik
+                        defaultIcon
                         name={`${visible ? 'code-open' : 'code-close'}`}
                         className={styles['icon']}
                         onClick={(): void => setVisible(!visible)}
                     />
                 </Tooltip>
                 <Tooltip title="拷贝代码">
-                    <Icon uik name="copy" className={styles['icon']} onClick={copyToClipboard} />
+                    <Icon defaultIcon name="copy" className={styles['icon']} onClick={copyToClipboard} />
                 </Tooltip>
             </div>
 

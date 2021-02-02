@@ -2,7 +2,7 @@ import { HTMLAttributes } from 'react'
 
 export type iconProps = {
     name: string
-    uik?: boolean
+    defaultIcon?: boolean
 } & HTMLAttributes<HTMLElement>
 
 export type iconConfig = {
