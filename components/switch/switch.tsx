@@ -1,8 +1,8 @@
 import React, { useState, MouseEvent, forwardRef, ForwardRefRenderFunction, useRef } from 'react'
 import classnames from 'classnames'
+import { useEffectAfterFirst } from '../_hooks'
 import { switchProps } from './types'
 import './switch.less'
-import { useEffectAfterFirst } from '../_hooks'
 
 const Switch: ForwardRefRenderFunction<unknown, switchProps> = (props, ref) => {
     const componentRef = useRef<HTMLElement>(null)
@@ -16,8 +16,6 @@ const Switch: ForwardRefRenderFunction<unknown, switchProps> = (props, ref) => {
     const onMouseUp = (e: MouseEvent<HTMLButtonElement>) => {
         if (outOnMouseUp) outOnMouseUp(e)
         setMouseDown(false)
-        setCheckChangeAnimate(!checkChangeAnimate)
-
         setVirtualChecked(!checked)
     }
 
@@ -29,6 +27,10 @@ const Switch: ForwardRefRenderFunction<unknown, switchProps> = (props, ref) => {
     useEffectAfterFirst(() => {
         if (onChange) onChange(virtualChecked)
     }, [virtualChecked])
+
+    useEffectAfterFirst(() => {
+        setCheckChangeAnimate(checked)
+    }, [checked])
 
     return (
         <button

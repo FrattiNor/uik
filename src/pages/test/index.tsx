@@ -3,7 +3,7 @@ import { Progress, Slider, Input, message, Switch, Checkbox } from 'uik'
 
 const Test: FC = () => {
     const [percent, setPercent] = useState(60)
-    const [b, setB] = useState(true)
+    const [b, setB] = useState(false)
 
     const a = (v) => {
         console.log(v)
