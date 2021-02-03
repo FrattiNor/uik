@@ -2,26 +2,23 @@ import React, { useState, MouseEvent, forwardRef, ForwardRefRenderFunction, useR
 import classnames from 'classnames'
 import { switchProps } from './types'
 import './switch.less'
+import { useEffectAfterFirst } from '../_hooks'
 
 const Switch: ForwardRefRenderFunction<unknown, switchProps> = (props, ref) => {
     const componentRef = useRef<HTMLElement>(null)
     const switchRef = (ref as any) || componentRef
     const { checked: outChecked, disabled, onChange, onMouseDown: outOnMouseDown, onMouseUp: outOnMouseUp } = props
-
     const [virtualChecked, setVirtualChecked] = useState(false)
-    const [mouseDown, setMouseDown] = useState(false)
-
     const checked = typeof outChecked === 'boolean' ? outChecked : virtualChecked
+    const [mouseDown, setMouseDown] = useState(false)
+    const [checkChangeAnimate, setCheckChangeAnimate] = useState<boolean | ''>('') // 只关于执行动画，初始为''不执行动画
 
     const onMouseUp = (e: MouseEvent<HTMLButtonElement>) => {
         if (outOnMouseUp) outOnMouseUp(e)
         setMouseDown(false)
+        setCheckChangeAnimate(!checkChangeAnimate)
 
-        if (onChange) {
-            onChange(!checked)
-        } else {
-            setVirtualChecked(!checked)
-        }
+        setVirtualChecked(!checked)
     }
 
     const onMouseDown = (e: MouseEvent<HTMLButtonElement>) => {
@@ -29,11 +26,21 @@ const Switch: ForwardRefRenderFunction<unknown, switchProps> = (props, ref) => {
         setMouseDown(true)
     }
 
+    useEffectAfterFirst(() => {
+        if (onChange) onChange(virtualChecked)
+    }, [virtualChecked])
+
     return (
         <button
             disabled={disabled}
             ref={switchRef}
-            className={classnames('uik-switch', { checked, disabled, ['not-checked']: !checked })}
+            className={classnames('uik-switch', {
+                disabled,
+                checked,
+                ['not-checked']: !checked,
+                ['checked-animate']: checkChangeAnimate === true,
+                ['not-checked-animate']: checkChangeAnimate === false
+            })}
             onMouseDown={onMouseDown}
             onMouseUp={onMouseUp}
         >

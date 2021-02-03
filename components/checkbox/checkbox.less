@@ -1,3 +1,85 @@
-.uik-checkbox {
-    
+@import '../_style/theme.less';
+
+.uik-checkbox-wrapper {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+
+    &.disabled {
+        cursor: not-allowed;
+    }
+
+    .uik-checkbox {
+        position: relative;
+        display: inline-flex;
+
+        &-input {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            opacity: 0;
+        }
+        &-inner {
+            display: inline-block;
+            position: relative;
+            width: 14px;
+            height: 14px;
+            border: @border-width solid @border-color;
+            border-radius: @border-radius;
+
+            &.checked {
+                &::after {
+                    width: 4px;
+                    height: 8px;
+                    content: '';
+                    position: absolute;
+                    border: 2px solid #fff;
+                    border-top: 0;
+                    border-left: 0;
+                    transform: rotate(45deg) scale(1) translate(-50%, -50%);
+                    z-index: 2;
+                    top: 50%;
+                    left: 22%;
+                }
+            }
+
+            &.disabled.checked {
+                &::after {
+                    border-color: @disabled-color;
+                }
+            }
+        }
+
+        &.checked {
+            &::after {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-color: @primary-color;
+                border-radius: @border-radius;
+                z-index: 1;
+            }
+        }
+
+        &.disabled.checked {
+            &::after {
+                background-color: fade(@disabled-color, 10);
+            }
+        }
+
+        & + span {
+            padding: 0 5px;
+        }
+        &.disabled + span {
+            color: @disabled-color;
+        }
+    }
 }

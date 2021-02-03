@@ -13,6 +13,17 @@
     transition: background-color 0.3s, box-shadow 0.3s;
     position: relative;
 
+    &.checked-animate&::before, &.not-checked-animate&::after {
+        border-radius: 10px;
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        animation: boxShadowOut 0.5s;
+    }
+
     &.not-checked {
         background-color: @not-checked-color;
         box-shadow: 0 0 0 2px fade(@not-checked-color, 10);
@@ -75,9 +86,9 @@
         box-shadow: none;
     }
     30% {
-        box-shadow: 0 0 0 6px fade(@primary-color, 10);
+        box-shadow: 0 0 0 8px fade(@primary-color, 10);
     }
     100% {
-        box-shadow: 0 0 0 6px fade(@primary-color, 0);
+        box-shadow: 0 0 0 8px fade(@primary-color, 0);
     }
 }

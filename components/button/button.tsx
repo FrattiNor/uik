@@ -87,7 +87,7 @@ const Button: ForwardRefRenderFunction<unknown, buttonProps> = (props, ref) => {
     }
 
     return (
-        <button ref={btnRef} type={htmlType} className={getClassName()} onClick={onClickFun} {...restProps}>
+        <button disabled={disabled} ref={btnRef} type={htmlType} className={getClassName()} onClick={onClickFun} {...restProps}>
             <ButtonLoading visible={loading} />
             {children}
         </button>
