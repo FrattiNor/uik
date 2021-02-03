@@ -4,15 +4,6 @@ import Icon from '../icon'
 import { inputProps } from './types'
 import './input.less'
 
-const classList = {
-    // 状态 disabled
-    disabled: 'uik-input-disabled',
-    // 状态 size
-    large: 'uik-input-large',
-    middle: 'uik-input-middle',
-    small: 'uik-input-small'
-}
-
 const Input: ForwardRefRenderFunction<unknown, inputProps> = (props, ref) => {
     const componentRef = useRef<HTMLElement>(null)
     const inputRef = (ref as any) || componentRef
@@ -68,19 +59,24 @@ const Input: ForwardRefRenderFunction<unknown, inputProps> = (props, ref) => {
         }
     }
 
+    const inputFocus = () => {
+        inputRef.current.focus()
+    }
+
     return (
         <span
-            className={classnames('uik-input', classList[size], className, {
-                [classList['disabled']]: disabled,
+            className={classnames('uik-input', className, {
+                disabled,
                 focus,
                 error,
                 'allow-clear': allowClear
             })}
+            onClick={inputFocus}
         >
             <span className={classnames('uik-input-content')}>
                 <input
                     ref={inputRef}
-                    className="uik-input-content-component"
+                    className={classnames('uik-input-content-component', [`${size}`])}
                     value={value}
                     onChange={onChange}
                     onKeyPress={onKeyPress}

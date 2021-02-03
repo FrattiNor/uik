@@ -5,20 +5,20 @@ import { buttonProps } from './types'
 import './button.less'
 
 // 多种状态可以重叠
-const classList = {
-    // 状态 type
-    primary: 'uik-btn-primary',
-    danger: 'uik-btn-danger',
-    default: 'uik-btn-default',
-    // 状态 disabled
-    disabled: 'uik-btn-disabled',
-    // 状态 loading
-    loading: 'uik-btn-loading',
-    // 状态 size
-    large: 'uik-btn-large',
-    middle: 'uik-btn-middle',
-    small: 'uik-btn-small'
-}
+// const classList = {
+//     // 状态 type
+//     primary: 'uik-btn-primary',
+//     danger: 'uik-btn-danger',
+//     default: 'uik-btn-default',
+//     // 状态 disabled
+//     disabled: 'uik-btn-disabled',
+//     // 状态 loading
+//     loading: 'uik-btn-loading',
+//     // 状态 size
+//     large: 'uik-btn-large',
+//     middle: 'uik-btn-middle',
+//     small: 'uik-btn-small'
+// }
 
 // 按钮
 const Button: ForwardRefRenderFunction<unknown, buttonProps> = (props, ref) => {
@@ -35,16 +35,6 @@ const Button: ForwardRefRenderFunction<unknown, buttonProps> = (props, ref) => {
     } = props
     const componentRef = useRef<HTMLElement>(null)
     const btnRef = (ref as any) || componentRef
-
-    // btn的class
-    const getClassName = (): string => {
-        const stateType = classList[type]
-        const stateSize = classList[size]
-        const stateLoading = loading && classList['loading']
-        const stateDisabled = disabled && classList['disabled']
-
-        return classnames('uik-btn', stateType, stateSize, stateLoading, stateDisabled, className)
-    }
 
     // 获取点击坐标
     // 增加点击动画
@@ -87,7 +77,14 @@ const Button: ForwardRefRenderFunction<unknown, buttonProps> = (props, ref) => {
     }
 
     return (
-        <button disabled={disabled} ref={btnRef} type={htmlType} className={getClassName()} onClick={onClickFun} {...restProps}>
+        <button
+            disabled={disabled}
+            ref={btnRef}
+            type={htmlType}
+            className={classnames('uik-btn', [`${type}`], [`${size}`], { loading, disabled }, className)}
+            onClick={onClickFun}
+            {...restProps}
+        >
             <ButtonLoading visible={loading} />
             {children}
         </button>

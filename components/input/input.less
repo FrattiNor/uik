@@ -1,7 +1,6 @@
 @import '../_style/theme.less';
 
 .uik-input {
-    padding: 4px 10px;
     border: @border-width solid @border-color;
     border-radius: @border-radius;
     transition: border-color 0.3s, box-shadow 0.3s;
@@ -9,7 +8,7 @@
     display: inline-flex;
     flex-direction: column;
     position: relative;
-    
+
     &:hover {
         border-color: @primary-color;
     }
@@ -32,7 +31,7 @@
         }
     }
 
-    &-disabled {
+    &.disabled {
         color: @disabled-color;
         background-color: @disabled-bg-color;
         cursor: not-allowed;
@@ -53,22 +52,6 @@
         }
     }
 
-    &-large {
-        height: @height-large;
-        font-size: @font-size-large;
-        padding: 6px 12px;
-    }
-    &-middle {
-        height: @height-middle;
-        font-size: @font-size-middle;
-        padding: 4px 10px;
-    }
-    &-small {
-        height: @height-small;
-        font-size: @font-size-small;
-        padding: 2px 8px;
-    }
-
     &-content {
         display: inline-flex;
         align-items: center;
@@ -83,6 +66,24 @@
             font-size: inherit;
             background-color: inherit;
             color: inherit;
+
+            &.large {
+                height: @height-large;
+
+                font-size: @font-size-large;
+                padding-left: 12px;
+            }
+            &.middle {
+                height: @height-middle;
+                line-height: 30px;
+                font-size: @font-size-middle;
+                padding-left: 10px;
+            }
+            &.small {
+                height: @height-small;
+                font-size: @font-size-small;
+                padding-left: 8px;
+            }
         }
 
         &-close {
@@ -91,6 +92,8 @@
             cursor: default;
             position: absolute;
             left: calc(~'100% + 5px');
+            height: 14px;
+            width: 14px;
 
             &.show {
                 opacity: 1;

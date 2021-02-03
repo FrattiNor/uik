@@ -14,9 +14,7 @@ const Test: FC = () => {
     return (
         <>
             <div style={{ margin: 24 }}>
-                <Checkbox checked={b} onChange={(v) => setB(v)}>
-                    Checkbox
-                </Checkbox>
+                <Input placeholder="请输入！" allowClear />
             </div>
         </>
     )
