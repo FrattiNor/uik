@@ -9,6 +9,7 @@ const Slider: FC<sliderProps> = (props) => {
     // props
     const {
         value: outValue,
+        defaultValue,
         start = 0,
         end = 100,
         min: outMin = start,
@@ -32,6 +33,7 @@ const Slider: FC<sliderProps> = (props) => {
         const value = v > max ? max : v < min ? min : v
         return value
     }
+    const trueDefaultValue = getValueFromMaxMin(defaultValue || min)
     // 获取保留2位小数的value
     const getFixed2Value = (v: number) => {
         // 根据 max min 设置值
@@ -49,7 +51,7 @@ const Slider: FC<sliderProps> = (props) => {
     // 鼠标是否点下（-1为未点下）
     const [startX, setStartX] = useState(-1)
     // 虚拟value
-    const [virtualValue, setVirtualValue] = useState(outValue || min)
+    const [virtualValue, setVirtualValue] = useState(trueDefaultValue)
     // step value
     const [valueByStep, setValueByStep] = useState(virtualValue)
     // tooltip 显示的 value，如果不存在 value 则使用组件自己的 step value
@@ -80,10 +82,7 @@ const Slider: FC<sliderProps> = (props) => {
     const maxLineStyle = {
         width: `${(end2Max / length) * 100}%`
     }
-    // 实际change方法
-    const onchange = (v: number) => {
-        if (outOnchange) outOnchange(v)
-    }
+
     // 鼠标点下事件
     const onMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
         if (!disabled) {
@@ -144,7 +143,7 @@ const Slider: FC<sliderProps> = (props) => {
     }, [virtualValue, step, start])
 
     useEffectAfterFirst(() => {
-        onchange(valueByStep)
+        if (outOnchange) outOnchange(valueByStep)
     }, [valueByStep])
 
     return (

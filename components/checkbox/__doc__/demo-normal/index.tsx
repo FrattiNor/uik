@@ -1,8 +1,8 @@
 import React, { FC } from 'react'
-import { Switch } from 'uik'
+import { Checkbox } from 'uik'
 
 const Demo: FC = () => {
-    return <Switch defaultChecked />
+    return <Checkbox>Checkbox</Checkbox>
 }
 
 export default Demo

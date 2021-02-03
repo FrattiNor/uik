@@ -1,0 +1,61 @@
+import CodeBox from '@/components/code-box'
+import CodeWrapper from '@/components/code-wrapper'
+
+import DemoNormal from './demo-normal'
+import descNormal from './demo-normal/desc.md'
+import codeNormal from '!raw-loader!./demo-normal'
+
+import DemoCheckAll from './demo-check-all'
+import descCheckAll from './demo-check-all/desc.md'
+import codeCheckAll from '!raw-loader!./demo-check-all'
+
+# Checkbox 多选框
+
+多选框输入控件。
+
+## 代码演示
+
+<CodeWrapper>
+    <CodeBox title="基础" desc={descNormal} code={codeNormal}>
+        <DemoNormal />
+    </CodeBox>
+    <CodeBox title="全选" desc={descCheckAll} code={codeCheckAll}>
+        <DemoCheckAll />
+    </CodeBox>
+</CodeWrapper>
+
+## API
+
+<div className="api">
+
+| 属性           | 说明                      | 类型                       | 默认值 | 版本 |
+| :------------- | :------------------------ | :------------------------- | :----- | :--- |
+| checked        | checkbox 的值             | boolean                    | -      | -    |
+| defaultChecked | checkbox 的默认值         | boolean                    | false  | -    |
+| checkedHalf    | 是否选中部分              | boolean                    | -      | -    |
+| disabled       | 是否禁用                  | number                     | false  | -    |
+| onChange       | checkbox 值发生改变的回调 | (checked: boolean) => void | -      | -    |
+| className      | 类名                      | string                     | -      | -    |
+
+</div>
+
+## Checkbox.Group
+
+| 属性               | 说明                          | 类型                             | 默认值 | 版本 |
+| :----------------- | :---------------------------- | :------------------------------- | :----- | :--- |
+| options            | checkbox 列表                 | string[] \| option[]             | []     | -    |
+| checkedList        | checkboxList 的值             | boolean[]                        | -      | -    |
+| defaultCheckedList | checkboxList 的默认值         | boolean[]                        | []     | -    |
+| disabled           | 是否全部禁用                  | boolean                          | false  | -    |
+| onChange           | checkboxList 值发生改变的回调 | (checkedList: boolean[]) => void | -      | -    |
+| className          | 类名                          | string                           | -      | -    |
+
+## option
+
+```
+type checkboxGroupOption = {
+  label: string;
+  value: string;
+  disabled?: boolean;
+}
+```

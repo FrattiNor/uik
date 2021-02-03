@@ -19,6 +19,7 @@ const Input: ForwardRefRenderFunction<unknown, inputProps> = (props, ref) => {
     const { CloseIcon } = Icon
     const {
         value: outValue,
+        defaultValue = '',
         allowClear = false,
         disabled = false,
         maxLength,
@@ -31,18 +32,15 @@ const Input: ForwardRefRenderFunction<unknown, inputProps> = (props, ref) => {
         error,
         ...restProps
     } = props
-    const [virtualValue, setVirtualValue] = useState('')
+    const [virtualValue, setVirtualValue] = useState(defaultValue)
     const [focus, setFocus] = useState(false)
-    const value = typeof outValue !== 'undefined' ? outValue : virtualValue
+    const value = outValue !== undefined ? outValue : virtualValue
 
     const changeValue = (v: string) => {
         const len = v.length
         const value = typeof maxLength === 'number' ? (len > maxLength ? v.slice(0, maxLength) : v) : v
-        if (outOnChange) {
-            outOnChange(value)
-        } else {
-            setVirtualValue(value)
-        }
+        setVirtualValue(value)
+        if (outOnChange) outOnChange(value)
     }
 
     const onChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -76,7 +74,7 @@ const Input: ForwardRefRenderFunction<unknown, inputProps> = (props, ref) => {
                 [classList['disabled']]: disabled,
                 focus,
                 error,
-                'allow-clear': allowClear,
+                'allow-clear': allowClear
             })}
         >
             <span className={classnames('uik-input-content')}>

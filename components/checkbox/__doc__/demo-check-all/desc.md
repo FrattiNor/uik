@@ -1,0 +1,1 @@
+checkedHalf 控制选中部分

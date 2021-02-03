@@ -1,5 +1,5 @@
 export type progressProps = {
-    percent: number
+    percent?: number
     barWidth?: number
     width?: number
     type?: 'line' | 'circle'

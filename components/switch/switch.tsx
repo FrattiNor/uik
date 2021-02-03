@@ -7,8 +7,8 @@ import './switch.less'
 const Switch: ForwardRefRenderFunction<unknown, switchProps> = (props, ref) => {
     const componentRef = useRef<HTMLElement>(null)
     const switchRef = (ref as any) || componentRef
-    const { checked: outChecked, disabled, onChange, onMouseDown: outOnMouseDown, onMouseUp: outOnMouseUp } = props
-    const [virtualChecked, setVirtualChecked] = useState(false)
+    const { checked: outChecked, defaultChecked = false, disabled, onChange, onMouseDown: outOnMouseDown, onMouseUp: outOnMouseUp } = props
+    const [virtualChecked, setVirtualChecked] = useState(defaultChecked)
     const checked = typeof outChecked === 'boolean' ? outChecked : virtualChecked
     const [mouseDown, setMouseDown] = useState(false)
     const [checkChangeAnimate, setCheckChangeAnimate] = useState<boolean | ''>('') // 只关于执行动画，初始为''不执行动画
@@ -17,16 +17,13 @@ const Switch: ForwardRefRenderFunction<unknown, switchProps> = (props, ref) => {
         if (outOnMouseUp) outOnMouseUp(e)
         setMouseDown(false)
         setVirtualChecked(!checked)
+        if (onChange) onChange(!checked)
     }
 
     const onMouseDown = (e: MouseEvent<HTMLButtonElement>) => {
         if (outOnMouseDown) outOnMouseDown(e)
         setMouseDown(true)
     }
-
-    useEffectAfterFirst(() => {
-        if (onChange) onChange(virtualChecked)
-    }, [virtualChecked])
 
     useEffectAfterFirst(() => {
         setCheckChangeAnimate(checked)
