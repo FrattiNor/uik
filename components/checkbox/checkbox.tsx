@@ -5,11 +5,11 @@ import { checkboxProps } from './types'
 import './checkbox.less'
 
 const Checkbox: FC<checkboxProps> = (props) => {
-    const { children, checked: outChecked, disabled, onChange: outOnChange } = props
+    const { children, checked: outChecked, disabled, onChange: outOnChange, checkedHalf } = props
 
     const [virtualChecked, setVirtualChecked] = useState(false)
     const [checkedAnimate, setCheckedAnimate] = useState<boolean | ''>('') // 只关于执行动画，初始为''不执行动画
-    const checked = typeof outChecked === 'boolean' ? outChecked : virtualChecked
+    const checked = checkedHalf === true ? false : typeof outChecked === 'boolean' ? outChecked : virtualChecked
 
     const onChange = (e: ChangeEvent<HTMLInputElement>) => {
         const newChekced = e.target.checked
@@ -26,7 +26,7 @@ const Checkbox: FC<checkboxProps> = (props) => {
 
     return (
         <label className={classnames('uik-checkbox-wrapper', { disabled })}>
-            <span className={classnames('uik-checkbox', { checked, disabled, ['checked-animate']: checkedAnimate })}>
+            <span className={classnames('uik-checkbox', { ['checked-half']: checkedHalf, checked, disabled, ['checked-animate']: checkedAnimate })}>
                 <input disabled={disabled} type="checkbox" className="uik-checkbox-input" checked={checked} onChange={onChange} />
                 <span className={classnames('uik-checkbox-inner', { checked, disabled })} />
             </span>

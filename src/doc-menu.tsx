@@ -37,6 +37,10 @@ const menu = [
             {
                 name: 'switch',
                 desc: 'Switch 开关'
+            },
+            {
+                name: 'checkbox',
+                desc: 'Checkbox 多选'
             }
         ]
     },

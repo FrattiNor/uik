@@ -9,6 +9,12 @@
         cursor: not-allowed;
     }
 
+    &:hover {
+        .uik-checkbox-inner {
+            border-color: @primary-color;
+        }
+    }
+
     .uik-checkbox {
         position: relative;
         display: inline-flex;
@@ -31,6 +37,7 @@
             height: 14px;
             border: @border-width solid @border-color;
             border-radius: @border-radius;
+            transition: border-color 0.3s;
 
             &::after {
                 width: 4px;
@@ -72,7 +79,19 @@
             border-radius: @border-radius;
             z-index: 1;
             opacity: 0;
-            transition: background-color 0.3s, opacity 0.3s;
+            transition: background-color 0.3s, opacity 0.3s, top 0.3s, left 0.3s, right 0.3s, bottom 0.3s, border-radius 0.3s;
+        }
+
+        // 部分选中
+        &.checked-half {
+            &::after {
+                top: 4px;
+                left: 4px;
+                right: 4px;
+                bottom: 4px;
+                opacity: 1;
+                border-radius: 0;
+            }
         }
 
         &.checked {
