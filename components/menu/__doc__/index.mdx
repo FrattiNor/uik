@@ -21,9 +21,19 @@ import codeNormal from '!raw-loader!./demo-normal'
 
 <div className="api">
 
-| 属性    | 说明         | 类型                            | 默认值 | 版本 |
-| :------ | :----------- | :------------------------------ | :----- | :--- |
-| list    | 列表内容     | { name , key } []                  | -      | -    |
-| onClick | 列表点击事件 | ({ event: e, name, key }) => void | -      | -    |
+| 属性                 | 说明                    | 类型                                    | 默认值 | 版本 |
+| :------------------- | :---------------------- | :-------------------------------------- | :----- | :--- |
+| list                 | 列表内容                | { name , key } \| {title, key, list} [] | -      | -    |
+| collapsed            | 列表是否可收缩          | boolean                                 | true   | -    |
+| defaultSelectedKeys  | 列表默认选中值          | string[]                                | []     | -    |
+| defaultOpenKeys      | 列表默认打开的目录      | string[]                                | []     | -    |
+| selectedKeys         | 列表选中值              | string[]                                | -      | -    |
+| openKeys             | 列表打开的目录          | string[]                                | -      | -    |
+| onTitleClick         | 列表目录标题点击事件    | ({ key, title, event }) => void         | -      | -    |
+| onClick              | 列表目录子元素点击事件  | ({ key, name, event }) => void          | -      | -    |
+| onSelectedKeysChange | selectedKeys 改变的回调 | (keys) => void                          | -      | -    |
+| onOpenKeysChange     | openKeys 改变的回调     | (keys) => void                          | -      | -    |
+| multiple             | 是否可以多选            | boolean                                 | false  | -    |
+| width                | 列表宽度                | number                                  | -      | -    |
 
 </div>

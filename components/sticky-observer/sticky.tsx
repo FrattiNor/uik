@@ -32,7 +32,7 @@ const Sticky: FC<stickyProps> = (props) => {
         const callback = (entries: any) => {
             entries.forEach((entry: any) => {
                 const { isIntersecting: canSee, boundingClientRect: targetRect, rootBounds: rootRect } = entry
-                const fixedBaseStyle = { transform: 'translateZ(0px)', position: 'fixed', width: targetOutStyle.width }
+                const fixedBaseStyle = { transform: 'translateZ(0px)', position: 'fixed', width: targetOutStyle.width, zIndex: 999 }
 
                 if (canSee) {
                     setFixedStyle({})
