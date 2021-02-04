@@ -2,9 +2,9 @@
 import ResizeObserver from 'resize-observer-polyfill'
 import { CSSProperties, useEffect } from 'react'
 
-type fun = (target: HTMLElement | null, setStyle: (style: CSSProperties) => void, depend: anyArray) => void
+type fun = (target: HTMLElement | null, setStyle: (style: CSSProperties) => void, depend?: anyArray) => void
 
-const useEffectResizeObserver:fun = (target, setStyle, depend) => {
+const useEffectResizeObserver:fun = (target, setStyle, depend = []) => {
     // 监测元素高宽
     useEffect(() => {
         const callback = (entries: any) => {
@@ -25,7 +25,7 @@ const useEffectResizeObserver:fun = (target, setStyle, depend) => {
         return () => {
             observer.disconnect()
         }
-    }, [depend, setStyle, target])
+    }, [...depend, setStyle, target])
 }
 
 export default useEffectResizeObserver

@@ -1,10 +1,59 @@
 /* eslint-disable no-unused-vars */
-import { MouseEvent } from 'react'
+import { HTMLAttributes, MouseEvent } from 'react'
 
-export type menuList = { name: string; key: string }[]
+export type menuListItem = { name: string; key: string }
+export type menuList = menuListItem[]
+export type menuTitleListItem = { title: string; key: string; list: menuTitleList }
+export type menuTitleList = (menuListItem | menuTitleListItem)[]
 export type menuClick = ({ key, name, event }: { key: string; name: string; event: MouseEvent }) => void
+export type menuTitleClick = ({ key, title, event }: { key: string; title: string; event: MouseEvent }) => void
+
+type changeKey = (key: string) => void
+type changeKeys = (key: string[]) => void
 
 export type menuProps = {
-    list: menuList
+    list: menuTitleList
+    collapsed?: boolean
+    defaultSelectedKeys?: string[]
+    defaultOpenKeys?: string[]
+    selectedKeys?: string[]
+    openKeys?: string[]
+    onTitleClick?: menuTitleClick
+    onClick?: menuClick
+    onSelectedKeysChange?: changeKeys
+    onOpenKeysChange?: changeKeys
+    multiple?: boolean
+    width?: number
+} & HTMLAttributes<HTMLDivElement>
+
+export type menuInnerProps = {
+    list: menuTitleList
+    collapsed?: boolean
+    selectedKeys?: string[]
+    openKeys?: string[]
+    onTitleClick?: menuTitleClick
+    onClick?: menuClick
+    zIndex?: number
+    changeOpenKeys?: changeKey
+    changeSelectedKeys?: changeKey
+}
+
+export type menuTitleListProps = menuTitleListItem & {
+    itemKey: string // key无法作为props传递
+    collapsed?: boolean
+    zIndex: number
+    selectedKeys: string[]
+    openKeys: string[]
+    changeOpenKeys?: changeKey
+    changeSelectedKeys?: changeKey
+    onTitleClick?: menuTitleClick
+    onClick?: menuClick
+}
+
+export type menuItemProps = menuListItem & {
+    itemKey: string // key无法作为props传递
+    zIndex: number
+    selectedKeys: string[]
+    changeSelectedKeys?: changeKey
     onClick?: menuClick
 }

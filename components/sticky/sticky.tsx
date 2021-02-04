@@ -11,8 +11,8 @@ const Sticky: FC<stickyProps> = (props) => {
     const [fixedStyle, setFixedStyle] = useState<CSSProperties>({})
 
     // 监测元素高宽
-    useResizeObserver(targetRef.current, setTargetStyle, [])
-    useResizeObserver(targetOutRef.current, setTargetOutStyle, [])
+    useResizeObserver(targetRef.current, setTargetStyle)
+    useResizeObserver(targetOutRef.current, setTargetOutStyle)
 
     // 监控滚动事件
     const scrollFun = useCallback(

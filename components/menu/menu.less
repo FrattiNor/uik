@@ -1,33 +1,71 @@
 @import '../_style/theme.less';
 
+.uik-menu-item-block {
+    padding: 5px 15px 5px 15px;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.3s, color 0.3s;
+
+    &:hover {
+        color: @primary-color;
+    }
+}
+
 .uik-menu {
-    color: @font-color;
     font-size: @font-size-middle;
-    padding: 4px 0;
+    color: @font-color;
+    display: inline-block;
+    border: @border-width solid @border-color;
+    border-radius: @border-radius;
 
-    &-item {
-        padding: 5px 12px;
-        cursor: pointer;
-        transition: background-color 0.3s, color 0.3s;
-        user-select: none;
+    & .uik-menu-item {
+        height: 36px;
+        line-height: 36px;
+    }
+}
 
-        &:hover {
-            background-color: @primary-bg-color;
-            color: @primary-color;
+.uik-menu-title {
+    .uik-menu-item-block();
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    &.child-selected {
+        color: @primary-color;
+    }
+
+    &-icon {
+        font-size: 12px;
+        margin-left: 15px;
+        transition: transform 0.3s;
+
+        &.show {
+            transform: rotate(180deg);
         }
     }
 }
 
-.uik-menu-default {
-    .uik-menu {
-        border: @border-width solid @border-color;
-        border-radius: @border-radius;
-        display: inline-flex;
-        flex-direction: column;
-        padding: 0;
-    }
+.uik-menu-list {
+    background-color: rgba(0, 0, 0, 0.06);
+    overflow: hidden;
+}
 
-    .uik-menu-item + .uik-menu-item {
-        border-top: @border-width solid @border-color;
+.uik-menu-item {
+    position: relative;
+    .uik-menu-item-block();
+
+    &.selected {
+        background-color: #e6f7ff;
+        color: @primary-color;
+
+        &::after {
+            content: '';
+            position: absolute;
+            height: 100%;
+            width: 4px;
+            background-color: @primary-color;
+            top: 0;
+            right: 0;
+        }
     }
 }
