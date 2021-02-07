@@ -33,6 +33,7 @@ const Button: ForwardRefRenderFunction<unknown, buttonProps> = (props, ref) => {
         onClick,
         ...restProps
     } = props
+    
     const componentRef = useRef<HTMLElement>(null)
     const btnRef = (ref as any) || componentRef
 

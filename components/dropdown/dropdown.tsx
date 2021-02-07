@@ -23,4 +23,4 @@ const Component = noticeHoc<dropdownProps>({
     updatePositionProps: ['list']
 })(DropDown)
 
-export default noticeRenderHoc<dropdownProps>({ name: 'dropdown', defaultTrigger: 'hover' })(Component)
+export default noticeRenderHoc<dropdownProps>({ name: 'dropdown', defaultTrigger: 'hover', defaultZIndex: 1001 })(Component)

@@ -1,0 +1,51 @@
+@import '../_style/theme.less';
+
+.uik-date-picker {
+    font-size: @font-size-middle;
+    color: @font-color;
+    display: inline-block;
+
+    &-title {
+        border-bottom: @border-width solid @border-color;
+        height: 35px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 15px;
+
+        &-text {
+            user-select: none;
+            font-weight: bold;
+
+            &.click {
+                transition: color 0.3s;
+                cursor: pointer;
+
+                &:hover {
+                    color: @primary-color;
+                }
+            }
+        }
+
+        &-icon {
+            color: @font-color-notice;
+            cursor: pointer;
+            transition: color 0.3s;
+            font-size: 12px;
+
+            &:hover {
+                color: @font-color;
+            }
+
+            & + .uik-date-picker-icon {
+                margin-left: 5px;
+            }
+        }
+    }
+
+    &-content {
+        width: calc(~'35px * 7');
+        height: calc(~'35px * 7');
+        padding: 10px;
+    }
+}

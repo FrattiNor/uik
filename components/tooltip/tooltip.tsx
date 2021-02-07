@@ -13,5 +13,5 @@ const Tooltip: FC<noticeRenderProps & tooltipProps> = (props) => {
 
 const Component = noticeHoc<tooltipProps>({ backgroundColor: 'rgba(0, 0, 0, 0.75)', emptyKey: 'title', updatePositionProps: ['title'] })(Tooltip)
 
-export default noticeRenderHoc<tooltipProps>({ name: 'tooltip', defaultTrigger: 'hover' })(Component)
+export default noticeRenderHoc<tooltipProps>({ name: 'tooltip', defaultTrigger: 'hover', defaultZIndex: 1004 })(Component)
 

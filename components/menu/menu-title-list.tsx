@@ -1,7 +1,7 @@
 import React, { FC, Fragment, MouseEvent, useRef, useState, CSSProperties } from 'react'
 import classnames from 'classnames'
 import Icon from '../icon'
-import { useEffectAfterFirst, useResizeObserver } from '../_hooks'
+import { useEffectAfterFirst } from '../_hooks'
 import { menuTitleListProps, menuTitleList, menuTitleListItem } from './types'
 import { MenuInner } from './menu'
 
@@ -21,15 +21,13 @@ const MenuTitleList: FC<menuTitleListProps> = (props) => {
     const childSelected = findIncludesKey(list)
     // list本体，用于获取list的height
     const listRef = useRef<HTMLDivElement>(null)
-        
+
     const showTimeout = useRef<NodeJS.Timeout | null>(null)
     const transitionTimeout = useRef<NodeJS.Timeout | null>(null)
 
     const [transition, setTransition] = useState(false)
     const [show, setShow] = useState(open)
     const [style, setStyle] = useState<CSSProperties>({})
-
-    useResizeObserver(listRef.current, setStyle)
 
     const titleClick = (key: string, title: string, event: MouseEvent) => {
         if (onTitleClick) onTitleClick({ key, title, event })
@@ -41,13 +39,15 @@ const MenuTitleList: FC<menuTitleListProps> = (props) => {
         if (showTimeout.current !== null) clearTimeout(showTimeout.current)
         if (transitionTimeout.current !== null) clearTimeout(transitionTimeout.current)
 
+        // open 和 close 之前先获取一次child的高度
+        if (listRef.current !== null) setStyle({ height: listRef.current.clientHeight })
         setTransition(true)
         showTimeout.current = setTimeout(() => {
             setShow(typeof newShow === 'boolean' ? newShow : !show)
         }, 50)
         transitionTimeout.current = setTimeout(() => {
             setTransition(false)
-        }, 300)
+        }, 350)
     }
 
     useEffectAfterFirst(() => {
@@ -70,7 +70,7 @@ const MenuTitleList: FC<menuTitleListProps> = (props) => {
             </div>
             <div
                 className={classnames('uik-menu-list')}
-                style={{ maxHeight: show ? style.height : 0, transition: transition ? 'max-height 0.3s' : 'unset' }}
+                style={{ height: show ? (transition ? style.height : 'auto') : 0, transition: transition ? 'height 0.3s' : 'unset' }}
             >
                 <div ref={listRef}>
                     <MenuInner

@@ -7,6 +7,7 @@ import './input.less'
 const Input: ForwardRefRenderFunction<unknown, inputProps> = (props, ref) => {
     const componentRef = useRef<HTMLElement>(null)
     const inputRef = (ref as any) || componentRef
+
     const { CloseIcon } = Icon
     const {
         value: outValue,
@@ -15,10 +16,12 @@ const Input: ForwardRefRenderFunction<unknown, inputProps> = (props, ref) => {
         disabled = false,
         maxLength,
         size = 'middle',
-        onChange: outOnChange,
+        onValueChange,
+        onChange: outOnchange,
         onEnter: outOnEnter,
         onFocus: outOnFocus,
         onBlur: outOnBlur,
+        onKeyPress: outOnKeyPress,
         className,
         error,
         ...restProps
@@ -31,18 +34,19 @@ const Input: ForwardRefRenderFunction<unknown, inputProps> = (props, ref) => {
         const len = v.length
         const value = typeof maxLength === 'number' ? (len > maxLength ? v.slice(0, maxLength) : v) : v
         setVirtualValue(value)
-        if (outOnChange) outOnChange(value)
+        if (onValueChange) onValueChange(value)
     }
 
     const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-        const v = e.target.value
-        changeValue(v)
+        changeValue(e.target.value)
+        if (outOnchange) outOnchange(e)
     }
     const onEnter = (e: ChangeEvent<HTMLInputElement>) => {
         if (outOnEnter) outOnEnter(e.target.value)
     }
     const onKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
-        if (e.code === 'enter') onEnter((e as unknown) as ChangeEvent<HTMLInputElement>)
+        if (e.code === 'Enter') onEnter((e as unknown) as ChangeEvent<HTMLInputElement>)
+        if(outOnKeyPress) outOnKeyPress(e)
     }
 
     const onFocus = (e: FocusEvent<HTMLInputElement>) => {
@@ -59,24 +63,18 @@ const Input: ForwardRefRenderFunction<unknown, inputProps> = (props, ref) => {
         }
     }
 
-    const inputFocus = () => {
-        inputRef.current.focus()
-    }
-
     return (
         <span
-            className={classnames('uik-input', className, {
+            className={classnames('uik-input', {
                 disabled,
                 focus,
-                error,
-                'allow-clear': allowClear
+                error
             })}
-            onClick={inputFocus}
         >
             <span className={classnames('uik-input-content')}>
                 <input
                     ref={inputRef}
-                    className={classnames('uik-input-content-component', [`${size}`])}
+                    className={classnames('uik-input-content-component', [`${size}`], { 'allow-clear': allowClear }, className)}
                     value={value}
                     onChange={onChange}
                     onKeyPress={onKeyPress}
@@ -85,14 +83,13 @@ const Input: ForwardRefRenderFunction<unknown, inputProps> = (props, ref) => {
                     disabled={disabled}
                     {...restProps}
                 />
-                {allowClear && !disabled && (
-                    <CloseIcon
-                        circle
-                        size="small"
-                        className={classnames('uik-input-content-close', { show: value })}
-                        onClick={() => changeValue('')}
-                    />
-                )}
+                <CloseIcon
+                    visible={!!value && allowClear && !disabled}
+                    circle
+                    size="small"
+                    className={classnames('uik-input-content-close')}
+                    onClick={() => changeValue('')}
+                />
             </span>
         </span>
     )

@@ -23,4 +23,5 @@ export type closeIconProps = {
     circle?: boolean
     size?: uikSize
     danger?: boolean
+    visible?: boolean
 } & HTMLAttributes<HTMLElement>

@@ -8,7 +8,7 @@ export type inputProps = {
     disabled?: boolean
     maxLength?: number
     size?: uikSize
-    onChange?: (v: string) => void
+    onValueChange?: (v: string) => void
     onEnter?: (v: string) => void
     error?: boolean
 } & HTMLAttributes<HTMLInputElement>

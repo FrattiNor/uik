@@ -40,8 +40,9 @@ export type noticeHocProps = {
     emptyKey?: string
     needArrow?: boolean
     defaultPosition?: noticePosition
-    isDropdown?: boolean // 是否是dropdwon，触发的动画不同
+    isDropdown?: boolean // 是否是dropdwon（代表从一边展开），触发的动画不同
     updatePositionProps?: string[] // 会触发重新获取定位的props参数
+    emptyClickClose?: boolean // 控制点击外部空白区域关闭【click默认是有的】
 }
 
 // notice 组件参数
@@ -54,14 +55,15 @@ export type noticeProps = {
 
 // any 代表组件本身的props参数
 // notice-hoc-inner 高阶组件本身
-export type noticeHocInner<T> = (WrapperComponent: FC<noticeRenderProps & T>) => FC<noticeProps & T>
+export type noticeHocInner<T> = (WrapperComponent: FC<noticeProps & T>) => FC<noticeProps & T>
 
 // =============== noticeRenderHoc ===============
 
 // render-hoc 配置参数
 export type noticeRenderHocProps = {
     name: string
-    defaultTrigger: noticeTrigger
+    defaultZIndex: number
+    defaultTrigger?: noticeTrigger
 }
 
 // render 组件参数

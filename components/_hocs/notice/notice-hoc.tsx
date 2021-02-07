@@ -13,7 +13,8 @@ function noticeHoc<T>(hocProps: noticeHocProps): noticeHocInner<T> {
         needArrow = true,
         defaultPosition = 'topCenter',
         isDropdown = false,
-        updatePositionProps = []
+        updatePositionProps = [],
+        emptyClickClose = false
     } = hocProps
     // 获取组件
     const noticeHocInner: noticeHocInner<T> = (WrapperComponent) => {
@@ -72,26 +73,25 @@ function noticeHoc<T>(hocProps: noticeHocProps): noticeHocInner<T> {
             }
             // trigger 为 click 时，点击空白关闭弹窗
             useEffect(() => {
-                const clickClose = (event: MouseEvent) => {
-                    const notice = noticeRef.current
-                    const clickNode = event.target as Node
-                    // 点击其他区域时, 隐藏指定区域
-                    // 点击区域不为children，点击区域不为弹出部分，点击区域不为弹出部分的子元素
-                    if (target !== null && notice !== null && clickNode !== null) {
-                        if (!(target === clickNode || notice === clickNode || notice.contains(clickNode))) {
-                            setVirtualVisible(false)
+                if (trigger === 'click' || emptyClickClose) {
+                    const clickClose = (event: MouseEvent) => {
+                        const notice = noticeRef.current
+                        const clickNode = event.target as HTMLElement
+                        // 点击其他区域时, 隐藏指定区域
+                        // 点击区域不为children，点击区域不为弹出部分，点击区域不为弹出部分的子元素
+                        if (target !== null && notice !== null && clickNode !== null) {
+                            if (!(target === clickNode || target.contains(clickNode) || notice === clickNode || notice.contains(clickNode))) {
+                                setVirtualVisible(false)
+                            }
                         }
                     }
-                }
-
-                if (trigger === 'click') {
                     document.addEventListener('click', clickClose)
-                }
 
-                return () => {
-                    document.removeEventListener('click', clickClose)
+                    return () => {
+                        document.removeEventListener('click', clickClose)
+                    }
                 }
-            }, [setVirtualVisible, target, trigger])
+            }, [setVirtualVisible, target, trigger, emptyClickClose])
 
             // 根据visible设置动画和展示
             useEffectTimeout(

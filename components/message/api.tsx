@@ -27,7 +27,7 @@ const getMessageContainer = (position: messagePosition): HTMLElement => {
         id,
         classname,
         containerType: 'fixed',
-        zIndex: 1002 // modal 1000, notice 1001, confirm 1001 ,message 1002
+        zIndex: 1005 // modal 1000, dropdown 1001, date-picker 1002, confirm 1003, tooltip 1004 ,message 1005
     })
 
     return container

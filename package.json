@@ -125,6 +125,7 @@
     },
     "dependencies": {
         "classnames": "^2.2.6",
+        "dayjs": "^1.10.4",
         "resize-observer-polyfill": "^1.5.1"
     }
 }

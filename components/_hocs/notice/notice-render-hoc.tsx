@@ -1,15 +1,15 @@
 import React, { FC, Fragment, useEffect, useState, useMemo, isValidElement, useRef, cloneElement, MouseEvent } from 'react'
 import ReactDOM, { unmountComponentAtNode } from 'react-dom'
-import { noticeRenderProps, noticeRenderHocProps, noticeRenderHocInner } from './types'
+import { noticeRenderProps, noticeProps, noticeRenderHocProps, noticeRenderHocInner } from './types'
 import { getContainer, getRootById, getDefaultRoot, getElementUUID } from '../../_utils'
 import { useDebounce, useEffectAfterFirst, useEffectOnce, useStateFromValue } from '../../_hooks'
 
 // 获取参数
-function noticeRenderHoc<T>({ name, defaultTrigger }: noticeRenderHocProps): noticeRenderHocInner<T> {
+function noticeRenderHoc<T>({ name, defaultTrigger, defaultZIndex }: noticeRenderHocProps): noticeRenderHocInner<T> {
     // inner
     const noticeRenderHocInner: noticeRenderHocInner<T> = (WrapperComponent) => {
         // 获取容器 notice 容器
-        const getNoticeContainer = (containerZIndex: number, root: HTMLElement): HTMLElement => {
+        const getNoticeContainer = (root: HTMLElement, containerZIndex?: number): HTMLElement => {
             // root 为根目录时才有id
             const id = root === getDefaultRoot() ? `uik-${name}-${containerZIndex}` : `uik-${name}-${containerZIndex}-${getElementUUID(root)}`
 
@@ -17,7 +17,7 @@ function noticeRenderHoc<T>({ name, defaultTrigger }: noticeRenderHocProps): not
                 id,
                 root,
                 containerType: 'absolute',
-                zIndex: containerZIndex // modal 1000, notice 1001, confirm 1001 ,message 1002
+                zIndex: containerZIndex || defaultZIndex // modal 1000, dropdown 1001, date-picker 1002, confirm 1003, tooltip 1004 ,message 1005
             })
 
             return container
@@ -28,7 +28,7 @@ function noticeRenderHoc<T>({ name, defaultTrigger }: noticeRenderHocProps): not
             const {
                 children,
                 visible: outVisible,
-                containerZIndex = 1001,
+                containerZIndex,
                 trigger = defaultTrigger,
                 disabled = false,
                 onVisibleChange,
@@ -42,8 +42,16 @@ function noticeRenderHoc<T>({ name, defaultTrigger }: noticeRenderHocProps): not
             const [container, setContainer] = useState<HTMLElement | null>(null)
             // 挂载的div
             const [div, setDiv] = useState<HTMLElement | null>(null)
-            // target
-            const targetRef = useRef<HTMLElement>(null)
+            // getChild
+            const getChild = () => {
+                const firstElement = Array.isArray(children) ? children[0] : children
+                const element = isValidElement(firstElement) ? firstElement : <span>{firstElement}</span>
+                return element
+            }
+            const child = getChild()
+            // target ref
+            const componentRef = useRef<HTMLElement>(null)
+            const targetRef = (child as any).ref || componentRef
             // 虚拟visible，和外部的visible保持一致（避免出现2个visible不一致的情况，保证onVisibleChange传的visible没问题）
             const [virtualVisible, setVirtualVisible] = useStateFromValue(!!outVisible)
             // 实际的visible
@@ -57,7 +65,7 @@ function noticeRenderHoc<T>({ name, defaultTrigger }: noticeRenderHocProps): not
             const DOM = useMemo(() => {
                 return (
                     <WrapperComponent
-                        {...restProps as T}
+                        {...(restProps as T & noticeProps)}
                         setVirtualVisible={debounceSetVisible}
                         visible={visible}
                         trigger={trigger}
@@ -68,46 +76,43 @@ function noticeRenderHoc<T>({ name, defaultTrigger }: noticeRenderHocProps): not
                 )
             }, [restProps, visible, trigger, debounceSetVisible, container, root])
 
-            // 获取child
-            const getChild = () => {
+            // 获取child clone
+            const getChildClone = () => {
                 if (children !== null) {
-                    const firstElement = Array.isArray(children) ? children[0] : children
-                    const element = isValidElement(firstElement) ? firstElement : <span>{firstElement}</span>
-
                     const childFun = () => {
                         switch (trigger) {
                             case 'hover':
                                 return {
                                     onMouseEnter: (e: MouseEvent) => {
-                                        const { onMouseEnter } = element.props
-                                        if (onMouseEnter) onMouseEnter(e)
+                                        const { onMouseEnter } = child.props
                                         debounceSetVisible(true)
+                                        if (onMouseEnter) onMouseEnter(e)
                                     },
                                     onMouseLeave: (e: MouseEvent) => {
-                                        const { onMouseLeave } = element.props
-                                        if (onMouseLeave) onMouseLeave(e)
+                                        const { onMouseLeave } = child.props
                                         debounceSetVisible(false)
+                                        if (onMouseLeave) onMouseLeave(e)
                                     }
                                 }
                             case 'focus':
                                 return {
                                     onFocus: (e: MouseEvent) => {
-                                        const { onFocus } = element.props
-                                        if (onFocus) onFocus(e)
+                                        const { onFocus } = child.props
                                         debounceSetVisible(true)
+                                        if (onFocus) onFocus(e)
                                     },
                                     onBlur: (e: MouseEvent) => {
-                                        const { onBlur } = element.props
-                                        if (onBlur) onBlur(e)
+                                        const { onBlur } = child.props
                                         debounceSetVisible(false)
+                                        if (onBlur) onBlur(e)
                                     }
                                 }
                             case 'click':
                                 return {
                                     onClick: (e: MouseEvent) => {
-                                        const { onClick } = element.props
-                                        if (onClick) onClick(e)
+                                        const { onClick } = child.props
                                         debounceSetVisible(!visible)
+                                        if (onClick) onClick(e)
                                     }
                                 }
                             default:
@@ -115,7 +120,7 @@ function noticeRenderHoc<T>({ name, defaultTrigger }: noticeRenderHocProps): not
                         }
                     }
 
-                    const cloneE = cloneElement(element, { ref: targetRef, ...childFun() })
+                    const cloneE = cloneElement(child, { ref: targetRef, ...childFun() })
 
                     return cloneE
                 }
@@ -135,7 +140,7 @@ function noticeRenderHoc<T>({ name, defaultTrigger }: noticeRenderHocProps): not
                 visible,
                 () => {
                     const root = getRoot ? getRoot() || getDefaultRoot() : getRootById(rootId)
-                    const container = getNoticeContainer(containerZIndex, root)
+                    const container = getNoticeContainer(root, containerZIndex)
                     const div = document.createElement('div')
                     div.setAttribute
                     container.append(div)
@@ -166,7 +171,7 @@ function noticeRenderHoc<T>({ name, defaultTrigger }: noticeRenderHocProps): not
                 }
             }, [div])
 
-            return <Fragment>{getChild()}</Fragment>
+            return <Fragment>{getChildClone()}</Fragment>
         }
 
         return NoticeRender

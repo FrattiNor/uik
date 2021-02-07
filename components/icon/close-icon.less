@@ -4,7 +4,7 @@
     &-icon {
         cursor: pointer;
         color: @disabled-color;
-        transition: color 0.3s;
+        transition: color 0.3s, opacity 0.3s;
 
         &.small {
             font-size: @font-size-small;
@@ -24,6 +24,14 @@
             &:hover {
                 color: @danger-color;
             }
+        }
+
+        &.show {
+            opacity: 1;
+        }
+
+        &.hidden {
+            opacity: 0;
         }
     }
 }

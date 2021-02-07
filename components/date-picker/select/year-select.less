@@ -1,0 +1,31 @@
+@import '../../_style/theme.less';
+
+.uik-year-select {
+    user-select: none;
+    font-size: @font-size-middle;
+    color: @font-color;
+    width: 100%;
+    height: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-wrap: wrap;
+
+    & > .year {
+        width: 70px;
+        height: 25px;
+        text-align: center;
+        line-height: 25px;
+        cursor: pointer;
+        box-sizing: border-box;
+        border-radius: @border-radius;
+
+        &:hover {
+            background-color: @primary-bg-color;
+        }
+
+        &.current-year {
+            border: @border-width solid fade(@primary-color, 30);
+        }
+    }
+}

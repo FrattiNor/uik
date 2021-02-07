@@ -38,4 +38,4 @@ const Confirm: FC<confirmProps & noticeRenderProps> = (props) => {
 
 const Component = noticeHoc<confirmProps>({ backgroundColor: '#fff', emptyKey: 'content', updatePositionProps: ['content'] })(Confirm)
 
-export default noticeRenderHoc<confirmProps>({ name: 'confirm', defaultTrigger: 'click' })(Component)
+export default noticeRenderHoc<confirmProps>({ name: 'confirm', defaultTrigger: 'click', defaultZIndex: 1003 })(Component)
