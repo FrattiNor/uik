@@ -134,7 +134,7 @@ const DateSelect: FC<dateSelectProps> = (props) => {
                 const today = getToday(month, date)
 
                 return (
-                    <div key={date.toString() + month.toString() + monthType} className={classnames('date', monthType)}>
+                    <div key={year.toString() + date.toString() + month.toString()} className={classnames('date', monthType)}>
                         <div
                             className={classnames('date-inner', { selected, today })}
                             onClick={(e) => {

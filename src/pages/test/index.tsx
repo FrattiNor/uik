@@ -6,7 +6,7 @@ const Test: FC = () => {
     return (
         <>
             <div style={{ margin: 24 }}>
-                <DatePicker value={dayjs()} />
+                <DatePicker />
             </div>
         </>
     )
