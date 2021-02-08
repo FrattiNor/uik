@@ -15,7 +15,7 @@ import { useEffectAfterFirst } from '../_hooks'
 const DatePickerDropdown: FC<datePickerDropdownProps & noticeProps> = (props) => {
     const datePickRef = useRef<HTMLDivElement>(null)
     // 使用 setVirtualVisible 关闭， 外部使用 onVisibleChange 监听
-    const { selectedDay, onSelectedDayChange, setVirtualVisible } = props
+    const { selectedDay, onSelectedDayChange, setVirtualVisible, disabledDate } = props
 
     // 保持 显示的 month year 的 dayjs对象
     const [monthAndYear, setMonthAndYear] = useState(dayjs())
@@ -144,7 +144,7 @@ const DatePickerDropdown: FC<datePickerDropdownProps & noticeProps> = (props) =>
                 </span>
             </div>
             <div className="uik-date-picker-content">
-                {page === 'date' && <DateSelect year={year} month={month} selectedDays={selectedDay ? [selectedDay] : []} onClick={dateClick} />}
+                {page === 'date' && <DateSelect disabledDate={disabledDate} year={year} month={month} selectedDays={selectedDay ? [selectedDay] : []} onClick={dateClick} />}
                 {page === 'month' && <MonthSelect currentMonth={month} onClick={monthClick} />}
                 {page === 'year' && <YearSelect currentYear={year} startYear={startYear} endYear={endYear} onClick={yearClick} />}
             </div>

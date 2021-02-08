@@ -8,6 +8,7 @@ export type dateSelectProps = {
     month: monthNumber
     selectedDays?: Dayjs[]
     onClick?: (day: Dayjs, selected: boolean) => void
+    disabledDate?: (currentDate: Dayjs) => boolean
 }
 
 export type monthSelectProps = {

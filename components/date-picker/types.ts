@@ -14,14 +14,14 @@ export type datePickInputProps = {
 
 export type datePickerProps = {
     format?: string
-    // disabledDate?: (currentDate: formatString) => boolean
+    disabledDate?: (currentDate: Dayjs) => boolean
     value?: Dayjs | null
     defaultValue?: Dayjs | null
     onChange?: (value: Dayjs | null) => void
 } & datePickInputProps
 
 export type datePickerDropdownProps = {
-    // disabledDate?: (currentDate: formatString) => boolean
+    disabledDate?: (currentDate: Dayjs) => boolean
     selectedDay: Dayjs | null
     onSelectedDayChange: (days: Dayjs) => void
 }

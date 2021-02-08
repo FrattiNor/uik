@@ -31,18 +31,26 @@
         &.next-month {
             color: @font-color-notice;
         }
+        &.disabled {
+            background-color: @disabled-bg-color;
+            color: @font-color-notice;
+            cursor: not-allowed;
+        }
 
         .date-inner {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            cursor: pointer;
             border-radius: 50%;
             width: 25px;
             height: 25px;
             border: @border-width solid transparent;
             box-sizing: border-box;
             transition: background-color 0.3s, color 0.3s;
+
+            &:not(.disabled) {
+                cursor: pointer;
+            }
 
             &.today {
                 border-color: fade(@primary-color, 30);
@@ -53,9 +61,16 @@
                 color: #fff;
             }
 
-            &:not(.selected):hover {
+            &:not(.selected):not(.disabled):hover {
                 background-color: @primary-bg-color;
             }
         }
     }
+
+    // .date.disabled + .date:not(.disabled) {
+    //     border-radius: 50%;
+    // }
+    // .date:not(.disabled) + .date.disabled {
+    //     border-radius: 50%;
+    // }
 }

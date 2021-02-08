@@ -20,7 +20,8 @@ const DatePicker: FC<datePickerProps> = (props) => {
         size,
         htmlSize,
         error,
-        placeholder
+        placeholder,
+        ...restProps
     } = props
 
     const [visible, setVisible] = useState(false)
@@ -78,9 +79,9 @@ const DatePicker: FC<datePickerProps> = (props) => {
             visible={visible}
             onVisibleChange={setVisible}
             autoAdjust
-            selectedDay={selectedDay?.isValid() ? selectedDay : null}
+            selectedDay={selectedDay}
             onSelectedDayChange={trueOnChange}
-            {...props}
+            {...restProps}
         >
             <Input
                 value={inputValue}

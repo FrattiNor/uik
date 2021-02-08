@@ -41,15 +41,19 @@ const getYearMonthDate = (day: Dayjs) => {
 }
 
 const DateSelect: FC<dateSelectProps> = (props) => {
-    const { month, year, selectedDays, onClick } = props
+    const { month, year, selectedDays, onClick, disabledDate } = props
+
+    const getDay = (month: number, date: number) => {
+        return dayjs()
+            .year(year)
+            .month(month - 1)
+            .date(date)
+    }
 
     const trueClick = (month: number, date: number, selected: boolean) => {
         if (onClick)
             onClick(
-                dayjs()
-                    .year(year)
-                    .month(month - 1)
-                    .date(date),
+                getDay(month, date),
                 !selected // 点击完改变selected状态
             )
     }
@@ -64,6 +68,17 @@ const DateSelect: FC<dateSelectProps> = (props) => {
         }
 
         return false
+    }
+
+    const getDisabled = (month: number, date: number): boolean => {
+        // disabled
+        let disabled = false
+
+        if (disabledDate) {
+            disabled = disabledDate(getDay(month, date))
+        }
+
+        return disabled
     }
 
     // 获取是否选中
@@ -132,14 +147,17 @@ const DateSelect: FC<dateSelectProps> = (props) => {
             {dateList.map(({ date, monthType, month }) => {
                 const selected = getSelected(month, date)
                 const today = getToday(month, date)
+                const disabled = getDisabled(month, date)
 
                 return (
-                    <div key={year.toString() + date.toString() + month.toString()} className={classnames('date', monthType)}>
+                    <div key={year.toString() + date.toString() + month.toString()} className={classnames('date', monthType, { disabled })}>
                         <div
-                            className={classnames('date-inner', { selected, today })}
+                            className={classnames('date-inner', { selected, today, disabled })}
                             onClick={(e) => {
                                 e.stopPropagation() // 取消冒泡事件，屏蔽掉全局点击事件【全局点击事件因为会切换page导致组件取消挂载，所以点击会触发visible变false】
-                                trueClick(month, date, selected)
+                                if (!disabled) {
+                                    trueClick(month, date, selected)
+                                }
                             }}
                         >
                             {date}
