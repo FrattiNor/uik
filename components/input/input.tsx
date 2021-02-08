@@ -22,8 +22,11 @@ const Input: ForwardRefRenderFunction<unknown, inputProps> = (props, ref) => {
         onFocus: outOnFocus,
         onBlur: outOnBlur,
         onKeyPress: outOnKeyPress,
+        onClear: outOnClear,
         className,
+        style,
         error,
+        htmlSize,
         ...restProps
     } = props
     const [virtualValue, setVirtualValue] = useState(defaultValue)
@@ -41,12 +44,12 @@ const Input: ForwardRefRenderFunction<unknown, inputProps> = (props, ref) => {
         changeValue(e.target.value)
         if (outOnchange) outOnchange(e)
     }
-    const onEnter = (e: ChangeEvent<HTMLInputElement>) => {
-        if (outOnEnter) outOnEnter(e.target.value)
+    const onEnter = () => {
+        if (outOnEnter) outOnEnter(value)
     }
     const onKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
-        if (e.code === 'Enter') onEnter((e as unknown) as ChangeEvent<HTMLInputElement>)
-        if(outOnKeyPress) outOnKeyPress(e)
+        if (e.code === 'Enter') onEnter()
+        if (outOnKeyPress) outOnKeyPress(e)
     }
 
     const onFocus = (e: FocusEvent<HTMLInputElement>) => {
@@ -63,18 +66,28 @@ const Input: ForwardRefRenderFunction<unknown, inputProps> = (props, ref) => {
         }
     }
 
+    const onClear = () => {
+        if (outOnClear) {
+            outOnClear(value)
+        } else {
+            changeValue('')
+        }
+    }
+
     return (
         <span
             className={classnames('uik-input', {
                 disabled,
                 focus,
                 error
-            })}
+            }, className)}
+            style={style}
         >
             <span className={classnames('uik-input-content')}>
                 <input
+                    size={htmlSize}
                     ref={inputRef}
-                    className={classnames('uik-input-content-component', [`${size}`], { 'allow-clear': allowClear }, className)}
+                    className={classnames('uik-input-content-component', [`${size}`], { 'allow-clear': allowClear })}
                     value={value}
                     onChange={onChange}
                     onKeyPress={onKeyPress}
@@ -88,7 +101,7 @@ const Input: ForwardRefRenderFunction<unknown, inputProps> = (props, ref) => {
                     circle
                     size="small"
                     className={classnames('uik-input-content-close')}
-                    onClick={() => changeValue('')}
+                    onClick={onClear}
                 />
             </span>
         </span>

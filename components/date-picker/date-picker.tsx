@@ -4,71 +4,98 @@ import customParseFormat from 'dayjs/plugin/customParseFormat'
 import Input from '../input'
 import DatePickerDropdown from './date-picker-dropdown'
 import { datePickerProps } from './types'
-import { useEffectAfterFirst, useStateFromValue } from '../_hooks'
-
-dayjs.extend(customParseFormat)
+import { useEffectAfterFirst } from '../_hooks'
 
 const DatePicker: FC<datePickerProps> = (props) => {
+    dayjs.extend(customParseFormat)
+
+    const {
+        value: outValue,
+        defaultValue,
+        onChange,
+        format: formatText = 'YYYY-MM-DD',
+        allowClear,
+        disabled,
+        maxLength,
+        size,
+        htmlSize,
+        error,
+        placeholder
+    } = props
+
     const [visible, setVisible] = useState(false)
-    const { value: outValue, defaultValue, onChange, format: formatText = 'YYYY-MM-DD' } = props
+
+    const [showTextChangeFlag, setShowTextChangeFlag] = useState(false)
+
     // 选中的 date dayjs对象
-    const [virtualSelectedDay, setVirtualSelectedDay] = useState<Dayjs | null>(defaultValue || null)
+    const [virtualSelectedDay, setVirtualSelectedDay] = useState(defaultValue || null)
 
     const selectedDay = outValue !== undefined ? outValue : virtualSelectedDay
 
     const showText = selectedDay ? selectedDay.format(formatText) : ''
 
-    const [inputValue, setInputValue] = useStateFromValue(showText)
+    const [inputValue, setInputValue] = useState(showText)
 
-    const inputValueChange = (newV: string) => {
-        setInputValue(newV)
-        const inputValueDayJs = dayjs(newV, formatText, true)
-        if (inputValueDayJs.isValid()) {
-            setVirtualSelectedDay(inputValueDayJs)
-        }
+    const trueOnChange = (day: Dayjs | null) => {
+        setVirtualSelectedDay(day)
+        if (onChange) onChange(day)
+        setShowTextChangeFlag(!showTextChangeFlag)
     }
 
-    const onKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    const onKeyUp = (e: KeyboardEvent<HTMLInputElement>) => {
         if (e.code === 'Enter') {
-            setVisible(false)
+            setVisible(!visible)
         } else {
             setVisible(true)
         }
     }
 
-    // const onVisibleChange = (v: boolean) => {
-    //     setVisible(v)
-    //     if (!v) {
-    //         const inputValueDayJs = dayjs(inputValue, [formatText, 'YYYY-MM-DD', 'YYYY-MM-D', 'YYYY-M-DD', 'YYYY-M-D'], true)
-
-    //         if (inputValueDayJs.isValid()) {
-    //             setVirtualSelectedDay(inputValueDayJs)
-    //         } else {
-    //             setVirtualSelectedDay(null)
-    //         }
-    //     }
-    // }
+    const onInputValueChange = (newInputValue: string) => {
+        const inputDay = dayjs(newInputValue, formatText, true)
+        setInputValue(newInputValue)
+        if (inputDay.isValid()) {
+            trueOnChange(inputDay)
+        }
+    }
 
     useEffectAfterFirst(() => {
-        if (onChange) onChange(virtualSelectedDay)
-    }, [virtualSelectedDay])
+        if (!visible) {
+            const inputDay = dayjs(inputValue, [formatText, 'YYYY-MM-DD', 'YYYY-M-DD', 'YYYY-MM-D', 'YYYY-M-D'], true)
+            if (inputDay.isValid()) {
+                trueOnChange(inputDay)
+            } else {
+                trueOnChange(null)
+            }
+        }
+    }, [visible])
+
+    useEffectAfterFirst(() => {
+        setInputValue(showText)
+    }, [showText, showTextChangeFlag])
 
     return (
         <DatePickerDropdown
             visible={visible}
             onVisibleChange={setVisible}
             autoAdjust
-            selectedDay={selectedDay}
-            onSelectedDayChange={(day: Dayjs) => setVirtualSelectedDay(day)}
+            selectedDay={selectedDay?.isValid() ? selectedDay : null}
+            onSelectedDayChange={trueOnChange}
             {...props}
         >
             <Input
                 value={inputValue}
-                onValueChange={inputValueChange}
+                onValueChange={onInputValueChange}
                 onClick={() => setVisible(true)}
-                onKeyDown={onKeyDown}
-                placeholder="请选择日期"
-                allowClear
+                onKeyUp={onKeyUp}
+                onClear={() => trueOnChange(null)}
+                placeholder={placeholder || '请选择日期'}
+                allowClear={typeof allowClear === 'boolean' ? allowClear : true}
+                htmlSize={htmlSize || 10}
+                style={{ width: 'auto' }}
+                disabled={disabled}
+                maxLength={maxLength}
+                size={size}
+                error={error}
             />
         </DatePickerDropdown>
     )

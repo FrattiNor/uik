@@ -1,0 +1,35 @@
+import CodeBox from '@/components/code-box'
+import CodeWrapper from '@/components/code-wrapper'
+
+import DemoNormal from './demo-normal'
+import descNormal from './demo-normal/desc.md'
+import codeNormal from '!raw-loader!./demo-normal'
+
+# DatePicker 日期选择
+
+可选择日期的控件。
+
+## 代码演示
+
+<CodeWrapper>
+    <CodeBox title="基础" desc={descNormal} code={codeNormal}>
+        <DemoNormal />
+    </CodeBox>
+</CodeWrapper>
+
+## API
+
+<div className="api">
+
+| 属性         | 说明                            | 类型                         | 默认值     | 版本 |
+| :----------- | :------------------------------ | :--------------------------- | :--------- | :--- |
+| format       | DatePicker 显示的 string 格式   | string                       | YYYY-MM-DD | -    |
+| value        | DatePicker 的值                 | Dayjs \| null                | -          | -    |
+| defaultValue | DatePicker 的默认值             | Dayjs \| null                | null       | -    |
+| onChange     | DatePicker 的值发生改变时的回调 | (day: Dayjs \| null) => void | false      | -    |
+| placeholder  | 未输入时的提示                  | string                       | -          | -    |
+| allowClear   | 是否显示一键清除                | boolean                      | true       | -    |
+| disabled     | 是否禁用                        | boolean                      | false      | -    |
+| size         | 设置 DatePicker 的大小          | large \| middle \| small     | middle     | -    |
+
+</div>

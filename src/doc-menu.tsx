@@ -41,6 +41,10 @@ const menu = [
             {
                 name: 'checkbox',
                 desc: 'Checkbox 多选'
+            },
+            {
+                name: 'date-picker',
+                desc: 'DatePicker 日期选择'
             }
         ]
     },

@@ -6,8 +6,8 @@
     transition: border-color 0.3s, box-shadow 0.3s;
     box-sizing: border-box;
     display: inline-flex;
-    flex-direction: column;
     position: relative;
+    width: 100%;
 
     &:hover {
         border-color: @primary-color;
@@ -54,6 +54,7 @@
         align-items: center;
         transition: height 0.3s;
         height: 100%;
+        width: 100%;
         position: relative;
 
         &-component {
@@ -63,6 +64,8 @@
             font-size: inherit;
             background-color: inherit;
             color: inherit;
+            width: 100%;
+            text-overflow: ellipsis;
 
             &.large {
                 height: @height-large;

@@ -1,22 +1,24 @@
 /* eslint-disable no-unused-vars */
 
-import { Dayjs } from "dayjs"
+import { Dayjs } from 'dayjs'
 
-type formatString = string
-
-export type datePickerInputProps = {
-    size?: uikSize
+export type datePickInputProps = {
+    placeholder?: string
     allowClear?: boolean
+    disabled?: boolean
+    maxLength?: number
+    size?: uikSize
+    htmlSize?: number
+    error?: boolean
 }
 
 export type datePickerProps = {
-    format?: formatString
+    format?: string
     // disabledDate?: (currentDate: formatString) => boolean
-    value?: Dayjs | null 
+    value?: Dayjs | null
     defaultValue?: Dayjs | null
     onChange?: (value: Dayjs | null) => void
-} & datePickerInputProps
-
+} & datePickInputProps
 
 export type datePickerDropdownProps = {
     // disabledDate?: (currentDate: formatString) => boolean

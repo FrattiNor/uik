@@ -1,12 +1,14 @@
-import dayjs from 'dayjs'
-import React, { FC } from 'react'
-import { DatePicker } from 'uik'
+import dayjs, { Dayjs } from 'dayjs'
+import React, { FC, useState } from 'react'
+import { DatePicker, Input } from 'uik'
 
 const Test: FC = () => {
+    const [v, setV] = useState<Dayjs | null>(dayjs())
+
     return (
         <>
             <div style={{ margin: 24 }}>
-                <DatePicker />
+                <DatePicker onChange={setV} />
             </div>
         </>
     )

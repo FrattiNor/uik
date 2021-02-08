@@ -1,6 +1,6 @@
+/* eslint-disable no-unused-vars */
 import { HTMLAttributes } from 'react'
 
-/* eslint-disable no-unused-vars */
 export type inputProps = {
     value?: string
     defaultValue?: string
@@ -8,7 +8,9 @@ export type inputProps = {
     disabled?: boolean
     maxLength?: number
     size?: uikSize
+    htmlSize?: number
     onValueChange?: (v: string) => void
     onEnter?: (v: string) => void
+    onClear?: (v: string) => void
     error?: boolean
 } & HTMLAttributes<HTMLInputElement>
