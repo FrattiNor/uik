@@ -84,13 +84,16 @@ const DateSelect: FC<dateSelectProps> = (props) => {
         return false
     }
 
+    const trueDisabledDate = (day: Dayjs) => {
+        if (disabledDate) {
+            return disabledDate(day)
+        }
+        return false
+    }
+
     const getDisabled = (month: number, date: number): boolean => {
         // disabled
-        let disabled = false
-
-        if (disabledDate) {
-            disabled = disabledDate(getCurrentDay(month, date))
-        }
+        const disabled = trueDisabledDate(getCurrentDay(month, date))
 
         return disabled
     }
@@ -166,8 +169,8 @@ const DateSelect: FC<dateSelectProps> = (props) => {
                 </div>
             ))}
             {dateList.map(({ date, monthType, month, selected, today, disabled }, i) => {
-                const beforeDisabled = i === 0 && disabledDate ? disabledDate(getBeforeMonthLastDay(month)) : dateList[i - 1].disabled
-                const afterDisabled = i === dateList.length - 1 && disabledDate ? disabledDate(getNextMonthFirstDay(month)) : dateList[i + 1].disabled
+                const beforeDisabled = i === 0 ? trueDisabledDate(getBeforeMonthLastDay(month)) : dateList[i - 1].disabled
+                const afterDisabled = i === dateList.length - 1 ? trueDisabledDate(getNextMonthFirstDay(month)) : dateList[i + 1].disabled
                 const disabledStart = disabled && !beforeDisabled
                 const disabledEnd = disabled && !afterDisabled
 
