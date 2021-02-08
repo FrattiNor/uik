@@ -43,7 +43,21 @@ const getYearMonthDate = (day: Dayjs) => {
 const DateSelect: FC<dateSelectProps> = (props) => {
     const { month, year, selectedDays, onClick, disabledDate } = props
 
-    const getDay = (month: number, date: number) => {
+    const getBeforeMonthLastDay = (month: number) => {
+        return dayjs()
+            .year(year)
+            .month(month - 1)
+            .date(0)
+    }
+
+    const getNextMonthFirstDay = (month: number) => {
+        return dayjs()
+            .year(year)
+            .month(month - 1)
+            .date(0)
+    }
+
+    const getCurrentDay = (month: number, date: number) => {
         return dayjs()
             .year(year)
             .month(month - 1)
@@ -53,7 +67,7 @@ const DateSelect: FC<dateSelectProps> = (props) => {
     const trueClick = (month: number, date: number, selected: boolean) => {
         if (onClick)
             onClick(
-                getDay(month, date),
+                getCurrentDay(month, date),
                 !selected // 点击完改变selected状态
             )
     }
@@ -75,7 +89,7 @@ const DateSelect: FC<dateSelectProps> = (props) => {
         let disabled = false
 
         if (disabledDate) {
-            disabled = disabledDate(getDay(month, date))
+            disabled = disabledDate(getCurrentDay(month, date))
         }
 
         return disabled
@@ -131,7 +145,14 @@ const DateSelect: FC<dateSelectProps> = (props) => {
         ...Array(nextMonthDateNumber)
             .fill('')
             .map((_, i) => ({ date: nextMonthFirstDayDate + i, monthType: 'next-month', month: month + 1 }))
-    ]
+    ].map(({ date, monthType, month }) => ({
+        date,
+        monthType,
+        month,
+        selected: getSelected(month, date),
+        today: getToday(month, date),
+        disabled: getDisabled(month, date)
+    }))
 
     const titleList = Array(7)
         .fill('')
@@ -144,13 +165,17 @@ const DateSelect: FC<dateSelectProps> = (props) => {
                     {date}
                 </div>
             ))}
-            {dateList.map(({ date, monthType, month }) => {
-                const selected = getSelected(month, date)
-                const today = getToday(month, date)
-                const disabled = getDisabled(month, date)
+            {dateList.map(({ date, monthType, month, selected, today, disabled }, i) => {
+                const beforeDisabled = i === 0 && disabledDate ? disabledDate(getBeforeMonthLastDay(month)) : dateList[i - 1].disabled
+                const afterDisabled = i === dateList.length - 1 && disabledDate ? disabledDate(getNextMonthFirstDay(month)) : dateList[i + 1].disabled
+                const disabledStart = disabled && !beforeDisabled
+                const disabledEnd = disabled && !afterDisabled
 
                 return (
-                    <div key={year.toString() + date.toString() + month.toString()} className={classnames('date', monthType, { disabled })}>
+                    <div
+                        key={year.toString() + date.toString() + month.toString()}
+                        className={classnames('date', monthType, { disabled, ['disabled-start']: disabledStart, ['disabled-end']: disabledEnd })}
+                    >
                         <div
                             className={classnames('date-inner', { selected, today, disabled })}
                             onClick={(e) => {
