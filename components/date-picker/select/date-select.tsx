@@ -27,7 +27,7 @@ const getWeakName = (weak: number) => {
         case 6:
             return '六'
         case 7:
-            return '七'
+            return '日'
         default:
             break
     }
