@@ -10,7 +10,7 @@
     }
 
     &:hover {
-        .uik-checkbox-inner {
+        .uik-checkbox-inner:not(.disabled) {
             border-color: @primary-color;
         }
     }
@@ -79,16 +79,13 @@
             border-radius: @border-radius;
             z-index: 1;
             opacity: 0;
-            transition: background-color 0.3s, opacity 0.3s, top 0.3s, left 0.3s, right 0.3s, bottom 0.3s, border-radius 0.3s;
+            transition: background-color 0.3s, opacity 0.3s, border-radius 0.3s, transform 0.3s;
         }
 
         // 部分选中
         &.checked-half {
             &::after {
-                top: 4px;
-                left: 4px;
-                right: 4px;
-                bottom: 4px;
+                transform: scale(0.5);
                 opacity: 1;
                 border-radius: 0;
             }
