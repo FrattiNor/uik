@@ -21,6 +21,8 @@ export { default as Slider } from './slider'
 export { default as Switch } from './switch'
 // 多选框
 export { default as Checkbox } from './checkbox'
+// 单选框
+export { default as Radio } from './radio'
 // 日期选择
 export { default as DatePicker } from './date-picker'
 
