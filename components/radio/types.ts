@@ -5,4 +5,4 @@ export type radioProps = {
     disabled?: boolean
     onChange?: (checked: boolean) => void
     className?: string
-}
+} 

@@ -72,6 +72,7 @@ const plugins = [
     [
         '@babel/plugin-transform-runtime', // 解决多次引入polyfill问题
         {
+            corejs: 3,
             useESModules // 使用esm形式的helper
         }
     ]
