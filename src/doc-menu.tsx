@@ -39,8 +39,12 @@ const menu = [
                 desc: 'Switch 开关'
             },
             {
+                name: 'radio',
+                desc: 'Radio 单选框'
+            },
+            {
                 name: 'checkbox',
-                desc: 'Checkbox 多选'
+                desc: 'Checkbox 多选框'
             },
             {
                 name: 'date-picker',

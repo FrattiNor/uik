@@ -6,19 +6,14 @@ export type checkboxProps = {
     onChange?: (checked: boolean) => void
     checkedHalf?: boolean
     className?: string
-}
-
-export type checkboxGroupOption = {
-    value: string
-    label: string
-    disabled?: boolean
+    value?: string
 }
 
 export type checkboxGroupProps = {
     disabled?: boolean
-    options?: string[] | checkboxGroupOption[]
     checkedList?: string[]
-    defaultCheckedList?: string[]
-    onChange?: (checkedList: string[]) => void
+    defaultCheckedList?: string []
     className?: string
+    onChange?: (checkedList: string[]) => void
+    onCheckedChange?: (checkedAll: boolean, checkedHalf: boolean) => void
 }

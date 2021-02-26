@@ -1,41 +1,60 @@
-import React, { FC, useState } from 'react'
+import React, { FC, useState, isValidElement, cloneElement, useEffect } from 'react'
 import classnames from 'classnames'
-import { checkboxGroupProps, checkboxGroupOption } from './types'
+import { checkboxGroupProps } from './types'
 import Checkbox from './checkbox'
-import { useEffectAfterFirst } from '../_hooks'
 import './checkbox-group.less'
 
 const CheckboxGroup: FC<checkboxGroupProps> = (props) => {
-    const { checkedList: outCheckedList, defaultCheckedList = [], disabled, options = [], onChange: outOnchange, className } = props
+    const { checkedList: outCheckedList, defaultCheckedList = [], disabled, onChange: outOnchange, onCheckedChange, className, children } = props
 
     const [virtualCheckedList, setVirtualCheckedList] = useState(defaultCheckedList)
+
+    const childValues: string [] = []
+
     const checkedList = Array.isArray(outCheckedList) ? outCheckedList : virtualCheckedList
 
     const onChange = (value: string) => {
+        let newCheckedList = [...checkedList]
         if (checkedList.includes(value)) {
-            setVirtualCheckedList(checkedList.filter((item) => item !== value))
+            newCheckedList = newCheckedList.filter((item) => item !== value)
         } else {
-            setVirtualCheckedList([...checkedList, value])
+            newCheckedList = [...newCheckedList, value]
         }
+
+        setVirtualCheckedList(newCheckedList)
+        if (outOnchange) outOnchange(newCheckedList)
     }
 
-    useEffectAfterFirst(() => {
-        if (outOnchange) outOnchange(virtualCheckedList)
-    }, [virtualCheckedList])
+    useEffect(() => {
+        const checkedAll = childValues.every((item) => checkedList.includes(item))
+        const checkedHalf = !checkedAll && checkedList.some((item) => childValues.includes(item))
+        if (onCheckedChange) onCheckedChange(checkedAll, checkedHalf)
+    }, [checkedList])
 
-    const DOM = (options as checkboxGroupOption[]).map((item: checkboxGroupOption | string) => {
-        const value = typeof item === 'string' ? item : item.value
-        const label = typeof item === 'string' ? item : item.label
-        const itemDisabled = typeof item === 'string' ? false : item.disabled
+    const getChild = () => {
+        const childs = Array.isArray(children) ? children : [children]
+        const dom = childs
+            .map((child, index) => {
+                if (isValidElement(child) && child.type === Checkbox) {
+                    const itemValue = child.props.value || index
+                    const itemDisabled = disabled || child.props.disabled
+                    const checked = checkedList.includes(itemValue)
+                    childValues.push(itemValue)
+                    return cloneElement(child, {
+                        key: child.key || index,
+                        checked,
+                        disabled: itemDisabled,
+                        onChange: () => onChange(itemValue)
+                    })
+                } else {
+                    return null
+                }
+            })
+            .filter((item) => item)
+        return dom
+    }
 
-        return (
-            <Checkbox disabled={itemDisabled || disabled} checked={checkedList.includes(value)} key={label} onChange={() => onChange(value)}>
-                {label}
-            </Checkbox>
-        )
-    })
-
-    return <div className={classnames('uik-checkbox-group', className)}>{DOM}</div>
+    return <div className={classnames('uik-checkbox-group', className)}>{getChild()}</div>
 }
 
 export default CheckboxGroup

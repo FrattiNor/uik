@@ -5,14 +5,19 @@ const Test: FC = () => {
     return (
         <>
             <div style={{ margin: 24 }}>
-                <Radio>a</Radio>
-                <Radio>b</Radio>
-                <Radio>c</Radio>
-                <Radio>d</Radio>
-                {/* <input type="radio" name="gender" id="6" />
-                <label htmlFor="6">e</label>
-                <input type="radio" name="gender" id="7" />
-                <label htmlFor="7">f</label> */}
+                <Radio.Group disabled defaultValue={'1'}>
+                    <Radio key={1}>a</Radio>
+                    <Radio key={2}>b</Radio>
+                    <Radio key={3}>c</Radio>
+                    <Radio key={4}>d</Radio>
+                    <label key={5}>666</label>
+                </Radio.Group>
+                <Checkbox.Group>
+                    <Checkbox>a</Checkbox>
+                    <Checkbox>b</Checkbox>
+                    <Checkbox>c</Checkbox>
+                    <Checkbox>d</Checkbox>
+                </Checkbox.Group>
             </div>
         </>
     )
