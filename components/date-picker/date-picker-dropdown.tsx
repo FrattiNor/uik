@@ -1,21 +1,21 @@
 import React, { FC, useState, MouseEvent, useEffect, useRef } from 'react'
-import dayjs, { Dayjs } from 'dayjs'
+import dayjs from 'dayjs'
+import Icon from '../icon'
 import noticeHoc from '../_hocs/notice/notice-hoc'
 import noticeRenderHoc from '../_hocs/notice/notice-render-hoc'
 import { noticeProps } from '../_hocs/notice/types'
-import Icon from '../icon'
+import { useEffectAfterFirst } from '../_hooks'
 import DateSelect from './select/date-select'
 import YearSelect from './select/year-select'
 import MonthSelect from './select/month-select'
 import { datePickerDropdownProps } from './types'
 import { monthNumber } from './select/types'
 import './date-picker-dropdown.less'
-import { useEffectAfterFirst } from '../_hooks'
 
 const DatePickerDropdown: FC<datePickerDropdownProps & noticeProps> = (props) => {
     const datePickRef = useRef<HTMLDivElement>(null)
     // 使用 setVirtualVisible 关闭， 外部使用 onVisibleChange 监听
-    const { selectedDay, onSelectedDayChange, setVirtualVisible, disabledDate } = props
+    const { selectedDay, dateClick, disabledDate, onEmptyClick } = props
 
     // 保持 显示的 month year 的 dayjs对象
     const [monthAndYear, setMonthAndYear] = useState(dayjs())
@@ -55,11 +55,6 @@ const DatePickerDropdown: FC<datePickerDropdownProps & noticeProps> = (props) =>
             setMonthAndYear(monthAndYear.year(monthAndYear.year() - 1))
         }
     }
-    // 日期选择页面的点击事件
-    const dateClick = (day: Dayjs) => {
-        onSelectedDayChange(day)
-        setVirtualVisible(false)
-    }
 
     // 月份选择页面的点击事件
     const monthClick = (monthNumber: number) => {
@@ -75,7 +70,6 @@ const DatePickerDropdown: FC<datePickerDropdownProps & noticeProps> = (props) =>
     const titleYearClick = (e: MouseEvent<HTMLSpanElement>) => {
         // e.stopPropagation() 取消默认事件，屏蔽掉全局点击事件【全局点击事件因为会切换page导致组件取消挂载，所以点击会触发visible变false】
         e.stopPropagation()
-
         setStartYear(Math.floor(year / 10) * 10 - 1)
         setEndYear(Math.floor(year / 10) * 10 + 10)
         setPage('year')
@@ -84,7 +78,6 @@ const DatePickerDropdown: FC<datePickerDropdownProps & noticeProps> = (props) =>
     const titleMonthClick = (e: MouseEvent<HTMLSpanElement>) => {
         // e.stopPropagation() 取消默认事件，屏蔽掉全局点击事件【全局点击事件因为会切换page导致组件取消挂载，所以点击会触发visible变false】
         e.stopPropagation()
-
         setPage('month')
     }
 
@@ -99,13 +92,26 @@ const DatePickerDropdown: FC<datePickerDropdownProps & noticeProps> = (props) =>
                 }
             }
         }
-
+        //  手动添加点击空白事件
+        const clickClose = (event: globalThis.MouseEvent) => {
+            const notice = datePickRef.current
+            const clickNode = event.target as HTMLElement
+            // 点击其他区域时, 隐藏指定区域
+            // 点击区域不为children，点击区域不为弹出部分，点击区域不为弹出部分的子元素
+            if (notice !== null && clickNode !== null) {
+                if (!(notice === clickNode || notice.contains(clickNode))) {
+                    onEmptyClick()
+                }
+            }
+        }
+        document.addEventListener('click', clickClose)
         document.addEventListener('mousedown', mousedown)
 
         return () => {
             document.removeEventListener('mousedown', mousedown)
+            document.removeEventListener('click', clickClose)
         }
-    }, [])
+    }, [onEmptyClick])
 
     useEffectAfterFirst(() => {
         if (selectedDay) {
@@ -144,7 +150,15 @@ const DatePickerDropdown: FC<datePickerDropdownProps & noticeProps> = (props) =>
                 </span>
             </div>
             <div className="uik-date-picker-content">
-                {page === 'date' && <DateSelect disabledDate={disabledDate} year={year} month={month} selectedDays={selectedDay ? [selectedDay] : []} onClick={dateClick} />}
+                {page === 'date' && (
+                    <DateSelect
+                        disabledDate={disabledDate}
+                        year={year}
+                        month={month}
+                        selectedDays={selectedDay ? [selectedDay] : []}
+                        onClick={dateClick}
+                    />
+                )}
                 {page === 'month' && <MonthSelect currentMonth={month} onClick={monthClick} />}
                 {page === 'year' && <YearSelect currentYear={year} startYear={startYear} endYear={endYear} onClick={yearClick} />}
             </div>
@@ -156,8 +170,7 @@ const DropdownComponent = noticeHoc<datePickerDropdownProps>({
     backgroundColor: '#fff',
     needArrow: false,
     defaultPosition: 'bottomLeft',
-    isDropdown: true,
-    emptyClickClose: true
+    isDropdown: true
 })(DatePickerDropdown)
 
 export default noticeRenderHoc<datePickerDropdownProps>({ name: 'date-picker', defaultZIndex: 1002 })(DropdownComponent)

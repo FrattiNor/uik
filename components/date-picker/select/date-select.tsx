@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, MouseEvent } from 'react'
 import dayjs, { Dayjs } from 'dayjs'
 import classnames from 'classnames'
 import { dateSelectProps } from './types'
@@ -41,7 +41,7 @@ const getYearMonthDate = (day: Dayjs) => {
 }
 
 const DateSelect: FC<dateSelectProps> = (props) => {
-    const { month, year, selectedDays, onClick, disabledDate } = props
+    const { month, year, selectedDays, onClick: outOnClick, disabledDate: outDisabledDate } = props
 
     const getBeforeMonthLastDay = (month: number) => {
         return dayjs()
@@ -64,12 +64,14 @@ const DateSelect: FC<dateSelectProps> = (props) => {
             .date(date)
     }
 
-    const trueClick = (month: number, date: number, selected: boolean) => {
-        if (onClick)
-            onClick(
+    const onClick = (e: MouseEvent<HTMLElement>, disabled: boolean, month: number, date: number, selected: boolean) => {
+        e.stopPropagation() // 取消冒泡事件，屏蔽掉全局点击事件【全局点击事件因为会切换page导致组件取消挂载，所以点击会触发visible变false】
+        if (!disabled && outOnClick) {
+            outOnClick(
                 getCurrentDay(month, date),
                 !selected // 点击完改变selected状态
             )
+        }
     }
 
     // 获取是否是今天
@@ -84,16 +86,16 @@ const DateSelect: FC<dateSelectProps> = (props) => {
         return false
     }
 
-    const trueDisabledDate = (day: Dayjs) => {
-        if (disabledDate) {
-            return disabledDate(day)
+    const disabledDate = (day: Dayjs) => {
+        if (outDisabledDate) {
+            return outDisabledDate(day)
         }
         return false
     }
 
     const getDisabled = (month: number, date: number): boolean => {
         // disabled
-        const disabled = trueDisabledDate(getCurrentDay(month, date))
+        const disabled = disabledDate(getCurrentDay(month, date))
 
         return disabled
     }
@@ -169,8 +171,8 @@ const DateSelect: FC<dateSelectProps> = (props) => {
                 </div>
             ))}
             {dateList.map(({ date, monthType, month, selected, today, disabled }, i) => {
-                const beforeDisabled = i === 0 ? trueDisabledDate(getBeforeMonthLastDay(month)) : dateList[i - 1].disabled
-                const afterDisabled = i === dateList.length - 1 ? trueDisabledDate(getNextMonthFirstDay(month)) : dateList[i + 1].disabled
+                const beforeDisabled = i === 0 ? disabledDate(getBeforeMonthLastDay(month)) : dateList[i - 1].disabled
+                const afterDisabled = i === dateList.length - 1 ? disabledDate(getNextMonthFirstDay(month)) : dateList[i + 1].disabled
                 const disabledStart = disabled && !beforeDisabled
                 const disabledEnd = disabled && !afterDisabled
 
@@ -181,12 +183,7 @@ const DateSelect: FC<dateSelectProps> = (props) => {
                     >
                         <div
                             className={classnames('date-inner', { selected, today, disabled })}
-                            onClick={(e) => {
-                                e.stopPropagation() // 取消冒泡事件，屏蔽掉全局点击事件【全局点击事件因为会切换page导致组件取消挂载，所以点击会触发visible变false】
-                                if (!disabled) {
-                                    trueClick(month, date, selected)
-                                }
-                            }}
+                            onClick={(e) => onClick(e, disabled, month, date, selected)}
                         >
                             {date}
                         </div>

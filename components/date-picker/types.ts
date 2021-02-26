@@ -24,5 +24,6 @@ export type datePickerProps = {
 export type datePickerDropdownProps = {
     disabledDate?: (currentDate: Dayjs) => boolean
     selectedDay: Dayjs | null
-    onSelectedDayChange: (days: Dayjs) => void
+    dateClick: (days: Dayjs) => void
+    onEmptyClick: () => void
 }
