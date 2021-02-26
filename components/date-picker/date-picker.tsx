@@ -10,9 +10,10 @@ const DatePicker: FC<datePickerProps> = (props) => {
     dayjs.extend(customParseFormat)
 
     const {
+        valueType = 'Dayjs',
         value: outValue,
-        defaultValue,
-        onChange,
+        defaultValue = null,
+        onChange: outOnChange,
         format: formatText = 'YYYY-MM-DD',
         allowClear,
         disabled,
@@ -21,25 +22,32 @@ const DatePicker: FC<datePickerProps> = (props) => {
         htmlSize,
         error,
         placeholder,
+        disabledDate: outDisabledDate,
         ...restProps
     } = props
+
+    const changeTypeToDayjs = (str: string) => (str === '' ? null : dayjs(str, formatText))
+    // 处理进入的value
+    const hanleInValue = (value: string | Dayjs | null): Dayjs | null =>
+        (valueType === 'string' ? changeTypeToDayjs(value as string) : value ? dayjs(value) : null) as Dayjs | null
+    const handleOutValue = (day: Dayjs | null) => (valueType === 'string' ? (day ? day.format(formatText) : '') : day)
 
     const [visible, setVisible] = useState(false)
 
     const [showTextChangeFlag, setShowTextChangeFlag] = useState(false)
 
     // 选中的 date dayjs对象
-    const [virtualSelectedDay, setVirtualSelectedDay] = useState(defaultValue || null)
+    const [virtualSelectedDay, setVirtualSelectedDay] = useState(defaultValue ? hanleInValue(defaultValue) : null)
 
-    const selectedDay = outValue !== undefined ? outValue : virtualSelectedDay
+    const selectedDay = outValue !== undefined ? hanleInValue(outValue) : virtualSelectedDay
 
     const showText = selectedDay ? selectedDay.format(formatText) : ''
 
     const [inputValue, setInputValue] = useState(showText)
 
-    const trueOnChange = (day: Dayjs | null) => {
+    const onChange = (day: Dayjs | null) => {
         setVirtualSelectedDay(day)
-        if (onChange) onChange(day)
+        if (outOnChange) outOnChange(handleOutValue(day))
         setShowTextChangeFlag(!showTextChangeFlag)
     }
 
@@ -55,17 +63,24 @@ const DatePicker: FC<datePickerProps> = (props) => {
         const inputDay = dayjs(newInputValue, formatText, true)
         setInputValue(newInputValue)
         if (inputDay.isValid()) {
-            trueOnChange(inputDay)
+            onChange(inputDay)
         }
+    }
+
+    const disabledDate = (day: Dayjs) => {
+        if (outDisabledDate) {
+            return outDisabledDate(handleOutValue(day) as Dayjs | string)
+        }
+        return false
     }
 
     useEffectAfterFirst(() => {
         if (!visible) {
             const inputDay = dayjs(inputValue, [formatText, 'YYYY-MM-DD', 'YYYY-M-DD', 'YYYY-MM-D', 'YYYY-M-D'], true)
             if (inputDay.isValid()) {
-                trueOnChange(inputDay)
+                onChange(inputDay)
             } else {
-                trueOnChange(null)
+                onChange(null)
             }
         }
     }, [visible])
@@ -80,7 +95,8 @@ const DatePicker: FC<datePickerProps> = (props) => {
             onVisibleChange={setVisible}
             autoAdjust
             selectedDay={selectedDay}
-            onSelectedDayChange={trueOnChange}
+            onSelectedDayChange={onChange}
+            disabledDate={disabledDate}
             {...restProps}
         >
             <Input
@@ -88,10 +104,10 @@ const DatePicker: FC<datePickerProps> = (props) => {
                 onValueChange={onInputValueChange}
                 onClick={() => setVisible(true)}
                 onKeyUp={onKeyUp}
-                onClear={() => trueOnChange(null)}
+                onClear={() => onChange(null)}
                 placeholder={placeholder || '请选择日期'}
                 allowClear={typeof allowClear === 'boolean' ? allowClear : true}
-                htmlSize={htmlSize || 10}
+                htmlSize={htmlSize || 11}
                 style={{ width: 'auto' }}
                 disabled={disabled}
                 maxLength={maxLength}
