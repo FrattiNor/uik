@@ -15,6 +15,8 @@ export { default as StickyObserver } from './sticky-observer'
 
 // 输入框
 export { default as Input } from './input'
+// 选择框
+export { default as Select } from './select'
 // 滑块
 export { default as Slider } from './slider'
 // 开关

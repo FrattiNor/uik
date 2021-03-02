@@ -30,7 +30,7 @@ const RadioGroup: FC<radioGroupProps> = (props) => {
                         checked,
                         disabled: itemDisabled,
                         value: itemValue,
-                        onChange: () => onChange(itemValue)
+                        onChange: () => onChange(itemValue),
                     })
                 } else {
                     return null

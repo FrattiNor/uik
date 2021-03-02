@@ -34,17 +34,6 @@ export type noticeAndRenderProps = {
 
 // =============== noticeHoc ===============
 
-// notice-hoc 配置参数
-export type noticeHocProps = {
-    backgroundColor: string
-    emptyKey?: string
-    needArrow?: boolean
-    defaultPosition?: noticePosition
-    isDropdown?: boolean // 是否是dropdwon（代表从一边展开），触发的动画不同
-    updatePositionProps?: string[] // 会触发重新获取定位的props参数
-    emptyClickClose?: boolean // 控制点击外部空白区域关闭【click默认是有的】
-}
-
 // notice 组件参数
 export type noticeProps = {
     target: HTMLElement | null
@@ -59,13 +48,6 @@ export type noticeHocInner<T> = (WrapperComponent: FC<noticeProps & T>) => FC<no
 
 // =============== noticeRenderHoc ===============
 
-// render-hoc 配置参数
-export type noticeRenderHocProps = {
-    name: string
-    defaultZIndex: number
-    defaultTrigger?: noticeTrigger
-}
-
 // render 组件参数
 export type noticeRenderProps = {
     containerZIndex?: number // notice容器的zIndex，用于和其他悬浮内容比较层次（例如tooltip默认是在modal上方的，所以tooltip会显示在mask上方）【只能首次设置切不可更改，因为容器只会创造一次】
@@ -77,3 +59,23 @@ export type noticeRenderProps = {
 
 // notice-hoc-inner 高阶组件本身
 export type noticeRenderHocInner<T> = (WrapperComponent: FC<noticeProps & T>) => FC<noticeRenderProps & T>
+
+// === 配置参数 ===
+
+// notice-hoc 配置参数
+export type noticeHocProps = {
+    backgroundColor: string // 背景色
+    emptyKey?: string // 判空props，props[emptyKey]
+    needArrow?: boolean // 需要箭头
+    defaultPosition?: noticePosition // 默认定位
+    isDropdown?: boolean // 是否是dropdwon（代表从一边展开），触发的动画不同
+    updatePositionProps?: string[] // 会触发重新获取定位的props参数
+    emptyClickClose?: boolean // 控制点击外部空白区域关闭【click默认是有的】
+}
+
+// render-render-hoc 配置参数
+export type noticeRenderHocProps = {
+    name: string // name 创建指定容器使用
+    defaultZIndex: number // 默认zindex
+    defaultTrigger?: noticeTrigger // 默认触发方式
+}

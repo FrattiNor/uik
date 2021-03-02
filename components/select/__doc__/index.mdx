@@ -1,0 +1,54 @@
+import CodeBox from '@/components/code-box'
+import CodeWrapper from '@/components/code-wrapper'
+
+import DemoNormal from './demo-normal'
+import descNormal from './demo-normal/desc.md'
+import codeNormal from '!raw-loader!./demo-normal'
+
+# Select 输入框
+
+下拉选择。
+
+## 代码演示
+
+<CodeWrapper>
+    <CodeBox title="基础" desc={descNormal} code={codeNormal}>
+        <DemoNormal />
+    </CodeBox>
+</CodeWrapper>
+
+## API
+
+<div className="api">
+
+| 属性            | 说明                                                     | 类型                                | 默认值                    | 版本 |
+| :-------------- | :------------------------------------------------------- | :---------------------------------- | :------------------------ | :--- |
+| value           | select 的值                                              | string \| string[]                  | -                         | -    |
+| defaultValue    | select 的默认值                                          | string \| string[]                  | -                         | -    |
+| onChange        | select 选中的值发生改变触发                              | (value: string \| string[]) => void | false                     | -    |
+| multiple        | 是多选                                                   | boolean                             | false                     | -    |
+| allowClear      | 是否允许清除                                             | boolean                             | false                     | -    |
+| disabled        | 是否禁用                                                 | booelan                             | false                     | -    |
+| size            | 设置 select 的大小                                       | large \| middle \| small            | middle                    | -    |
+| virtualList     | 下拉列表是否使用虚拟列表                                 | boolean                             | 默认超过 50 个使用        | -    |
+| showCount       | 下拉显示几条数据，在使用 itemHeight 为函数时，第一位计算 | number                              | showCount <= 10           | -    |
+| itemHeight      | 设置下拉列表的 item 高度，虚拟列表需要定高               | number \| (index: number) => number | 虚拟列表是 30，普通不设置 | -    |
+| overlayHeight   | 下拉列表的高度，手动设置下拉列表高度覆盖 showCount       | number                              | 50                        | -    |
+| width           | 手动设置 select 宽度，默认最小宽度 50                    | number                              | -                         | -    |
+| visible         | 设置 select 下拉列表是否显示                             | boolean                             | -                         | -    |
+| onVisibleChange | visible 发生改变时触发回调函数                           | (visible: boolean) => void          | -                         | -    |
+
+</div>
+
+## Select.Option
+
+<div className="api">
+
+| 属性      | 说明                      | 类型          | 默认值 | 版本 |
+| :-------- | :------------------------ | :------------ | :----- | :--- |
+| value     | option 的值               | string        | -      | -    |
+| className | option 的 className       | string        | -      | -    |
+| style     | option 的 style           | CSSProperties | -      | -    |
+| label     | option 显示在选择框的内容 | JSX.Element   | -      | -    |
+
+</div>

@@ -127,6 +127,7 @@
     "dependencies": {
         "classnames": "^2.2.6",
         "dayjs": "^1.10.4",
+        "react-tiny-virtual-list": "^2.2.0",
         "resize-observer-polyfill": "^1.5.1"
     }
 }

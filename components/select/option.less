@@ -1,0 +1,27 @@
+@import '../_style/theme.less';
+
+.uik-select-option {
+    background-color: #fff;
+    color: @font-color;
+    font-size: @font-size-middle;
+    padding: 5px 12px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    box-sizing: border-box;
+    overflow: hidden;
+    width: 100%;
+
+    &:hover:not(.is-show) {
+        background-color: @grey-bg-color;
+    }
+
+    &.selected:not(.is-show) {
+        background-color: @primary-bg-color;
+    }
+
+    &-inner {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        width: 100%;
+    }
+}

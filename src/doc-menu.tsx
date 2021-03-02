@@ -31,6 +31,10 @@ const menu = [
                 desc: 'Input 输入框'
             },
             {
+                name: 'select',
+                desc: 'Select 选择框'
+            },
+            {
                 name: 'slider',
                 desc: 'Slider 滑块'
             },

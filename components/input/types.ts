@@ -13,4 +13,5 @@ export type inputProps = {
     onEnter?: (v: string) => void
     onClear?: (v: string) => void
     error?: boolean
+    width?: number
 } & HTMLAttributes<HTMLInputElement>

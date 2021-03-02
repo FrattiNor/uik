@@ -24,9 +24,10 @@ const Input: ForwardRefRenderFunction<unknown, inputProps> = (props, ref) => {
         onKeyPress: outOnKeyPress,
         onClear: outOnClear,
         className,
-        style,
+        style = {},
         error,
         htmlSize,
+        width,
         ...restProps
     } = props
     const [virtualValue, setVirtualValue] = useState(defaultValue)
@@ -74,15 +75,19 @@ const Input: ForwardRefRenderFunction<unknown, inputProps> = (props, ref) => {
         }
     }
 
+    const inputStyle = { ...style, ...(typeof width === 'number' ? { width } : {}) }
+    const inputClass = classnames(
+        'uik-input',
+        {
+            disabled,
+            focus,
+            error
+        },
+        className
+    )
+
     return (
-        <span
-            className={classnames('uik-input', {
-                disabled,
-                focus,
-                error
-            }, className)}
-            style={style}
-        >
+        <span className={inputClass} style={inputStyle}>
             <span className={classnames('uik-input-content')}>
                 <input
                     size={htmlSize}

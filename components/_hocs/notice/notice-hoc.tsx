@@ -51,7 +51,7 @@ function noticeHoc<T>(hocProps: noticeHocProps): noticeHocInner<T> {
             // notice本身的ref
             const noticeRef = useRef<HTMLDivElement>(null)
             // 基础样式
-            const baseStyle = { display: show ? 'block' : 'none', minWidth: popSameWidth ? target?.clientWidth : undefined }
+            const baseStyle = { display: show ? 'block' : 'none', width: popSameWidth ? target?.clientWidth : undefined }
             const lastStyle =
                 typeof overlayStyle === 'function'
                     ? overlayStyle({ ...baseStyle, ...topLeftstyle })
