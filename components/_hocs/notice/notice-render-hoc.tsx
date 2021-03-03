@@ -10,14 +10,16 @@ function noticeRenderHoc<T>({ name, defaultTrigger, defaultZIndex }: noticeRende
     const noticeRenderHocInner: noticeRenderHocInner<T> = (WrapperComponent) => {
         // 获取容器 notice 容器
         const getNoticeContainer = (root: HTMLElement, containerZIndex?: number): HTMLElement => {
+            // modal 1000, dropdown 1001, date-picker 1002, confirm 1003, tooltip 1004 ,message 1005
+            const index = containerZIndex || defaultZIndex
             // root 为根目录时才有id
-            const id = root === getDefaultRoot() ? `uik-${name}-${containerZIndex}` : `uik-${name}-${containerZIndex}-${getElementUUID(root)}`
+            const id = root === getDefaultRoot() ? `uik-${name}-${index}` : `uik-${name}-${index}-${getElementUUID(root)}`
 
             const container = getContainer({
                 id,
                 root,
                 containerType: 'absolute',
-                zIndex: containerZIndex || defaultZIndex // modal 1000, dropdown 1001, date-picker 1002, confirm 1003, tooltip 1004 ,message 1005
+                zIndex: index
             })
 
             return container
