@@ -25,10 +25,16 @@ import codeNormal from '!raw-loader!./demo-normal'
 
 <div className="api">
 
-| 属性    | 说明         | 类型                           | 默认值 | 版本 |
-| :------ | :----------- | :----------------------------- | :----- | :--- |
-| list    | 列表内容     | { name , key } []              | -      | -    |
-| onClick | 列表点击事件 | ({ key, name, event }) => void | -      | -    |
+| 属性               | 说明                 | 类型                                    | 默认值 | 版本 |
+| :----------------- | :------------------- | :-------------------------------------- | :----- | :--- |
+| list               | 列表内容             | { name , key } \| {title, key, list} [] | -      | -    |
+| onClick            | 列表点击事件         | ({ key, name, event }) => void          | -      | -    |
+| onTitleClick       | 列表目录标题点击事件 | ({ key, title, event }) => void         | -      | -    |
+| collapsed          | 列表是否可收缩       | boolean                                 | true   | -    |
+| defaultOpenKeys    | 列表默认打开的目录   | string[]                                | -      | -    |
+| openKeys           | 列表打开的目录       | string[]                                | -      | -    |
+| onOpenKeysChange   | openKeys 改变的回调  | (keys: string[]) => void                | -      | -    |
+| closeClearOpenKeys | 关闭清空 openKeys    | boolean                                 | true   | -    |
 
 </div>
 

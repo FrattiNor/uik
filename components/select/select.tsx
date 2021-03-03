@@ -4,7 +4,7 @@ import SelectDropdown from './select-dropdown'
 import { selectProps, optionProps } from './types'
 import Icon from '../icon'
 import SelectOption from './option'
-import { useVisible } from '../_hooks'
+import { useHalfControlled } from '../_hooks'
 import './select.less'
 
 const Select: FC<selectProps> = (props) => {
@@ -31,7 +31,7 @@ const Select: FC<selectProps> = (props) => {
     const [hover, setHover] = useState(false)
     const getListOne = (v: string[]) => (multiple ? v : v.length > 0 ? [v[0]] : [])
     const getValue = (v: undefined | string | string[]) => (v ? (Array.isArray(v) ? getListOne(v) : [v]) : [])
-    const [visible, setVisible] = useVisible(outVisible, onVisibleChange, false)
+    const [visible, setVisible] = useHalfControlled(outVisible, onVisibleChange, false)
     const [virtualValue, setVirtualValue] = useState(getValue(defaultValue))
     const value = outValue !== undefined ? getValue(outValue) : virtualValue
     const focus = visible

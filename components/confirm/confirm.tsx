@@ -1,12 +1,12 @@
 import React, { FC, MouseEvent } from 'react'
 import noticeHoc from '../_hocs/notice/notice-hoc'
 import noticeRenderHoc from '../_hocs/notice/notice-render-hoc'
-import { noticeRenderProps } from '../_hocs/notice/types'
+import { noticeProps } from '../_hocs/notice/types'
 import { confirmProps } from './types'
 import Button from '../button'
 import './confirm.less'
 
-const Confirm: FC<confirmProps & noticeRenderProps> = (props) => {
+const Confirm: FC<confirmProps & noticeProps> = (props) => {
     const { content, okBtnProps = {}, cancelBtnProps = {}, okBtnText, cancelBtnText, onConfrim, onCancel } = props
 
     const trueCancel = (e: MouseEvent<HTMLElement>) => {

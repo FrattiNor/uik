@@ -8,10 +8,15 @@ export type menuTitleList = (menuListItem | menuTitleListItem)[]
 export type menuClick = ({ key, name, event }: { key: string; name: string; event: MouseEvent }) => void
 export type menuTitleClick = ({ key, title, event }: { key: string; title: string; event: MouseEvent }) => void
 
-type changeKey = (key: string) => void
-type changeKeys = (key: string[]) => void
+export type changeKey = (key: string) => void
+export type changeKeys = (key: string[]) => void
 
 export type menuProps = {
+    width?: number
+} & menuInnerProps &
+    HTMLAttributes<HTMLDivElement>
+
+export type menuInnerProps = {
     list: menuTitleList
     collapsed?: boolean
     defaultSelectedKeys?: string[]
@@ -23,10 +28,9 @@ export type menuProps = {
     onSelectedKeysChange?: changeKeys
     onOpenKeysChange?: changeKeys
     multiple?: boolean
-    width?: number
-} & HTMLAttributes<HTMLDivElement>
+}
 
-export type menuInnerProps = {
+export type menuLoopProps = {
     list: menuTitleList
     collapsed?: boolean
     selectedKeys?: string[]

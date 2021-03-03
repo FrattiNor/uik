@@ -3,7 +3,7 @@ import classnames from 'classnames'
 import Icon from '../icon'
 import { useEffectAfterFirst } from '../_hooks'
 import { menuTitleListProps, menuTitleList, menuTitleListItem } from './types'
-import { MenuInner } from './menu'
+import { MenuLoop } from './menu-inner'
 
 // menu-title + list
 const MenuTitleList: FC<menuTitleListProps> = (props) => {
@@ -73,11 +73,12 @@ const MenuTitleList: FC<menuTitleListProps> = (props) => {
                 style={{ height: show ? (transition ? style.height : 'auto') : 0, transition: transition ? 'height 0.3s' : 'unset' }}
             >
                 <div ref={listRef}>
-                    <MenuInner
+                    <MenuLoop
                         list={list}
                         openKeys={openKeys}
                         selectedKeys={selectedKeys}
                         changeOpenKeys={changeOpenKeys}
+                        collapsed={collapsed}
                         zIndex={zIndex + 1}
                         {...restProps}
                     />

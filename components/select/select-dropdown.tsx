@@ -2,10 +2,10 @@ import React, { cloneElement, FC } from 'react'
 import ReactTinyVirtualList from 'react-tiny-virtual-list'
 import noticeHoc from '../_hocs/notice/notice-hoc'
 import noticeRenderHoc from '../_hocs/notice/notice-render-hoc'
-import { noticeRenderProps } from '../_hocs/notice/types'
+import { noticeProps } from '../_hocs/notice/types'
 import { selectDropdownProps } from './types'
 
-const SelectDropdown: FC<selectDropdownProps & noticeRenderProps> = (props) => {
+const SelectDropdown: FC<selectDropdownProps & noticeProps> = (props) => {
     const { options, virtualList, showCount, itemHeight, overlayHeight } = props
 
     const defaultItemHeight = 30

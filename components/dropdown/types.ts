@@ -1,7 +1,14 @@
 /* eslint-disable no-unused-vars */
-import { menuList, menuClick } from '../menu/types'
+import { menuClick, menuTitleList, menuTitleClick, changeKeys } from '../menu/types'
 
 export type dropdownProps = {
-    list?: menuList
+    list: menuTitleList
+    collapsed?: boolean
+    defaultOpenKeys?: string[]
+    openKeys?: string[]
+    onTitleClick?: menuTitleClick
     onClick?: menuClick
+    onOpenKeysChange?: changeKeys
+
+    closeClearOpenKeys?: boolean // 关闭时触发清空openKeys
 }

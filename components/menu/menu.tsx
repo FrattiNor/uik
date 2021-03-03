@@ -1,113 +1,54 @@
-import React, { FC, Fragment, useState } from 'react'
+import React, { FC } from 'react'
 import classnames from 'classnames'
-import { menuProps, menuInnerProps, menuTitleListItem, menuListItem } from './types'
-import MenuTitleList from './menu-title-list'
-import MenuItem from './menu-item'
+import MenuInner from './menu-inner'
+import { menuProps } from './types'
 import './menu.less'
 
-// menu内部 少个div
-const MenuInner: FC<menuInnerProps> = (props) => {
-    const { list, onClick, onTitleClick, collapsed = true, zIndex = 1, selectedKeys = [], openKeys = [], changeSelectedKeys, changeOpenKeys } = props
+// menu 结构
 
-    const titleProps = {
-        onClick,
-        onTitleClick,
-        collapsed,
-        zIndex,
-        selectedKeys,
-        openKeys,
-        changeSelectedKeys,
-        changeOpenKeys
-    }
+// menu 对menu-inner进行一次包装，赋予样式等
+// menu-inner
+// menu-title-list + menu-item
 
-    const itemProps = {
-        onClick,
-        zIndex,
-        selectedKeys,
-        changeSelectedKeys
-    }
-
-    return (
-        <Fragment>
-            {list.map((item) => {
-                if ((item as menuTitleListItem).title) {
-                    return <MenuTitleList {...(item as menuTitleListItem)} itemKey={item.key} {...titleProps} />
-                } else {
-                    return <MenuItem {...(item as menuListItem)} itemKey={item.key} {...itemProps} />
-                }
-            })}
-        </Fragment>
-    )
-}
-
+// menu
 const Menu: FC<menuProps> = (props) => {
     const {
         list,
         collapsed,
-        selectedKeys: OutselectedKeys,
-        openKeys: outOpenKeys,
+        selectedKeys,
+        openKeys,
         defaultOpenKeys,
         defaultSelectedKeys,
         onTitleClick,
         onClick,
         onOpenKeysChange,
         onSelectedKeysChange,
-        multiple = false,
+        multiple,
         className,
         style = {},
         width,
         ...restProps
     } = props
 
-    const [virtualSelectedKeys, setVirtualSelectedKeys] = useState<string[]>(defaultSelectedKeys || [])
-    const [virtualOpenKeys, setVirtualOpenKeys] = useState<string[]>(defaultOpenKeys || [])
-
-    const selectedKeys = Array.isArray(OutselectedKeys) ? OutselectedKeys : virtualSelectedKeys
-    const openKeys = Array.isArray(outOpenKeys) ? outOpenKeys : virtualOpenKeys
-
-    const changeSelectedKeys = (key: string) => {
-        let newKeys
-        if (multiple) {
-            if (selectedKeys.includes(key)) {
-                newKeys = selectedKeys.filter((item) => item !== key)
-            } else {
-                newKeys = [...selectedKeys, key]
-            }
-        } else {
-            newKeys = [key]
-        }
-        setVirtualSelectedKeys(newKeys)
-        if (onSelectedKeysChange) onSelectedKeysChange(newKeys)
-    }
-
-    const changeOpenKeys = (key: string) => {
-        let newKeys
-        if (openKeys.includes(key)) {
-            newKeys = openKeys.filter((item) => item !== key)
-        } else {
-            newKeys = [...openKeys, key]
-        }
-        setVirtualOpenKeys(newKeys)
-        if (onOpenKeysChange) onOpenKeysChange(newKeys)
-    }
-
-    const innerProps = {
+    const forOtherProps = {
         list,
         collapsed,
         selectedKeys,
         openKeys,
-        changeSelectedKeys,
-        changeOpenKeys,
+        defaultOpenKeys,
+        defaultSelectedKeys,
         onTitleClick,
-        onClick
+        onClick,
+        onOpenKeysChange,
+        onSelectedKeysChange,
+        multiple
     }
 
     return (
         <div className={classnames('uik-menu', className)} style={{ ...style, width }} {...restProps}>
-            <MenuInner {...innerProps} />
+            <MenuInner {...forOtherProps} />
         </div>
     )
 }
 
-export { MenuInner }
 export default Menu
