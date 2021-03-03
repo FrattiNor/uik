@@ -1,17 +1,16 @@
-import React, { FC, useState, isValidElement, cloneElement, useEffect } from 'react'
+import React, { FC, isValidElement, cloneElement, useEffect } from 'react'
 import classnames from 'classnames'
 import { checkboxGroupProps } from './types'
 import Checkbox from './checkbox'
 import './checkbox-group.less'
+import { useHalfControlled } from '../_hooks'
 
 const CheckboxGroup: FC<checkboxGroupProps> = (props) => {
     const { checkedList: outCheckedList, defaultCheckedList = [], disabled, onChange: outOnchange, onCheckedChange, className, children } = props
 
-    const [virtualCheckedList, setVirtualCheckedList] = useState(defaultCheckedList)
+    const childValues: string[] = []
 
-    const childValues: string [] = []
-
-    const checkedList = Array.isArray(outCheckedList) ? outCheckedList : virtualCheckedList
+    const [checkedList, setCheckedList] = useHalfControlled(outCheckedList, outOnchange, defaultCheckedList, (l) => Array.isArray(l))
 
     const onChange = (value: string) => {
         let newCheckedList = [...checkedList]
@@ -21,8 +20,7 @@ const CheckboxGroup: FC<checkboxGroupProps> = (props) => {
             newCheckedList = [...newCheckedList, value]
         }
 
-        setVirtualCheckedList(newCheckedList)
-        if (outOnchange) outOnchange(newCheckedList)
+        setCheckedList(newCheckedList)
     }
 
     useEffect(() => {
@@ -54,7 +52,9 @@ const CheckboxGroup: FC<checkboxGroupProps> = (props) => {
         return dom
     }
 
-    return <div className={classnames('uik-checkbox-group', className)}>{getChild()}</div>
+    const dom = getChild()
+
+    return <div className={classnames('uik-checkbox-group', className)}>{dom}</div>
 }
 
 export default CheckboxGroup

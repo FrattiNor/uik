@@ -5,6 +5,10 @@ import DemoNormal from './demo-normal'
 import descNormal from './demo-normal/desc.md'
 import codeNormal from '!raw-loader!./demo-normal'
 
+import DemoMultiple from './demo-multiple'
+import descMultiple from './demo-multiple/desc.md'
+import codeMultiple from '!raw-loader!./demo-multiple'
+
 # Select 输入框
 
 下拉选择。
@@ -14,6 +18,9 @@ import codeNormal from '!raw-loader!./demo-normal'
 <CodeWrapper>
     <CodeBox title="基础" desc={descNormal} code={codeNormal}>
         <DemoNormal />
+    </CodeBox>
+    <CodeBox title="多选" desc={descMultiple} code={codeMultiple}>
+        <DemoMultiple />
     </CodeBox>
 </CodeWrapper>
 

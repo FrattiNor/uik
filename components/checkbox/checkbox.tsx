@@ -1,20 +1,21 @@
 import React, { FC, isValidElement, ChangeEvent, useState } from 'react'
 import classnames from 'classnames'
-import { useEffectAfterFirst } from '../_hooks'
+import { useEffectAfterFirst, useHalfControlled } from '../_hooks'
 import { checkboxProps } from './types'
 import './checkbox.less'
 
 const Checkbox: FC<checkboxProps> = (props) => {
     const { children, checked: outChecked, disabled, onChange: outOnChange, checkedHalf, defaultChecked = false, className } = props
 
-    const [virtualChecked, setVirtualChecked] = useState(defaultChecked)
     const [checkedAnimate, setCheckedAnimate] = useState<boolean | ''>('') // 只关于执行动画，初始为''不执行动画
-    const checked = checkedHalf === true ? false : typeof outChecked === 'boolean' ? outChecked : virtualChecked
+    // 理论的checked
+    const [theChecked, setChecked] = useHalfControlled(outChecked, outOnChange, defaultChecked, 'boolean')
+    // checked判断在checkedHalf之后
+    const checked = checkedHalf === true ? false : theChecked
 
     const onChange = (e: ChangeEvent<HTMLInputElement>) => {
         const newChekced = e.target.checked
-        setVirtualChecked(newChekced)
-        if (outOnChange) outOnChange(newChekced)
+        setChecked(newChekced)
     }
 
     useEffectAfterFirst(() => {

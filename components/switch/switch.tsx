@@ -1,23 +1,29 @@
 import React, { useState, MouseEvent, forwardRef, ForwardRefRenderFunction, useRef } from 'react'
 import classnames from 'classnames'
-import { useEffectAfterFirst } from '../_hooks'
+import { useEffectAfterFirst, useHalfControlled } from '../_hooks'
 import { switchProps } from './types'
 import './switch.less'
 
 const Switch: ForwardRefRenderFunction<unknown, switchProps> = (props, ref) => {
     const componentRef = useRef<HTMLElement>(null)
     const switchRef = (ref as any) || componentRef
-    const { checked: outChecked, defaultChecked = false, disabled, onChange, onMouseDown: outOnMouseDown, onMouseUp: outOnMouseUp } = props
-    const [virtualChecked, setVirtualChecked] = useState(defaultChecked)
-    const checked = typeof outChecked === 'boolean' ? outChecked : virtualChecked
+    const {
+        checked: outChecked,
+        defaultChecked = false,
+        disabled,
+        onCheckedChange,
+        onMouseDown: outOnMouseDown,
+        onMouseUp: outOnMouseUp,
+        ...rest
+    } = props
+    const [checked, setChecked] = useHalfControlled<boolean>(outChecked, onCheckedChange, defaultChecked, 'boolean')
     const [mouseDown, setMouseDown] = useState(false)
     const [checkChangeAnimate, setCheckChangeAnimate] = useState<boolean | ''>('') // 只关于执行动画，初始为''不执行动画
 
     const onMouseUp = (e: MouseEvent<HTMLButtonElement>) => {
         if (outOnMouseUp) outOnMouseUp(e)
         setMouseDown(false)
-        setVirtualChecked(!checked)
-        if (onChange) onChange(!checked)
+        setChecked(!checked)
     }
 
     const onMouseDown = (e: MouseEvent<HTMLButtonElement>) => {
@@ -42,6 +48,7 @@ const Switch: ForwardRefRenderFunction<unknown, switchProps> = (props, ref) => {
             })}
             onMouseDown={onMouseDown}
             onMouseUp={onMouseUp}
+            {...rest}
         >
             <div className={classnames('uik-switch-dot', { checked })}>
                 <div className={classnames('uik-switch-dot-content', { checked, ['mouse-down']: mouseDown })} />

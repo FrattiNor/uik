@@ -5,5 +5,5 @@ export type switchProps = {
     checked?: boolean
     defaultChecked?: boolean
     disabled?: boolean
-    onChange?: (c: boolean) => void
+    onCheckedChange?: (c: boolean) => void
 } & HTMLAttributes<HTMLButtonElement>

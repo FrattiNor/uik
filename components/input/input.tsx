@@ -3,6 +3,7 @@ import classnames from 'classnames'
 import Icon from '../icon'
 import { inputProps } from './types'
 import './input.less'
+import { useHalfControlled } from '../_hooks'
 
 const Input: ForwardRefRenderFunction<unknown, inputProps> = (props, ref) => {
     const componentRef = useRef<HTMLElement>(null)
@@ -30,19 +31,15 @@ const Input: ForwardRefRenderFunction<unknown, inputProps> = (props, ref) => {
         width,
         ...restProps
     } = props
-    const [virtualValue, setVirtualValue] = useState(defaultValue)
     const [focus, setFocus] = useState(false)
-    const value = outValue !== undefined ? outValue : virtualValue
 
-    const changeValue = (v: string) => {
-        const len = v.length
-        const value = typeof maxLength === 'number' ? (len > maxLength ? v.slice(0, maxLength) : v) : v
-        setVirtualValue(value)
-        if (onValueChange) onValueChange(value)
-    }
+    // 理论上的value
+    const [theValue, setValue] = useHalfControlled(outValue, onValueChange, defaultValue, 'string')
+    // 受maxLength影响
+    const value = typeof maxLength === 'number' ? (theValue.length > maxLength ? theValue.slice(0, maxLength) : theValue) : theValue
 
     const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-        changeValue(e.target.value)
+        setValue(e.target.value)
         if (outOnchange) outOnchange(e)
     }
     const onEnter = () => {
@@ -71,7 +68,7 @@ const Input: ForwardRefRenderFunction<unknown, inputProps> = (props, ref) => {
         if (outOnClear) {
             outOnClear(value)
         } else {
-            changeValue('')
+            setValue('')
         }
     }
 

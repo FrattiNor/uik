@@ -1,20 +1,19 @@
 import React, { FC, isValidElement, ChangeEvent, useState } from 'react'
 import classnames from 'classnames'
 import { radioProps } from './types'
-import { useEffectAfterFirst } from '../_hooks'
+import { useEffectAfterFirst, useHalfControlled } from '../_hooks'
 import './radio.less'
 
 const Radio: FC<radioProps> = (props) => {
     const { children, checked: outChecked, disabled, onChange: outOnChange, defaultChecked = false, className } = props
 
-    const [virtualChecked, setVirtualChecked] = useState(defaultChecked)
+    const [checked, setChecked] = useHalfControlled(outChecked, outOnChange, defaultChecked, 'boolean')
+
     const [checkedAnimate, setCheckedAnimate] = useState<boolean | ''>('') // 只关于执行动画，初始为''不执行动画
-    const checked = typeof outChecked === 'boolean' ? outChecked : virtualChecked
 
     const onChange = (e: ChangeEvent<HTMLInputElement>) => {
         const newChekced = e.target.checked
-        setVirtualChecked(newChekced)
-        if (outOnChange) outOnChange(newChekced)
+        setChecked(newChekced)
     }
 
     useEffectAfterFirst(() => {

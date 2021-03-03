@@ -1,20 +1,16 @@
-import React, { cloneElement, FC, isValidElement, useState } from 'react'
+import React, { cloneElement, FC, isValidElement } from 'react'
 import classnames from 'classnames'
 import Radio from './radio'
 import { radioGroupProps } from './types'
 import './radio-group.less'
+import { useHalfControlled } from '../_hooks'
 
 const RadioGroup: FC<radioGroupProps> = (props) => {
     const { value: outValue, defaultValue = '', onChange: outOnChange, children, className, disabled } = props
 
-    const [virtualValue, setVirtualValue] = useState(defaultValue)
+    const [value, setValue] = useHalfControlled(outValue, outOnChange, defaultValue, 'string')
 
-    const value = typeof outValue !== 'undefined' ? outValue : virtualValue
-
-    const onChange = (newValue: string) => {
-        setVirtualValue(newValue)
-        if (outOnChange) outOnChange(newValue)
-    }
+    const onChange = setValue
 
     const getChild = () => {
         const childs = Array.isArray(children) ? children : [children]
@@ -30,7 +26,7 @@ const RadioGroup: FC<radioGroupProps> = (props) => {
                         checked,
                         disabled: itemDisabled,
                         value: itemValue,
-                        onChange: () => onChange(itemValue),
+                        onChange: () => onChange(itemValue)
                     })
                 } else {
                     return null
@@ -39,7 +35,9 @@ const RadioGroup: FC<radioGroupProps> = (props) => {
             .filter((item) => item)
     }
 
-    return <div className={classnames('uik-radio-group', className)}>{getChild()}</div>
+    const dom = getChild()
+
+    return <div className={classnames('uik-radio-group', className)}>{dom}</div>
 }
 
 export default RadioGroup

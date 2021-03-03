@@ -31,7 +31,7 @@ const Select: FC<selectProps> = (props) => {
     const [hover, setHover] = useState(false)
     const getListOne = (v: string[]) => (multiple ? v : v.length > 0 ? [v[0]] : [])
     const getValue = (v: undefined | string | string[]) => (v ? (Array.isArray(v) ? getListOne(v) : [v]) : [])
-    const [visible, setVisible] = useHalfControlled(outVisible, onVisibleChange, false)
+    const [visible, setVisible] = useHalfControlled(outVisible, onVisibleChange, false, 'boolean')
     const [virtualValue, setVirtualValue] = useState(getValue(defaultValue))
     const value = outValue !== undefined ? getValue(outValue) : virtualValue
     const focus = visible

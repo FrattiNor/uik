@@ -1,7 +1,8 @@
-import React, { FC, Fragment, useState } from 'react'
+import React, { FC, Fragment } from 'react'
 import { menuLoopProps, menuTitleListItem, menuListItem, menuInnerProps } from './types'
 import MenuTitleList from './menu-title-list'
 import MenuItem from './menu-item'
+import { useHalfControlled } from '../_hooks'
 
 // menu 循环渲染
 const MenuLoop: FC<menuLoopProps> = (props) => {
@@ -45,8 +46,8 @@ const MenuInner: FC<menuInnerProps> = (props) => {
         collapsed,
         selectedKeys: OutselectedKeys,
         openKeys: outOpenKeys,
-        defaultOpenKeys,
-        defaultSelectedKeys,
+        defaultOpenKeys = [],
+        defaultSelectedKeys = [],
         onTitleClick,
         onClick,
         onOpenKeysChange,
@@ -54,11 +55,8 @@ const MenuInner: FC<menuInnerProps> = (props) => {
         multiple = false
     } = props
 
-    const [virtualSelectedKeys, setVirtualSelectedKeys] = useState<string[]>(defaultSelectedKeys || [])
-    const [virtualOpenKeys, setVirtualOpenKeys] = useState<string[]>(defaultOpenKeys || [])
-
-    const selectedKeys = Array.isArray(OutselectedKeys) ? OutselectedKeys : virtualSelectedKeys
-    const openKeys = Array.isArray(outOpenKeys) ? outOpenKeys : virtualOpenKeys
+    const [selectedKeys, setSelectedKeys] = useHalfControlled(OutselectedKeys, onSelectedKeysChange, defaultSelectedKeys, (keys) => Array.isArray(keys))
+    const [openKeys, setOpenKeys] = useHalfControlled(outOpenKeys, onOpenKeysChange, defaultOpenKeys, (keys) => Array.isArray(keys))
 
     const changeSelectedKeys = (key: string) => {
         let newKeys
@@ -71,8 +69,7 @@ const MenuInner: FC<menuInnerProps> = (props) => {
         } else {
             newKeys = [key]
         }
-        setVirtualSelectedKeys(newKeys)
-        if (onSelectedKeysChange) onSelectedKeysChange(newKeys)
+        setSelectedKeys(newKeys)
     }
 
     const changeOpenKeys = (key: string) => {
@@ -82,8 +79,7 @@ const MenuInner: FC<menuInnerProps> = (props) => {
         } else {
             newKeys = [...openKeys, key]
         }
-        setVirtualOpenKeys(newKeys)
-        if (onOpenKeysChange) onOpenKeysChange(newKeys)
+        setOpenKeys(newKeys)
     }
 
     const innerProps = {

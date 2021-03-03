@@ -22,7 +22,7 @@ const DropDown: FC<dropdownProps & noticeProps> = (props) => {
 
     const truelist = Array.isArray(list) ? list : []
 
-    const [openKeys, setOpenKeys] = useHalfControlled(OutOpenKeys, outOnOpenKeysChange, defaultOpenKeys || [])
+    const [openKeys, setOpenKeys] = useHalfControlled(OutOpenKeys, outOnOpenKeysChange, defaultOpenKeys || [], (keys) => Array.isArray(keys))
 
     const menuProps = {
         list: truelist,
