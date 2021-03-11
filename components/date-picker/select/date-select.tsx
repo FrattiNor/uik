@@ -2,12 +2,11 @@ import React, { FC, MouseEvent } from 'react'
 import dayjs, { Dayjs } from 'dayjs'
 import classnames from 'classnames'
 import { dateSelectProps, selectedObj } from './types'
-import { getTrueWeak, getWeakName, getYearMonthDate, compareDays } from './util'
+import { getTrueWeak, getWeakName, getYearMonthDate } from './util'
 import './date-select.less'
 
 const DateSelect: FC<dateSelectProps> = (props) => {
-    const { month, year, selectedDays, onClick: outOnClick, disabledDate: outDisabledDate, type } = props
-    const mutiple = !!type
+    const { month, year, selectedDays, onClick: outOnClick, disabledDate: outDisabledDate, mutiple = false } = props
     // dayjs
     const thisMonthFirstDay = dayjs()
         .year(year)
@@ -40,10 +39,7 @@ const DateSelect: FC<dateSelectProps> = (props) => {
     const onClick = (e: MouseEvent<HTMLElement>, disabled: boolean, month: number, date: number) => {
         e.stopPropagation() // 取消冒泡事件，屏蔽掉全局点击事件【全局点击事件因为会切换page导致组件取消挂载，所以点击会触发visible变false】
         if (!disabled && outOnClick) {
-            outOnClick(
-                getCurrentDay(month, date),
-                type || 'default' // 点击完改变selected状态
-            )
+            outOnClick(getCurrentDay(month, date))
         }
     }
 
@@ -60,17 +56,10 @@ const DateSelect: FC<dateSelectProps> = (props) => {
     }
 
     const disabledDate = (day: Dayjs) => {
-        let mutipleDisable = false
-        let res = false
-        if (type === 'start2') {
-            if (selectedDays?.[0]) {
-                mutipleDisable = compareDays(day, selectedDays[0], (a, b) => a < b)
-            }
-        }
         if (outDisabledDate) {
-            res = outDisabledDate(day)
+            return outDisabledDate(day)
         }
-        return res || mutipleDisable
+        return false
     }
 
     const getDisabled = (month: number, date: number): boolean => {

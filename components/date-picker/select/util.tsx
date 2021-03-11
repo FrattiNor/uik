@@ -37,10 +37,4 @@ const getYearMonthDate = (day: Dayjs): { year: number; month: number; date: numb
     return { year, month, date }
 }
 
-const compareDays = (day1: Dayjs, day2: Dayjs, compare: (day1: number, day2: number) => boolean): boolean => {
-    const newDay1 = day1.hour(0).minute(0).second(0).millisecond(0)
-    const newDay2 = day2.hour(0).minute(0).second(0).millisecond(0)
-    return compare(newDay1.valueOf(), newDay2.valueOf())
-}
-
-export { getTrueWeak, getWeakName, getYearMonthDate, compareDays }
+export { getTrueWeak, getWeakName, getYearMonthDate }

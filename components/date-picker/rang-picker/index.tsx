@@ -3,9 +3,9 @@ import classnames from 'classnames'
 import dayjs, { Dayjs } from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
 import RangPickerDropdown from './rang-picker-dropdown'
-import { dateSelectType } from '../select/types'
-import { rangPickerProps, rangPickerValueOutter, rangPickerValueInner, pickerValueInner, inputType } from './types'
+import { rangPickerProps, rangPickerValueOutter, rangPickerValueInner, pickerValueInner, inputType, dateSelectType } from './types'
 import Icon from '../../icon'
+import { compareDays } from './util'
 import './index.less'
 
 const typeObj = {
@@ -78,19 +78,26 @@ const RangPicker: FC<rangPickerProps> = (props) => {
     }
 
     const disabledDate = (day: Dayjs) => {
-        if (outDisabledDate) {
-            return outDisabledDate(valueType === 'string' ? (day ? day.format(formatText) : '') : day)
+        let mutipleDisable = false
+        let res = false
+        if (dateSelectType === 'start2') {
+            if (selectedDayStart) {
+                mutipleDisable = compareDays(day, selectedDayStart, (a, b) => a < b)
+            }
         }
-        return false
+        if (outDisabledDate) {
+            res = outDisabledDate(day)
+        }
+        return res || mutipleDisable
     }
 
     // 点击date关闭
-    const dateClick = (day: Dayjs, type: dateSelectType) => {
-        if (type === 'start1') {
+    const dateClick = (day: Dayjs) => {
+        if (dateSelectType === 'start1') {
             setDateSelectType('start2')
             onChange(day, 'start')
         }
-        if (type === 'start2') {
+        if (dateSelectType === 'start2') {
             setDateSelectType('default')
             setVisible(false)
             onChange(day, 'end')
@@ -125,7 +132,6 @@ const RangPicker: FC<rangPickerProps> = (props) => {
             disabledDate={disabledDate}
             autoAdjust
             selectedDays={[selectedDayStart, selectedDayEnd]}
-            dateSelectType={dateSelectType}
             {...restProps}
         >
             <label

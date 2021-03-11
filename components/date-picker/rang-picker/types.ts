@@ -2,11 +2,13 @@
 
 import { Dayjs } from 'dayjs'
 import { pickerValueOutter, pickerValueInner, datePickInputProps } from '../date-picker/types'
-import { dateSelectType } from '../select/types'
 
 export { pickerValueOutter, pickerValueInner }
 export type rangPickerValueOutter = [pickerValueOutter, pickerValueOutter]
 export type rangPickerValueInner = [pickerValueInner, pickerValueInner]
+
+export type dateSelectType = 'start1' | 'start2' | 'default'
+export type inputType = 'start' | 'end'
 
 export type rangPickerProps = {
     format?: string
@@ -20,9 +22,6 @@ export type rangPickerProps = {
 export type rangPickerDropdownProps = {
     disabledDate?: (currentDate: Dayjs) => boolean
     selectedDays: rangPickerValueInner
-    dateClick: (days: Dayjs, type: dateSelectType) => void
+    dateClick: (days: Dayjs) => void
     onEmptyClick: () => void
-    dateSelectType: dateSelectType
 }
-
-export type inputType = 'start' | 'end'

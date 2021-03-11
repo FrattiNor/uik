@@ -18,4 +18,4 @@ export default DatePicker
 
 export * from './date-picker/types'
 export * from './rang-picker/types'
-// export * from './time-picker/types'
+export * from './time-picker/types'
