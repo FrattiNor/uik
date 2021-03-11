@@ -35,6 +35,7 @@ const Select: FC<selectProps> = (props) => {
     const [virtualValue, setVirtualValue] = useState(getValue(defaultValue))
     const value = outValue !== undefined ? getValue(outValue) : virtualValue
     const focus = visible
+    const allowClearShow = value.length > 0 && allowClear && !disabled && hover
 
     const onChange = (newValue: string[]) => {
         const handleNewValue = () => (multiple ? newValue : newValue[0])
@@ -145,8 +146,6 @@ const Select: FC<selectProps> = (props) => {
             setVisible(false)
         }
     }, [disabled])
-
-    const allowClearShow = value.length > 0 && allowClear && !disabled && hover
 
     return (
         <SelectDropdown

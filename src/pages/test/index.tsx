@@ -1,15 +1,15 @@
+import dayjs, { Dayjs } from 'dayjs'
 import React, { FC } from 'react'
-import { Radio } from 'uik'
+import { DatePicker } from 'uik'
+
+const { RangPicker } = DatePicker
 
 const Test: FC = () => {
     return (
         <>
             <div style={{ margin: 24 }}>
-                <Radio.Group>
-                    <Radio value={'A'}>A</Radio>
-                    <Radio value={'B'}>B</Radio>
-                    <Radio value={'C'}>C</Radio>
-                </Radio.Group>
+                <RangPicker />
+                <DatePicker disabledDate={(day: Dayjs | string) => (day as Dayjs).valueOf() > dayjs().valueOf()} />
             </div>
         </>
     )

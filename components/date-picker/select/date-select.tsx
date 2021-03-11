@@ -1,122 +1,13 @@
 import React, { FC, MouseEvent } from 'react'
 import dayjs, { Dayjs } from 'dayjs'
 import classnames from 'classnames'
-import { dateSelectProps } from './types'
+import { dateSelectProps, selectedObj } from './types'
+import { getTrueWeak, getWeakName, getYearMonthDate, compareDays } from './util'
 import './date-select.less'
 
-const getTrueWeak = (weak: number) => {
-    if (weak === 0) {
-        return 7
-    } else {
-        return weak
-    }
-}
-
-const getWeakName = (weak: number) => {
-    switch (weak) {
-        case 1:
-            return '一'
-        case 2:
-            return '二'
-        case 3:
-            return '三'
-        case 4:
-            return '四'
-        case 5:
-            return '五'
-        case 6:
-            return '六'
-        case 7:
-            return '日'
-        default:
-            break
-    }
-}
-
-const getYearMonthDate = (day: Dayjs) => {
-    const year = day.year()
-    const month = day.month() + 1
-    const date = day.date()
-    return { year, month, date }
-}
-
 const DateSelect: FC<dateSelectProps> = (props) => {
-    const { month, year, selectedDays, onClick: outOnClick, disabledDate: outDisabledDate } = props
-
-    const getBeforeMonthLastDay = (month: number) => {
-        return dayjs()
-            .year(year)
-            .month(month - 1)
-            .date(0)
-    }
-
-    const getNextMonthFirstDay = (month: number) => {
-        return dayjs()
-            .year(year)
-            .month(month - 1)
-            .date(0)
-    }
-
-    const getCurrentDay = (month: number, date: number) => {
-        return dayjs()
-            .year(year)
-            .month(month - 1)
-            .date(date)
-    }
-
-    const onClick = (e: MouseEvent<HTMLElement>, disabled: boolean, month: number, date: number, selected: boolean) => {
-        e.stopPropagation() // 取消冒泡事件，屏蔽掉全局点击事件【全局点击事件因为会切换page导致组件取消挂载，所以点击会触发visible变false】
-        if (!disabled && outOnClick) {
-            outOnClick(
-                getCurrentDay(month, date),
-                !selected // 点击完改变selected状态
-            )
-        }
-    }
-
-    // 获取是否是今天
-    const getToday = (month: number, date: number): boolean => {
-        // today
-        const { year: thisDayYear, month: thisDayMonth, date: thisDayDate } = getYearMonthDate(dayjs())
-
-        if (thisDayYear === year && thisDayMonth === month && thisDayDate === date) {
-            return true
-        }
-
-        return false
-    }
-
-    const disabledDate = (day: Dayjs) => {
-        if (outDisabledDate) {
-            return outDisabledDate(day)
-        }
-        return false
-    }
-
-    const getDisabled = (month: number, date: number): boolean => {
-        // disabled
-        const disabled = disabledDate(getCurrentDay(month, date))
-
-        return disabled
-    }
-
-    // 获取是否选中
-    const getSelected = (month: number, date: number): boolean => {
-        let isSelectd = false
-
-        if (selectedDays) {
-            selectedDays.some((day) => {
-                const { year: selectedDayYear, month: selectedDayMonth, date: selectedDayDate } = getYearMonthDate(day)
-                if (selectedDayYear === year && selectedDayMonth === month && selectedDayDate === date) {
-                    isSelectd = true
-                    return true
-                }
-            })
-        }
-
-        return isSelectd
-    }
-
+    const { month, year, selectedDays, onClick: outOnClick, disabledDate: outDisabledDate, type } = props
+    const mutiple = !!type
     // dayjs
     const thisMonthFirstDay = dayjs()
         .year(year)
@@ -139,6 +30,104 @@ const DateSelect: FC<dateSelectProps> = (props) => {
     const nextMonthDateNumber = 42 - prevMonthDateNumber - thisMonthDateNumber
     // const nextMonthDateNumber = 7 - thisMonthLastDayWeak
 
+    const getCurrentDay = (month: number, date: number) => {
+        return dayjs()
+            .year(year)
+            .month(month - 1)
+            .date(date)
+    }
+
+    const onClick = (e: MouseEvent<HTMLElement>, disabled: boolean, month: number, date: number) => {
+        e.stopPropagation() // 取消冒泡事件，屏蔽掉全局点击事件【全局点击事件因为会切换page导致组件取消挂载，所以点击会触发visible变false】
+        if (!disabled && outOnClick) {
+            outOnClick(
+                getCurrentDay(month, date),
+                type || 'default' // 点击完改变selected状态
+            )
+        }
+    }
+
+    // 获取是否是今天
+    const getToday = (month: number, date: number): boolean => {
+        // today
+        const { year: thisDayYear, month: thisDayMonth, date: thisDayDate } = getYearMonthDate(dayjs())
+
+        if (thisDayYear === year && thisDayMonth === month && thisDayDate === date) {
+            return true
+        }
+
+        return false
+    }
+
+    const disabledDate = (day: Dayjs) => {
+        let mutipleDisable = false
+        let res = false
+        if (type === 'start2') {
+            if (selectedDays?.[0]) {
+                mutipleDisable = compareDays(day, selectedDays[0], (a, b) => a < b)
+            }
+        }
+        if (outDisabledDate) {
+            res = outDisabledDate(day)
+        }
+        return res || mutipleDisable
+    }
+
+    const getDisabled = (month: number, date: number): boolean => {
+        // disabled
+        const disabled = disabledDate(getCurrentDay(month, date))
+
+        return disabled
+    }
+
+    const judgeSelected = (month: number, date: number, day: Dayjs | null): boolean => {
+        let res = false
+        if (day) {
+            const { year: selectedDayYear, month: selectedDayMonth, date: selectedDayDate } = getYearMonthDate(day)
+            if (selectedDayYear === year && selectedDayMonth === month && selectedDayDate === date) {
+                res = true
+            }
+        }
+        return res
+    }
+
+    // 获取是否选中
+    const getSelected = (month: number, date: number): selectedObj => {
+        let selected = false
+        let selectedLine = false
+        let selectedLineStart = false
+        let selectedLineEnd = false
+
+        if (!mutiple) {
+            if (selectedDays) {
+                selectedDays.some((day) => {
+                    selected = judgeSelected(month, date, day)
+                    return selected
+                })
+            }
+        } else {
+            const theDay = getCurrentDay(month, date)
+            const dayString = theDay.valueOf()
+            const start = selectedDays?.[0] || null
+            const end = selectedDays?.[1] || null
+            const startSelected = judgeSelected(month, date, start)
+            const endSelected = judgeSelected(month, date, end)
+            selected = startSelected || endSelected
+            if (start && end && startSelected) selectedLineStart = true
+            if (start && end && endSelected) selectedLineEnd = true
+            if (!selected) {
+                if (start && end) {
+                    // 这样比较会有一些小问题，dayString是后生成的，时分秒会比start和end的时分秒大，如何dayString和start同天，但是 dayString > start.valueOf() 为true
+                    if (dayString > start.valueOf() && dayString < end.valueOf()) {
+                        selectedLine = true
+                    }
+                }
+            }
+        }
+
+        return { selected, selectedLine, selectedLineStart, selectedLineEnd }
+    }
+
     const dateList = [
         ...Array(prevMonthDateNumber)
             .fill('')
@@ -150,14 +139,20 @@ const DateSelect: FC<dateSelectProps> = (props) => {
         ...Array(nextMonthDateNumber)
             .fill('')
             .map((_, i) => ({ date: nextMonthFirstDayDate + i, monthType: 'next-month', month: month + 1 }))
-    ].map(({ date, monthType, month }) => ({
-        date,
-        monthType,
-        month,
-        selected: getSelected(month, date),
-        today: getToday(month, date),
-        disabled: getDisabled(month, date)
-    }))
+    ].map(({ date, monthType, month }) => {
+        const { selected, selectedLine, selectedLineStart, selectedLineEnd } = getSelected(month, date)
+        return {
+            date,
+            monthType,
+            month,
+            selected,
+            selectedLine,
+            selectedLineStart,
+            selectedLineEnd,
+            today: getToday(month, date),
+            disabled: getDisabled(month, date)
+        }
+    })
 
     const titleList = Array(7)
         .fill('')
@@ -170,20 +165,26 @@ const DateSelect: FC<dateSelectProps> = (props) => {
                     {date}
                 </div>
             ))}
-            {dateList.map(({ date, monthType, month, selected, today, disabled }, i) => {
-                const beforeDisabled = i === 0 ? disabledDate(getBeforeMonthLastDay(month)) : dateList[i - 1].disabled
-                const afterDisabled = i === dateList.length - 1 ? disabledDate(getNextMonthFirstDay(month)) : dateList[i + 1].disabled
-                const disabledStart = disabled && !beforeDisabled
-                const disabledEnd = disabled && !afterDisabled
+            {dateList.map(({ date, monthType, month, selected, selectedLine, selectedLineStart, selectedLineEnd, today, disabled }) => {
+                const isThisMonth = monthType === 'this-month'
 
                 return (
                     <div
                         key={year.toString() + date.toString() + month.toString()}
-                        className={classnames('date', monthType, { disabled, ['disabled-start']: disabledStart, ['disabled-end']: disabledEnd })}
+                        className={classnames('date', {
+                            disabled,
+                            ['selected-line']: selectedLine && isThisMonth,
+                            ['selected-line-start']: selectedLineStart && isThisMonth,
+                            ['selected-line-end']: selectedLineEnd && isThisMonth
+                        })}
                     >
                         <div
-                            className={classnames('date-inner', { selected, today, disabled })}
-                            onClick={(e) => onClick(e, disabled, month, date, selected)}
+                            className={classnames('date-inner', monthType, {
+                                disabled,
+                                selected: selected && isThisMonth,
+                                today: today && isThisMonth
+                            })}
+                            onClick={(e) => onClick(e, disabled, month, date)}
                         >
                             {date}
                         </div>

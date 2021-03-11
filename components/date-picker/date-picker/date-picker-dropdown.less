@@ -1,4 +1,4 @@
-@import '../_style/theme.less';
+@import '../../_style/theme.less';
 
 .uik-date-picker {
     font-size: @font-size-middle;
@@ -12,6 +12,7 @@
         align-items: center;
         justify-content: space-between;
         padding: 0 15px;
+        position: relative;
 
         &-text {
             user-select: none;
@@ -36,16 +37,10 @@
             &:hover {
                 color: @font-color;
             }
-
-            & + .uik-date-picker-icon {
-                margin-left: 5px;
-            }
         }
     }
 
     &-content {
-        width: calc(~'35px * 7');
-        height: calc(~'35px * 7');
         padding: 10px;
     }
 }

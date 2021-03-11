@@ -2,8 +2,13 @@
 
 import { Dayjs } from 'dayjs'
 
-export type datePickInputProps = {
-    placeholder?: string
+// 组件外部的值
+export type pickerValueOutter = Dayjs | string | null
+// 组件内部流通的值
+export type pickerValueInner = Dayjs | null
+
+export type datePickInputProps<T> = {
+    placeholder?: T
     allowClear?: boolean
     disabled?: boolean
     maxLength?: number
@@ -15,15 +20,15 @@ export type datePickInputProps = {
 export type datePickerProps = {
     format?: string
     disabledDate?: (currentDate: Dayjs | string) => boolean
-    value?: Dayjs | string | null
-    defaultValue?: Dayjs | string | null
-    onChange?: (value: Dayjs | string | null) => void
+    value?: pickerValueOutter
+    defaultValue?: pickerValueOutter
+    onChange?: (value: pickerValueOutter) => void
     valueType?: 'Dayjs' | 'string'
-} & datePickInputProps
+} & datePickInputProps<string>
 
 export type datePickerDropdownProps = {
     disabledDate?: (currentDate: Dayjs) => boolean
-    selectedDay: Dayjs | null
+    selectedDay: pickerValueInner
     dateClick: (days: Dayjs) => void
     onEmptyClick: () => void
 }

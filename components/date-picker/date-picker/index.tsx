@@ -1,10 +1,10 @@
 import React, { FC, useState, KeyboardEvent, MouseEvent } from 'react'
 import dayjs, { Dayjs } from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
-import Input from '../input'
+import Input from '../../input'
 import DatePickerDropdown from './date-picker-dropdown'
-import { datePickerProps } from './types'
-import { useEffectAfterFirst } from '../_hooks'
+import { datePickerProps, pickerValueOutter, pickerValueInner } from './types'
+import { useEffectAfterFirst } from '../../_hooks'
 
 const DatePicker: FC<datePickerProps> = (props) => {
     dayjs.extend(customParseFormat)
@@ -17,7 +17,6 @@ const DatePicker: FC<datePickerProps> = (props) => {
         format: formatText = 'YYYY-MM-DD',
         allowClear,
         disabled,
-        maxLength,
         size,
         htmlSize,
         error,
@@ -31,10 +30,10 @@ const DatePicker: FC<datePickerProps> = (props) => {
 
     const changeTypeToDayjs = (str: string) => (str === '' ? null : dayjs(str, formatText))
     // 处理进入的value
-    const hanleInValue = (value: string | Dayjs | null): Dayjs | null =>
-        (valueType === 'string' ? changeTypeToDayjs(value as string) : value ? dayjs(value) : null) as Dayjs | null
+    const hanleInValue = (value: pickerValueOutter): pickerValueInner =>
+        (valueType === 'string' ? changeTypeToDayjs(value as string) : value ? dayjs(value) : null) as pickerValueInner
     // 处理输出的value
-    const handleOutValue = (day: Dayjs | null) => (valueType === 'string' ? (day ? day.format(formatText) : '') : day)
+    const handleOutValue = (day: pickerValueInner) => (valueType === 'string' ? (day ? day.format(formatText) : '') : day)
 
     const [visible, setVisible] = useState(false)
 
@@ -49,7 +48,7 @@ const DatePicker: FC<datePickerProps> = (props) => {
 
     const [updateInputValueFalg, setUpdateInputValueFalg] = useState(true)
 
-    const onChange = (day: Dayjs | null) => {
+    const onChange = (day: pickerValueInner) => {
         setVirtualSelectedDay(day)
         if (outOnChange) outOnChange(handleOutValue(day))
         // onchange 一定要重置一下inputValue，不然存在以下情况
@@ -116,8 +115,14 @@ const DatePicker: FC<datePickerProps> = (props) => {
     }
 
     const inputClick = (e: MouseEvent<HTMLElement>) => {
+        // 取消冒泡，点击空白区域关闭在DatePickerDropdown里未包括Input本体
         e.stopPropagation()
         setVisible(true)
+    }
+
+    const inputClear = (e: MouseEvent<HTMLElement>) => {
+        e.stopPropagation()
+        onChange(null)
     }
 
     useEffectAfterFirst(() => {
@@ -141,13 +146,12 @@ const DatePicker: FC<datePickerProps> = (props) => {
                 onValueChange={onInputValueChange}
                 onClick={inputClick}
                 onKeyUp={onKeyUp}
-                onClear={() => onChange(null)}
+                onClear={inputClear}
                 placeholder={placeholder || '请选择日期'}
                 allowClear={typeof allowClear === 'boolean' ? allowClear : true}
                 htmlSize={htmlSize || 11}
                 style={{ width: 'auto' }}
                 disabled={disabled}
-                maxLength={maxLength}
                 size={size}
                 error={error}
             />

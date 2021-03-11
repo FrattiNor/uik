@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent, KeyboardEvent, forwardRef, ForwardRefRenderFunction, useRef, FocusEvent } from 'react'
+import React, { useState, ChangeEvent, KeyboardEvent, forwardRef, ForwardRefRenderFunction, useRef, FocusEvent, MouseEvent } from 'react'
 import classnames from 'classnames'
 import Icon from '../icon'
 import { inputProps } from './types'
@@ -64,9 +64,9 @@ const Input: ForwardRefRenderFunction<unknown, inputProps> = (props, ref) => {
         }
     }
 
-    const onClear = () => {
+    const onClear = (e: MouseEvent<HTMLElement>) => {
         if (outOnClear) {
-            outOnClear(value)
+            outOnClear(e, value)
         } else {
             setValue('')
         }
@@ -84,11 +84,10 @@ const Input: ForwardRefRenderFunction<unknown, inputProps> = (props, ref) => {
     )
 
     return (
-        <span className={inputClass} style={inputStyle}>
-            <span className={classnames('uik-input-content')}>
+        <label className={inputClass} style={inputStyle} ref={inputRef}>
+            <span className={classnames('uik-input-content', [`${size}`])}>
                 <input
                     size={htmlSize}
-                    ref={inputRef}
                     className={classnames('uik-input-content-component', [`${size}`], { 'allow-clear': allowClear })}
                     value={value}
                     onChange={onChange}
@@ -106,7 +105,7 @@ const Input: ForwardRefRenderFunction<unknown, inputProps> = (props, ref) => {
                     onClick={onClear}
                 />
             </span>
-        </span>
+        </label>
     )
 }
 

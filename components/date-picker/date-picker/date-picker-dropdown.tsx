@@ -1,15 +1,15 @@
 import React, { FC, useState, MouseEvent, useEffect, useRef } from 'react'
 import dayjs from 'dayjs'
-import Icon from '../icon'
-import noticeHoc from '../_hocs/notice/notice-hoc'
-import noticeRenderHoc from '../_hocs/notice/notice-render-hoc'
-import { noticeProps } from '../_hocs/notice/types'
-import { useEffectAfterFirst } from '../_hooks'
-import DateSelect from './select/date-select'
-import YearSelect from './select/year-select'
-import MonthSelect from './select/month-select'
+import Icon from '../../icon'
+import noticeHoc from '../../_hocs/notice/notice-hoc'
+import noticeRenderHoc from '../../_hocs/notice/notice-render-hoc'
+import { noticeProps } from '../../_hocs/notice/types'
+import { useEffectAfterFirst } from '../../_hooks'
+import DateSelect from '../select/date-select'
+import YearSelect from '../select/year-select'
+import MonthSelect from '../select/month-select'
+import { monthNumber } from '../select/types'
 import { datePickerDropdownProps } from './types'
-import { monthNumber } from './select/types'
 import './date-picker-dropdown.less'
 
 const DatePickerDropdown: FC<datePickerDropdownProps & noticeProps> = (props) => {
@@ -61,6 +61,7 @@ const DatePickerDropdown: FC<datePickerDropdownProps & noticeProps> = (props) =>
         setMonthAndYear(monthAndYear.month(monthNumber - 1))
         setPage('date')
     }
+
     // 年份选择页面的点击事件
     const yearClick = (yearNumber: number) => {
         setMonthAndYear(monthAndYear.year(yearNumber))

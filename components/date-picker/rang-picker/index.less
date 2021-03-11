@@ -1,0 +1,56 @@
+@import '../../_style/theme.less';
+
+.uik-rang-picker-input-wrapper {
+    display: inline-flex;
+    align-items: center;
+    border: @border-width solid @border-color;
+    border-radius: @border-radius;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    box-sizing: border-box;
+    position: relative;
+
+    &:hover {
+        border-color: @primary-color;
+    }
+    &.focus {
+        border-color: @primary-color;
+        box-shadow: 0 0 1px 2px fade(@primary-color, 20);
+    }
+
+    &.large {
+        height: @height-large;
+        padding: 0 12px;
+    }
+    &.middle {
+        height: @height-middle;
+        padding: 0 10px;
+    }
+    &.small {
+        height: @height-small;
+        padding: 0 8px;
+    }
+
+    .uik-rang-picker-input {
+        border: 0;
+        outline: none;
+        padding: 0;
+        font-size: inherit;
+        background-color: inherit;
+        color: inherit;
+        text-overflow: ellipsis;
+
+        &.large {
+            font-size: @font-size-large;
+        }
+        &.middle {
+            font-size: @font-size-middle;
+        }
+        &.small {
+            font-size: @font-size-small;
+        }
+
+        &-center {
+            padding: 0 10px;
+        }
+    }
+}
