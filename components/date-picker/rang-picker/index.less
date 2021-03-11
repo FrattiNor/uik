@@ -8,6 +8,7 @@
     transition: border-color 0.3s, box-shadow 0.3s;
     box-sizing: border-box;
     position: relative;
+    cursor: pointer;
 
     &:hover {
         border-color: @primary-color;
@@ -15,6 +16,38 @@
     &.focus {
         border-color: @primary-color;
         box-shadow: 0 0 1px 2px fade(@primary-color, 20);
+    }
+
+    &.error {
+        &:hover {
+            border-color: @danger-color;
+        }
+        &.focus {
+            border-color: @danger-color;
+            box-shadow: 0 0 1px 2px fade(@danger-color, 20);
+        }
+    }
+
+    &.disabled {
+        color: @disabled-color;
+        background-color: @disabled-bg-color;
+        cursor: not-allowed;
+
+        & * {
+            cursor: not-allowed !important;
+        }
+
+        input::placeholder {
+            color: @disabled-color;
+        }
+
+        &:hover {
+            border-color: @border-color !important; // 覆盖error
+        }
+        &.focus {
+            border-color: @border-color !important;
+            box-shadow: none !important;
+        }
     }
 
     &.large {
@@ -30,6 +63,10 @@
         padding: 0 8px;
     }
 
+    &.allow-clear {
+        padding-right: 25px;
+    }
+
     .uik-rang-picker-input {
         border: 0;
         outline: none;
@@ -38,6 +75,7 @@
         background-color: inherit;
         color: inherit;
         text-overflow: ellipsis;
+        cursor: pointer;
 
         &.large {
             font-size: @font-size-large;
@@ -48,9 +86,16 @@
         &.small {
             font-size: @font-size-small;
         }
+    }
 
-        &-center {
-            padding: 0 10px;
-        }
+    .uik-rang-picker-center {
+        padding: 0 10px;
+    }
+
+    .uik-rang-picker-close {
+        position: absolute;
+        left: calc(~'100% - 20px');
+        height: 12px;
+        width: 12px;
     }
 }

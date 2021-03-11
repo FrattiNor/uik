@@ -4,6 +4,7 @@ import { Dayjs } from 'dayjs'
 import { pickerValueOutter, pickerValueInner, datePickInputProps } from '../date-picker/types'
 import { dateSelectType } from '../select/types'
 
+export { pickerValueOutter, pickerValueInner }
 export type rangPickerValueOutter = [pickerValueOutter, pickerValueOutter]
 export type rangPickerValueInner = [pickerValueInner, pickerValueInner]
 
@@ -23,3 +24,5 @@ export type rangPickerDropdownProps = {
     onEmptyClick: () => void
     dateSelectType: dateSelectType
 }
+
+export type inputType = 'start' | 'end'

@@ -28,10 +28,10 @@ const DatePicker: FC<datePickerProps> = (props) => {
     const gteValueType = () => (outValueType ? outValueType : typeof (outValue || defaultValue) === 'string' ? 'string' : 'Dayjs')
     const valueType = gteValueType()
 
-    const changeTypeToDayjs = (str: string) => (str === '' ? null : dayjs(str, formatText))
+    const changeStringToDayjs = (str: string) => (str === '' ? null : dayjs(str, formatText))
     // 处理进入的value
     const hanleInValue = (value: pickerValueOutter): pickerValueInner =>
-        (valueType === 'string' ? changeTypeToDayjs(value as string) : value ? dayjs(value) : null) as pickerValueInner
+        (valueType === 'string' ? changeStringToDayjs(value as string) : value ? dayjs(value) : null) as pickerValueInner
     // 处理输出的value
     const handleOutValue = (day: pickerValueInner) => (valueType === 'string' ? (day ? day.format(formatText) : '') : day)
 

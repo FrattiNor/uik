@@ -63,13 +63,13 @@ const DatePickerDropdown: FC<rangPickerDropdownProps & noticeProps> = (props) =>
 
     // 月份选择页面的点击事件
     const monthClick = (monthNumber: number) => {
-        // setMonthAndYear(monthAndYear.month(monthNumber - 1))
+        setMonthAndYearStart(monthAndYearStart.month(monthNumber - 1))
         setPage('date')
     }
 
     // 年份选择页面的点击事件
     const yearClick = (yearNumber: number) => {
-        // setMonthAndYear(monthAndYear.year(yearNumber))
+        setMonthAndYearStart(monthAndYearStart.year(yearNumber))
         setPage('date')
     }
 
@@ -77,8 +77,8 @@ const DatePickerDropdown: FC<rangPickerDropdownProps & noticeProps> = (props) =>
     const titleYearClick = (e: MouseEvent<HTMLSpanElement>) => {
         // e.stopPropagation() 取消默认事件，屏蔽掉全局点击事件【全局点击事件因为会切换page导致组件取消挂载，所以点击会触发visible变false】
         e.stopPropagation()
-        // setStartYear(Math.floor(year / 10) * 10 - 1)
-        // setEndYear(Math.floor(year / 10) * 10 + 10)
+        setStartYear(Math.floor(yearStart / 10) * 10 - 1)
+        setEndYear(Math.floor(yearStart / 10) * 10 + 10)
         setPage('year')
     }
     // 标题的月份的点击事件

@@ -170,7 +170,7 @@ const DateSelect: FC<dateSelectProps> = (props) => {
 
                 return (
                     <div
-                        key={year.toString() + date.toString() + month.toString()}
+                        key={year.toString() + date.toString() + month.toString() + monthType}
                         className={classnames('date', {
                             disabled,
                             ['selected-line']: selectedLine && isThisMonth,
