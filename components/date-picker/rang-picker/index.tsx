@@ -152,8 +152,7 @@ const RangPicker: FC<rangPickerProps> = (props) => {
                     disabled={disabled}
                 />
                 <CloseIcon
-                    // visible={!!(showTextStart || showTextEnd) && allowClear && !disabled}
-                    visible
+                    visible={!!(showTextStart || showTextEnd) && allowClear && !disabled}
                     circle
                     size="small"
                     className={classnames('uik-rang-picker-close')}
