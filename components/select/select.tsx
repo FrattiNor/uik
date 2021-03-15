@@ -170,13 +170,11 @@ const Select: FC<selectProps> = (props) => {
                     <div className={classnames('uik-select-content-value', [`${size}`], { multiple })}>{getValueDom()}</div>
                     <CloseIcon
                         visible={allowClearShow}
-                        defaultIcon="arrow-down"
-                        defaultIconSize="small"
-                        defaultIconProps={{ className: classnames('uik-select-content-arrow', { open: visible }) }}
                         circle
                         size="small"
-                        className="uik-select-content-close"
+                        wrapperClassName="uik-select-content-close"
                         onClick={onClear}
+                        defaultIconProps={{ name: "arrow-down", size: 'small', className: classnames('uik-select-content-arrow', { open: visible }) }}
                     />
                 </div>
             </label>

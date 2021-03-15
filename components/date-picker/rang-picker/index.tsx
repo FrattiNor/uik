@@ -342,13 +342,11 @@ const RangPicker: FC<rangPickerProps> = (props) => {
                 />
                 <span className="uik-rang-picker-input-bottom" style={inputBottomStyle()} />
                 <CloseIcon
-                    defaultIcon="date"
-                    defaultIconSize="middle"
-                    defaultIconProps={{ className: 'uik-rang-picker-icon' }}
+                    defaultIconProps={{ name: 'date', size: 'middle', className: 'uik-rang-picker-icon' }}
                     circle
                     size="small"
                     onClick={onClear}
-                    className={classnames('uik-rang-picker-close')}
+                    wrapperClassName={classnames('uik-rang-picker-close')}
                     visible={allowClearShow}
                 />
             </label>

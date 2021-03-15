@@ -5,36 +5,24 @@ import { closeIconProps } from './types'
 import './close-icon.less'
 
 const CloseIcon: FC<closeIconProps> = (props) => {
-    const {
-        className,
-        defaultIcon,
-        defaultIconProps = {},
-        closeIconProps = {},
-        circle = false,
-        danger = false,
-        visible = true,
-        size = 'middle',
-        defaultIconSize = 'middle',
-        ...restProps
-    } = props
+    const { circle = false, danger = false, size = 'middle', className, visible = true, onClick, defaultIconProps = {}, wrapperClassName } = props
 
-    const { className: defaultIconClassName, ...restDefaultIconProps } = defaultIconProps
-    const { className: closeIconClassName, ...restCloseIconProps } = closeIconProps
+    const { name: defaultIconName, className: defaultIconClassName, size: defaultIconSize = 'middle', ...restDefaultIconProps } = defaultIconProps
 
     return (
-        <span className={classnames(className, 'uik-close-icon-wrapper')} {...restProps}>
+        <span className={classnames('uik-close-icon-wrapper', wrapperClassName)}>
             {visible && (
                 <Icon
                     defaultIcon
                     name={circle ? 'error' : 'close'}
-                    className={classnames('uik-close-icon', [`${size}`], closeIconClassName, { danger })}
-                    {...restCloseIconProps}
+                    className={classnames('uik-close-icon', [`${size}`], className, { danger })}
+                    onClick={onClick}
                 />
             )}
-            {defaultIcon && !visible && (
+            {defaultIconName && !visible && (
                 <Icon
                     defaultIcon
-                    name={defaultIcon}
+                    name={defaultIconName}
                     className={classnames('uik-close-default-icon', [`${defaultIconSize}`], defaultIconClassName)}
                     {...restDefaultIconProps}
                 />

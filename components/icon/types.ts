@@ -1,4 +1,5 @@
-import { HTMLAttributes } from 'react'
+/* eslint-disable no-unused-vars */
+import { HTMLAttributes, MouseEvent } from 'react'
 
 export type iconProps = {
     name: string
@@ -23,9 +24,9 @@ export type closeIconProps = {
     circle?: boolean
     danger?: boolean
     visible?: boolean
-    defaultIcon?: string
-    closeIconProps?: HTMLAttributes<HTMLElement>
-    defaultIconProps?: HTMLAttributes<HTMLElement>
     size?: uikSize
-    defaultIconSize?: uikSize
-} & HTMLAttributes<HTMLSpanElement>
+    className?: string
+    onClick?: (e: MouseEvent<HTMLElement>) => void
+    defaultIconProps?: { name?: string; size?: uikSize; className?: string }
+    wrapperClassName?: string
+}
