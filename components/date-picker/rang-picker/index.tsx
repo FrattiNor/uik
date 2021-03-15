@@ -4,7 +4,7 @@ import dayjs, { Dayjs } from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
 import Icon from '../../icon'
 import RangPickerDropDown from './rang-picker-dropdown'
-import { useDebounce } from '../../_hooks'
+import { useDebounce, useEffectAfterFirst } from '../../_hooks'
 import { rangPickerProps, rangPickerValueInner, rangPickerValueOutter, inputType, flowType, pickerValueOutter } from './types'
 import { flowObj, compareDays, dayToZero } from './util'
 import './index.less'
@@ -28,7 +28,7 @@ const RangPicker: FC<rangPickerProps> = (props) => {
         disabledDate: outDisabledDate,
         ...restProps
     } = props
-    
+
     // input的ref
     const rangPickerRef = useRef<HTMLLabelElement>(null)
     const startDom = useRef<HTMLInputElement>(null)
@@ -221,22 +221,20 @@ const RangPicker: FC<rangPickerProps> = (props) => {
             returnBeforeStep()
         }
         if (step === 'start1' && type === 'end') {
-            toNextStep()
-            // if (value[0]) {
-            //     toNextStep()
-            // } else {
-            //     newFlow(type)
-            // }
+            if (value[0]) {
+                toNextStep()
+            } else {
+                newFlow(type)
+            }
             // 为了刷新text
             flashText(!flashTextFlag)
         }
         if (step === 'end1' && type === 'start') {
-            toNextStep()
-            // if (value[1]) {
-            //     toNextStep()
-            // } else {
-            //     newFlow(type)
-            // }
+            if (value[1]) {
+                toNextStep()
+            } else {
+                newFlow(type)
+            }
             // 为了刷新text
             flashText(!flashTextFlag)
         }
@@ -267,9 +265,11 @@ const RangPicker: FC<rangPickerProps> = (props) => {
 
     // input的keydown事件
     const inputKeyDown = (e: KeyboardEvent<HTMLInputElement>, type: inputType) => {
-        if (e.code === 'Tab') e.preventDefault()
-        if (e.code === 'Enter' || e.code === 'Tab') {
-            if (type === 'start') {
+        // if (e.code === 'Tab') e.preventDefault()
+        if (e.code === 'Enter') {
+            // 如果没值就刷新一下text，不进行下一步
+            flashText(!flashTextFlag)
+            if (type === 'start' && value[0]) {
                 if (step === 'start1') {
                     setTimeout(() => endDom.current?.focus())
                 }
@@ -277,7 +277,7 @@ const RangPicker: FC<rangPickerProps> = (props) => {
                     close()
                 }
             }
-            if (type === 'end') {
+            if (type === 'end' && value[1]) {
                 if (step === 'start2') {
                     close()
                 }
@@ -306,6 +306,13 @@ const RangPicker: FC<rangPickerProps> = (props) => {
     useEffect(() => {
         setInputText([startText, endText])
     }, [startText, endText, flashTextFlag])
+
+    // 通过别的手段离开组件，Tab等，从focus情况可以了解到
+    useEffectAfterFirst(() => {
+        if(!focusInput) {
+            close()
+        }
+    }, [focusInput])
 
     const allowClearShow = !!(allowClear && !disabled && value[0] && value[1] && hover)
 

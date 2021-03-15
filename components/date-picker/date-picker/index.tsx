@@ -92,6 +92,7 @@ const DatePicker: FC<datePickerProps> = (props) => {
     }
 
     const close = (day?: pickerValueInner) => {
+        setVisible(false)
         const theDay = day || selectedDay
         onChange(theDay)
         setTimeout(() => inputRef.current?.blur())
@@ -134,8 +135,9 @@ const DatePicker: FC<datePickerProps> = (props) => {
         setVisible(true)
     }
 
+    // 通过别的手段离开组件，Tab等，从focus情况可以了解到
     const onInputBlur = () => {
-        setVisible(false)
+        onNotDateClickToClose()
     }
 
     const inputClear = (e: MouseEvent<HTMLElement>) => {
