@@ -24,4 +24,5 @@ export type rangPickerDropdownProps = {
     selectedDays: rangPickerValueInner
     dateClick: (days: Dayjs) => void
     onEmptyClick: () => void
+    target: HTMLElement | null
 }

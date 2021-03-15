@@ -30,4 +30,5 @@ export type datePickerDropdownProps = {
     selectedDay: pickerValueInner
     dateClick: (days: Dayjs) => void
     onEmptyClick: () => void
+    target: HTMLElement | null
 }

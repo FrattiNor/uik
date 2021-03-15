@@ -30,6 +30,7 @@ const RangPicker: FC<rangPickerProps> = (props) => {
     } = props
 
     // input的ref
+    const rangPickerRef = useRef<HTMLLabelElement>(null)
     const startDom = useRef<HTMLInputElement>(null)
     const endDom = useRef<HTMLInputElement>(null)
     // input的focus选中的值，控制底部样式
@@ -190,12 +191,6 @@ const RangPicker: FC<rangPickerProps> = (props) => {
         return res || stepDisabledDate
     }
 
-    // 取消冒泡
-    const stopPropagation = (e: MouseEvent<HTMLElement>) => {
-        // 取消冒泡，点击空白区域关闭在DatePickerDropdown里未包括Input本体
-        e.stopPropagation()
-    }
-
     // 节流改变focus状态
     const changeFocus = useDebounce((type: inputType | '') => {
         setFocusInput(type)
@@ -308,11 +303,12 @@ const RangPicker: FC<rangPickerProps> = (props) => {
             disabledDate={disabledDate}
             autoAdjust
             selectedDays={value}
+            target={rangPickerRef.current}
             {...restProps}
         >
             <label
+                ref={rangPickerRef}
                 className={classnames('uik-rang-picker-input-wrapper', [`${size}`], { focus: visible, error, disabled })}
-                onClick={stopPropagation}
                 onMouseEnter={() => setHover(true)}
                 onMouseLeave={() => setHover(false)}
             >
@@ -324,7 +320,6 @@ const RangPicker: FC<rangPickerProps> = (props) => {
                     placeholder={placeholder[0] || '开始日期'}
                     className={classnames('uik-rang-picker-input', [`${size}`])}
                     onBlur={inputBlur}
-                    onClick={stopPropagation}
                     onFocus={() => inputFocus('start')}
                     onChange={(e) => inputChange(e, 'start')}
                     onKeyDown={(e) => inputKeyDown(e, 'start')}
@@ -338,7 +333,6 @@ const RangPicker: FC<rangPickerProps> = (props) => {
                     placeholder={placeholder[1] || '结束日期'}
                     className={classnames('uik-rang-picker-input', [`${size}`])}
                     onBlur={inputBlur}
-                    onClick={stopPropagation}
                     onFocus={() => inputFocus('end')}
                     onChange={(e) => inputChange(e, 'end')}
                     onKeyDown={(e) => inputKeyDown(e, 'end')}

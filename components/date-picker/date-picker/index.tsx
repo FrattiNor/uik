@@ -1,4 +1,4 @@
-import React, { FC, useState, KeyboardEvent, MouseEvent, ChangeEvent } from 'react'
+import React, { FC, useState, KeyboardEvent, MouseEvent, ChangeEvent, useRef } from 'react'
 import classnames from 'classnames'
 import dayjs, { Dayjs } from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
@@ -28,6 +28,7 @@ const DatePicker: FC<datePickerProps> = (props) => {
         ...restProps
     } = props
 
+    const datePickerRef = useRef<HTMLLabelElement>(null)
     const [hover, setHover] = useState(false)
     const gteValueType = () => (outValueType ? outValueType : typeof (outValue || defaultValue) === 'string' ? 'string' : 'Dayjs')
     const valueType = gteValueType()
@@ -119,21 +120,13 @@ const DatePicker: FC<datePickerProps> = (props) => {
         }
     }
 
-    const onInputClick = (e: MouseEvent<HTMLElement>) => {
-        // 取消冒泡，点击空白区域关闭在DatePickerDropdown里未包括Input本体
-        e.stopPropagation()
+    const onInputClick = () => {
         setVisible(true)
     }
 
     const inputClear = (e: MouseEvent<HTMLElement>) => {
         e.preventDefault()
         onChange(null)
-    }
-
-    // 取消冒泡
-    const stopPropagation = (e: MouseEvent<HTMLElement>) => {
-        // 取消冒泡，点击空白区域关闭在DatePickerDropdown里未包括Input本体
-        e.stopPropagation()
     }
 
     useEffectAfterFirst(() => {
@@ -152,11 +145,12 @@ const DatePicker: FC<datePickerProps> = (props) => {
             disabledDate={disabledDate}
             autoAdjust
             selectedDay={selectedDay}
+            target={datePickerRef.current}
             {...restProps}
         >
             <label
+                ref={datePickerRef}
                 className={classnames('uik-date-picker-input-wrapper', [`${size}`], { focus: visible, error, disabled })}
-                onClick={stopPropagation}
                 onMouseEnter={() => setHover(true)}
                 onMouseLeave={() => setHover(false)}
             >

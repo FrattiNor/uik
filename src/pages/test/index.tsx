@@ -12,14 +12,8 @@ const Test: FC = () => {
             <div style={{ margin: 24 }}>
                 {/* <RangPicker />
                 <DatePicker disabledDate={(day: Dayjs | string) => (day as Dayjs).valueOf() > dayjs().valueOf()} /> */}
-                <RangPicker
-                    value={a}
-                    onChange={(v) => {
-                        console.log('v', v)
-                        setA(v)
-                    }}
-                    allowClear
-                />
+                <RangPicker allowClear />
+                <RangPicker allowClear />
             </div>
         </>
     )

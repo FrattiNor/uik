@@ -16,7 +16,7 @@ import './rang-picker-dropdown.less'
 const DatePickerDropdown: FC<rangPickerDropdownProps & noticeProps> = (props) => {
     const datePickRef = useRef<HTMLDivElement>(null)
     // 使用 setVirtualVisible 关闭， 外部使用 onVisibleChange 监听
-    const { selectedDays, dateClick, disabledDate, onEmptyClick } = props
+    const { selectedDays, dateClick, disabledDate, onEmptyClick, target } = props
     const today = dayjs()
 
     // 保持 显示的 month year 的 dayjs对象
@@ -105,8 +105,8 @@ const DatePickerDropdown: FC<rangPickerDropdownProps & noticeProps> = (props) =>
             const clickNode = event.target as HTMLElement
             // 点击其他区域时, 隐藏指定区域
             // 点击区域不为children，点击区域不为弹出部分，点击区域不为弹出部分的子元素
-            if (notice !== null && clickNode !== null) {
-                if (!(notice === clickNode || notice.contains(clickNode))) {
+            if (notice !== null && clickNode !== null && target !== null) {
+                if (!(notice === clickNode || notice.contains(clickNode) || target === clickNode || target.contains(clickNode))) {
                     onEmptyClick()
                 }
             }
