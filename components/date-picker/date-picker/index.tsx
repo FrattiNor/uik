@@ -28,6 +28,7 @@ const DatePicker: FC<datePickerProps> = (props) => {
         ...restProps
     } = props
 
+    const inputRef = useRef<HTMLInputElement>(null)
     const datePickerRef = useRef<HTMLLabelElement>(null)
     const [hover, setHover] = useState(false)
     const gteValueType = () => (outValueType ? outValueType : typeof (outValue || defaultValue) === 'string' ? 'string' : 'Dayjs')
@@ -51,7 +52,7 @@ const DatePicker: FC<datePickerProps> = (props) => {
 
     const [inputValue, setInputValue] = useState(showText)
 
-    const [updateInputValueFalg, setUpdateInputValueFalg] = useState(true)
+    const [flashTextFlag, flashText] = useState(true)
 
     const judgeSame = (item1: pickerValueOutter, item2: pickerValueOutter | undefined) => {
         if (valueType === 'string') {
@@ -71,7 +72,7 @@ const DatePicker: FC<datePickerProps> = (props) => {
         }
         // onchange 一定要重置一下inputValue，不然存在以下情况
         // 设置了固定value，但未设置outOnChange，固定情况，需要重置inputValue
-        setUpdateInputValueFalg(!updateInputValueFalg)
+        flashText(!flashTextFlag)
     }
 
     const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -90,18 +91,19 @@ const DatePicker: FC<datePickerProps> = (props) => {
         return false
     }
 
+    const close = (day?: pickerValueInner) => {
+        const theDay = day || selectedDay
+        onChange(theDay)
+        setTimeout(() => inputRef.current?.blur())
+    }
+
     // 通过非date点击事件关闭
     const onNotDateClickToClose = () => {
         const inputDay = dayjs(inputValue, [formatText, 'YYYY-MM-DD', 'YYYY-M-DD', 'YYYY-MM-D', 'YYYY-M-D'], true)
         if (inputDay.isValid()) {
-            if (inputDay.format(formatText) !== selectedDay?.format(formatText)) {
-                onChange(inputDay)
-            } else {
-                // 未刷新inputValue【关闭时触发的判断机制不一样，支持多种格式】
-                setUpdateInputValueFalg(!updateInputValueFalg)
-            }
+            close(inputDay)
         } else {
-            onChange(null)
+            close(null)
         }
     }
 
@@ -112,29 +114,28 @@ const DatePicker: FC<datePickerProps> = (props) => {
             if (visible) {
                 onNotDateClickToClose()
             }
-            setVisible(!visible)
-        } else {
-            setVisible(true)
         }
     }
 
     // 点击date关闭
-    const dateClick = (dayjs: Dayjs) => {
-        onChange(dayjs)
-        setVisible(false)
+    const dateClick = (day: Dayjs) => {
+        close(day)
     }
 
     // 点击空白区域关闭
     const onEmptyClick = () => {
-        setVisible(false)
         // 之前是打开的情况
         if (visible) {
             onNotDateClickToClose()
         }
     }
 
-    const onInputClick = () => {
+    const onInputFocus = () => {
         setVisible(true)
+    }
+
+    const onInputBlur = () => {
+        setVisible(false)
     }
 
     const inputClear = (e: MouseEvent<HTMLElement>) => {
@@ -147,7 +148,7 @@ const DatePicker: FC<datePickerProps> = (props) => {
         if (showText !== inputValue) {
             setInputValue(showText)
         }
-    }, [showText, updateInputValueFalg])
+    }, [showText, flashTextFlag])
 
     const allowClearShow = !!(allowClear && !disabled && selectedDay && hover)
 
@@ -169,9 +170,11 @@ const DatePicker: FC<datePickerProps> = (props) => {
                 onMouseLeave={() => setHover(false)}
             >
                 <input
+                    ref={inputRef}
                     className={classnames('uik-date-picker-input', [`${size}`])}
                     onChange={onInputChange}
-                    onClick={onInputClick}
+                    onFocus={onInputFocus}
+                    onBlur={onInputBlur}
                     onKeyUp={onInputKeyUp}
                     size={htmlSize}
                     value={inputValue}

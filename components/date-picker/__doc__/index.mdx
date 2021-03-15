@@ -30,13 +30,13 @@ import codeRang from '!raw-loader!./demo-rang'
 date // Dayjs | null | string
 ```
 
-## DatePicker API
+## DatePicker
 
 <div className="api">
 
 | 属性         | 说明                                   | 类型                                     | 默认值                    | 版本 |
 | :----------- | :------------------------------------- | :--------------------------------------- | :------------------------ | :--- |
-| format       | DatePicker 显示的 string 格式          | string                                   | YYYY-MM-DD                | -    |
+| format       | DatePicker 识别的 string 格式          | string                                   | YYYY-MM-DD                | -    |
 | value        | DatePicker 的值                        | date                                     | -                         | -    |
 | defaultValue | DatePicker 的默认值                    | date                                     | null                      | -    |
 | disabledDate | 设置 DatePicker 的禁用区域             | (currentDay: Dayjs \| string) => boolean | -                         | -    |
@@ -49,21 +49,21 @@ date // Dayjs | null | string
 
 </div>
 
-## RangPicker API
+## RangPicker
 
 <div className="api">
 
 | 属性         | 说明                                   | 类型                                     | 默认值                    | 版本 |
 | :----------- | :------------------------------------- | :--------------------------------------- | :------------------------ | :--- |
-| format       | DatePicker 显示的 string 格式          | string                                   | YYYY-MM-DD                | -    |
-| value        | DatePicker 的值                        | [date, date]                             | -                         | -    |
-| defaultValue | DatePicker 的默认值                    | [date, date]                             | [null, null]              | -    |
-| disabledDate | 设置 DatePicker 的禁用区域             | (currentDay: Dayjs \| string) => boolean | -                         | -    |
-| onChange     | DatePicker 的值发生改变时的回调        | (day: [date, date]) => void              | -                         | -    |
+| format       | RangPicker 识别的 string 格式          | string                                   | YYYY-MM-DD                | -    |
+| value        | RangPicker 的值                        | [date, date]                             | -                         | -    |
+| defaultValue | RangPicker 的默认值                    | [date, date]                             | [null, null]              | -    |
+| disabledDate | 设置 RangPicker 的禁用区域             | (currentDay: Dayjs \| string) => boolean | -                         | -    |
+| onChange     | RangPicker 的值发生改变时的回调        | (day: [date, date]) => void              | -                         | -    |
 | placeholder  | 未输入时的提示                         | [string, string]                         | -                         | -    |
 | allowClear   | 是否显示一键清除                       | boolean                                  | true                      | -    |
 | disabled     | 是否禁用                               | boolean                                  | false                     | -    |
-| size         | 设置 DatePicker 的大小                 | large \| middle \| small                 | middle                    | -    |
-| valueType    | 设置 DatePicker 的进入和输出的数据类型 | string \| Dayjs                          | Dayjs \| 根据输入类型判断 | -    |
+| size         | 设置 RangPicker 的大小                 | large \| middle \| small                 | middle                    | -    |
+| valueType    | 设置 RangPicker 的进入和输出的数据类型 | string \| Dayjs                          | Dayjs \| 根据输入类型判断 | -    |
 
 </div>

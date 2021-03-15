@@ -28,7 +28,7 @@ const RangPicker: FC<rangPickerProps> = (props) => {
         disabledDate: outDisabledDate,
         ...restProps
     } = props
-
+    
     // input的ref
     const rangPickerRef = useRef<HTMLLabelElement>(null)
     const startDom = useRef<HTMLInputElement>(null)
@@ -221,20 +221,22 @@ const RangPicker: FC<rangPickerProps> = (props) => {
             returnBeforeStep()
         }
         if (step === 'start1' && type === 'end') {
-            if (value[0]) {
-                toNextStep()
-            } else {
-                newFlow(type)
-            }
+            toNextStep()
+            // if (value[0]) {
+            //     toNextStep()
+            // } else {
+            //     newFlow(type)
+            // }
             // 为了刷新text
             flashText(!flashTextFlag)
         }
         if (step === 'end1' && type === 'start') {
-            if (value[1]) {
-                toNextStep()
-            } else {
-                newFlow(type)
-            }
+            toNextStep()
+            // if (value[1]) {
+            //     toNextStep()
+            // } else {
+            //     newFlow(type)
+            // }
             // 为了刷新text
             flashText(!flashTextFlag)
         }
