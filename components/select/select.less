@@ -47,61 +47,51 @@
         }
     }
 
-    &-content {
-        display: inline-flex;
-        align-items: center;
-        transition: height 0.3s;
+    &-value {
+        overflow: hidden;
+        text-overflow: ellipsis;
         width: 100%;
-        position: relative;
+        padding-right: 25px;
+        padding-left: 12px;
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
 
-        &-value {
-            overflow: hidden;
-            text-overflow: ellipsis;
-            width: 100%;
-            padding-right: 25px;
-            padding-left: 12px;
-            box-sizing: border-box;
+        &.multiple {
             display: flex;
             align-items: center;
-
-            &.multiple {
-                display: flex;
-                align-items: center;
-                flex-wrap: wrap;
-                padding: 1px 25px 1px 4px;
-            }
-
-            &.large {
-                min-height: calc(@height-large - 2px);
-                font-size: @font-size-large;
-            }
-            &.middle {
-                min-height: calc(@height-middle - 2px);
-                font-size: @font-size-middle;
-            }
-            &.small {
-                min-height: calc(@height-small - 2px);
-                font-size: @font-size-small;
-            }
+            flex-wrap: wrap;
+            padding: 1px 25px 1px 4px;
         }
 
-        &-close {
-            position: absolute;
-            left: calc(~'100% - 20px');
-            height: 12px;
-            width: 12px;
+        &.large {
+            min-height: calc(@height-large - 2px);
+            font-size: @font-size-large;
         }
+        &.middle {
+            min-height: calc(@height-middle - 2px);
+            font-size: @font-size-middle;
+        }
+        &.small {
+            min-height: calc(@height-small - 2px);
+            font-size: @font-size-small;
+        }
+    }
 
-        &-arrow {
-            height: 12px;
-            width: 12px;
-            color: @border-color;
-            transform-origin: 50% 50%;
-            transition: transform 0.3s;
+    &-close {
+        position: absolute;
+        left: calc(~'100% - 20px');
+        top: calc(~'50% - 6px');
+        height: 12px;
+    }
 
-            &.open {
-                transform: rotate(180deg);
-            }
+    &-arrow {
+        color: @border-color;
+        transform-origin: 50% 50%;
+        transition: transform 0.3s;
+
+        &.open {
+            transform: rotate(180deg);
         }
     }
 }

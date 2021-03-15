@@ -35,7 +35,7 @@ const Select: FC<selectProps> = (props) => {
     const [virtualValue, setVirtualValue] = useState(getValue(defaultValue))
     const value = outValue !== undefined ? getValue(outValue) : virtualValue
     const focus = visible
-    const allowClearShow = value.length > 0 && allowClear && !disabled && hover
+    const allowClearShow = !!(allowClear && value.length > 0 && !disabled && hover)
 
     const onChange = (newValue: string[]) => {
         const handleNewValue = () => (multiple ? newValue : newValue[0])
@@ -166,17 +166,15 @@ const Select: FC<selectProps> = (props) => {
                 onMouseEnter={onMouseEnter}
                 onMouseLeave={onMouseLeave}
             >
-                <div className="uik-select-content">
-                    <div className={classnames('uik-select-content-value', [`${size}`], { multiple })}>{getValueDom()}</div>
-                    <CloseIcon
-                        visible={allowClearShow}
-                        circle
-                        size="small"
-                        wrapperClassName="uik-select-content-close"
-                        onClick={onClear}
-                        defaultIconProps={{ name: "arrow-down", size: 'small', className: classnames('uik-select-content-arrow', { open: visible }) }}
-                    />
-                </div>
+                <div className={classnames('uik-select-value', [`${size}`], { multiple })}>{getValueDom()}</div>
+                <CloseIcon
+                    visible={allowClearShow}
+                    circle
+                    size="small"
+                    wrapperClassName="uik-select-close"
+                    onClick={onClear}
+                    defaultIconProps={{ name: 'arrow-down', size: 'small', className: classnames('uik-select-arrow', { open: visible }) }}
+                />
             </label>
         </SelectDropdown>
     )

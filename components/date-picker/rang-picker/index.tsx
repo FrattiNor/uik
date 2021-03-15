@@ -33,6 +33,7 @@ const RangPicker: FC<rangPickerProps> = (props) => {
     const startDom = useRef<HTMLInputElement>(null)
     const endDom = useRef<HTMLInputElement>(null)
     // input的focus选中的值，控制底部样式
+    const [hover, setHover] = useState(false)
     const [focusInput, setFocusInput] = useState<inputType | ''>('')
     const inputBottomStyle = () => {
         if (!focusInput) {
@@ -297,7 +298,7 @@ const RangPicker: FC<rangPickerProps> = (props) => {
         setInputText([startText, endText])
     }, [startText, endText, flashTextFlag])
 
-    const allowClearShow = !!(value[0] && value[1]) && allowClear && !disabled
+    const allowClearShow = !!(allowClear && !disabled && value[0] && value[1] && hover)
 
     return (
         <RangPickerDropDown
@@ -312,6 +313,8 @@ const RangPicker: FC<rangPickerProps> = (props) => {
             <label
                 className={classnames('uik-rang-picker-input-wrapper', [`${size}`], { focus: visible, error, disabled })}
                 onClick={stopPropagation}
+                onMouseEnter={() => setHover(true)}
+                onMouseLeave={() => setHover(false)}
             >
                 <input
                     ref={startDom}

@@ -28,6 +28,7 @@ const DatePicker: FC<datePickerProps> = (props) => {
         ...restProps
     } = props
 
+    const [hover, setHover] = useState(false)
     const gteValueType = () => (outValueType ? outValueType : typeof (outValue || defaultValue) === 'string' ? 'string' : 'Dayjs')
     const valueType = gteValueType()
 
@@ -141,7 +142,7 @@ const DatePicker: FC<datePickerProps> = (props) => {
         }
     }, [showText, updateInputValueFalg])
 
-    const allowClearShow = !!selectedDay && allowClear && !disabled
+    const allowClearShow = !!(allowClear && !disabled && selectedDay && hover)
 
     return (
         <DatePickerDropdown
@@ -156,6 +157,8 @@ const DatePicker: FC<datePickerProps> = (props) => {
             <label
                 className={classnames('uik-date-picker-input-wrapper', [`${size}`], { focus: visible, error, disabled })}
                 onClick={stopPropagation}
+                onMouseEnter={() => setHover(true)}
+                onMouseLeave={() => setHover(false)}
             >
                 <input
                     className={classnames('uik-date-picker-input', [`${size}`])}
