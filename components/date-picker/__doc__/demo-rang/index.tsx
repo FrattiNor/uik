@@ -4,7 +4,7 @@ import { DatePicker } from 'uik'
 const { RangPicker } = DatePicker
 
 const Demo: FC = () => {
-    return <RangPicker />
+    return <RangPicker allowClear />
 }
 
 export default Demo

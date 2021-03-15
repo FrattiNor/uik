@@ -5,7 +5,7 @@ import customParseFormat from 'dayjs/plugin/customParseFormat'
 import Icon from '../../icon'
 import RangPickerDropDown from './rang-picker-dropdown'
 import { useDebounce } from '../../_hooks'
-import { rangPickerProps, rangPickerValueInner, rangPickerValueOutter, inputType, flowType } from './types'
+import { rangPickerProps, rangPickerValueInner, rangPickerValueOutter, inputType, flowType, pickerValueOutter } from './types'
 import { flowObj, compareDays, dayToZero } from './util'
 import './index.less'
 
@@ -116,10 +116,23 @@ const RangPicker: FC<rangPickerProps> = (props) => {
     // 当前流程
     const step = flow[0] || false
 
+    const judgeSame = (item1: pickerValueOutter, item2: pickerValueOutter | undefined) => {
+        if (valueType === 'string') {
+            return item1 === item2
+        } else {
+            return (item1 as Dayjs)?.format(formatText) === (item2 as Dayjs)?.format(formatText)
+        }
+    }
+
     // 用于触发外界的onChange
     const onChange = (days: rangPickerValueInner) => {
         setValue(days)
-        if (outOnChange) outOnChange(handleToOutter(days))
+        if (outOnChange) {
+            const newDays = handleToOutter(days)
+            if (newDays.some((item, i) => !judgeSame(item, outValue?.[i]))) {
+                outOnChange(newDays)
+            }
+        }
         // 如果没有onChange，需要把外部值重新赋值一次
         flashValue(!flashValueFlag)
     }
@@ -212,18 +225,18 @@ const RangPicker: FC<rangPickerProps> = (props) => {
                 toNextStep()
             } else {
                 newFlow(type)
-                // 为了刷新text
-                flashText(!flashTextFlag)
             }
+            // 为了刷新text
+            flashText(!flashTextFlag)
         }
         if (step === 'end1' && type === 'start') {
             if (value[1]) {
                 toNextStep()
             } else {
                 newFlow(type)
-                // 为了刷新text
-                flashText(!flashTextFlag)
             }
+            // 为了刷新text
+            flashText(!flashTextFlag)
         }
     }
 
@@ -239,16 +252,14 @@ const RangPicker: FC<rangPickerProps> = (props) => {
         if (type === 'start') {
             if (inputDay.isValid()) {
                 setValue([inputDay, value[1]])
-            } else {
-                setInputText([v, inputText[1]])
             }
+            setInputText([v, inputText[1]])
         }
         if (type === 'end') {
             if (inputDay.isValid()) {
                 setValue([value[0], inputDay])
-            } else {
-                setInputText([inputText[0], v])
             }
+            setInputText([inputText[0], v])
         }
     }
 
@@ -277,6 +288,7 @@ const RangPicker: FC<rangPickerProps> = (props) => {
 
     // 清除
     const onClear = (e: MouseEvent) => {
+        e.stopPropagation()
         e.preventDefault()
         close([null, null])
     }

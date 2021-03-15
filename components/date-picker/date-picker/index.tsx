@@ -53,9 +53,22 @@ const DatePicker: FC<datePickerProps> = (props) => {
 
     const [updateInputValueFalg, setUpdateInputValueFalg] = useState(true)
 
+    const judgeSame = (item1: pickerValueOutter, item2: pickerValueOutter | undefined) => {
+        if (valueType === 'string') {
+            return item1 === item2
+        } else {
+            return (item1 as Dayjs)?.format(formatText) === (item2 as Dayjs)?.format(formatText)
+        }
+    }
+
     const onChange = (day: pickerValueInner) => {
         setVirtualSelectedDay(day)
-        if (outOnChange) outOnChange(handleOutValue(day))
+        if (outOnChange) {
+            const newDay = handleOutValue(day)
+            if (!judgeSame(newDay, outValue)) {
+                outOnChange(newDay)
+            }
+        }
         // onchange 一定要重置一下inputValue，不然存在以下情况
         // 设置了固定value，但未设置outOnChange，固定情况，需要重置inputValue
         setUpdateInputValueFalg(!updateInputValueFalg)
@@ -125,6 +138,7 @@ const DatePicker: FC<datePickerProps> = (props) => {
     }
 
     const inputClear = (e: MouseEvent<HTMLElement>) => {
+        e.stopPropagation()
         e.preventDefault()
         onChange(null)
     }

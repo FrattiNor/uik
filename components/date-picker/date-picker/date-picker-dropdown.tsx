@@ -100,7 +100,7 @@ const DatePickerDropdown: FC<datePickerDropdownProps & noticeProps> = (props) =>
             // 点击其他区域时, 隐藏指定区域
             // 点击区域不为children，点击区域不为弹出部分，点击区域不为弹出部分的子元素
             if (notice !== null && clickNode !== null && target !== null) {
-                if (!(notice === clickNode || notice.contains(clickNode)) || target === clickNode || target.contains(clickNode)) {
+                if (!(notice === clickNode || notice.contains(clickNode) || target === clickNode || target.contains(clickNode))) {
                     onEmptyClick()
                 }
             }
