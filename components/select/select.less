@@ -93,21 +93,13 @@
         }
 
         &-arrow {
-            position: absolute;
-            left: calc(~'100% - 20px');
-            font-size: 12px;
             height: 12px;
             width: 12px;
             color: @border-color;
-            opacity: 1;
             transition: transform 0.3s;
 
-            &.visible {
+            &.open {
                 transform: rotate(180deg);
-            }
-
-            &.hidden {
-                opacity: 0;
             }
         }
     }

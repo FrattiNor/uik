@@ -1,6 +1,6 @@
 @import '../../_style/theme.less';
 
-.uik-rang-picker-input-wrapper {
+.uik-date-picker-input-wrapper {
     display: inline-flex;
     align-items: center;
     border: @border-width solid @border-color;
@@ -62,7 +62,7 @@
         padding: 0 25px 0 8px;
     }
 
-    .uik-rang-picker-input {
+    .uik-date-picker-input {
         border: 0;
         outline: none;
         padding: 0;
@@ -82,27 +82,12 @@
         }
     }
 
-    .uik-rang-picker-input-bottom {
-        position: absolute;
-        width: 0;
-        height: 1px;
-        background-color: @primary-color;
-        bottom: 0;
-        left: 50%;
-        transition: left 0.3s, opacity 0.3s;
-    }
-
-    .uik-rang-picker-center {
-        padding: 0 10px;
-        color: @border-color;
-    }
-
-    .uik-rang-picker-close {
+    .uik-date-picker-close {
         position: absolute;
         left: calc(~'100% - 20px');
     }
 
-    .uik-rang-picker-icon {
+    .uik-date-picker-icon {
         color: @border-color;
     }
 }

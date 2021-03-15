@@ -5,6 +5,10 @@ import DemoNormal from './demo-normal'
 import descNormal from './demo-normal/desc.md'
 import codeNormal from '!raw-loader!./demo-normal'
 
+import DemoRang from './demo-rang'
+import descRang from './demo-rang/desc.md'
+import codeRang from '!raw-loader!./demo-rang'
+
 # DatePicker 日期选择
 
 可选择日期的控件。
@@ -15,20 +19,48 @@ import codeNormal from '!raw-loader!./demo-normal'
     <CodeBox title="基础" desc={descNormal} code={codeNormal}>
         <DemoNormal />
     </CodeBox>
+    <CodeBox title="范围选择器" desc={descRang} code={codeRang}>
+        <DemoRang />
+    </CodeBox>
 </CodeWrapper>
 
 ## API
+
+```
+date // Dayjs | null | string
+```
+
+## DatePicker API
 
 <div className="api">
 
 | 属性         | 说明                                   | 类型                                     | 默认值                    | 版本 |
 | :----------- | :------------------------------------- | :--------------------------------------- | :------------------------ | :--- |
 | format       | DatePicker 显示的 string 格式          | string                                   | YYYY-MM-DD                | -    |
-| value        | DatePicker 的值                        | Dayjs \| null \| string                  | -                         | -    |
-| defaultValue | DatePicker 的默认值                    | Dayjs \| null \| string                  | null                      | -    |
+| value        | DatePicker 的值                        | date                                     | -                         | -    |
+| defaultValue | DatePicker 的默认值                    | date                                     | null                      | -    |
 | disabledDate | 设置 DatePicker 的禁用区域             | (currentDay: Dayjs \| string) => boolean | -                         | -    |
-| onChange     | DatePicker 的值发生改变时的回调        | (day: Dayjs \| null \| string) => void   | false                     | -    |
+| onChange     | DatePicker 的值发生改变时的回调        | (day: date) => void                      | -                         | -    |
 | placeholder  | 未输入时的提示                         | string                                   | -                         | -    |
+| allowClear   | 是否显示一键清除                       | boolean                                  | true                      | -    |
+| disabled     | 是否禁用                               | boolean                                  | false                     | -    |
+| size         | 设置 DatePicker 的大小                 | large \| middle \| small                 | middle                    | -    |
+| valueType    | 设置 DatePicker 的进入和输出的数据类型 | string \| Dayjs                          | Dayjs \| 根据输入类型判断 | -    |
+
+</div>
+
+## RangPicker API
+
+<div className="api">
+
+| 属性         | 说明                                   | 类型                                     | 默认值                    | 版本 |
+| :----------- | :------------------------------------- | :--------------------------------------- | :------------------------ | :--- |
+| format       | DatePicker 显示的 string 格式          | string                                   | YYYY-MM-DD                | -    |
+| value        | DatePicker 的值                        | [date, date]                             | -                         | -    |
+| defaultValue | DatePicker 的默认值                    | [date, date]                             | [null, null]              | -    |
+| disabledDate | 设置 DatePicker 的禁用区域             | (currentDay: Dayjs \| string) => boolean | -                         | -    |
+| onChange     | DatePicker 的值发生改变时的回调        | (day: [date, date]) => void              | -                         | -    |
+| placeholder  | 未输入时的提示                         | [string, string]                         | -                         | -    |
 | allowClear   | 是否显示一键清除                       | boolean                                  | true                      | -    |
 | disabled     | 是否禁用                               | boolean                                  | false                     | -    |
 | size         | 设置 DatePicker 的大小                 | large \| middle \| small                 | middle                    | -    |

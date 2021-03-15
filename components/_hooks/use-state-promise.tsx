@@ -17,7 +17,7 @@ const useStatePromise: fun = (v) => {
     const setData = (newV: typeV) => {
         setValue(newV)
         return new Promise<typeV>((res) => {
-            if (flag) {
+            if (flag.current) {
                 flag.current = false
                 res(newV)
             }

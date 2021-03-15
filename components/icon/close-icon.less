@@ -1,20 +1,18 @@
 @import '../_style/theme.less';
 
-.uik-close {
-    &-icon {
+.uik-close-icon-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    // icon有点飘，向下移动1px
+    transform: translateY(1px);
+}
+
+.uik {
+    &-close-icon {
         cursor: pointer;
         color: @disabled-color;
         transition: color 0.3s, opacity 0.3s;
-
-        &.small {
-            font-size: @font-size-small;
-        }
-        &.middle {
-            font-size: @font-size-middle;
-        }
-        &.large {
-            font-size: @font-size-large;
-        }
 
         &:hover {
             color: fade(@font-color, 60);
@@ -26,12 +24,26 @@
             }
         }
 
-        &.show {
-            opacity: 1;
+        &.small {
+            font-size: @font-size-small;
         }
+        &.middle {
+            font-size: @font-size-middle;
+        }
+        &.large {
+            font-size: @font-size-large;
+        }
+    }
 
-        &.hidden {
-            opacity: 0;
+    &-close-default-icon {
+        &.small {
+            font-size: @font-size-small;
+        }
+        &.middle {
+            font-size: @font-size-middle;
+        }
+        &.large {
+            font-size: @font-size-large;
         }
     }
 }

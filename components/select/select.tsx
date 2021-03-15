@@ -1,4 +1,4 @@
-import React, { FC, useState, isValidElement, cloneElement, ReactElement, useEffect } from 'react'
+import React, { FC, useState, isValidElement, cloneElement, ReactElement, MouseEvent, useEffect } from 'react'
 import classnames from 'classnames'
 import SelectDropdown from './select-dropdown'
 import { selectProps, optionProps } from './types'
@@ -90,7 +90,8 @@ const Select: FC<selectProps> = (props) => {
         }
     }
 
-    const onClear = () => {
+    const onClear = (e: MouseEvent<HTMLElement>) => {
+        e.stopPropagation()
         if (!disabled) {
             setVirtualValue([])
         }
@@ -167,8 +168,16 @@ const Select: FC<selectProps> = (props) => {
             >
                 <div className="uik-select-content">
                     <div className={classnames('uik-select-content-value', [`${size}`], { multiple })}>{getValueDom()}</div>
-                    <Icon defaultIcon name="arrow-down" className={classnames('uik-select-content-arrow', { visible, hidden: allowClearShow })} />
-                    <CloseIcon visible={allowClearShow} circle size="small" className="uik-select-content-close" onClick={onClear} />
+                    <CloseIcon
+                        visible={allowClearShow}
+                        defaultIcon="arrow-down"
+                        defaultIconSize="small"
+                        defaultIconProps={{ className: classnames('uik-select-content-arrow', { open: visible }) }}
+                        circle
+                        size="small"
+                        className="uik-select-content-close"
+                        onClick={onClear}
+                    />
                 </div>
             </label>
         </SelectDropdown>

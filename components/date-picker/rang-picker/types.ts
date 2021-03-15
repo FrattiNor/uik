@@ -7,7 +7,7 @@ export { pickerValueOutter, pickerValueInner }
 export type rangPickerValueOutter = [pickerValueOutter, pickerValueOutter]
 export type rangPickerValueInner = [pickerValueInner, pickerValueInner]
 
-export type dateSelectType = 'start1' | 'start2' | 'default'
+export type flowType = 'start1' | 'start2' | 'end1' | 'end2' | 'default'
 export type inputType = 'start' | 'end'
 
 export type rangPickerProps = {

@@ -1,13 +1,16 @@
-import React, { FC, useState, KeyboardEvent, MouseEvent } from 'react'
+import React, { FC, useState, KeyboardEvent, MouseEvent, ChangeEvent } from 'react'
+import classnames from 'classnames'
 import dayjs, { Dayjs } from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
-import Input from '../../input'
 import DatePickerDropdown from './date-picker-dropdown'
 import { datePickerProps, pickerValueOutter, pickerValueInner } from './types'
 import { useEffectAfterFirst } from '../../_hooks'
+import Icon from '../../icon'
+import './index.less'
 
 const DatePicker: FC<datePickerProps> = (props) => {
     dayjs.extend(customParseFormat)
+    const { CloseIcon } = Icon
 
     const {
         valueType: outValueType,
@@ -17,10 +20,10 @@ const DatePicker: FC<datePickerProps> = (props) => {
         format: formatText = 'YYYY-MM-DD',
         allowClear,
         disabled,
-        size,
-        htmlSize,
+        size = 'middle',
+        htmlSize = 10,
         error,
-        placeholder,
+        placeholder = '请选择日期',
         disabledDate: outDisabledDate,
         ...restProps
     } = props
@@ -56,7 +59,8 @@ const DatePicker: FC<datePickerProps> = (props) => {
         setUpdateInputValueFalg(!updateInputValueFalg)
     }
 
-    const onInputValueChange = (newInputValue: string) => {
+    const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const newInputValue = e.target.value
         const inputDay = dayjs(newInputValue, formatText, true)
         setInputValue(newInputValue)
         if (inputDay.isValid()) {
@@ -88,7 +92,7 @@ const DatePicker: FC<datePickerProps> = (props) => {
 
     // 3种控制 visible
     // 按键事件 通过回车关闭啊
-    const onKeyUp = (e: KeyboardEvent<HTMLInputElement>) => {
+    const onInputKeyUp = (e: KeyboardEvent<HTMLInputElement>) => {
         if (e.code === 'Enter') {
             if (visible) {
                 onNotDateClickToClose()
@@ -114,15 +118,21 @@ const DatePicker: FC<datePickerProps> = (props) => {
         }
     }
 
-    const inputClick = (e: MouseEvent<HTMLElement>) => {
+    const onInputClick = (e: MouseEvent<HTMLElement>) => {
         // 取消冒泡，点击空白区域关闭在DatePickerDropdown里未包括Input本体
         e.stopPropagation()
         setVisible(true)
     }
 
     const inputClear = (e: MouseEvent<HTMLElement>) => {
-        e.stopPropagation()
+        e.preventDefault()
         onChange(null)
+    }
+
+    // 取消冒泡
+    const stopPropagation = (e: MouseEvent<HTMLElement>) => {
+        // 取消冒泡，点击空白区域关闭在DatePickerDropdown里未包括Input本体
+        e.stopPropagation()
     }
 
     useEffectAfterFirst(() => {
@@ -130,6 +140,8 @@ const DatePicker: FC<datePickerProps> = (props) => {
             setInputValue(showText)
         }
     }, [showText, updateInputValueFalg])
+
+    const allowClearShow = !!selectedDay && allowClear && !disabled
 
     return (
         <DatePickerDropdown
@@ -141,20 +153,31 @@ const DatePicker: FC<datePickerProps> = (props) => {
             selectedDay={selectedDay}
             {...restProps}
         >
-            <Input
-                value={inputValue}
-                onValueChange={onInputValueChange}
-                onClick={inputClick}
-                onKeyUp={onKeyUp}
-                onClear={inputClear}
-                placeholder={placeholder || '请选择日期'}
-                allowClear={typeof allowClear === 'boolean' ? allowClear : true}
-                htmlSize={htmlSize || 11}
-                style={{ width: 'auto' }}
-                disabled={disabled}
-                size={size}
-                error={error}
-            />
+            <label
+                className={classnames('uik-date-picker-input-wrapper', [`${size}`], { focus: visible, error, disabled })}
+                onClick={stopPropagation}
+            >
+                <input
+                    className={classnames('uik-date-picker-input', [`${size}`])}
+                    onChange={onInputChange}
+                    onClick={onInputClick}
+                    onKeyUp={onInputKeyUp}
+                    size={htmlSize}
+                    value={inputValue}
+                    disabled={disabled}
+                    placeholder={placeholder}
+                />
+                <CloseIcon
+                    defaultIcon="date"
+                    defaultIconSize="middle"
+                    defaultIconProps={{ className: 'uik-date-picker-icon' }}
+                    circle
+                    size="small"
+                    onClick={inputClear}
+                    className={classnames('uik-date-picker-close')}
+                    visible={allowClearShow}
+                />
+            </label>
         </DatePickerDropdown>
     )
 }

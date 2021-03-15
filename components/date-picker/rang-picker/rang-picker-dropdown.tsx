@@ -124,7 +124,7 @@ const DatePickerDropdown: FC<rangPickerDropdownProps & noticeProps> = (props) =>
         if (selectedDays[0] !== null) {
             setMonthAndYearStart(selectedDays[0])
         }
-    }, [selectedDays])
+    }, [selectedDays[0]])
 
     return (
         <div className="uik-rang-picker" ref={datePickRef}>

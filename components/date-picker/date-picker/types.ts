@@ -11,7 +11,6 @@ export type datePickInputProps<T> = {
     placeholder?: T
     allowClear?: boolean
     disabled?: boolean
-    maxLength?: number
     size?: uikSize
     htmlSize?: number
     error?: boolean
