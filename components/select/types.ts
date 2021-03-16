@@ -17,6 +17,7 @@ export type selectProps = {
     width?: number
     visible?: boolean
     onVisibleChange?: (v: boolean) => void
+    placeholder?: string
 }
 
 export type selectDropdownProps = {

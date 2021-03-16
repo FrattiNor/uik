@@ -21,7 +21,7 @@ const DatePicker: FC<datePickerProps> = (props) => {
         allowClear,
         disabled,
         size = 'middle',
-        htmlSize = 10,
+        htmlSize = 11,
         error,
         placeholder = '请选择日期',
         disabledDate: outDisabledDate,

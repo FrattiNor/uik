@@ -25,16 +25,18 @@ const Select: FC<selectProps> = (props) => {
         overlayHeight,
         onChange: outOnChange,
         visible: outVisible,
-        onVisibleChange
+        onVisibleChange,
+        placeholder
     } = props
 
-    const [hover, setHover] = useState(false)
     const getListOne = (v: string[]) => (multiple ? v : v.length > 0 ? [v[0]] : [])
     const getValue = (v: undefined | string | string[]) => (v ? (Array.isArray(v) ? getListOne(v) : [v]) : [])
     const [visible, setVisible] = useHalfControlled(outVisible, onVisibleChange, false, 'boolean')
     const [virtualValue, setVirtualValue] = useState(getValue(defaultValue))
+    const [hover, setHover] = useState(false)
     const value = outValue !== undefined ? getValue(outValue) : virtualValue
     const focus = visible
+    const placeholderText = placeholder ? <span className="uik-select-placeholder">{placeholder}</span> : ''
     const allowClearShow = !!(allowClear && value.length > 0 && !disabled && hover)
 
     const onChange = (newValue: string[]) => {
@@ -166,7 +168,7 @@ const Select: FC<selectProps> = (props) => {
                 onMouseEnter={onMouseEnter}
                 onMouseLeave={onMouseLeave}
             >
-                <div className={classnames('uik-select-value', [`${size}`], { multiple })}>{getValueDom()}</div>
+                <div className={classnames('uik-select-value', [`${size}`], { multiple })}>{getValueDom() || placeholderText}</div>
                 <CloseIcon
                     visible={allowClearShow}
                     circle

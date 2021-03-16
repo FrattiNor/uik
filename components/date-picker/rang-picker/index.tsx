@@ -22,7 +22,7 @@ const RangPicker: FC<rangPickerProps> = (props) => {
         allowClear,
         disabled,
         size = 'middle',
-        htmlSize = 10,
+        htmlSize = 11,
         error,
         placeholder = [],
         disabledDate: outDisabledDate,

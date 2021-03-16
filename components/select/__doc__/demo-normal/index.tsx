@@ -3,7 +3,7 @@ import { Select } from 'uik'
 
 const Demo: FC = () => {
     return (
-        <Select width={150} allowClear>
+        <Select width={150} allowClear placeholder="请选择">
             <Select.Option value="111">1111</Select.Option>
             <Select.Option value="222">2222</Select.Option>
             <Select.Option value="333">3333</Select.Option>
