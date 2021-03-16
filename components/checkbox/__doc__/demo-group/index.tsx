@@ -26,6 +26,7 @@ const Demo: FC = () => {
             <Checkbox checked={checkedAll} checkedHalf={checkedHalf} onChange={onChange}>
                 全选
             </Checkbox>
+            <br />
             <Checkbox.Group className={styles['checkbox-group']} onCheckedChange={onCheckedChange} checkedList={checkedList} onChange={setCheckList}>
                 {list.map((item) => (
                     <Checkbox key={item} value={item}>

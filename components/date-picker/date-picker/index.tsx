@@ -25,9 +25,11 @@ const DatePicker: FC<datePickerProps> = (props) => {
         error,
         placeholder = '请选择日期',
         disabledDate: outDisabledDate,
+        textBefore,
         ...restProps
     } = props
 
+    const textBeforeText = textBefore ? <span className={classnames('uik-date-picker-text-before')}>{textBefore}</span> : ''
     const inputRef = useRef<HTMLInputElement>(null)
     const datePickerRef = useRef<HTMLLabelElement>(null)
     const [hover, setHover] = useState(false)
@@ -171,6 +173,7 @@ const DatePicker: FC<datePickerProps> = (props) => {
                 onMouseEnter={() => setHover(true)}
                 onMouseLeave={() => setHover(false)}
             >
+                {textBeforeText}
                 <input
                     ref={inputRef}
                     className={classnames('uik-date-picker-input', [`${size}`])}

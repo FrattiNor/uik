@@ -5,11 +5,24 @@
     border-radius: @border-radius;
     transition: border-color 0.3s, box-shadow 0.3s;
     box-sizing: border-box;
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
     position: relative;
     cursor: pointer;
     min-width: 50px;
     max-width: 100%;
+    vertical-align: middle;
+    padding: 0 25px 0 10px;
+
+    &.large {
+        font-size: @font-size-large;
+    }
+    &.middle {
+        font-size: @font-size-middle;
+    }
+    &.small {
+        font-size: @font-size-small;
+    }
 
     &:hover {
         border-color: @primary-color;
@@ -47,34 +60,92 @@
         }
     }
 
+    .uik-select-text-before {
+        white-space: nowrap;
+        padding: 0 5px 0 0;
+    }
+
+    .uik-select-text-before + .uik-select-value {
+        margin-left: 0;
+    }
+
     &-value {
         overflow: hidden;
         text-overflow: ellipsis;
         width: 100%;
-        padding-right: 25px;
-        padding-left: 12px;
         box-sizing: border-box;
         display: flex;
         align-items: center;
+
+        .uik-select-placeholder {
+            color: @placeholder-color;
+        }
 
         &.multiple {
             display: flex;
             align-items: center;
             flex-wrap: wrap;
-            padding: 1px 25px 1px 4px;
+            padding: 1px 0;
+            margin-left: -6px;
+
+            .uik-select-multiple-item {
+                background-color: @grey-bg-color;
+                margin: 2px 4px 2px 0;
+                overflow: hidden;
+                padding: 0 5px;
+                border-radius: @border-radius;
+                display: flex;
+                align-items: center;
+                border: 1px solid @grey-bg-color;
+                transition: border-color 0.3s;
+
+                &.large {
+                    height: calc(@height-large - 10px);
+                }
+                &.middle {
+                    height: calc(@height-middle - 10px);
+                }
+                &.small {
+                    height: calc(@height-small - 10px);
+                }
+
+                &.disabled {
+                    border-color: @border-color;
+                }
+
+                &-close {
+                    margin-left: 5px;
+                    height: 12px;
+                }
+            }
+        }
+
+        &.line {
+            display: block;
+            white-space: nowrap;
+            overflow: hidden;
+            padding-top: 0;
+            padding-bottom: 0;
+
+            &.large {
+                line-height: calc(@height-large - 2px);
+            }
+            &.middle {
+                line-height: calc(@height-middle - 2px);
+            }
+            &.small {
+                line-height: calc(@height-small - 2px);
+            }
         }
 
         &.large {
             min-height: calc(@height-large - 2px);
-            font-size: @font-size-large;
         }
         &.middle {
             min-height: calc(@height-middle - 2px);
-            font-size: @font-size-middle;
         }
         &.small {
             min-height: calc(@height-small - 2px);
-            font-size: @font-size-small;
         }
     }
 
@@ -93,43 +164,5 @@
         &.open {
             transform: rotate(180deg);
         }
-    }
-}
-
-.uik-select-placeholder {
-    color: @placeholder-color;
-}
-
-.uik-select-multiple-item {
-    background-color: @grey-bg-color;
-    margin: 2px 4px 2px 0;
-    overflow: hidden;
-    padding: 0 5px;
-    border-radius: @border-radius;
-    display: flex;
-    align-items: center;
-    border: 1px solid @grey-bg-color;
-    transition: border-color 0.3s;
-
-    &.large {
-        height: calc(@height-large - 10px);
-        font-size: @font-size-large;
-    }
-    &.middle {
-        height: calc(@height-middle - 10px);
-        font-size: @font-size-middle;
-    }
-    &.small {
-        height: calc(@height-small - 10px);
-        font-size: @font-size-small;
-    }
-
-    &.disabled {
-        border-color: @border-color;
-    }
-
-    &-close {
-        margin-left: 5px;
-        height: 12px;
     }
 }

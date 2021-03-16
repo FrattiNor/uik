@@ -17,6 +17,7 @@ export type rangPickerProps = {
     defaultValue?: rangPickerValueOutter
     onChange?: (value: rangPickerValueOutter) => void
     valueType?: 'Dayjs' | 'string'
+    textBefore?: string
 } & datePickInputProps<[string, string]>
 
 export type rangPickerDropdownProps = {

@@ -23,6 +23,7 @@ export type datePickerProps = {
     defaultValue?: pickerValueOutter
     onChange?: (value: pickerValueOutter) => void
     valueType?: 'Dayjs' | 'string'
+    textBefore?: string
 } & datePickInputProps<string>
 
 export type datePickerDropdownProps = {

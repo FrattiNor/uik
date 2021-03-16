@@ -54,7 +54,7 @@ const CheckboxGroup: FC<checkboxGroupProps> = (props) => {
 
     const dom = getChild()
 
-    return <div className={classnames('uik-checkbox-group', className)}>{dom}</div>
+    return <label className={classnames('uik-checkbox-group', className)}>{dom}</label>
 }
 
 export default CheckboxGroup

@@ -18,6 +18,9 @@ export type selectProps = {
     visible?: boolean
     onVisibleChange?: (v: boolean) => void
     placeholder?: string
+    textBefore?: string
+    multipleShow?: 'block' | 'line'
+    checkBoxItem?: boolean
 }
 
 export type selectDropdownProps = {
@@ -36,4 +39,5 @@ export type optionProps = {
     className?: string
     style?: CSSProperties
     label?: JSX.Element | string | number // 需要show的内容，无则直接取children
+    checkBoxItem?: boolean
 }

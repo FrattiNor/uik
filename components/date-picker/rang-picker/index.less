@@ -8,6 +8,7 @@
     transition: border-color 0.3s, box-shadow 0.3s;
     box-sizing: border-box;
     position: relative;
+    vertical-align: middle;
 
     &:hover {
         border-color: @primary-color;
@@ -60,6 +61,11 @@
     &.small {
         height: @height-small;
         padding: 0 25px 0 8px;
+    }
+
+    .uik-rang-picker-text-before {
+        white-space: nowrap;
+        padding: 0 5px 0 0;
     }
 
     .uik-rang-picker-input {

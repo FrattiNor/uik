@@ -37,7 +37,7 @@ const RadioGroup: FC<radioGroupProps> = (props) => {
 
     const dom = getChild()
 
-    return <div className={classnames('uik-radio-group', className)}>{dom}</div>
+    return <label className={classnames('uik-radio-group', className)}>{dom}</label>
 }
 
 export default RadioGroup

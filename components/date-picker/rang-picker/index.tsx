@@ -26,9 +26,11 @@ const RangPicker: FC<rangPickerProps> = (props) => {
         error,
         placeholder = [],
         disabledDate: outDisabledDate,
+        textBefore,
         ...restProps
     } = props
 
+    const textBeforeText = textBefore ? <span className={classnames('uik-rang-picker-text-before')}>{textBefore}</span> : ''
     // input的ref
     const rangPickerRef = useRef<HTMLLabelElement>(null)
     const startDom = useRef<HTMLInputElement>(null)
@@ -333,6 +335,7 @@ const RangPicker: FC<rangPickerProps> = (props) => {
                 onMouseEnter={() => setHover(true)}
                 onMouseLeave={() => setHover(false)}
             >
+                {textBeforeText}
                 <input
                     ref={startDom}
                     size={htmlSize}

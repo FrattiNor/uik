@@ -1,17 +1,19 @@
 @import '../_style/theme.less';
 
-.line {
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    border-radius: 3px;
-    transition: background-color 0.3s;
-}
+
 
 .uik-slider {
     height: 4px;
     position: relative;
     margin: 10px 12px;
+
+    .line {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        border-radius: 3px;
+        transition: background-color 0.3s;
+    }
 
     &.disabled {
         .uik-slider-line-bg {

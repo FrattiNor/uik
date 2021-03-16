@@ -26,7 +26,10 @@ const Select: FC<selectProps> = (props) => {
         onChange: outOnChange,
         visible: outVisible,
         onVisibleChange,
-        placeholder
+        placeholder,
+        textBefore,
+        multipleShow = 'block',
+        checkBoxItem
     } = props
 
     const getListOne = (v: string[]) => (multiple ? v : v.length > 0 ? [v[0]] : [])
@@ -37,6 +40,7 @@ const Select: FC<selectProps> = (props) => {
     const value = outValue !== undefined ? getValue(outValue) : virtualValue
     const focus = visible
     const placeholderText = placeholder ? <span className="uik-select-placeholder">{placeholder}</span> : ''
+    const textBeforeText = textBefore ? <span className={classnames('uik-select-text-before')}>{textBefore}</span> : ''
     const allowClearShow = !!(allowClear && value.length > 0 && !disabled && hover)
 
     const onChange = (newValue: string[]) => {
@@ -74,7 +78,8 @@ const Select: FC<selectProps> = (props) => {
                     return cloneElement(child as ReactElement<optionProps>, {
                         key: child.key || index,
                         selected,
-                        itemClick
+                        itemClick,
+                        checkBoxItem,
                     })
                 } else {
                     return null
@@ -114,23 +119,41 @@ const Select: FC<selectProps> = (props) => {
             return label || children
         }
 
+        if (value.length === 0) {
+            return false
+        }
+
         if (multiple) {
-            const items = value.map((v) => {
-                return (
-                    <div key={v} className={classnames('uik-select-multiple-item', [`${size}`], { disabled })}>
-                        <span>{getItem(v)}</span>
-                        <CloseIcon
-                            size="small"
-                            className="uik-select-multiple-item-close"
-                            onClick={(e) => {
-                                e.stopPropagation()
-                                deleteItem(v)
-                            }}
-                        />
-                    </div>
-                )
-            })
-            return items
+            switch (multipleShow) {
+                case 'block': {
+                    const items = value.map((v) => {
+                        return (
+                            <div key={v} className={classnames('uik-select-multiple-item', [`${size}`], { disabled })}>
+                                <span>{getItem(v)}</span>
+                                <CloseIcon
+                                    size="small"
+                                    className="uik-select-multiple-item-close"
+                                    onClick={(e) => {
+                                        e.stopPropagation()
+                                        deleteItem(v)
+                                    }}
+                                />
+                            </div>
+                        )
+                    })
+
+                    return items
+                }
+                case 'line': {
+                    const items = value.map((v) => {
+                        return getItem(v)
+                    })
+
+                    return items.join('，')
+                }
+                default:
+                    return false
+            }
         } else {
             return getItem(value[0])
         }
@@ -162,13 +185,16 @@ const Select: FC<selectProps> = (props) => {
             popSameWidth
         >
             <label
-                className={classnames('uik-select', { focus, error, disabled })}
+                className={classnames('uik-select', [`${size}`], { focus, error, disabled })}
                 onClick={onClick}
                 style={{ width }}
                 onMouseEnter={onMouseEnter}
                 onMouseLeave={onMouseLeave}
             >
-                <div className={classnames('uik-select-value', [`${size}`], { multiple })}>{getValueDom() || placeholderText}</div>
+                {textBeforeText}
+                <div className={classnames('uik-select-value', [`${size}`], { multiple, line: multipleShow === 'line' })}>
+                    {getValueDom() || placeholderText}
+                </div>
                 <CloseIcon
                     visible={allowClearShow}
                     circle
