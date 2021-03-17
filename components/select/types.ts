@@ -34,7 +34,7 @@ export type selectDropdownProps = {
 export type optionProps = {
     value: string
     selected?: boolean
-    itemClick?: (value: string, selected: boolean) => void
+    onClick?: (value: string, selected: boolean) => void
     isShow?: boolean
     className?: string
     style?: CSSProperties

@@ -1,14 +1,16 @@
-import React, { FC } from 'react'
+import React, { FC, MouseEvent } from 'react'
 import classnames from 'classnames'
 import Checkbox from '../checkbox'
 import { optionProps } from './types'
 import './option.less'
 
 const Option: FC<optionProps> = (props) => {
-    const { children, selected, itemClick, value, style, className, isShow, checkBoxItem } = props
+    const { children, selected, onClick, value, style, className, isShow, checkBoxItem } = props
 
-    const click = () => {
-        if (itemClick) itemClick(value, !!selected)
+    const click = (e: MouseEvent<HTMLDivElement>) => {
+        // 解决 Checkbox label 2次触发click事件
+        e.preventDefault()
+        if (onClick) onClick(value, !!selected)
     }
 
     return (

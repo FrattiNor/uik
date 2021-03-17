@@ -78,7 +78,7 @@ const Select: FC<selectProps> = (props) => {
                     return cloneElement(child as ReactElement<optionProps>, {
                         key: child.key || index,
                         selected,
-                        itemClick,
+                        onClick: itemClick,
                         checkBoxItem,
                     })
                 } else {
