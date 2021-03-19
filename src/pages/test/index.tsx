@@ -1,13 +1,9 @@
-import dayjs, { Dayjs } from 'dayjs'
-import React, { FC, useEffect, useState } from 'react'
-import { DatePicker, Icon } from 'uik'
+import React, { FC } from 'react'
 
 const Test: FC = () => {
     return (
         <>
-            <div style={{ margin: 24 }} onClick={() => console.log('C')}>
-                <Icon defaultIcon name="error" />
-            </div>
+            <div style={{ margin: 24 }}>TEST</div>
         </>
     )
 }

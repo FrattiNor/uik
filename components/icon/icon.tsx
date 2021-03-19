@@ -1,8 +1,8 @@
-import React, { ForwardRefRenderFunction, useRef, forwardRef } from 'react'
+import React, { ForwardRefRenderFunction, useRef, forwardRef, useEffect } from 'react'
 import classnames from 'classnames'
 import { iconProps } from './types'
+import { setIconJS } from './util'
 import { _iconConfig } from './config'
-import './iconfont.js'
 import './icon.less'
 
 // icon 组件
@@ -13,6 +13,10 @@ const Icon: ForwardRefRenderFunction<unknown, iconProps> = (props, ref) => {
     const { name = '', className, defaultIcon = false, ...restProps } = props
     const { prefix } = _iconConfig
     const truePrefix = defaultIcon ? 'uik-icon-' : prefix
+
+    useEffect(() => {
+        setIconJS('https://at.alicdn.com/t/font_2300539_q0cmvuvm7fg.js', 'uik-icon-default-js')
+    }, [])
 
     return (
         <svg ref={iconRef} className={classnames(`uik-icon`, className)} aria-hidden="true" {...restProps}>
