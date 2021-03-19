@@ -1,0 +1,28 @@
+@import '../../_style/theme.less';
+
+.uik-picker-wrapper {
+    display: flex;
+    font-size: @font-size-middle;
+    color: @font-color;
+
+    .uik-picker-left {
+        position: relative;
+        border-right: @border-width solid @border-color;
+    }
+    .uik-picker-right {
+        position: relative;
+        border-left: @border-width solid @border-color;
+    }
+    .uik-picker-top {
+        position: relative;
+        border-bottom: @border-width solid @border-color;
+    }
+    .uik-picker-bottom {
+        position: relative;
+        border-top: @border-width solid @border-color;
+    }
+
+    .uik-picker {
+        display: inline-block;
+    }
+}

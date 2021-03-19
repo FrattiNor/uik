@@ -1,10 +1,6 @@
 @import '../../_style/theme.less';
 
 .uik-date-picker {
-    font-size: @font-size-middle;
-    color: @font-color;
-    display: inline-block;
-
     &-title {
         border-bottom: @border-width solid @border-color;
         height: 35px;
@@ -13,6 +9,10 @@
         justify-content: space-between;
         padding: 0 15px;
         position: relative;
+
+        & > span {
+            display: inline-flex;
+        }
 
         &-text {
             user-select: none;
@@ -26,6 +26,10 @@
                     color: @primary-color;
                 }
             }
+        }
+
+        &-text + .uik-date-picker-title-text {
+            margin-left: 5px;
         }
 
         &-icon {

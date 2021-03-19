@@ -7,15 +7,15 @@ interface RouteList {
     models?: string[]
 }
 
-import React from 'react'
+import React, { ReactElement } from 'react'
 import ReactDocumentTitle from 'react-document-title'
 import { Route, Switch, Redirect, BrowserRouter } from 'react-router-dom'
 import { loadModel, getComponent } from './utils'
 import menu from './menu'
 
 // 递归渲染路由
-const Routes = ({ app }: { app?: any }): JSX.Element => {
-    const renderRoute = (list: any): JSX.Element => {
+const Routes = ({ app }: { app?: any }): ReactElement => {
+    const renderRoute = (list: any): ReactElement => {
         const renderRouteDom = list.map(({ path, component, routes, redirect, title = '', models }: RouteList) => {
             // 加载model
             if (models && app) {
@@ -41,7 +41,7 @@ const Routes = ({ app }: { app?: any }): JSX.Element => {
                     key={path}
                     path={path}
                     exact={!hasChild}
-                    render={(props: any): JSX.Element => (
+                    render={(props: any): ReactElement => (
                         <ReactDocumentTitle title={title}>
                             <Component {...props} child={child}>
                                 {hasChild && renderRoute(routes)}

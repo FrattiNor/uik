@@ -1,22 +1,19 @@
-import React, { FC, useState, MouseEvent, useEffect, useRef } from 'react'
+import React, { FC, useState, MouseEvent } from 'react'
 import classnames from 'classnames'
 import dayjs from 'dayjs'
 import Icon from '../../icon'
-import noticeHoc from '../../_hocs/notice/notice-hoc'
-import noticeRenderHoc from '../../_hocs/notice/notice-render-hoc'
-import { noticeProps } from '../../_hocs/notice/types'
 import { useEffectAfterFirst } from '../../_hooks'
 import DateSelect from '../select/date-select'
 import YearSelect from '../select/year-select'
 import MonthSelect from '../select/month-select'
 import { monthNumber } from '../select/types'
 import { rangPickerDropdownProps } from './types'
+import DropdownBox from '../dropdown-box'
 import './rang-picker-dropdown.less'
 
-const DatePickerDropdown: FC<rangPickerDropdownProps & noticeProps> = (props) => {
-    const datePickRef = useRef<HTMLDivElement>(null)
+const RangPickerDropdown: FC<rangPickerDropdownProps> = (props) => {
     // 使用 setVirtualVisible 关闭， 外部使用 onVisibleChange 监听
-    const { selectedDays, dateClick, disabledDate, onEmptyClick, target } = props
+    const { selectedDays, dateClick, disabledDate, ...restProps } = props
     const today = dayjs()
 
     // 保持 显示的 month year 的 dayjs对象
@@ -88,46 +85,14 @@ const DatePickerDropdown: FC<rangPickerDropdownProps & noticeProps> = (props) =>
         setPage('month')
     }
 
-    useEffect(() => {
-        // 取消mousedown默认事件，使input不丢失focus
-        const mousedown = (e: globalThis.MouseEvent) => {
-            const notice = datePickRef.current
-            const clickNode = e.target as HTMLElement
-            if (notice !== null && clickNode !== null) {
-                if (notice === clickNode || notice.contains(clickNode)) {
-                    e.preventDefault()
-                }
-            }
-        }
-        //  手动添加点击空白事件
-        const clickClose = (event: globalThis.MouseEvent) => {
-            const notice = datePickRef.current
-            const clickNode = event.target as HTMLElement
-            // 点击其他区域时, 隐藏指定区域
-            // 点击区域不为children，点击区域不为弹出部分，点击区域不为弹出部分的子元素
-            if (notice !== null && clickNode !== null && target !== null) {
-                if (!(notice === clickNode || notice.contains(clickNode) || target === clickNode || target.contains(clickNode))) {
-                    onEmptyClick()
-                }
-            }
-        }
-        document.addEventListener('click', clickClose)
-        document.addEventListener('mousedown', mousedown)
-
-        return () => {
-            document.removeEventListener('mousedown', mousedown)
-            document.removeEventListener('click', clickClose)
-        }
-    }, [onEmptyClick])
-
     useEffectAfterFirst(() => {
         if (selectedDays[0] !== null) {
             setMonthAndYearStart(selectedDays[0])
         }
     }, [selectedDays[0]])
 
-    return (
-        <div className="uik-rang-picker" ref={datePickRef}>
+    const centerDom = (
+        <>
             <div className="uik-rang-picker-title">
                 <span className="uik-rang-picker-title-left">
                     <Icon className="uik-rang-picker-title-icon" onClick={prevYear} defaultIcon name="double-arrow-left" />
@@ -140,7 +105,7 @@ const DatePickerDropdown: FC<rangPickerDropdownProps & noticeProps> = (props) =>
                                 <span onClick={titleYearClick} className="uik-rang-picker-title-text click">
                                     {yearStart}年
                                 </span>{' '}
-                                <span onClick={titleMonthClick} onMouseDown={(e) => e.preventDefault()} className="uik-rang-picker-title-text click">
+                                <span onClick={titleMonthClick} className="uik-rang-picker-title-text click">
                                     {monthStart}月
                                 </span>
                             </span>
@@ -148,7 +113,7 @@ const DatePickerDropdown: FC<rangPickerDropdownProps & noticeProps> = (props) =>
                                 <span onClick={titleYearClick} className="uik-rang-picker-title-text click">
                                     {yearEnd}年
                                 </span>{' '}
-                                <span onClick={titleMonthClick} onMouseDown={(e) => e.preventDefault()} className="uik-rang-picker-title-text click">
+                                <span onClick={titleMonthClick} className="uik-rang-picker-title-text click">
                                     {monthEnd}月
                                 </span>
                             </span>
@@ -190,15 +155,10 @@ const DatePickerDropdown: FC<rangPickerDropdownProps & noticeProps> = (props) =>
                 {page === 'month' && <MonthSelect currentMonth={monthStart} onClick={monthClick} />}
                 {page === 'year' && <YearSelect currentYear={yearStart} startYear={startYear} endYear={endYear} onClick={yearClick} />}
             </div>
-        </div>
+        </>
     )
+
+    return <DropdownBox {...restProps} centerDom={centerDom} />
 }
 
-const DropdownComponent = noticeHoc<rangPickerDropdownProps>({
-    backgroundColor: '#fff',
-    needArrow: false,
-    defaultPosition: 'bottomLeft',
-    isDropdown: true
-})(DatePickerDropdown)
-
-export default noticeRenderHoc<rangPickerDropdownProps>({ name: 'date-picker', defaultZIndex: 1002 })(DropdownComponent)
+export default RangPickerDropdown

@@ -40,7 +40,7 @@ const getModalStyle = (position: modalPosition, baseStyle: CSSProperties) => {
 
 // 组件
 const Modal: FC<modalProps> = (props) => {
-    const {CloseIcon} = Icon
+    const { CloseIcon } = Icon
     const {
         position = 'center',
         destroyOnClose = false,

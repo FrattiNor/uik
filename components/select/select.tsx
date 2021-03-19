@@ -93,7 +93,7 @@ const Select: FC<selectProps> = (props) => {
 
     const onClick = () => {
         if (!disabled) {
-            setVisible(true)
+            setVisible(!visible)
         }
     }
 

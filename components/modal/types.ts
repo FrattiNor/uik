@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { CSSProperties, MouseEventHandler } from 'react'
+import { CSSProperties, MouseEventHandler, ReactElement } from 'react'
 import { buttonProps } from '../button/types'
 
 type positionCenter = 'center' | ['center', { top?: number; width?: number; height?: number }]
@@ -14,10 +14,10 @@ export type modalProps = {
     position?: modalPosition
     visible?: boolean
     destroyOnClose?: boolean
-    title?: string | JSX.Element
+    title?: string | ReactElement
     hiddenCloseIcon?: boolean
-    head?: JSX.Element | null
-    foot?: JSX.Element | null
+    head?: ReactElement | null
+    foot?: ReactElement | null
     mask?: boolean
     maskClosable?: boolean
     zIndex?: number // modal 和 modal 之间的层次关系

@@ -12,7 +12,7 @@
 // ultramin
 // vsDark
 
-import React, { FC, useEffect, useState } from 'react'
+import React, { FC, useEffect, useState, ReactElement } from 'react'
 import Highlight, { defaultProps } from 'prism-react-renderer'
 import theme from 'prism-react-renderer/themes/github'
 import styles from './index.less'
@@ -56,7 +56,7 @@ const HighlightCode: FC<props> = ({ code, language, backgroundColor, deleteEndEm
 
     return (
         <Highlight {...defaultProps} code={trueCode} language={language || 'jsx'} theme={theme}>
-            {({ style, tokens, getLineProps, getTokenProps }): JSX.Element => (
+            {({ style, tokens, getLineProps, getTokenProps }): ReactElement => (
                 <div className={styles['pre']} style={getStyle(style)}>
                     <code className={styles['code']}>
                         {tokens.map((line, i) => (

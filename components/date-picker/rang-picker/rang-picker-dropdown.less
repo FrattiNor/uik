@@ -1,10 +1,6 @@
 @import '../../_style/theme.less';
 
 .uik-rang-picker {
-    font-size: @font-size-middle;
-    color: @font-color;
-    display: inline-block;
-
     &-title {
         border-bottom: @border-width solid @border-color;
         height: 35px;
@@ -53,6 +49,10 @@
                     color: @primary-color;
                 }
             }
+        }
+
+        &-text + .uik-rang-picker-title-text {
+            margin-left: 5px;
         }
 
         &-icon {

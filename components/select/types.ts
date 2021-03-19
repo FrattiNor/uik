@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { CSSProperties } from 'react'
+import { CSSProperties, ReactElement } from 'react'
 
 export type selectProps = {
     value?: string | string[]
@@ -38,6 +38,6 @@ export type optionProps = {
     isShow?: boolean
     className?: string
     style?: CSSProperties
-    label?: JSX.Element | string | number // 需要show的内容，无则直接取children
+    label?: ReactElement | string | number // 需要show的内容，无则直接取children
     checkBoxItem?: boolean
 }

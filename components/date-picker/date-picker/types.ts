@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 
 import { Dayjs } from 'dayjs'
+import { pickerDropdownPropsToOut, wrapperProps } from '../dropdown-box/types'
 
 // 组件外部的值
 export type pickerValueOutter = Dayjs | string | null
@@ -24,12 +25,13 @@ export type datePickerProps = {
     onChange?: (value: pickerValueOutter) => void
     valueType?: 'Dayjs' | 'string'
     textBefore?: string
-} & datePickInputProps<string>
+    visible?: boolean
+    onVisibleChange?: (visible?: boolean) => void
+} & wrapperProps &
+    datePickInputProps<string>
 
 export type datePickerDropdownProps = {
     disabledDate?: (currentDate: Dayjs) => boolean
     selectedDay: pickerValueInner
     dateClick: (days: Dayjs) => void
-    onEmptyClick: () => void
-    target: HTMLElement | null
-}
+} & pickerDropdownPropsToOut

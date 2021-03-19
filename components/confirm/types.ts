@@ -1,8 +1,8 @@
-import { MouseEventHandler } from 'react'
+import { MouseEventHandler, ReactElement } from 'react'
 import { buttonProps } from '../button/types'
 
 export type confirmProps = {
-    content: string | JSX.Element
+    content: string | ReactElement
     okBtnText?: string
     cancelBtnText?: string
     okBtnProps?: buttonProps

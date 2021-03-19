@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
-
 import { Dayjs } from 'dayjs'
 import { pickerValueOutter, pickerValueInner, datePickInputProps } from '../date-picker/types'
+import { pickerDropdownPropsToOut, wrapperProps } from '../dropdown-box/types'
 
 export { pickerValueOutter, pickerValueInner }
 export type rangPickerValueOutter = [pickerValueOutter, pickerValueOutter]
@@ -18,12 +18,13 @@ export type rangPickerProps = {
     onChange?: (value: rangPickerValueOutter) => void
     valueType?: 'Dayjs' | 'string'
     textBefore?: string
-} & datePickInputProps<[string, string]>
+    visible?: boolean
+    onVisibleChange?: (visible?: boolean) => void
+} & wrapperProps &
+    datePickInputProps<[string, string]>
 
 export type rangPickerDropdownProps = {
     disabledDate?: (currentDate: Dayjs) => boolean
     selectedDays: rangPickerValueInner
     dateClick: (days: Dayjs) => void
-    onEmptyClick: () => void
-    target: HTMLElement | null
-}
+} & pickerDropdownPropsToOut

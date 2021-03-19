@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, ReactElement } from 'react'
 import classnames from 'classnames'
 import { MDXProvider } from '@mdx-js/react'
 import CodeBlock from '@/components/code-block'
@@ -14,7 +14,7 @@ type props = {
 const FormatMarkDown: FC<props> = ({ children, className, formatCode = true, ...rest }) => {
     // 代码高亮
     const components = {
-        code: ({ children }: { children: string }): JSX.Element => {
+        code: ({ children }: { children: string }): ReactElement => {
             return <CodeBlock code={children} deleteEndEmptyLine />
         }
     }

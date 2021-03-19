@@ -1,8 +1,9 @@
 /* eslint-disable no-unused-vars */
+import { ReactElement } from 'react'
 
 export type messageType = 'success' | 'error' | 'warn' | 'info' | 'default'
 export type messagePosition = 'topLeft' | 'topCenter' | 'topRight' | 'bottomLeft' | 'bottomCenter' | 'bottomRight'
-export type messageTitle = string | JSX.Element
+export type messageTitle = string | ReactElement
 
 export type messageConfig = {
     duration: number
@@ -26,7 +27,7 @@ export type messagePropsAndOptions = {
     id?: string
     duration?: number
     showClose?: boolean
-    desc?: string | JSX.Element
+    desc?: string | ReactElement
     width?: number
 }
 

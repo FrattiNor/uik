@@ -1,3 +1,5 @@
+import { ReactElement } from 'react'
+
 export type tooltipProps = {
-    title: string | JSX.Element
+    title: string | ReactElement
 }

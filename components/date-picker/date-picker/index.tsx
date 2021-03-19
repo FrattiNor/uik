@@ -4,7 +4,7 @@ import dayjs, { Dayjs } from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
 import DatePickerDropdown from './date-picker-dropdown'
 import { datePickerProps, pickerValueOutter, pickerValueInner } from './types'
-import { useEffectAfterFirst } from '../../_hooks'
+import { useEffectAfterFirst, useHalfControlled } from '../../_hooks'
 import Icon from '../../icon'
 import './index.less'
 
@@ -26,6 +26,8 @@ const DatePicker: FC<datePickerProps> = (props) => {
         placeholder = '请选择日期',
         disabledDate: outDisabledDate,
         textBefore,
+        visible: outVisible,
+        onVisibleChange,
         ...restProps
     } = props
 
@@ -43,7 +45,7 @@ const DatePicker: FC<datePickerProps> = (props) => {
     // 处理输出的value
     const handleOutValue = (day: pickerValueInner) => (valueType === 'string' ? (day ? day.format(formatText) : '') : day)
 
-    const [visible, setVisible] = useState(false)
+    const [visible, setVisible] = useHalfControlled(outVisible, onVisibleChange, false, 'boolean')
 
     // 选中的 date dayjs对象
     const [virtualSelectedDay, setVirtualSelectedDay] = useState(defaultValue ? hanleInValue(defaultValue) : null)

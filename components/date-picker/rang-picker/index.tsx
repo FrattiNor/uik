@@ -4,7 +4,7 @@ import dayjs, { Dayjs } from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
 import Icon from '../../icon'
 import RangPickerDropDown from './rang-picker-dropdown'
-import { useDebounce, useEffectAfterFirst } from '../../_hooks'
+import { useDebounce, useEffectAfterFirst, useHalfControlled } from '../../_hooks'
 import { rangPickerProps, rangPickerValueInner, rangPickerValueOutter, inputType, flowType, pickerValueOutter } from './types'
 import { flowObj, compareDays, dayToZero } from './util'
 import './index.less'
@@ -27,6 +27,8 @@ const RangPicker: FC<rangPickerProps> = (props) => {
         placeholder = [],
         disabledDate: outDisabledDate,
         textBefore,
+        visible: outVisible,
+        onVisibleChange,
         ...restProps
     } = props
 
@@ -53,7 +55,7 @@ const RangPicker: FC<rangPickerProps> = (props) => {
         }
     }
     // 窗口开关
-    const [visible, setVisible] = useState(false)
+    const [visible, setVisible] = useHalfControlled(outVisible, onVisibleChange, false, 'boolean')
     // 传入值的type类型
     const valueType = outValueType ? outValueType : typeof (outValue || defaultValue)[0] === 'string' ? 'string' : 'Dayjs'
     // 处理传入的值
@@ -311,7 +313,7 @@ const RangPicker: FC<rangPickerProps> = (props) => {
 
     // 通过别的手段离开组件，Tab等，从focus情况可以了解到
     useEffectAfterFirst(() => {
-        if(!focusInput) {
+        if (!focusInput) {
             close()
         }
     }, [focusInput])
