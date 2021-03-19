@@ -16,6 +16,10 @@ const FormatMarkDown: FC<props> = ({ children, className, formatCode = true, ...
     const components = {
         code: ({ children }: { children: string }): ReactElement => {
             return <CodeBlock code={children} deleteEndEmptyLine />
+        },
+        h2: ({ children }: { children: string }): ReactElement => {
+            const id = typeof children === 'string' ? children.replace(/\s/, '') : Math.random().toString()
+            return <h2 id={id}>{children}</h2>
         }
     }
 

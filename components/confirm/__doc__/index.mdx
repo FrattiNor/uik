@@ -1,5 +1,6 @@
 import CodeBox from '@/components/code-box'
 import CodeWrapper from '@/components/code-wrapper'
+import ALink from '@/components/a-link'
 
 import DemoNormal from './demo-normal'
 import descNormal from './demo-normal/desc.md'
@@ -46,30 +47,4 @@ import codePosition from '!raw-loader!./demo-position'
 
 ## 通用 API
 
-<div className="api">
-
-| 属性                  | 说明                                                     | 类型                                                                                                                                                           | 默认值    | 版本 |
-| :-------------------- | :------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------- | :-------- | :--- |
-| position              | 定位                                                     | topLeft \| topCenter \| topRight \| bottomLeft \| bottomCenter \| bottomRight \| leftTop \| leftCenter \| leftBottom \| rightTop \| rightCenter \| rightBottom | topCenter | -    |
-| visible               | 是否可见                                                 | boolean                                                                                                                                                        | false     | -    |
-| onVisibleChange       | trigger 触发的 visible 改变的回调                        | (visible) => void                                                                                                                                              | -         | -    |
-| containerZIndex       | 容器的 zIndex， 用于和其他悬浮内容比较层次               | number                                                                                                                                                         | -         | -    |
-| rootId                | 挂载容器 id                                              | string                                                                                                                                                         | -         | -    |
-| getRoot               | 获取挂载的容器（用于 ref 获取 dom）（优先级高于 rootId） | () => HTMLElement \| null                                                                                                                                      | body      | -    |
-| trigger               | 不设置 visible 时，设置触发 visible 的方式               | hover \| focus \| click                                                                                                                                        | click     | -    |
-| autoAdjust            | 自动调整 Confirm 位置不被遮挡                            | boolean                                                                                                                                                        | false     | -    |
-| disabled              | 阻止 trigger 触发 visible 修改                           | boolean                                                                                                                                                        | false     | -    |
-| popSameWidth          | 弹出层最小宽度和触发元素的宽度一致                       | boolean                                                                                                                                                        | false     | -    |
-| overlayStyle          | 弹出层的样式                                             | CSSProperties                                                                                                                                                  | -         | -    |
-| overlayClass          | 弹出层的样式                                             | string                                                                                                                                                         | -         | -    |
-| updatePositionDepends | 触发重新获取定位的依赖属性                               | any[]                                                                                                                                                          | -         | -    |
-
-</div>
-
-## 注意
-
-请确保 `子元素` 能接受 `onMouseEnter`、`onMouseLeave`、`onFocus`、`onBlur`, `onClick` 事件。
-
-请确保 `挂载容器` 的定位存在（不存在定位，不会跟随滑动）
-
-`挂载容器` 确定后不可更改
+<ALink pathname="/uik/tooltip" hash="srcoll_通用API">通用API详见Tooltip页</ALink>
