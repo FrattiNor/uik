@@ -124,7 +124,7 @@ const DatePickerDropdown: FC<datePickerDropdownProps & noticeProps> = (props) =>
         <div className="uik-date-picker" ref={datePickRef}>
             <div className="uik-date-picker-title">
                 <span>
-                    <Icon className="uik-date-picker-title-icon" onClick={prevYear} defaultIcon name="arrow-double-left" />
+                    <Icon className="uik-date-picker-title-icon" onClick={prevYear} defaultIcon name="double-arrow-left" />
                     {page === 'date' && <Icon className="uik-date-picker-title-icon" onClick={prevMonth} defaultIcon name="arrow-left" />}
                 </span>
                 <span>
@@ -147,7 +147,7 @@ const DatePickerDropdown: FC<datePickerDropdownProps & noticeProps> = (props) =>
                 </span>
                 <span>
                     {page === 'date' && <Icon className="uik-date-picker-title-icon" onClick={nextMonth} defaultIcon name="arrow-right" />}
-                    <Icon className="uik-date-picker-title-icon" onClick={nextYear} defaultIcon name="arrow-double-right" />
+                    <Icon className="uik-date-picker-title-icon" onClick={nextYear} defaultIcon name="double-arrow-right" />
                 </span>
             </div>
             <div className="uik-date-picker-content">

@@ -130,7 +130,7 @@ const DatePickerDropdown: FC<rangPickerDropdownProps & noticeProps> = (props) =>
         <div className="uik-rang-picker" ref={datePickRef}>
             <div className="uik-rang-picker-title">
                 <span className="uik-rang-picker-title-left">
-                    <Icon className="uik-rang-picker-title-icon" onClick={prevYear} defaultIcon name="arrow-double-left" />
+                    <Icon className="uik-rang-picker-title-icon" onClick={prevYear} defaultIcon name="double-arrow-left" />
                     {page === 'date' && <Icon className="uik-rang-picker-title-icon" onClick={prevMonth} defaultIcon name="arrow-left" />}
                 </span>
                 <span className={classnames('uik-rang-picker-title-center', [`${page}`])}>
@@ -163,7 +163,7 @@ const DatePickerDropdown: FC<rangPickerDropdownProps & noticeProps> = (props) =>
                 </span>
                 <span className="uik-rang-picker-title-right">
                     {page === 'date' && <Icon className="uik-rang-picker-title-icon" onClick={nextMonth} defaultIcon name="arrow-right" />}
-                    <Icon className="uik-rang-picker-title-icon" onClick={nextYear} defaultIcon name="arrow-double-right" />
+                    <Icon className="uik-rang-picker-title-icon" onClick={nextYear} defaultIcon name="double-arrow-right" />
                 </span>
             </div>
             <div className="uik-rang-picker-content">
