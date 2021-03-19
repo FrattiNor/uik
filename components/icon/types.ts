@@ -1,20 +1,18 @@
 /* eslint-disable no-unused-vars */
-import { HTMLAttributes, MouseEvent } from 'react'
+import { CSSProperties, HTMLAttributes, MouseEvent } from 'react'
 
 export type iconProps = {
     name: string
     defaultIcon?: boolean
-} & HTMLAttributes<HTMLElement>
+} & HTMLAttributes<HTMLOrSVGElement>
 
 export type iconConfig = {
-    fontFamily: string
-    classPrefix: string
+    prefix: string
     url: string
 }
 
 export type newIconConfig = {
-    fontFamily: string
-    classPrefix: string
+    prefix: string
     url?: string
 }
 
@@ -24,9 +22,11 @@ export type closeIconProps = {
     circle?: boolean
     danger?: boolean
     visible?: boolean
-    size?: uikSize
+    size?: number
     className?: string
+    style?: CSSProperties
     onClick?: (e: MouseEvent<HTMLElement>) => void
-    defaultIconProps?: { name?: string; size?: uikSize; className?: string }
+    defaultIconProps?: { name?: string; size?: number; className?: string; style?: CSSProperties }
     wrapperClassName?: string
+    wrapperStyle?: CSSProperties
 }

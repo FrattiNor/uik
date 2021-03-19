@@ -2,6 +2,7 @@ import React, { ForwardRefRenderFunction, useRef, forwardRef } from 'react'
 import classnames from 'classnames'
 import { iconProps } from './types'
 import { _iconConfig } from './config'
+import './iconfont.js'
 import './icon.less'
 
 // icon 组件
@@ -9,19 +10,14 @@ const Icon: ForwardRefRenderFunction<unknown, iconProps> = (props, ref) => {
     const componentRef = useRef<HTMLElement>(null)
     const iconRef = (ref as any) || componentRef
 
-    const { name = '', className, style = {}, defaultIcon = false, ...restProps } = props
-    const { fontFamily, classPrefix } = _iconConfig
-    const trueFontFamily = defaultIcon ? 'uik-iconfont' : fontFamily
-    const trueClassPrefix = defaultIcon ? 'uik-icon-' : classPrefix
-    const iconStyle = { fontFamily: trueFontFamily, ...style }
+    const { name = '', className, defaultIcon = false, ...restProps } = props
+    const { prefix } = _iconConfig
+    const truePrefix = defaultIcon ? 'uik-icon-' : prefix
 
     return (
-        <i
-            ref={iconRef}
-            className={classnames(`uik-iconfont ${trueClassPrefix}${name}`, { [`${className}`]: className })}
-            style={iconStyle}
-            {...restProps}
-        />
+        <svg ref={iconRef} className={classnames(`uik-icon`, className)} aria-hidden="true" {...restProps}>
+            <use xlinkHref={`#${truePrefix}${name}`}></use>
+        </svg>
     )
 }
 

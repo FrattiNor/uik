@@ -1,22 +1,21 @@
 import { iconConfig, newIconConfig } from './types'
 
 let _iconConfig: iconConfig = {
-    fontFamily: '',
-    classPrefix: '',
+    prefix: '',
     url: ''
 }
 
 // 获取icon的css
-const getIconCss = (url: string): void => {
-    const id = 'uik-icon-css'
-    const style = document.getElementById(id)
-    if (!style) {
-        const newStyle = document.createElement('style')
-        newStyle.setAttribute('id', id)
-        newStyle.innerText = `@import url(${url});`
-        document.head.append(newStyle)
+const getIconJS = (url: string): void => {
+    const id = 'uik-icon-js'
+    const script = document.getElementById(id)
+    if (!script) {
+        const newScript = document.createElement('script')
+        newScript.setAttribute('id', id)
+        newScript.setAttribute('src', url)
+        document.head.append(newScript)
     } else {
-        style.innerText = `@import url(${url});`
+        script.setAttribute('src', url)
     }
 }
 
@@ -24,7 +23,7 @@ const getIconCss = (url: string): void => {
 const config = (newConfig: newIconConfig): void => {
     _iconConfig = { ..._iconConfig, ...newConfig }
     if (newConfig.url) {
-        getIconCss(newConfig.url)
+        getIconJS(newConfig.url)
     }
 }
 

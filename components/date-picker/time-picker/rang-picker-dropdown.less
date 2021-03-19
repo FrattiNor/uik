@@ -1,0 +1,80 @@
+@import '../../_style/theme.less';
+
+.uik-rang-picker {
+    font-size: @font-size-middle;
+    color: @font-color;
+    display: inline-block;
+
+    &-title {
+        border-bottom: @border-width solid @border-color;
+        height: 35px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0 10px;
+        position: relative;
+
+        &-left {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            left: 15px;
+        }
+        &-right {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            right: 15px;
+        }
+
+        &-center.date {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-grow: 1;
+
+            .uik-rang-picker-title-date {
+                width: 245px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+        }
+
+        &-text {
+            user-select: none;
+            font-weight: bold;
+
+            &.click {
+                transition: color 0.3s;
+                cursor: pointer;
+
+                &:hover {
+                    color: @primary-color;
+                }
+            }
+        }
+
+        &-icon {
+            color: @font-color-notice;
+            cursor: pointer;
+            transition: color 0.3s;
+            font-size: 12px;
+
+            &:hover {
+                color: @font-color;
+            }
+        }
+    }
+
+    &-content {
+        padding: 10px;
+
+        &-date {
+            width: calc(~'35px * 14 + 20px');
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+    }
+}

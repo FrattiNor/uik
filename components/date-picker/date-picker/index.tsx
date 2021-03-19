@@ -187,9 +187,9 @@ const DatePicker: FC<datePickerProps> = (props) => {
                     placeholder={placeholder}
                 />
                 <CloseIcon
-                    defaultIconProps={{ name: 'date', size: 'middle', className: 'uik-date-picker-icon' }}
+                    defaultIconProps={{ name: 'date', size: 14, className: 'uik-date-picker-icon' }}
                     circle
-                    size="small"
+                    size={12}
                     onClick={inputClear}
                     wrapperClassName={classnames('uik-date-picker-close')}
                     visible={allowClearShow}

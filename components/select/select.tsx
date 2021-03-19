@@ -79,7 +79,7 @@ const Select: FC<selectProps> = (props) => {
                         key: child.key || index,
                         selected,
                         onClick: itemClick,
-                        checkBoxItem,
+                        checkBoxItem
                     })
                 } else {
                     return null
@@ -131,8 +131,8 @@ const Select: FC<selectProps> = (props) => {
                             <div key={v} className={classnames('uik-select-multiple-item', [`${size}`], { disabled })}>
                                 <span>{getItem(v)}</span>
                                 <CloseIcon
-                                    size="small"
-                                    className="uik-select-multiple-item-close"
+                                    size={12}
+                                    wrapperClassName="uik-select-multiple-item-close"
                                     onClick={(e) => {
                                         e.stopPropagation()
                                         deleteItem(v)
@@ -198,10 +198,10 @@ const Select: FC<selectProps> = (props) => {
                 <CloseIcon
                     visible={allowClearShow}
                     circle
-                    size="small"
+                    size={12}
                     wrapperClassName="uik-select-close"
                     onClick={onClear}
-                    defaultIconProps={{ name: 'arrow-down', size: 'small', className: classnames('uik-select-arrow', { open: visible }) }}
+                    defaultIconProps={{ name: 'arrow-down', size: 12, className: classnames('uik-select-arrow', { open: visible }) }}
                 />
             </label>
         </SelectDropdown>

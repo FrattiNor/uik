@@ -100,8 +100,8 @@ const Input: ForwardRefRenderFunction<unknown, inputProps> = (props, ref) => {
                 <CloseIcon
                     visible={!!value && allowClear && !disabled}
                     circle
-                    size="small"
-                    className={classnames('uik-input-content-close')}
+                    size={12}
+                    wrapperClassName={classnames('uik-input-content-close')}
                     onClick={onClear}
                 />
             </span>

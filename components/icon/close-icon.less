@@ -1,49 +1,58 @@
 @import '../_style/theme.less';
 
-.uik-close-icon-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    // icon有点飘，向下移动1px
-    transform: translateY(1px);
-}
+.uik-close-icon {
+    &-wrapper {
+        position: relative;
+        font-size: @font-size-middle;
+        width: 1em;
+        height: 1em;
+    }
 
-.uik {
-    &-close-icon {
-        cursor: pointer;
-        color: @disabled-color;
-        transition: color 0.3s, opacity 0.3s;
+    .center {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 1em;
+        height: 1em;
+        line-height: 1em;
+    }
 
-        &:hover {
-            color: fade(@font-color, 60);
-        }
+    &-conetnt {
+        .center();
 
-        &.danger {
+        .uik-close-icon {
+            cursor: pointer;
+            color: @disabled-color;
+            transition: color 0.3s;
+            animation: fadeIn 0.2s ease-in forwards;
+
             &:hover {
-                color: @danger-color;
+                color: fade(@font-color, 60);
             }
-        }
 
-        &.small {
-            font-size: @font-size-small;
-        }
-        &.middle {
-            font-size: @font-size-middle;
-        }
-        &.large {
-            font-size: @font-size-large;
+            &.danger {
+                &:hover {
+                    color: @danger-color;
+                }
+            }
         }
     }
 
-    &-close-default-icon {
-        &.small {
-            font-size: @font-size-small;
+    &-default {
+        .center();
+
+        .uik-close-default-icon {
+            display: inline-block;
         }
-        &.middle {
-            font-size: @font-size-middle;
-        }
-        &.large {
-            font-size: @font-size-large;
-        }
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0.3;
+    }
+    100% {
+        opacity: 1;
     }
 }

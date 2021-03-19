@@ -35,10 +35,15 @@ import codeIcon from '!raw-loader!./demo-icon'
 
 <div className="api">
 
-| 属性        | 说明                                     | 类型   | 默认值 | 版本 |
-| :---------- | :--------------------------------------- | :----- | :----- | :--- |
-| fontFamily  | iconfont 的 css 属性 font-family         | string | -      | -    |
-| classPrefix | iconfont 的 icon-name 的前缀             | string | -      | -    |
-| url         | iconfont 的 css 链接（可不填，自己引入） | string | -      | -    |
+| 属性   | 说明                                    | 类型   | 默认值 | 版本 |
+| :----- | :-------------------------------------- | :----- | :----- | :--- |
+| prefix | iconfont 的 icon-name 的前缀            | string | -      | -    |
+| url    | iconfont 的 js 链接（可不填，自己引入） | string | -      | -    |
 
 </div>
+
+
+## 注意
+
+请确保导入的 `iconfont.js` 文件的 `<svg>` 元素不存在 `fill` 属性，不然会导致设置的 `color` 样式失效。
+建议使用正则匹配 `/fill="#([0-9]|[a-z]|[A-Z])+"/` 替换为空字符串
