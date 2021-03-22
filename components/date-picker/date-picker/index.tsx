@@ -4,7 +4,7 @@ import dayjs, { Dayjs } from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
 import DatePickerDropdown from './date-picker-dropdown'
 import { datePickerProps, pickerValueOutter, pickerValueInner } from './types'
-import { useEffectAfterFirst, useHalfControlled } from '../../_hooks'
+import { useHalfControlled } from '../../_hooks'
 import Icon from '../../icon'
 import './index.less'
 
@@ -18,6 +18,7 @@ const DatePicker: FC<datePickerProps> = (props) => {
         defaultValue = null,
         onChange: outOnChange,
         format: formatText = 'YYYY-MM-DD',
+        inputFormat =  ['YYYY-MM-DD', 'YYYY-M-DD', 'YYYY-MM-D', 'YYYY-M-D'],
         allowClear,
         disabled,
         size = 'middle',
@@ -56,7 +57,11 @@ const DatePicker: FC<datePickerProps> = (props) => {
 
     const [inputValue, setInputValue] = useState(showText)
 
-    const [flashTextFlag, flashText] = useState(true)
+    const setValueAndText = (v: pickerValueInner, needSetText?: boolean) => {
+        setVirtualSelectedDay(v)
+        const setText = typeof needSetText === 'boolean' ? needSetText : true
+        if (setText) setInputValue(v ? v.format(formatText) : '')
+    }
 
     const judgeSame = (item1: pickerValueOutter, item2: pickerValueOutter | undefined) => {
         if (valueType === 'string') {
@@ -66,25 +71,22 @@ const DatePicker: FC<datePickerProps> = (props) => {
         }
     }
 
-    const onChange = (day: pickerValueInner) => {
-        setVirtualSelectedDay(day)
+    const onChange = (day: pickerValueInner, needSetText?: boolean) => {
+        setValueAndText(day, needSetText)
         if (outOnChange) {
             const newDay = handleOutValue(day)
             if (!judgeSame(newDay, outValue)) {
                 outOnChange(newDay)
             }
         }
-        // onchange 一定要重置一下inputValue，不然存在以下情况
-        // 设置了固定value，但未设置outOnChange，固定情况，需要重置inputValue
-        flashText(!flashTextFlag)
     }
 
     const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
         const newInputValue = e.target.value
-        const inputDay = dayjs(newInputValue, formatText, true)
+        const inputDay = dayjs(newInputValue, [formatText, ...inputFormat], true)
         setInputValue(newInputValue)
         if (inputDay.isValid()) {
-            onChange(inputDay)
+            onChange(inputDay, false)
         }
     }
 
@@ -95,6 +97,7 @@ const DatePicker: FC<datePickerProps> = (props) => {
         return false
     }
 
+    // 结束
     const close = (day?: pickerValueInner) => {
         setVisible(false)
         const theDay = day || selectedDay
@@ -102,22 +105,16 @@ const DatePicker: FC<datePickerProps> = (props) => {
         setTimeout(() => inputRef.current?.blur())
     }
 
-    // 通过非date点击事件关闭
-    const onNotDateClickToClose = () => {
-        const inputDay = dayjs(inputValue, [formatText, 'YYYY-MM-DD', 'YYYY-M-DD', 'YYYY-MM-D', 'YYYY-M-D'], true)
-        if (inputDay.isValid()) {
-            close(inputDay)
-        } else {
-            close(null)
-        }
+    // 开启
+    const onInputFocus = () => {
+        setVisible(true)
     }
 
-    // 3种控制 visible
     // 按键事件 通过回车关闭啊
     const onInputKeyUp = (e: KeyboardEvent<HTMLInputElement>) => {
         if (e.code === 'Enter') {
             if (visible) {
-                onNotDateClickToClose()
+                close()
             }
         }
     }
@@ -127,21 +124,9 @@ const DatePicker: FC<datePickerProps> = (props) => {
         close(day)
     }
 
-    // 点击空白区域关闭
-    const onEmptyClick = () => {
-        // 之前是打开的情况
-        if (visible) {
-            onNotDateClickToClose()
-        }
-    }
-
-    const onInputFocus = () => {
-        setVisible(true)
-    }
-
-    // 通过别的手段离开组件，Tab等，从focus情况可以了解到
+    // 失去焦点
     const onInputBlur = () => {
-        onNotDateClickToClose()
+        close()
     }
 
     const inputClear = (e: MouseEvent<HTMLElement>) => {
@@ -150,18 +135,11 @@ const DatePicker: FC<datePickerProps> = (props) => {
         onChange(null)
     }
 
-    useEffectAfterFirst(() => {
-        if (showText !== inputValue) {
-            setInputValue(showText)
-        }
-    }, [showText, flashTextFlag])
-
     const allowClearShow = !!(allowClear && !disabled && selectedDay && hover)
 
     return (
         <DatePickerDropdown
             visible={visible}
-            onEmptyClick={onEmptyClick}
             dateClick={dateClick}
             disabledDate={disabledDate}
             autoAdjust

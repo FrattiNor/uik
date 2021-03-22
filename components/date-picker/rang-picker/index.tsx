@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { FC, useState, useRef, MouseEvent, useEffect, ChangeEvent, KeyboardEvent } from 'react'
 import classnames from 'classnames'
 import dayjs, { Dayjs } from 'dayjs'
@@ -5,13 +6,14 @@ import customParseFormat from 'dayjs/plugin/customParseFormat'
 import Icon from '../../icon'
 import RangPickerDropDown from './rang-picker-dropdown'
 import { useDebounce, useEffectAfterFirst, useHalfControlled } from '../../_hooks'
-import { rangPickerProps, rangPickerValueInner, rangPickerValueOutter, inputType, flowType, pickerValueOutter } from './types'
+import { rangPickerProps, rangPickerValueInner, rangPickerValueOutter, inputType, flowType, pickerValueOutter, pickerValueInner } from './types'
 import { flowObj, compareDays, dayToZero } from './util'
 import './index.less'
 
 const RangPicker: FC<rangPickerProps> = (props) => {
     const { CloseIcon } = Icon
     dayjs.extend(customParseFormat)
+    const timeout = useRef<number | null>(null)
 
     const {
         valueType: outValueType,
@@ -19,6 +21,7 @@ const RangPicker: FC<rangPickerProps> = (props) => {
         defaultValue = [null, null],
         onChange: outOnChange,
         format: formatText = 'YYYY-MM-DD',
+        inputFormat = ['YYYY-MM-DD', 'YYYY-M-DD', 'YYYY-MM-D', 'YYYY-M-D'],
         allowClear,
         disabled,
         size = 'middle',
@@ -32,19 +35,58 @@ const RangPicker: FC<rangPickerProps> = (props) => {
         ...restProps
     } = props
 
-    const textBeforeText = textBefore ? <span className={classnames('uik-rang-picker-text-before')}>{textBefore}</span> : ''
-    // input的ref
-    const rangPickerRef = useRef<HTMLLabelElement>(null)
-    const startDom = useRef<HTMLInputElement>(null)
-    const endDom = useRef<HTMLInputElement>(null)
-    // input的focus选中的值，控制底部样式
-    const [hover, setHover] = useState(false)
-    const [focusInput, setFocusInput] = useState<inputType | ''>('')
-    const inputBottomStyle = () => {
-        if (!focusInput) {
+    // === utils === //
+    // 处理传入的值
+    const handleToOutter = (days: rangPickerValueInner) => {
+        return (valueType === 'string' ? days.map((item) => (item ? item.format(formatText) : '')) : days) as rangPickerValueOutter
+    }
+    // 处理传出的值
+    const handleToInner = (days: rangPickerValueOutter): rangPickerValueInner => {
+        const innerValue = (valueType === 'string'
+            ? days.map((item) => (item ? dayjs(item as string, formatText) : null))
+            : days.map((item) => (item ? dayjs(item as Dayjs) : null))) as rangPickerValueInner
+
+        if (innerValue[0] && innerValue[1] && innerValue[0].valueOf() <= innerValue[1].valueOf()) {
+            return innerValue
+        } else {
+            return [null, null]
+        }
+    }
+    // 使用value格式化的input值
+    const getTextFromValue = (v: pickerValueInner) => (v ? v.format(formatText) : '')
+    // 防抖改变focus状态（start ）
+    const changeFocus = useDebounce((type: inputType | '') => {
+        setFocusType(type)
+    }, 50)
+    // 设置value，并且设置text
+    const setValueAndText = ([value0, value1]: rangPickerValueInner) => {
+        setValue([value0, value1])
+        setInputText([getTextFromValue(value0), getTextFromValue(value1)])
+    }
+    // 判断是否一致
+    const judgeSame = (item1: pickerValueOutter, item2: pickerValueOutter | undefined) => {
+        if (valueType === 'string') {
+            return item1 === item2
+        } else {
+            return (item1 as Dayjs)?.format(formatText) === (item2 as Dayjs)?.format(formatText)
+        }
+    }
+    // 修改Input状态
+    const changeInputFocusStatus = (type: inputType, status: 'focus' | 'blur') => {
+        const domObj = {
+            start: startDom,
+            end: endDom
+        }
+        timeout.current = setTimeout(() => {
+            domObj[type]?.current?.[status]()
+        })
+    }
+    // 根据focus状态修改样式
+    const getInputBottomStyle = () => {
+        if (!focusType) {
             return { opacity: 0 }
         } else {
-            switch (focusInput) {
+            switch (focusType) {
                 case 'start':
                     return { left: startDom.current?.offsetLeft, width: startDom.current?.clientWidth, opacity: 1 }
                 case 'end':
@@ -54,51 +96,22 @@ const RangPicker: FC<rangPickerProps> = (props) => {
             }
         }
     }
-    // 窗口开关
-    const [visible, setVisible] = useHalfControlled(outVisible, onVisibleChange, false, 'boolean')
-    // 传入值的type类型
-    const valueType = outValueType ? outValueType : typeof (outValue || defaultValue)[0] === 'string' ? 'string' : 'Dayjs'
-    // 处理传入的值
-    const handleToOutter = (days: rangPickerValueInner) => {
-        return (valueType === 'string' ? days.map((item) => (item ? item.format(formatText) : '')) : days) as rangPickerValueOutter
-    }
-    // 处理传出的值
-    const handleToInner = (days: rangPickerValueOutter) => {
-        return (valueType === 'string'
-            ? days.map((item) => (item ? dayjs(item as string, formatText) : null))
-            : days.map((item) => (item ? dayjs(item as Dayjs) : null))) as rangPickerValueInner
-    }
-    // 处理好的defaultValue
-    const innerDefaultValue: rangPickerValueInner = handleToInner(defaultValue)
-    // 组件内部的value
-    const [value, setValue] = useState<rangPickerValueInner>(innerDefaultValue)
-    // 刷新value的值的flag
-    const [flashValueFlag, flashValue] = useState(false)
-    // 使用value格式化的input值
-    const startText = value[0] ? value[0].format(formatText) : ''
-    const endText = value[1] ? value[1].format(formatText) : ''
-    // input的值
-    const [inputText, setInputText] = useState<[string, string]>([startText, endText])
-    // 刷新input的值的flag
-    const [flashTextFlag, flashText] = useState(false)
-    // 将外部的value替换掉内部的value
-    const pushOutValueToValue = () => {
-        const innerValue: rangPickerValueInner = outValue ? handleToInner(outValue) : [null, null]
-        setValue(innerValue)
-    }
+    // === utils === //
+
+    // === flows === //
     // 工作流
     const [endFlow, setEndFlow] = useState<flowType[]>([])
     const [flow, setFlow] = useState<flowType[]>([])
     // 关闭工作流
     const closeFlow = () => {
         setFlow([])
-        setEndFlow([])
     }
     // 新创建流
     const newFlow = (type: inputType) => {
         setFlow((flowObj[type] || []) as flowType[])
         setEndFlow([])
     }
+
     // 返回上一步
     const returnBeforeStep = () => {
         const newFlow = [...flow]
@@ -119,79 +132,33 @@ const RangPicker: FC<rangPickerProps> = (props) => {
     }
     // 当前流程
     const step = flow[0] || false
+    // === flows === //
 
-    const judgeSame = (item1: pickerValueOutter, item2: pickerValueOutter | undefined) => {
-        if (valueType === 'string') {
-            return item1 === item2
-        } else {
-            return (item1 as Dayjs)?.format(formatText) === (item2 as Dayjs)?.format(formatText)
-        }
-    }
+    // === values === //
+    // date-picker的hover状态
+    const [hover, setHover] = useState(false)
+    // input的focus状态
+    const [focusType, setFocusType] = useState<inputType | ''>('')
+    // 窗口开关
+    const [visible, setVisible] = useHalfControlled(outVisible, onVisibleChange, false, 'boolean')
+    // 组件内部的value
+    const [value, setValue] = useState<rangPickerValueInner>(handleToInner(defaultValue))
+    // input的值
+    const [inputText, setInputText] = useState<[string, string]>([getTextFromValue(value[0]), getTextFromValue(value[1])])
+    //
+    const textBeforeText = textBefore ? <span className={classnames('uik-rang-picker-text-before')}>{textBefore}</span> : ''
+    // input的ref
+    const rangPickerRef = useRef<HTMLLabelElement>(null)
+    const startDom = useRef<HTMLInputElement>(null)
+    const endDom = useRef<HTMLInputElement>(null)
+    // 传入值的type类型
+    const valueType = outValueType ? outValueType : typeof (outValue || defaultValue)[0] === 'string' ? 'string' : 'Dayjs'
+    // clear显示
+    const allowClearShow = !!(allowClear && !disabled && value[0] && value[1] && hover)
+    const inputBottomStyle = getInputBottomStyle()
+    // === values === //
 
-    // 用于触发外界的onChange
-    const onChange = (days: rangPickerValueInner) => {
-        setValue(days)
-        if (outOnChange) {
-            const newDays = handleToOutter(days)
-            if (newDays.some((item, i) => !judgeSame(item, outValue?.[i]))) {
-                outOnChange(newDays)
-            }
-        }
-        // 如果没有onChange，需要把外部值重新赋值一次
-        flashValue(!flashValueFlag)
-    }
-
-    // 结速流程的标记，并关闭窗口
-    const close = (days?: rangPickerValueInner) => {
-        const theValue = days || value
-        setVisible(false)
-        setTimeout(() => endDom.current?.blur())
-        setTimeout(() => startDom.current?.blur())
-
-        if (step) {
-            closeFlow()
-        }
-
-        // 结束流程触发onChange
-        if (theValue[0] && theValue[1] && theValue[0].valueOf() < theValue[1].valueOf()) {
-            onChange(theValue)
-        } else {
-            onChange([null, null])
-        }
-        flashText(!flashTextFlag)
-    }
-
-    // 点击空白区域关闭
-    const onEmptyClick = () => {
-        if (visible) {
-            close()
-        }
-    }
-
-    // 日期点击事件
-    const dateClick = (day: Dayjs) => {
-        const newDay = dayToZero(day)
-        if (step === 'start1' || step === 'end2') {
-            setValue([newDay, value[1]])
-            if (step === 'start1') {
-                setTimeout(() => endDom.current?.focus())
-            }
-            if (step === 'end2') {
-                // 在函数内部调用函数，需要传入新的value，不然获取的一直是之前的value
-                close([newDay, value[1]])
-            }
-        }
-        if (step === 'end1' || step === 'start2') {
-            setValue([value[0], newDay])
-            if (step === 'end1') {
-                setTimeout(() => startDom.current?.focus())
-            }
-            if (step === 'start2') {
-                close([value[0], newDay])
-            }
-        }
-    }
-
+    // === functions === //
     // 禁用日期
     const disabledDate = (day: Dayjs) => {
         let res = false
@@ -208,51 +175,70 @@ const RangPicker: FC<rangPickerProps> = (props) => {
         return res || stepDisabledDate
     }
 
-    // 节流改变focus状态
-    const changeFocus = useDebounce((type: inputType | '') => {
-        setFocusInput(type)
-    }, 200)
-
-    // input的focus事件
-    const inputFocus = (type: inputType) => {
-        setVisible(true)
-        changeFocus(type)
-
-        if (!step) {
-            newFlow(type as inputType)
-        }
-        if ((step === 'start2' && type === 'start') || (step === 'end2' && type === 'end')) {
-            returnBeforeStep()
-        }
-        if (step === 'start1' && type === 'end') {
-            if (value[0]) {
-                toNextStep()
-            } else {
-                newFlow(type)
+    // 用于触发外界的onChange
+    const onChange = (days: rangPickerValueInner) => {
+        setValueAndText(days)
+        if (outOnChange) {
+            const newDays = handleToOutter(days)
+            if (newDays.some((item, i) => !judgeSame(item, outValue?.[i]))) {
+                outOnChange(newDays)
             }
-            // 为了刷新text
-            flashText(!flashTextFlag)
-        }
-        if (step === 'end1' && type === 'start') {
-            if (value[1]) {
-                toNextStep()
-            } else {
-                newFlow(type)
-            }
-            // 为了刷新text
-            flashText(!flashTextFlag)
         }
     }
 
-    // input的blur事件
-    const inputBlur = () => {
-        changeFocus('')
+    // 结速流程的标记，并关闭窗口
+    const close = (days?: rangPickerValueInner) => {
+        const theValue = days || value
+        setVisible(false)
+
+        if (step) {
+            closeFlow()
+        }
+
+        // 结束流程触发onChange
+        if (theValue[0] && theValue[1] && theValue[0].valueOf() < theValue[1].valueOf()) {
+            onChange(theValue)
+        } else {
+            onChange([null, null])
+        }
+    }
+
+    // 开启流程的标记
+    const open = (type: inputType) => {
+        setVisible(true)
+
+        if (!step) {
+            newFlow(type)
+        }
+    }
+
+    // 日期点击事件
+    const dateClick = (day: Dayjs) => {
+        const newDay = dayToZero(day)
+        if (step === 'start1' || step === 'end2') {
+            setValueAndText([newDay, value[1]])
+            if (step === 'start1') {
+                changeInputFocusStatus('end', 'focus')
+            }
+            if (step === 'end2') {
+                changeInputFocusStatus('start', 'blur')
+            }
+        }
+        if (step === 'end1' || step === 'start2') {
+            setValueAndText([value[0], newDay])
+            if (step === 'end1') {
+                changeInputFocusStatus('start', 'focus')
+            }
+            if (step === 'start2') {
+                changeInputFocusStatus('end', 'blur')
+            }
+        }
     }
 
     // input的change事件
     const inputChange = (e: ChangeEvent<HTMLInputElement>, type: inputType) => {
         const v = e.target.value
-        const inputDay = dayjs(v, formatText, true)
+        const inputDay = dayjs(v, [formatText, ...inputFormat], true)
         if (type === 'start') {
             if (inputDay.isValid()) {
                 setValue([inputDay, value[1]])
@@ -269,24 +255,21 @@ const RangPicker: FC<rangPickerProps> = (props) => {
 
     // input的keydown事件
     const inputKeyDown = (e: KeyboardEvent<HTMLInputElement>, type: inputType) => {
-        // if (e.code === 'Tab') e.preventDefault()
         if (e.code === 'Enter') {
-            // 如果没值就刷新一下text，不进行下一步
-            flashText(!flashTextFlag)
             if (type === 'start' && value[0]) {
                 if (step === 'start1') {
-                    setTimeout(() => endDom.current?.focus())
+                    changeInputFocusStatus('end', 'focus')
                 }
                 if (step === 'end2') {
-                    close()
+                    changeInputFocusStatus('start', 'blur')
                 }
             }
             if (type === 'end' && value[1]) {
                 if (step === 'start2') {
-                    close()
+                    changeInputFocusStatus('end', 'blur')
                 }
                 if (step === 'end1') {
-                    setTimeout(() => startDom.current?.focus())
+                    changeInputFocusStatus('start', 'focus')
                 }
             }
         }
@@ -299,31 +282,66 @@ const RangPicker: FC<rangPickerProps> = (props) => {
         close([null, null])
     }
 
-    // 外部value改变替换内部value
-    useEffect(() => {
-        if (outValue) {
-            pushOutValueToValue()
+    // input blur 用于确认text是否正确
+    const inputBlur = (type: inputType) => {
+        changeFocus('')
+        if (type === 'start') {
+            const startText = getTextFromValue(value[0])
+            if (startText !== inputText[0]) {
+                setInputText([startText, inputText[1]])
+            }
         }
-    }, [outValue, flashValueFlag])
+        if (type === 'end') {
+            const endText = getTextFromValue(value[1])
+            if (endText !== inputText[1]) {
+                setInputText([inputText[0], endText])
+            }
+        }
+    }
+    // === functions === //
 
-    // 刷新input的值
-    useEffect(() => {
-        setInputText([startText, endText])
-    }, [startText, endText, flashTextFlag])
-
-    // 通过别的手段离开组件，Tab等，从focus情况可以了解到
+    // === effects === //
+    // 根据input的focus状态，修改流程
     useEffectAfterFirst(() => {
-        if (!focusInput) {
+        const type = focusType
+        if (type) {
+            open(type)
+            if ((step === 'start2' && type === 'start') || (step === 'end2' && type === 'end')) {
+                returnBeforeStep()
+            }
+            if (step === 'start1' && type === 'end') {
+                if (value[0]) {
+                    toNextStep()
+                } else {
+                    newFlow(type)
+                }
+            }
+            if (step === 'end1' && type === 'start') {
+                if (value[1]) {
+                    toNextStep()
+                } else {
+                    newFlow(type)
+                }
+            }
+        } else {
             close()
         }
-    }, [focusInput])
+    }, [focusType])
 
-    const allowClearShow = !!(allowClear && !disabled && value[0] && value[1] && hover)
+    //
+    useEffect(() => {
+        if (!step && outValue) {
+            setValueAndText(handleToInner(outValue))
+        }
+        if (!step && visible) {
+            newFlow('start')
+        }
+    }, [step, outValue, visible])
+    // === effects === //
 
     return (
         <RangPickerDropDown
             visible={visible}
-            onEmptyClick={onEmptyClick}
             dateClick={dateClick}
             disabledDate={disabledDate}
             autoAdjust
@@ -345,8 +363,8 @@ const RangPicker: FC<rangPickerProps> = (props) => {
                     disabled={disabled}
                     placeholder={placeholder[0] || '开始日期'}
                     className={classnames('uik-rang-picker-input', [`${size}`])}
-                    onBlur={inputBlur}
-                    onFocus={() => inputFocus('start')}
+                    onBlur={() => inputBlur('start')}
+                    onFocus={() => changeFocus('start')}
                     onChange={(e) => inputChange(e, 'start')}
                     onKeyDown={(e) => inputKeyDown(e, 'start')}
                 />
@@ -358,12 +376,12 @@ const RangPicker: FC<rangPickerProps> = (props) => {
                     disabled={disabled}
                     placeholder={placeholder[1] || '结束日期'}
                     className={classnames('uik-rang-picker-input', [`${size}`])}
-                    onBlur={inputBlur}
-                    onFocus={() => inputFocus('end')}
+                    onBlur={() => inputBlur('end')}
+                    onFocus={() => changeFocus('end')}
                     onChange={(e) => inputChange(e, 'end')}
                     onKeyDown={(e) => inputKeyDown(e, 'end')}
                 />
-                <span className="uik-rang-picker-input-bottom" style={inputBottomStyle()} />
+                <span className="uik-rang-picker-input-bottom" style={inputBottomStyle} />
                 <CloseIcon
                     defaultIconProps={{ name: 'date', size: 14, className: 'uik-rang-picker-icon' }}
                     circle

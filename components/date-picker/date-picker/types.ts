@@ -19,6 +19,7 @@ export type datePickInputProps<T> = {
 
 export type datePickerProps = {
     format?: string
+    inputFormat?: string[]
     disabledDate?: (currentDate: Dayjs | string) => boolean
     value?: pickerValueOutter
     defaultValue?: pickerValueOutter

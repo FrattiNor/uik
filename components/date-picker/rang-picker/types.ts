@@ -12,6 +12,7 @@ export type inputType = 'start' | 'end'
 
 export type rangPickerProps = {
     format?: string
+    inputFormat?: string[]
     disabledDate?: (currentDate: Dayjs | string) => boolean
     value?: rangPickerValueOutter
     defaultValue?: rangPickerValueOutter
