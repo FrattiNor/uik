@@ -19,7 +19,7 @@ const PickerDropdown: FC<pickerDropdownProps> = (props) => {
             // 点击区域不为children，点击区域不为弹出部分，点击区域不为弹出部分的子元素
             if (notice !== null && clickNode !== null && target !== null) {
                 if (!(notice === clickNode || notice.contains(clickNode) || target === clickNode || target.contains(clickNode))) {
-                    timeout.current = setTimeout(onEmptyClick)
+                    if (onEmptyClick) timeout.current = setTimeout(onEmptyClick)
                 }
             }
         }

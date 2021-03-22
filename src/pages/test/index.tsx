@@ -5,7 +5,7 @@ const Test: FC = () => {
     return (
         <>
             <div style={{ margin: 24 }}>
-                <DatePicker.RangPicker visible />
+                <DatePicker.RangPicker allowClear />
             </div>
         </>
     )

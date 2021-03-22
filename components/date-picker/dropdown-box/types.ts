@@ -10,13 +10,13 @@ export type wrapperProps = {
 }
 
 export type pickerDropdownPropsToOut = {
-    onEmptyClick: () => void
+    onEmptyClick?: () => void
     target: HTMLElement | null
 } & wrapperProps &
     noticeRenderProps
 
 export type pickerDropdownProps = {
     centerDom: ReactElement
-    onEmptyClick: () => void
+    onEmptyClick?: () => void
     target: HTMLElement | null
 } & wrapperProps
