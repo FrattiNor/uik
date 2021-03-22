@@ -3,7 +3,7 @@ import classnames from 'classnames'
 import dayjs, { Dayjs } from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
 import DatePickerDropdown from './date-picker-dropdown'
-import { datePickerProps, pickerValueOutter, pickerValueInner } from './types'
+import { datePickerProps, pickerValueOutter, pickerValueInner, wrapperProps } from './types'
 import { useHalfControlled } from '../../_hooks'
 import Icon from '../../icon'
 import './index.less'
@@ -18,7 +18,7 @@ const DatePicker: FC<datePickerProps> = (props) => {
         defaultValue = null,
         onChange: outOnChange,
         format: formatText = 'YYYY-MM-DD',
-        inputFormat =  ['YYYY-MM-DD', 'YYYY-M-DD', 'YYYY-MM-D', 'YYYY-M-D'],
+        inputFormat = ['YYYY-MM-DD', 'YYYY-M-DD', 'YYYY-MM-D', 'YYYY-M-D'],
         allowClear,
         disabled,
         size = 'middle',
@@ -29,6 +29,10 @@ const DatePicker: FC<datePickerProps> = (props) => {
         textBefore,
         visible: outVisible,
         onVisibleChange,
+        topDom,
+        bottomDom,
+        leftDom,
+        rightDom,
         ...restProps
     } = props
 
@@ -56,6 +60,7 @@ const DatePicker: FC<datePickerProps> = (props) => {
     const showText = selectedDay ? selectedDay.format(formatText) : ''
 
     const [inputValue, setInputValue] = useState(showText)
+    const allowClearShow = !!(allowClear && !disabled && selectedDay && hover)
 
     const setValueAndText = (v: pickerValueInner, needSetText?: boolean) => {
         setVirtualSelectedDay(v)
@@ -135,7 +140,14 @@ const DatePicker: FC<datePickerProps> = (props) => {
         onChange(null)
     }
 
-    const allowClearShow = !!(allowClear && !disabled && selectedDay && hover)
+    const getWrapperDoms = () => {
+        const res: wrapperProps = {}
+        if (topDom) res.topDom = topDom({ close })
+        if (bottomDom) res.bottomDom = bottomDom({ close })
+        if (leftDom) res.leftDom = leftDom({ close })
+        if (rightDom) res.rightDom = rightDom({ close })
+        return res
+    }
 
     return (
         <DatePickerDropdown
@@ -145,6 +157,7 @@ const DatePicker: FC<datePickerProps> = (props) => {
             autoAdjust
             selectedDay={selectedDay}
             target={datePickerRef.current}
+            {...getWrapperDoms()}
             {...restProps}
         >
             <label

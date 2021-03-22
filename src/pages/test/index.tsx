@@ -7,7 +7,7 @@ const Test: FC = () => {
     return (
         <>
             <div style={{ margin: 24 }}>
-                <DatePicker.RangPicker visible allowClear value={value} onChange={(v) => { console.log(v); setValue(v)}} />
+                <DatePicker.RangPickerBox allowClear value={value} onChange={(v) => { console.log(v); setValue(v)}} />
             </div>
         </>
     )

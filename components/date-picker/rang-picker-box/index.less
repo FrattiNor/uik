@@ -1,0 +1,21 @@
+@import '../../_style/theme.less';
+
+.uik-rang-picker-box-select {
+    color: @font-color;
+    font-size: @font-size-middle;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+
+    & > span {
+        padding: 3px 5px;
+        cursor: pointer;
+        transition: background-color 0.3s, color 0.3s;
+        border-radius: @border-radius;
+        
+        &:hover {
+            background-color: @primary-bg-color;
+            color: @primary-color;
+        }
+    }
+}

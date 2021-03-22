@@ -1,19 +1,27 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { FC, useState, useRef, MouseEvent, useEffect, ChangeEvent, KeyboardEvent } from 'react'
+import React, { FC, useState, useRef, MouseEvent, useEffect, ChangeEvent, KeyboardEvent, useLayoutEffect } from 'react'
 import classnames from 'classnames'
 import dayjs, { Dayjs } from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
 import Icon from '../../icon'
 import RangPickerDropDown from './rang-picker-dropdown'
 import { useDebounce, useEffectAfterFirst, useHalfControlled } from '../../_hooks'
-import { rangPickerProps, rangPickerValueInner, rangPickerValueOutter, inputType, flowType, pickerValueOutter, pickerValueInner } from './types'
 import { flowObj, compareDays, dayToZero } from './util'
+import {
+    rangPickerProps,
+    rangPickerValueInner,
+    rangPickerValueOutter,
+    inputType,
+    flowType,
+    pickerValueOutter,
+    pickerValueInner,
+    wrapperProps
+} from './types'
 import './index.less'
 
 const RangPicker: FC<rangPickerProps> = (props) => {
     const { CloseIcon } = Icon
     dayjs.extend(customParseFormat)
-    const timeout = useRef<number | null>(null)
 
     const {
         valueType: outValueType,
@@ -32,6 +40,11 @@ const RangPicker: FC<rangPickerProps> = (props) => {
         textBefore,
         visible: outVisible,
         onVisibleChange,
+        getRatePickerFuncs,
+        topDom,
+        bottomDom,
+        leftDom,
+        rightDom,
         ...restProps
     } = props
 
@@ -77,9 +90,7 @@ const RangPicker: FC<rangPickerProps> = (props) => {
             start: startDom,
             end: endDom
         }
-        timeout.current = setTimeout(() => {
-            domObj[type]?.current?.[status]()
-        })
+        domObj[type]?.current?.[status]()
     }
     // 根据focus状态修改样式
     const getInputBottomStyle = () => {
@@ -96,6 +107,15 @@ const RangPicker: FC<rangPickerProps> = (props) => {
             }
         }
     }
+    //
+    const getWrapperDoms = () => {
+        const res: wrapperProps = {}
+        if (topDom) res.topDom = topDom({ close })
+        if (bottomDom) res.bottomDom = bottomDom({ close })
+        if (leftDom) res.leftDom = leftDom({ close })
+        if (rightDom) res.rightDom = rightDom({ close })
+        return res
+    }
     // === utils === //
 
     // === flows === //
@@ -110,6 +130,7 @@ const RangPicker: FC<rangPickerProps> = (props) => {
     const newFlow = (type: inputType) => {
         setFlow((flowObj[type] || []) as flowType[])
         setEndFlow([])
+        changeInputFocusStatus(type, 'focus')
     }
 
     // 返回上一步
@@ -190,6 +211,9 @@ const RangPicker: FC<rangPickerProps> = (props) => {
     const close = (days?: rangPickerValueInner) => {
         const theValue = days || value
         setVisible(false)
+
+        changeInputFocusStatus('start', 'blur')
+        changeInputFocusStatus('end', 'blur')
 
         if (step) {
             closeFlow()
@@ -333,10 +357,19 @@ const RangPicker: FC<rangPickerProps> = (props) => {
         if (!step && outValue) {
             setValueAndText(handleToInner(outValue))
         }
+        // 如果因为外部原因导致visible没有关闭，则新建一个工作流
         if (!step && visible) {
             newFlow('start')
         }
     }, [step, outValue, visible])
+
+    useLayoutEffect(() => {
+        if (getRatePickerFuncs) {
+            getRatePickerFuncs({
+                close
+            })
+        }
+    }, [getRatePickerFuncs])
     // === effects === //
 
     return (
@@ -347,6 +380,7 @@ const RangPicker: FC<rangPickerProps> = (props) => {
             autoAdjust
             selectedDays={value}
             target={rangPickerRef.current}
+            {...getWrapperDoms()}
             {...restProps}
         >
             <label
