@@ -1,122 +1,73 @@
-import React, { FC, useState, useRef, MouseEvent, useEffect, ChangeEvent, KeyboardEvent } from 'react'
+import React, { FC, useState, KeyboardEvent, MouseEvent, ChangeEvent, useRef } from 'react'
 import classnames from 'classnames'
 import dayjs, { Dayjs } from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
+import TimePickerDropdown from './time-picker-dropdown'
+import { timePickerProps, pickerValueOutter, pickerValueInner, wrapperProps } from './types'
+import { useHalfControlled } from '../../_hooks'
 import Icon from '../../icon'
-import RangPickerDropDown from './rang-picker-dropdown'
-import { useDebounce, useEffectAfterFirst } from '../../_hooks'
-import { rangPickerProps, rangPickerValueInner, rangPickerValueOutter, inputType, flowType, pickerValueOutter } from './types'
-import { flowObj, compareDays, dayToZero } from './util'
 import './index.less'
 
-const RangPicker: FC<rangPickerProps> = (props) => {
-    const { CloseIcon } = Icon
+const DatePicker: FC<timePickerProps> = (props) => {
     dayjs.extend(customParseFormat)
+    const { CloseIcon } = Icon
 
     const {
         valueType: outValueType,
         value: outValue,
-        defaultValue = [null, null],
+        defaultValue = null,
         onChange: outOnChange,
-        format: formatText = 'YYYY-MM-DD',
+        format: formatText = 'HH:mm:ss',
+        inputFormat = ['HH:mm:ss', 'H:mm:ss', 'H:m:ss', 'H:m:s', 'HH:m:ss', 'HH:m:s', 'HH:mm:s'],
         allowClear,
         disabled,
         size = 'middle',
         htmlSize = 11,
         error,
-        placeholder = [],
+        placeholder = '请选择日期',
         disabledDate: outDisabledDate,
         textBefore,
+        visible: outVisible,
+        onVisibleChange,
+        topDom,
+        bottomDom,
+        leftDom,
+        rightDom,
         ...restProps
     } = props
 
-    const textBeforeText = textBefore ? <span className={classnames('uik-rang-picker-text-before')}>{textBefore}</span> : ''
-    // input的ref
-    const rangPickerRef = useRef<HTMLLabelElement>(null)
-    const startDom = useRef<HTMLInputElement>(null)
-    const endDom = useRef<HTMLInputElement>(null)
-    // input的focus选中的值，控制底部样式
+    const textBeforeText = textBefore ? <span className={classnames('uik-time-picker-text-before')}>{textBefore}</span> : ''
+    const inputRef = useRef<HTMLInputElement>(null)
+    const timePickerRef = useRef<HTMLLabelElement>(null)
     const [hover, setHover] = useState(false)
-    const [focusInput, setFocusInput] = useState<inputType | ''>('')
-    const inputBottomStyle = () => {
-        if (!focusInput) {
-            return { opacity: 0 }
-        } else {
-            switch (focusInput) {
-                case 'start':
-                    return { left: startDom.current?.offsetLeft, width: startDom.current?.clientWidth, opacity: 1 }
-                case 'end':
-                    return { left: endDom.current?.offsetLeft, width: endDom.current?.clientWidth, opacity: 1 }
-                default:
-                    return { opacity: 0 }
-            }
-        }
+    const gteValueType = () => (outValueType ? outValueType : typeof (outValue || defaultValue) === 'string' ? 'string' : 'Dayjs')
+    const valueType = gteValueType()
+
+    const changeStringToDayjs = (str: string) => (str === '' ? null : dayjs(str, formatText))
+    // 处理进入的value
+    const hanleInValue = (value: pickerValueOutter): pickerValueInner =>
+        (valueType === 'string' ? changeStringToDayjs(value as string) : value ? dayjs(value) : null) as pickerValueInner
+    // 处理输出的value
+    const handleOutValue = (day: pickerValueInner) => (valueType === 'string' ? (day ? day.format(formatText) : '') : day)
+
+    const [visible, setVisible] = useHalfControlled(outVisible, onVisibleChange, false, 'boolean')
+
+    // 选中的 date dayjs对象
+    const [virtualSelectedValue, setVirtualSelectedValue] = useState(defaultValue ? hanleInValue(defaultValue) : null)
+
+    const selectedValue = outValue !== undefined ? hanleInValue(outValue) : virtualSelectedValue
+
+    const showText = selectedValue ? selectedValue.format(formatText) : ''
+
+    const [inputValue, setInputValue] = useState(showText)
+
+    const allowClearShow = !!(allowClear && !disabled && selectedValue && hover)
+
+    const setValueAndText = (v: pickerValueInner, needSetText?: boolean) => {
+        setVirtualSelectedValue(v)
+        const setText = typeof needSetText === 'boolean' ? needSetText : true
+        if (setText) setInputValue(v ? v.format(formatText) : '')
     }
-    // 窗口开关
-    const [visible, setVisible] = useState(false)
-    // 传入值的type类型
-    const valueType = outValueType ? outValueType : typeof (outValue || defaultValue)[0] === 'string' ? 'string' : 'Dayjs'
-    // 处理传入的值
-    const handleToOutter = (days: rangPickerValueInner) => {
-        return (valueType === 'string' ? days.map((item) => (item ? item.format(formatText) : '')) : days) as rangPickerValueOutter
-    }
-    // 处理传出的值
-    const handleToInner = (days: rangPickerValueOutter) => {
-        return (valueType === 'string'
-            ? days.map((item) => (item ? dayjs(item as string, formatText) : null))
-            : days.map((item) => (item ? dayjs(item as Dayjs) : null))) as rangPickerValueInner
-    }
-    // 处理好的defaultValue
-    const innerDefaultValue: rangPickerValueInner = handleToInner(defaultValue)
-    // 组件内部的value
-    const [value, setValue] = useState<rangPickerValueInner>(innerDefaultValue)
-    // 刷新value的值的flag
-    const [flashValueFlag, flashValue] = useState(false)
-    // 使用value格式化的input值
-    const startText = value[0] ? value[0].format(formatText) : ''
-    const endText = value[1] ? value[1].format(formatText) : ''
-    // input的值
-    const [inputText, setInputText] = useState<[string, string]>([startText, endText])
-    // 刷新input的值的flag
-    const [flashTextFlag, flashText] = useState(false)
-    // 将外部的value替换掉内部的value
-    const pushOutValueToValue = () => {
-        const innerValue: rangPickerValueInner = outValue ? handleToInner(outValue) : [null, null]
-        setValue(innerValue)
-    }
-    // 工作流
-    const [endFlow, setEndFlow] = useState<flowType[]>([])
-    const [flow, setFlow] = useState<flowType[]>([])
-    // 关闭工作流
-    const closeFlow = () => {
-        setFlow([])
-        setEndFlow([])
-    }
-    // 新创建流
-    const newFlow = (type: inputType) => {
-        setFlow((flowObj[type] || []) as flowType[])
-        setEndFlow([])
-    }
-    // 返回上一步
-    const returnBeforeStep = () => {
-        const newFlow = [...flow]
-        const newEndFlow = [...endFlow]
-        const endStep = newEndFlow.pop()
-        if (endStep) newFlow.unshift(endStep)
-        setFlow(newFlow)
-        setEndFlow(newEndFlow)
-    }
-    // 下一步
-    const toNextStep = () => {
-        const newFlow = [...flow]
-        const newEndFlow = [...endFlow]
-        const endStep = newFlow.shift()
-        if (endStep) newEndFlow.push(endStep)
-        setFlow(newFlow)
-        setEndFlow(newEndFlow)
-    }
-    // 当前流程
-    const step = flow[0] || false
 
     const judgeSame = (item1: pickerValueOutter, item2: pickerValueOutter | undefined) => {
         if (valueType === 'string') {
@@ -126,253 +77,120 @@ const RangPicker: FC<rangPickerProps> = (props) => {
         }
     }
 
-    // 用于触发外界的onChange
-    const onChange = (days: rangPickerValueInner) => {
-        setValue(days)
+    const onChange = (day: pickerValueInner, needSetText?: boolean) => {
+        setValueAndText(day, needSetText)
         if (outOnChange) {
-            const newDays = handleToOutter(days)
-            if (newDays.some((item, i) => !judgeSame(item, outValue?.[i]))) {
-                outOnChange(newDays)
-            }
-        }
-        // 如果没有onChange，需要把外部值重新赋值一次
-        flashValue(!flashValueFlag)
-    }
-
-    // 结速流程的标记，并关闭窗口
-    const close = (days?: rangPickerValueInner) => {
-        const theValue = days || value
-        setVisible(false)
-        setTimeout(() => endDom.current?.blur())
-        setTimeout(() => startDom.current?.blur())
-
-        if (step) {
-            closeFlow()
-        }
-
-        // 结束流程触发onChange
-        if (theValue[0] && theValue[1] && theValue[0].valueOf() < theValue[1].valueOf()) {
-            onChange(theValue)
-        } else {
-            onChange([null, null])
-        }
-        flashText(!flashTextFlag)
-    }
-
-    // 点击空白区域关闭
-    const onEmptyClick = () => {
-        if (visible) {
-            close()
-        }
-    }
-
-    // 日期点击事件
-    const dateClick = (day: Dayjs) => {
-        const newDay = dayToZero(day)
-        if (step === 'start1' || step === 'end2') {
-            setValue([newDay, value[1]])
-            if (step === 'start1') {
-                setTimeout(() => endDom.current?.focus())
-            }
-            if (step === 'end2') {
-                // 在函数内部调用函数，需要传入新的value，不然获取的一直是之前的value
-                close([newDay, value[1]])
-            }
-        }
-        if (step === 'end1' || step === 'start2') {
-            setValue([value[0], newDay])
-            if (step === 'end1') {
-                setTimeout(() => startDom.current?.focus())
-            }
-            if (step === 'start2') {
-                close([value[0], newDay])
+            const newDay = handleOutValue(day)
+            if (!judgeSame(newDay, outValue)) {
+                outOnChange(newDay)
             }
         }
     }
 
-    // 禁用日期
+    const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const newInputValue = e.target.value
+        const inputDay = dayjs(newInputValue, [formatText, ...inputFormat], true)
+        setInputValue(newInputValue)
+        if (inputDay.isValid()) {
+            onChange(inputDay, false)
+        }
+    }
+
     const disabledDate = (day: Dayjs) => {
-        let res = false
-        let stepDisabledDate = false
         if (outDisabledDate) {
-            res = outDisabledDate(day)
+            return outDisabledDate(handleOutValue(day) as Dayjs | string)
         }
-        if (step === 'start2' && value[0]) {
-            stepDisabledDate = compareDays(value[0], day, (a, b) => a > b)
-        }
-        if (step === 'end2' && value[1]) {
-            stepDisabledDate = compareDays(value[1], day, (a, b) => a < b)
-        }
-        return res || stepDisabledDate
+        return false
     }
 
-    // 节流改变focus状态
-    const changeFocus = useDebounce((type: inputType | '') => {
-        setFocusInput(type)
-    }, 200)
+    // 结束
+    const close = (day?: pickerValueInner) => {
+        setVisible(false)
+        const theDay = day || selectedValue
+        onChange(theDay)
+        setTimeout(() => inputRef.current?.blur())
+    }
 
-    // input的focus事件
-    const inputFocus = (type: inputType) => {
+    // 开启
+    const onInputFocus = () => {
         setVisible(true)
-        changeFocus(type)
-
-        if (!step) {
-            newFlow(type as inputType)
-        }
-        if ((step === 'start2' && type === 'start') || (step === 'end2' && type === 'end')) {
-            returnBeforeStep()
-        }
-        if (step === 'start1' && type === 'end') {
-            if (value[0]) {
-                toNextStep()
-            } else {
-                newFlow(type)
-            }
-            // 为了刷新text
-            flashText(!flashTextFlag)
-        }
-        if (step === 'end1' && type === 'start') {
-            if (value[1]) {
-                toNextStep()
-            } else {
-                newFlow(type)
-            }
-            // 为了刷新text
-            flashText(!flashTextFlag)
-        }
     }
 
-    // input的blur事件
-    const inputBlur = () => {
-        changeFocus('')
-    }
-
-    // input的change事件
-    const inputChange = (e: ChangeEvent<HTMLInputElement>, type: inputType) => {
-        const v = e.target.value
-        const inputDay = dayjs(v, formatText, true)
-        if (type === 'start') {
-            if (inputDay.isValid()) {
-                setValue([inputDay, value[1]])
-            }
-            setInputText([v, inputText[1]])
-        }
-        if (type === 'end') {
-            if (inputDay.isValid()) {
-                setValue([value[0], inputDay])
-            }
-            setInputText([inputText[0], v])
-        }
-    }
-
-    // input的keydown事件
-    const inputKeyDown = (e: KeyboardEvent<HTMLInputElement>, type: inputType) => {
-        // if (e.code === 'Tab') e.preventDefault()
+    // 按键事件 通过回车关闭啊
+    const onInputKeyUp = (e: KeyboardEvent<HTMLInputElement>) => {
         if (e.code === 'Enter') {
-            // 如果没值就刷新一下text，不进行下一步
-            flashText(!flashTextFlag)
-            if (type === 'start' && value[0]) {
-                if (step === 'start1') {
-                    setTimeout(() => endDom.current?.focus())
-                }
-                if (step === 'end2') {
-                    close()
-                }
-            }
-            if (type === 'end' && value[1]) {
-                if (step === 'start2') {
-                    close()
-                }
-                if (step === 'end1') {
-                    setTimeout(() => startDom.current?.focus())
-                }
+            if (visible) {
+                close()
             }
         }
     }
 
-    // 清除
-    const onClear = (e: MouseEvent) => {
+    // 点击date关闭
+    const timeClick = (day: Dayjs) => {
+        close(day)
+    }
+
+    // 失去焦点
+    const onInputBlur = () => {
+        close()
+    }
+
+    const inputClear = (e: MouseEvent<HTMLElement>) => {
         e.stopPropagation()
         e.preventDefault()
-        close([null, null])
+        onChange(null)
     }
 
-    // 外部value改变替换内部value
-    useEffect(() => {
-        if (outValue) {
-            pushOutValueToValue()
-        }
-    }, [outValue, flashValueFlag])
-
-    // 刷新input的值
-    useEffect(() => {
-        setInputText([startText, endText])
-    }, [startText, endText, flashTextFlag])
-
-    // 通过别的手段离开组件，Tab等，从focus情况可以了解到
-    useEffectAfterFirst(() => {
-        if(!focusInput) {
-            close()
-        }
-    }, [focusInput])
-
-    const allowClearShow = !!(allowClear && !disabled && value[0] && value[1] && hover)
+    const getWrapperDoms = () => {
+        const res: wrapperProps = {}
+        if (topDom) res.topDom = topDom({ close })
+        if (bottomDom) res.bottomDom = bottomDom({ close })
+        if (leftDom) res.leftDom = leftDom({ close })
+        if (rightDom) res.rightDom = rightDom({ close })
+        return res
+    }
 
     return (
-        <RangPickerDropDown
+        <TimePickerDropdown
             visible={visible}
-            onEmptyClick={onEmptyClick}
-            dateClick={dateClick}
+            timeClick={timeClick}
             disabledDate={disabledDate}
             autoAdjust
-            selectedDays={value}
-            target={rangPickerRef.current}
+            selectedValue={selectedValue}
+            target={timePickerRef.current}
+            {...getWrapperDoms()}
             {...restProps}
         >
             <label
-                ref={rangPickerRef}
-                className={classnames('uik-rang-picker-input-wrapper', [`${size}`], { focus: visible, error, disabled })}
+                ref={timePickerRef}
+                className={classnames('uik-date-picker-input-wrapper', [`${size}`], { focus: visible, error, disabled })}
                 onMouseEnter={() => setHover(true)}
                 onMouseLeave={() => setHover(false)}
             >
                 {textBeforeText}
                 <input
-                    ref={startDom}
+                    ref={inputRef}
+                    className={classnames('uik-date-picker-input', [`${size}`])}
+                    onChange={onInputChange}
+                    onFocus={onInputFocus}
+                    onBlur={onInputBlur}
+                    onKeyUp={onInputKeyUp}
                     size={htmlSize}
-                    value={inputText[0]}
+                    value={inputValue}
                     disabled={disabled}
-                    placeholder={placeholder[0] || '开始日期'}
-                    className={classnames('uik-rang-picker-input', [`${size}`])}
-                    onBlur={inputBlur}
-                    onFocus={() => inputFocus('start')}
-                    onChange={(e) => inputChange(e, 'start')}
-                    onKeyDown={(e) => inputKeyDown(e, 'start')}
+                    placeholder={placeholder}
                 />
-                <span className="uik-rang-picker-center">~</span>
-                <input
-                    ref={endDom}
-                    size={htmlSize}
-                    value={inputText[1]}
-                    disabled={disabled}
-                    placeholder={placeholder[1] || '结束日期'}
-                    className={classnames('uik-rang-picker-input', [`${size}`])}
-                    onBlur={inputBlur}
-                    onFocus={() => inputFocus('end')}
-                    onChange={(e) => inputChange(e, 'end')}
-                    onKeyDown={(e) => inputKeyDown(e, 'end')}
-                />
-                <span className="uik-rang-picker-input-bottom" style={inputBottomStyle()} />
                 <CloseIcon
-                    defaultIconProps={{ name: 'date', size: 'middle', className: 'uik-rang-picker-icon' }}
+                    defaultIconProps={{ name: 'date', size: 14, className: 'uik-date-picker-icon' }}
                     circle
-                    size="small"
-                    onClick={onClear}
-                    wrapperClassName={classnames('uik-rang-picker-close')}
+                    size={12}
+                    onClick={inputClear}
+                    wrapperClassName={classnames('uik-date-picker-close')}
                     visible={allowClearShow}
                 />
             </label>
-        </RangPickerDropDown>
+        </TimePickerDropdown>
     )
 }
 
-export default RangPicker
+export default DatePicker

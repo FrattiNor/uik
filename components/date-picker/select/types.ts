@@ -10,6 +10,8 @@ export type selectedObj = {
     selectedLineEnd: boolean
 }
 
+export type timeType = 'hour' | 'minute' | 'second'
+
 export type dateSelectProps = {
     year: number
     month: monthNumber
@@ -31,4 +33,11 @@ export type yearSelectProps = {
     startYear: number
     endYear: number
     onClick?: (year: number) => void
+}
+
+export type timeSelectProps = {
+    hour: number
+    minute: number
+    second: number
+    onClick?: (num: number, type: timeType) => void
 }

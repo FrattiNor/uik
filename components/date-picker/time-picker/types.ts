@@ -1,29 +1,31 @@
 /* eslint-disable no-unused-vars */
-
 import { Dayjs } from 'dayjs'
-import { pickerValueOutter, pickerValueInner, datePickInputProps } from '../date-picker/types'
+import { pickerValueOutter, pickerValueInner, datePickInputProps, wrapperOutProps } from '../date-picker/types'
+import { pickerDropdownPropsToOut, wrapperProps } from '../dropdown-box/types'
+import { timeType } from '../select/types'
 
-export { pickerValueOutter, pickerValueInner }
-export type rangPickerValueOutter = [pickerValueOutter, pickerValueOutter]
-export type rangPickerValueInner = [pickerValueInner, pickerValueInner]
+export { wrapperProps, pickerValueOutter, pickerValueInner }
 
-export type flowType = 'start1' | 'start2' | 'end1' | 'end2' | 'default'
-export type inputType = 'start' | 'end'
+export type timePickerFuncs = {
+    close: (v?: pickerValueInner) => void
+}
 
-export type rangPickerProps = {
+export type timePickerProps = {
     format?: string
+    inputFormat?: string[]
     disabledDate?: (currentDate: Dayjs | string) => boolean
-    value?: rangPickerValueOutter
-    defaultValue?: rangPickerValueOutter
-    onChange?: (value: rangPickerValueOutter) => void
+    value?: pickerValueOutter
+    defaultValue?: pickerValueOutter
+    onChange?: (value: pickerValueOutter) => void
     valueType?: 'Dayjs' | 'string'
     textBefore?: string
-} & datePickInputProps<[string, string]>
+    visible?: boolean
+    onVisibleChange?: (visible: boolean) => void
+} & wrapperOutProps<timePickerFuncs> &
+    datePickInputProps<string>
 
-export type rangPickerDropdownProps = {
+export type timePickerDropdownProps = {
     disabledDate?: (currentDate: Dayjs) => boolean
-    selectedDays: rangPickerValueInner
-    dateClick: (days: Dayjs) => void
-    onEmptyClick: () => void
-    target: HTMLElement | null
-}
+    selectedValue: pickerValueInner
+    timeClick: (num: number, type: timeType) => void
+} & pickerDropdownPropsToOut
