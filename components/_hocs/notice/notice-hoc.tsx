@@ -116,18 +116,18 @@ function noticeHoc<T>(hocProps: noticeHocProps): noticeHocInner<T> {
             useEffect(() => {
                 if (show) {
                     // 根据 定位 目标元素 notice本身 容器节点 根节点 获取 top left 和 是否存在遮挡
-                    const { top, left, error } = getPositionStyle(position, target, noticeRef.current, root, container)
+                    const { top, left } = getPositionStyle(position, target, noticeRef.current, root, container)
 
-                    if (autoAdjust && error) {
-                        // 根据 存在遮挡的error 和 当前定位 进行 定位调整
-                        const newPosition = autoAdjustPosition(position, error)
+                    // if (autoAdjust && error) {
+                    //     // 根据 存在遮挡的error 和 当前定位 进行 定位调整
+                    //     const newPosition = autoAdjustPosition(position, error)
 
-                        if (newPosition) {
-                            setPosition(newPosition)
-                        }
-                    } else {
-                        setTopLeftstyle({ top, left })
-                    }
+                    //     if (newPosition) {
+                    //         setPosition(newPosition)
+                    //     }
+                    // } else {
+                    setTopLeftstyle({ top, left })
+                    // }
                 }
             }, [position, target, show, autoAdjust, container, root, setPosition, ..._getPositionProps, ...updatePositionDepends])
 
