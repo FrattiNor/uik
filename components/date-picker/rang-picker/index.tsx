@@ -7,16 +7,8 @@ import Icon from '../../icon'
 import RangPickerDropDown from './rang-picker-dropdown'
 import { useDebounce, useEffectAfterFirst, useHalfControlled } from '../../_hooks'
 import { flowObj, compareDays, dayToZero } from './util'
-import {
-    rangPickerProps,
-    rangPickerValueInner,
-    rangPickerValueOutter,
-    inputType,
-    flowType,
-    pickerValueOutter,
-    pickerValueInner,
-    wrapperProps
-} from './types'
+import { rangPickerProps, rangPickerValueInner, rangPickerValueOutter, inputType, flowType, wrapperProps } from './types'
+import { pickerValueOutter, pickerValueInner } from '../date-picker/types'
 import './index.less'
 
 const RangPicker: FC<rangPickerProps> = (props) => {

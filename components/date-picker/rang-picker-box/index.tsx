@@ -1,7 +1,8 @@
 import React, { FC, useState } from 'react'
 import dayjs from 'dayjs'
 import RangPicker from '../rang-picker'
-import { rangPickerBoxProps, rangPickerValueInner, rangPickerFuncs } from './types'
+import { rangPickerBoxProps } from './types'
+import { rangPickerValueInner, rangPickerFuncs } from '../rang-picker/types'
 import './index.less'
 
 const RangPickerBox: FC<rangPickerBoxProps> = (props) => {

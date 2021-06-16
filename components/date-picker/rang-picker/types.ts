@@ -1,11 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { Dayjs } from 'dayjs'
-import { pickerValueOutter as pickerValueOutter2, pickerValueInner as pickerValueInner2, datePickInputProps, wrapperOutProps } from '../date-picker/types'
+import { pickerValueOutter, pickerValueInner, datePickInputProps, wrapperOutProps } from '../date-picker/types'
 import { pickerDropdownPropsToOut, wrapperProps } from '../dropdown-box/types'
-
-// 直接导出会报warn
-export type pickerValueOutter = pickerValueOutter2
-export type pickerValueInner = pickerValueInner2
 
 export { wrapperProps }
 
