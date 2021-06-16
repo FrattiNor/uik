@@ -37,10 +37,10 @@ const Sticky: FC<stickyProps> = (props) => {
                 if (canSee) {
                     setFixedStyle({})
                 } else {
-                    if (haveOffsetTop && targetRect.y < rootRect.y) {
+                    if (haveOffsetTop && targetRect.y <= rootRect.y) {
                         setFixedStyle({ ...fixedBaseStyle, top: rootRect.y, left: targetRect.x } as CSSProperties)
                     }
-                    if (haveOffsetBottom && targetRect.y > rootRect.y) {
+                    if (haveOffsetBottom && targetRect.y >= rootRect.y) {
                         setFixedStyle({
                             ...fixedBaseStyle,
                             top: rootRect.bottom - targetRect.height,

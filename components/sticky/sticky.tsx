@@ -27,9 +27,9 @@ const Sticky: FC<stickyProps> = (props) => {
                 const rootRect = root === document ? { x: 0, y: 0, height: window.innerHeight } : (root as HTMLElement).getBoundingClientRect()
                 const fixedBaseStyle = { transform: 'translateZ(0px)', position: 'fixed', width: targetOutStyle.width, zIndex: 999 }
 
-                if (haveOffsetTop && targetRect.y < rootRect.y + top) {
+                if (haveOffsetTop && targetRect.y <= rootRect.y + top) {
                     setFixedStyle({ ...fixedBaseStyle, top: rootRect.y + top, left: targetRect.x } as CSSProperties)
-                } else if (haveOffsetBottom && targetRect.y + targetRect.height > rootRect.y + rootRect.height - bottom) {
+                } else if (haveOffsetBottom && targetRect.y + targetRect.height >= rootRect.y + rootRect.height - bottom) {
                     setFixedStyle({
                         ...fixedBaseStyle,
                         top: rootRect.y + rootRect.height - targetRect.height - bottom,
