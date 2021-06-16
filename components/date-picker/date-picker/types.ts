@@ -5,14 +5,14 @@ import { pickerDropdownPropsToOut, wrapperProps } from '../dropdown-box/types'
 
 export { wrapperProps }
 
+export type datePickerFuncs = {
+    close: (day?: Dayjs) => void
+}
+
 // 组件外部的值
 export type pickerValueOutter = Dayjs | string | null
 // 组件内部流通的值
 export type pickerValueInner = Dayjs | null
-
-export type datePickerFuncs = {
-    close: (day?: Dayjs) => void
-}
 
 //
 export type wrapperOutProps<T> = {
@@ -50,3 +50,5 @@ export type datePickerDropdownProps = {
     selectedDay: pickerValueInner
     dateClick: (days: Dayjs) => void
 } & pickerDropdownPropsToOut
+
+

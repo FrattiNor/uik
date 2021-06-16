@@ -10,15 +10,18 @@ module.exports = {
         rules: [
             {
                 test: /(\.d)?\.(j|t)sx?$/, // 匹配js，ts
-                use: ['babel-loader']
+                use: ['babel-loader'],
+                include: [/src/, /components/]
             },
             {
                 test: /\.md$/,
-                use: ['html-loader', 'markdown-loader']
+                use: ['html-loader', 'markdown-loader'],
+                include: [/src/, /components/]
             },
             {
                 test: /\.mdx$/,
-                use: ['babel-loader', '@mdx-js/loader']
+                use: ['babel-loader', '@mdx-js/loader'],
+                include: [/src/, /components/]
             }
             // {
             //     test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, // 匹配图片文件
@@ -67,6 +70,11 @@ module.exports = {
         assetFilter: function (assetFilename) {
             // 提供资源文件名的断言函数
             return /\.(png|jpe?g|gif|svg)(\?.*)?$/.test(assetFilename)
+        }
+    },
+    optimization: {
+        splitChunks: {
+            chunks: 'all'
         }
     },
     plugins: [

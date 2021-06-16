@@ -11,7 +11,8 @@ const devConfig = (port) => ({
     devtool: 'cheap-module-eval-source-map',
     entry,
     output: {
-        filename: 'js/[name].[hash].js',
+        filename: 'js/[name].js',
+        chunkFilename: 'js/[name].js',
         publicPath: '/',
         path: outPath
     },
