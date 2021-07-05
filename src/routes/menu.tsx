@@ -16,11 +16,11 @@ const routes = [
                     }
                 ]
             },
-            {
-                path: '/test',
-                title: '测试',
-                component: require('@/pages/test'),
-            },
+            // {
+            //     path: '/test',
+            //     title: '测试',
+            //     component: require('@/pages/test'),
+            // },
             {
                 redirect: '/uik'
             }
