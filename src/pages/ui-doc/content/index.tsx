@@ -1,7 +1,7 @@
 import React, { FC, useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 import FormatMarkDown from '@/components/format-markdown'
-import { getDoc } from '@/doc-menu'
+import { getDoc } from '@/pages/ui-doc/menuList'
 import styles from './index.less'
 
 const Content: FC = () => {

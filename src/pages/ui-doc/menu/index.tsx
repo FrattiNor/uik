@@ -3,7 +3,7 @@ import classnames from 'classnames'
 import { useHistory, useLocation } from 'react-router-dom'
 import Title from 'react-document-title'
 import { Sticky } from 'uik'
-import { menu, getTitle, judgeName } from '@/doc-menu'
+import { menu, getTitle, judgeName } from '@/pages/ui-doc/menuList'
 import styles from './index.less'
 
 const Menu: FC = () => {

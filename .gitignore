@@ -11,3 +11,5 @@ dest
 .idea
 
 yarn-error.log
+
+.history

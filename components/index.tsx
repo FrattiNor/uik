@@ -1,3 +1,5 @@
+
+
 // == 通用 ==
 
 // 按钮
@@ -6,10 +8,15 @@ export { default as Button } from './button'
 export { default as Icon } from './icon'
 // 菜单
 export { default as Menu } from './menu'
-// 固钉 sticky 使用监视 scroll 方法
+// 固钉 
+// sticky 使用监视 scroll 方法
 export { default as Sticky } from './sticky'
-// 固钉 sticky2 使用 IntersectionObserver（缺陷是不能使用在超过可视区域大小的元素上）
+// 固钉 
+// hidden
+// sticky2 使用 IntersectionObserver（缺陷是不能使用在超过可视区域大小的元素上）
 export { default as StickyObserver } from './sticky-observer'
+// 栅格
+export { Row, Col } from './grid'
 
 // == 输入 ==
 
@@ -38,6 +45,7 @@ export { default as Loading } from './loading'
 // == 反馈 ==
 
 // 全局消息
+// lowerCase
 export { default as message } from './message'
 // 全局弹窗
 export { default as Modal } from './modal'
