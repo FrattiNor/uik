@@ -77,6 +77,7 @@
         "browserslist": "^4.16.6",
         "caniuse-lite": "^1.0.30001237",
         "copy-to-clipboard": "^3.3.1",
+        "cross-env": "^7.0.3",
         "css-loader": "^5.0.1",
         "dva-core": "^2.0.4",
         "dva-loading": "^3.0.22",

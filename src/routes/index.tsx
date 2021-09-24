@@ -12,6 +12,10 @@ import ReactDocumentTitle from 'react-document-title'
 import { Route, Switch, Redirect, BrowserRouter } from 'react-router-dom'
 import { loadModel, getComponent } from './utils'
 import menu from './menu'
+import menuDev from './menuDev'
+
+const env = process.env.NODE_ENV
+const useMenu = env === 'development' ? menuDev : menu
 
 // 递归渲染路由
 const Routes = ({ app }: { app?: any }): ReactElement => {
@@ -55,7 +59,7 @@ const Routes = ({ app }: { app?: any }): ReactElement => {
         return <Switch>{renderRouteDom}</Switch>
     }
 
-    return <BrowserRouter>{renderRoute(menu)}</BrowserRouter>
+    return <BrowserRouter>{renderRoute(useMenu)}</BrowserRouter>
 }
 
 export default Routes
