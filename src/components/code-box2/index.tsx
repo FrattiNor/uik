@@ -1,7 +1,7 @@
-import React, { FC, useEffect, useState } from 'react'
+import React, { FC, useEffect, useState, useReducer } from 'react'
 import copy from 'copy-to-clipboard'
 import CodeBlock from '@/components/code-block'
-import { message, Icon, Tooltip } from 'uik'
+import { message, Icon, Tooltip, Loading } from 'uik'
 import classnames from 'classnames'
 import styles from './index.less'
 
@@ -13,8 +13,44 @@ type props = {
     getComponent: () => any
 }
 
+type reducersState = {
+    less: boolean
+    js: boolean
+    desc: boolean
+    component: boolean
+}
+
+type reducersType = 'setLessLoading' | 'setJsLoading' | 'setDescLoading' | 'setComponentLoading'
+
 // 去掉最后一行的空行
 const noEndLineCode = (code: string) => code.replace(/\n$/, '')
+
+const reducers = (state: reducersState, { type, payload }: { type: reducersType; payload: boolean }) => {
+    switch (type) {
+        case 'setLessLoading':
+            return {
+                ...state,
+                less: payload
+            }
+        case 'setJsLoading':
+            return {
+                ...state,
+                less: payload
+            }
+        case 'setDescLoading':
+            return {
+                ...state,
+                less: payload
+            }
+        case 'setComponentLoading':
+            return {
+                ...state,
+                less: payload
+            }
+        default:
+            return { ...state }
+    }
+}
 
 // mdx 介绍文件 使用的demo示例
 const CodeBox: FC<props> = ({ title, getJs, getLess, getDesc, getComponent }) => {
@@ -23,6 +59,8 @@ const CodeBox: FC<props> = ({ title, getJs, getLess, getDesc, getComponent }) =>
     const [desc, setDesc] = useState('')
     const [Component, setComponent] = useState<any>('')
     const [type, setType] = useState<'js' | 'less'>('js')
+    const [state, dispatch] = useReducer(reducers, { less: false, js: false, desc: false, component: false })
+    const loading = Object.values(state).some((item) => item) ? true : false
 
     const showCodeObj = {
         js: code,
@@ -32,26 +70,57 @@ const CodeBox: FC<props> = ({ title, getJs, getLess, getDesc, getComponent }) =>
 
     useEffect(() => {
         try {
-            if (getLess) {
-                getLess().then((res: any) => {
-                    setLessCode(res.default)
+            const setLoading = (type: reducersType) => (payload: boolean) => {
+                dispatch({
+                    type,
+                    payload
                 })
+            }
+
+            if (getLess) {
+                const setLessLoading = setLoading('setLessLoading')
+                setLessLoading(true)
+                getLess()
+                    .then((res: any) => {
+                        setLessCode(res.default)
+                    })
+                    .finally(() => {
+                        setLessLoading(false)
+                    })
             }
             if (getJs) {
-                getJs().then((res: any) => {
-                    setCode(res.default)
-                })
+                const setJsLoading = setLoading('setJsLoading')
+                setJsLoading(true)
+                getJs()
+                    .then((res: any) => {
+                        setCode(res.default)
+                    })
+                    .finally(() => {
+                        setJsLoading(false)
+                    })
             }
             if (getDesc) {
-                getDesc().then((res: any) => {
-                    setDesc(res.default)
-                })
+                const setDescLoading = setLoading('setDescLoading')
+                setDescLoading(true)
+                getDesc()
+                    .then((res: any) => {
+                        setDesc(res.default)
+                    })
+                    .finally(() => {
+                        setDescLoading(false)
+                    })
             }
             if (getComponent) {
-                getComponent().then((res: any) => {
-                    const { default: Component } = res
-                    setComponent(<Component />)
-                })
+                const setComponentLoading = setLoading('setComponentLoading')
+                setComponentLoading(true)
+                getComponent()
+                    .then((res: any) => {
+                        const { default: Component } = res
+                        setComponent(<Component />)
+                    })
+                    .finally(() => {
+                        setComponentLoading(false)
+                    })
             }
         } catch (e) {
             console.log('e', e)
@@ -67,12 +136,12 @@ const CodeBox: FC<props> = ({ title, getJs, getLess, getDesc, getComponent }) =>
     }
 
     return (
-        <div className={styles['code-box']}>
-            {/* demo */}
-            <div className={styles['demo']}>{Component}</div>
+        <Loading loading={loading}>
+            <div className={styles['code-box']}>
+                {/* demo */}
+                <div className={styles['demo']}>{Component}</div>
 
-            {/* desc */}
-            {title && desc && (
+                {/* desc */}
                 <div>
                     <div className={styles['title']}>
                         <span>{title}</span>
@@ -81,10 +150,9 @@ const CodeBox: FC<props> = ({ title, getJs, getLess, getDesc, getComponent }) =>
                         <p dangerouslySetInnerHTML={{ __html: desc }} />
                     </div>
                 </div>
-            )}
 
-            {/* icon */}
-            {code && (
+                {/* icon */}
+
                 <div className={styles['icon-box']}>
                     {lessCode && (
                         <>
@@ -120,15 +188,15 @@ const CodeBox: FC<props> = ({ title, getJs, getLess, getDesc, getComponent }) =>
                         <Icon defaultIcon name="copy" className={styles['icon']} onClick={copyToClipboard} />
                     </Tooltip>
                 </div>
-            )}
 
-            {/* code */}
-            {visible && (
-                <pre className={styles['pre']}>
-                    <CodeBlock code={noEndLineCode(showCode)} />
-                </pre>
-            )}
-        </div>
+                {/* code */}
+                {visible && (
+                    <pre className={styles['pre']}>
+                        <CodeBlock code={noEndLineCode(showCode)} />
+                    </pre>
+                )}
+            </div>
+        </Loading>
     )
 }
 
