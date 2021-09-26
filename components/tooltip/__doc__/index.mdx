@@ -1,13 +1,5 @@
-import CodeBox from '@/components/code-box'
+import CodeBox from '@/components/code-box2'
 import CodeWrapper from '@/components/code-wrapper'
-
-import DemoNormal from './demo-normal'
-import descNormal from './demo-normal/desc.md'
-import codeNormal from '!raw-loader!./demo-normal'
-
-import DemoPosition from './demo-position'
-import descPosition from './demo-position/desc.md'
-import codePosition from '!raw-loader!./demo-position'
 
 # Tooltip 文字提示
 
@@ -20,12 +12,19 @@ import codePosition from '!raw-loader!./demo-position'
 ## 代码演示
 
 <CodeWrapper>
-    <CodeBox title="基本" desc={descNormal} code={codeNormal}>
-        <DemoNormal />
-    </CodeBox>
-    <CodeBox title="定位" desc={descPosition} code={codePosition}>
-        <DemoPosition />
-    </CodeBox>
+    <CodeBox
+        title="基础"
+        getComponent={() => import('./demo-normal')}
+        getDesc={() => import('./demo-normal/desc.md')}
+        getJs={() => import('!raw-loader!./demo-normal')}
+    />
+    <CodeBox
+        title="定位"
+        getComponent={() => import('./demo-position')}
+        getDesc={() => import('./demo-position/desc.md')}
+        getJs={() => import('!raw-loader!./demo-position')}
+        getLess={() => import('!raw-loader!./demo-position/index.less')}
+    />
 </CodeWrapper>
 
 ## API

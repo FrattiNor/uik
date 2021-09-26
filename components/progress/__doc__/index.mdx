@@ -1,13 +1,5 @@
-import CodeBox from '@/components/code-box'
+import CodeBox from '@/components/code-box2'
 import CodeWrapper from '@/components/code-wrapper'
-
-import DemoNormal from './demo-normal'
-import descNormal from './demo-normal/desc.md'
-import codeNormal from '!raw-loader!./demo-normal'
-
-import DemoCircle from './demo-circle'
-import descCircle from './demo-circle/desc.md'
-import codeCircle from '!raw-loader!./demo-circle'
 
 # Progress 进度条
 
@@ -20,12 +12,20 @@ import codeCircle from '!raw-loader!./demo-circle'
 ## 代码演示
 
 <CodeWrapper>
-    <CodeBox title="基本进度条" desc={descNormal} code={codeNormal}>
-        <DemoNormal />
-    </CodeBox>
-    <CodeBox title="环型进度条" desc={descCircle} code={codeCircle}>
-        <DemoCircle />
-    </CodeBox>
+    <CodeBox
+        title="基本进度条"
+        getComponent={() => import('./demo-normal')}
+        getDesc={() => import('./demo-normal/desc.md')}
+        getJs={() => import('!raw-loader!./demo-normal')}
+        getLess={() => import('!raw-loader!./demo-normal/index.less')}
+    />
+    <CodeBox
+        title="环型进度条"
+        getComponent={() => import('./demo-circle')}
+        getDesc={() => import('./demo-circle/desc.md')}
+        getJs={() => import('!raw-loader!./demo-circle')}
+        getLess={() => import('!raw-loader!./demo-circle/index.less')}
+    />
 </CodeWrapper>
 
 ## API

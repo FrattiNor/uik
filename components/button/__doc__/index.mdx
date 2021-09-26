@@ -1,17 +1,5 @@
-import CodeBox from '@/components/code-box'
+import CodeBox from '@/components/code-box2'
 import CodeWrapper from '@/components/code-wrapper'
-
-import DemoSize from './demo-size'
-import descSize from './demo-size/desc.md'
-import codeSize from '!raw-loader!./demo-size'
-
-import DemoType from './demo-type'
-import descType from './demo-type/desc.md'
-import codeType from '!raw-loader!./demo-type'
-
-import DemoStatus from './demo-status'
-import descStatus from './demo-status/desc.md'
-import codeStatus from '!raw-loader!./demo-status'
 
 # Button 按钮
 
@@ -35,15 +23,27 @@ import codeStatus from '!raw-loader!./demo-status'
 ## 代码演示
 
 <CodeWrapper>
-    <CodeBox title="按钮大小" desc={descSize} code={codeSize}>
-        <DemoSize />
-    </CodeBox>
-    <CodeBox title="按钮类型" desc={descType} code={codeType}>
-        <DemoType />
-    </CodeBox>
-    <CodeBox title="按钮状态" desc={descStatus} code={codeStatus}>
-        <DemoStatus />
-    </CodeBox>
+    <CodeBox
+        title="按钮大小"
+        getComponent={() => import('./demo-size')}
+        getDesc={() => import('./demo-size/desc.md')}
+        getJs={() => import('!raw-loader!./demo-size')}
+        getLess={() => import('!raw-loader!./demo-size/index.less')}
+    />
+    <CodeBox
+        title="按钮类型"
+        getComponent={() => import('./demo-type')}
+        getDesc={() => import('./demo-type/desc.md')}
+        getJs={() => import('!raw-loader!./demo-type')}
+        getLess={() => import('!raw-loader!./demo-type/index.less')}
+    />
+    <CodeBox
+        title="按钮状态"
+        getComponent={() => import('./demo-status')}
+        getDesc={() => import('./demo-status/desc.md')}
+        getJs={() => import('!raw-loader!./demo-status')}
+        getLess={() => import('!raw-loader!./demo-status/index.less')}
+    />
 </CodeWrapper>
 
 ## API

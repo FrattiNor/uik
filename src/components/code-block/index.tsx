@@ -37,7 +37,7 @@ const HighlightCode: FC<props> = ({ code, language, backgroundColor, deleteEndEm
         } else {
             setTrueCode(code)
         }
-    }, [deleteEndEmptyLine])
+    }, [deleteEndEmptyLine, code])
 
     // 设置容器style，目前只是覆盖 backgroundColor
     const getStyle = (oldStyle: anyObject): anyObject => {

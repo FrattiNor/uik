@@ -1,10 +1,6 @@
-import CodeBox from '@/components/code-box'
+import CodeBox from '@/components/code-box2'
 import CodeWrapper from '@/components/code-wrapper'
 import ALink from '@/components/a-link'
-
-import DemoNormal from './demo-normal'
-import descNormal from './demo-normal/desc.md'
-import codeNormal from '!raw-loader!./demo-normal'
 
 # Grid 栅格
 
@@ -13,9 +9,13 @@ import codeNormal from '!raw-loader!./demo-normal'
 ## 代码演示
 
 <CodeWrapper>
-    <CodeBox title="基本" desc={descNormal} code={codeNormal}>
-        <DemoNormal />
-    </CodeBox>
+    <CodeBox
+        title="基本"
+        getComponent={() => import('./demo-normal')}
+        getDesc={() => import('./demo-normal/desc.md')}
+        getJs={() => import('!raw-loader!./demo-normal')}
+        getLess={() => import('!raw-loader!./demo-normal/index.less')}
+    />
 </CodeWrapper>
 
 ## API

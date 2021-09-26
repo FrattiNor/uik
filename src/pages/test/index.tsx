@@ -1,21 +1,35 @@
 import React, { FC } from 'react'
-import { Col, Row } from 'uik'
+import { Table } from 'uik'
 
 const Test: FC = () => {
+    const data = [{ id: 2 }, { id: 3 }, { id: 1 }, { id: 4 }, { id: 5 }, { id: 6 }, { id: 7 }, { id: 8 }]
+    const columns = [
+        {
+            title: 'title1',
+            key: 'id',
+            dataIndex: 'id',
+            width: '300px'
+        },
+        {
+            title: 'title2',
+            key: 'id2',
+            dataIndex: 'id2',
+            width: '300px',
+            render: (a: any, b: any, i: number) => `22222-${i}`
+        },
+        {
+            title: 'title3',
+            key: 'i3',
+            dataIndex: 'id2',
+            width: '300px',
+            render: (a: any, b: any, i: number) => `333333333333333333-${i}`
+        }
+    ]
+
     return (
         <>
             <div style={{ margin: 24 }}>
-                <Row gutter={[24, 24]} align="top" justify="space-between" rowGap={false}>
-                    <Col span={4} leftSpan={4}>Col1</Col>
-                    <Col span={8}>Col2</Col>
-                    <Col span={8}>Col3</Col>
-                    <Col span={8}>Col4</Col>
-                    <Col span={8}>Col5</Col>
-                    <Col span={8}>Col6</Col>
-                    <Col span={8}>Col7</Col>
-                    <Col span={8}>Col8</Col>
-                    <Col span={8}>Col9</Col>
-                </Row>
+                <Table dataSource={data} columns={columns} bordered scroll={{ x: '500px', y: '30vh' }} />
             </div>
         </>
     )

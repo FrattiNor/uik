@@ -1,0 +1,89 @@
+@import '~@/theme';
+
+.code-box {
+    border: 1px solid @border-color;
+    border-bottom: 0;
+
+    .demo {
+        padding: 24px 24px 20px 24px;
+        overflow: auto;
+        position: relative;
+        z-index: 2;
+    }
+
+    .title {
+        height: 24px;
+        position: relative;
+        display: flex;
+        width: 100%;
+        position: relative;
+        z-index: 1;
+
+        span {
+            padding: 0 10px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        &::before {
+            content: '';
+            display: table-cell;
+            position: relative;
+            width: 24px;
+            border-bottom: 1px solid @border-color;
+            top: -50%;
+        }
+
+        &::after {
+            content: '';
+            display: table-cell;
+            position: relative;
+            flex-grow: 1;
+            border-bottom: 1px solid @border-color;
+            top: -50%;
+        }
+    }
+
+    .desc {
+        padding: 12px 24px 16px 24px;
+        position: relative;
+        z-index: 1;
+
+        p {
+            margin: 0;
+        }
+    }
+
+    .icon-box {
+        border-top: 1px dashed @border-color;
+        border-bottom: 1px solid @border-color;
+        padding: 5px 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        z-index: 1;
+
+        .icon {
+            font-size: 18px;
+            cursor: pointer;
+            color: rgba(0, 0, 0, 0.6);
+            transition: color 0.3s;
+
+            &.check {
+                color: @primary-color;
+            }
+        }
+
+        & > * + * {
+            margin-left: 15px;
+        }
+    }
+
+    .pre {
+        border-bottom: 1px solid @border-color;
+        margin: 0;
+        position: relative;
+        z-index: 1;
+    }
+}

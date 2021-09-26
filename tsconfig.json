@@ -16,8 +16,8 @@
         "resolveJsonModule": true,
         "paths": {
             "@/*": ["src/*"],
-            "uik/lib/*": ["components/*"],
             "uik": ["components/index.tsx"],
+            "uik/*": ["components/*"],
             
         }
     },

@@ -1,13 +1,5 @@
-import CodeBox from '@/components/code-box'
+import CodeBox from '@/components/code-box2'
 import CodeWrapper from '@/components/code-wrapper'
-
-import DemoNormal from './demo-normal'
-import descNormal from './demo-normal/desc.md'
-import codeNormal from '!raw-loader!./demo-normal'
-
-import DemoGroup from './demo-group'
-import descGroup from './demo-group/desc.md'
-import codeGroup from '!raw-loader!./demo-group'
 
 # Checkbox 多选框
 
@@ -16,12 +8,19 @@ import codeGroup from '!raw-loader!./demo-group'
 ## 代码演示
 
 <CodeWrapper>
-    <CodeBox title="基础" desc={descNormal} code={codeNormal}>
-        <DemoNormal />
-    </CodeBox>
-    <CodeBox title="全选" desc={descGroup} code={codeGroup}>
-        <DemoGroup />
-    </CodeBox>
+    <CodeBox
+        title="基础"
+        getComponent={() => import('./demo-normal')}
+        getDesc={() => import('./demo-normal/desc.md')}
+        getJs={() => import('!raw-loader!./demo-normal')}
+    />
+    <CodeBox
+        title="全选"
+        getComponent={() => import('./demo-group')}
+        getDesc={() => import('./demo-group/desc.md')}
+        getJs={() => import('!raw-loader!./demo-group')}
+        getLess={() => import('!raw-loader!./demo-group/index.less')}
+    />
 </CodeWrapper>
 
 ## API
@@ -46,10 +45,10 @@ import codeGroup from '!raw-loader!./demo-group'
 
 | 属性               | 说明                          | 类型                                                | 默认值 | 版本 |
 | :----------------- | :---------------------------- | :-------------------------------------------------- | :----- | :--- |
-| checkedList        | checkboxList 的值             | (string \| number) []                                | -      | -    |
-| defaultCheckedList | checkboxList 的默认值         | (string \| number) []                                | []     | -    |
+| checkedList        | checkboxList 的值             | (string \| number) []                               | -      | -    |
+| defaultCheckedList | checkboxList 的默认值         | (string \| number) []                               | []     | -    |
 | disabled           | 是否全部禁用                  | boolean                                             | false  | -    |
-| onChange           | checkboxList 值发生改变的回调 | (checkedList: (string \| number) []) => void         | -      | -    |
+| onChange           | checkboxList 值发生改变的回调 | (checkedList: (string \| number) []) => void        | -      | -    |
 | onChange           | checkboxList 值发生改变的回调 | (checkedAll: boolean, checkedHalf: boolean) => void | -      | -    |
 | className          | 类名                          | string                                              | -      | -    |
 

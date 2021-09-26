@@ -1,13 +1,13 @@
 import React, { FC, useState } from 'react'
 import { Button, Modal } from 'uik'
-import { modalPosition } from 'uik/lib/modal'
+import { modalPosition } from 'uik/modal'
 import styles from './index.less'
 
 const Demo: FC = () => {
     const [visible, setVisible] = useState(false)
     const [position, setPosition] = useState<modalPosition>('center')
 
-    const open = (p:modalPosition) => {
+    const open = (p: modalPosition) => {
         setPosition(p)
         setVisible(true)
     }

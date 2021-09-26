@@ -1,13 +1,5 @@
-import CodeBox from '@/components/code-box'
+import CodeBox from '@/components/code-box2'
 import CodeWrapper from '@/components/code-wrapper'
-
-import DemoNormal from './demo-normal'
-import descNormal from './demo-normal/desc.md'
-import codeNormal from '!raw-loader!./demo-normal'
-
-import DemoContainer from './demo-container'
-import descContainer from './demo-container/desc.md'
-import codeContainer from '!raw-loader!./demo-container'
 
 # Sticky 固钉
 
@@ -20,12 +12,19 @@ import codeContainer from '!raw-loader!./demo-container'
 ## 代码演示
 
 <CodeWrapper>
-    <CodeBox title="基本" desc={descNormal} code={codeNormal}>
-        <DemoNormal />
-    </CodeBox>
-    <CodeBox title="设置滚动窗口" desc={descContainer} code={codeContainer}>
-        <DemoContainer />
-    </CodeBox>
+    <CodeBox
+        title="基础"
+        getComponent={() => import('./demo-normal')}
+        getDesc={() => import('./demo-normal/desc.md')}
+        getJs={() => import('!raw-loader!./demo-normal')}
+    />
+    <CodeBox
+        title="设置滚动窗口"
+        getComponent={() => import('./demo-container')}
+        getDesc={() => import('./demo-container/desc.md')}
+        getJs={() => import('!raw-loader!./demo-container')}
+        getLess={() => import('!raw-loader!./demo-container/index.less')}
+    />
 </CodeWrapper>
 
 ## API

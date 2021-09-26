@@ -58,7 +58,6 @@ module.exports = {
         // 别名
         alias: {
             '@': path.join(__dirname, '../src'),
-            'uik/lib': path.join(__dirname, '../components'),
             uik: path.join(__dirname, '../components')
         }
     },

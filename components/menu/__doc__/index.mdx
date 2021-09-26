@@ -1,9 +1,5 @@
-import CodeBox from '@/components/code-box'
+import CodeBox from '@/components/code-box2'
 import CodeWrapper from '@/components/code-wrapper'
-
-import DemoNormal from './demo-normal'
-import descNormal from './demo-normal/desc.md'
-import codeNormal from '!raw-loader!./demo-normal'
 
 # Menu 菜单
 
@@ -12,9 +8,12 @@ import codeNormal from '!raw-loader!./demo-normal'
 ## 代码演示
 
 <CodeWrapper>
-    <CodeBox title="基本" desc={descNormal} code={codeNormal}>
-        <DemoNormal />
-    </CodeBox>
+    <CodeBox
+        title="基础"
+        getComponent={() => import('./demo-normal')}
+        getDesc={() => import('./demo-normal/desc.md')}
+        getJs={() => import('!raw-loader!./demo-normal')}
+    />
 </CodeWrapper>
 
 ## API

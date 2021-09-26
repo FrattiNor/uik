@@ -1,9 +1,5 @@
-import CodeBox from '@/components/code-box'
+import CodeBox from '@/components/code-box2'
 import CodeWrapper from '@/components/code-wrapper'
-
-import DemoIcon from './demo-icon'
-import descIcon from './demo-icon/desc.md'
-import codeIcon from '!raw-loader!./demo-icon'
 
 # Icon 图标
 
@@ -14,9 +10,13 @@ import codeIcon from '!raw-loader!./demo-icon'
 ## 代码演示
 
 <CodeWrapper>
-    <CodeBox title="图标" desc={descIcon} code={codeIcon}>
-        <DemoIcon />
-    </CodeBox>
+    <CodeBox
+        title="图标"
+        getComponent={() => import('./demo-icon')}
+        getDesc={() => import('./demo-icon/desc.md')}
+        getJs={() => import('!raw-loader!./demo-icon')}
+        getLess={() => import('!raw-loader!./demo-icon/index.less')}
+    />
 </CodeWrapper>
 
 ## API
@@ -41,7 +41,6 @@ import codeIcon from '!raw-loader!./demo-icon'
 | url    | iconfont 的 js 链接（可不填，自己引入） | string | -      | -    |
 
 </div>
-
 
 ## 注意
 

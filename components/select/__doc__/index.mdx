@@ -1,13 +1,5 @@
-import CodeBox from '@/components/code-box'
+import CodeBox from '@/components/code-box2'
 import CodeWrapper from '@/components/code-wrapper'
-
-import DemoNormal from './demo-normal'
-import descNormal from './demo-normal/desc.md'
-import codeNormal from '!raw-loader!./demo-normal'
-
-import DemoMultiple from './demo-multiple'
-import descMultiple from './demo-multiple/desc.md'
-import codeMultiple from '!raw-loader!./demo-multiple'
 
 # Select 输入框
 
@@ -16,12 +8,20 @@ import codeMultiple from '!raw-loader!./demo-multiple'
 ## 代码演示
 
 <CodeWrapper>
-    <CodeBox title="基础" desc={descNormal} code={codeNormal}>
-        <DemoNormal />
-    </CodeBox>
-    <CodeBox title="多选" desc={descMultiple} code={codeMultiple}>
-        <DemoMultiple />
-    </CodeBox>
+    <CodeBox
+        title="基础"
+        getComponent={() => import('./demo-normal')}
+        getDesc={() => import('./demo-normal/desc.md')}
+        getJs={() => import('!raw-loader!./demo-normal')}
+        getLess={() => import('!raw-loader!./demo-normal/index.less')}
+    />
+    <CodeBox
+        title="多选"
+        getComponent={() => import('./demo-multiple')}
+        getDesc={() => import('./demo-multiple/desc.md')}
+        getJs={() => import('!raw-loader!./demo-multiple')}
+        getLess={() => import('!raw-loader!./demo-multiple/index.less')}
+    />
 </CodeWrapper>
 
 ## API

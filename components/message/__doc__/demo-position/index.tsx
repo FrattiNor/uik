@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 import { Button, message } from 'uik'
-import { messagePosition } from 'uik/lib/message'
+import { messagePosition } from 'uik/message'
 import styles from './index.less'
 
 const Demo: FC = () => {

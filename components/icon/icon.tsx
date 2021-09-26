@@ -15,7 +15,7 @@ const Icon: ForwardRefRenderFunction<unknown, iconProps> = (props, ref) => {
     const truePrefix = defaultIcon ? 'uik-icon-' : prefix
 
     useEffect(() => {
-        setIconJS('https://at.alicdn.com/t/font_2300539_cba9giupwjs.js', 'uik-icon-default-js')
+        setIconJS('https://at.alicdn.com/t/font_2300539_eww2tkjzt67.js', 'uik-icon-default-js')
     }, [])
 
     return (

@@ -1,17 +1,5 @@
-import CodeBox from '@/components/code-box'
+import CodeBox from '@/components/code-box2'
 import CodeWrapper from '@/components/code-wrapper'
-
-import DemoNormal from './demo-normal'
-import descNormal from './demo-normal/desc.md'
-import codeNormal from '!raw-loader!./demo-normal'
-
-import DemoType from './demo-type'
-import descType from './demo-type/desc.md'
-import codeType from '!raw-loader!./demo-type'
-
-import DemoPosition from './demo-position'
-import descPosition from './demo-position/desc.md'
-import codePosition from '!raw-loader!./demo-position'
 
 # message 消息提示
 
@@ -26,15 +14,26 @@ import codePosition from '!raw-loader!./demo-position'
 ## 代码演示
 
 <CodeWrapper>
-    <CodeBox title="普通提示" desc={descNormal} code={codeNormal}>
-        <DemoNormal />
-    </CodeBox>
-    <CodeBox title="特殊提示类型" desc={descType} code={codeType}>
-        <DemoType />
-    </CodeBox>
-    <CodeBox title="定位" desc={descPosition} code={codePosition}>
-        <DemoPosition />
-    </CodeBox>
+    <CodeBox
+        title="普通提示"
+        getComponent={() => import('./demo-normal')}
+        getDesc={() => import('./demo-normal/desc.md')}
+        getJs={() => import('!raw-loader!./demo-normal')}
+    />
+    <CodeBox
+        title="特殊提示类型"
+        getComponent={() => import('./demo-type')}
+        getDesc={() => import('./demo-type/desc.md')}
+        getJs={() => import('!raw-loader!./demo-type')}
+        getLess={() => import('!raw-loader!./demo-type/index.less')}
+    />
+    <CodeBox
+        title="定位"
+        getComponent={() => import('./demo-position')}
+        getDesc={() => import('./demo-position/desc.md')}
+        getJs={() => import('!raw-loader!./demo-position')}
+        getLess={() => import('!raw-loader!./demo-position/index.less')}
+    />
 </CodeWrapper>
 
 ## API

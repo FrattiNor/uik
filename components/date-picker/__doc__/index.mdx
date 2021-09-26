@@ -1,13 +1,5 @@
-import CodeBox from '@/components/code-box'
+import CodeBox from '@/components/code-box2'
 import CodeWrapper from '@/components/code-wrapper'
-
-import DemoNormal from './demo-normal'
-import descNormal from './demo-normal/desc.md'
-import codeNormal from '!raw-loader!./demo-normal'
-
-import DemoRang from './demo-rang'
-import descRang from './demo-rang/desc.md'
-import codeRang from '!raw-loader!./demo-rang'
 
 # DatePicker 日期选择
 
@@ -16,12 +8,18 @@ import codeRang from '!raw-loader!./demo-rang'
 ## 代码演示
 
 <CodeWrapper>
-    <CodeBox title="基础" desc={descNormal} code={codeNormal}>
-        <DemoNormal />
-    </CodeBox>
-    <CodeBox title="范围选择器" desc={descRang} code={codeRang}>
-        <DemoRang />
-    </CodeBox>
+    <CodeBox
+        title="基础"
+        getComponent={() => import('./demo-normal')}
+        getDesc={() => import('./demo-normal/desc.md')}
+        getJs={() => import('!raw-loader!./demo-normal')}
+    />
+    <CodeBox
+        title="范围选择器"
+        getComponent={() => import('./demo-rang')}
+        getDesc={() => import('./demo-rang/desc.md')}
+        getJs={() => import('!raw-loader!./demo-rang')}
+    />
 </CodeWrapper>
 
 ## API
