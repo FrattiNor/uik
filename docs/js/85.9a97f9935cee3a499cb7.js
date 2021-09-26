@@ -1,1 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[85],{362:function(n,e,o){"use strict";o.r(e),e.default="import React, { FC } from 'react'\nimport { DatePicker } from 'uik'\n\nconst { RangPicker } = DatePicker\n\nconst Demo: FC = () => {\n    return <RangPicker allowClear />\n}\n\nexport default Demo\n"}}]);

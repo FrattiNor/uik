@@ -1,1 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[87],{368:function(n,o,c){"use strict";c.r(o),o.default=".col-inner {\n    background-color: rgb(0, 146, 255);\n    padding: 8px;\n    color: #fff;\n    text-align: center;\n}\n"}}]);

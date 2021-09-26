@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[89],{373:function(n,p,o){"use strict";o.r(p),p.default=".wrapper {\n    font-size: 20px;\n    color: #999;\n\n    & > svg + svg {\n        margin-left: 10px;\n    }\n}"}}]);
