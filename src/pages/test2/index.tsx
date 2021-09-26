@@ -8,7 +8,7 @@ const Demo: FC = () => {
     return (
         <div className={styles['wrapper']} ref={wrapperRef}>
             <div className={styles['wrapper-inner']}>
-                <Sticky offsetBottom={10} getRoot={() => wrapperRef.current} getRootParent={() => document}>
+                <Sticky offsetBottom={10} getRoot={() => wrapperRef.current}>
                     <Button type="primary">Sticky</Button>
                 </Sticky>
             </div>

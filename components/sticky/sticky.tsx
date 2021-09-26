@@ -3,7 +3,7 @@ import { useResizeObserver } from '../_hooks'
 import { stickyProps } from './types'
 
 const Sticky: FC<stickyProps> = (props) => {
-    const { children, rootId, getRoot, offsetTop, offsetBottom, style = {}, className, ...restProps } = props
+    const { children, rootId, getRoot, offsetTop, offsetBottom, style = {}, className, rootParentId, getRootParent, ...restProps } = props
     const targetOutRef = useRef<HTMLDivElement>(null)
     const targetRef = useRef<HTMLDivElement>(null)
     const [targetOutStyle, setTargetOutStyle] = useState<CSSProperties>({})
@@ -16,7 +16,7 @@ const Sticky: FC<stickyProps> = (props) => {
 
     // 监控滚动事件
     const scrollFun = useCallback(
-        (root: HTMLElement | Document) => {
+        (root: HTMLElement | Document | Window) => {
             const haveOffsetTop = typeof offsetTop === 'number'
             const haveOffsetBottom = typeof offsetBottom === 'number'
             const top = typeof offsetTop === 'number' ? offsetTop : 0
@@ -30,11 +30,12 @@ const Sticky: FC<stickyProps> = (props) => {
                 if (haveOffsetTop && targetRect.y <= rootRect.y + top) {
                     setFixedStyle({ ...fixedBaseStyle, top: rootRect.y + top, left: targetRect.x } as CSSProperties)
                 } else if (haveOffsetBottom && targetRect.y + targetRect.height >= rootRect.y + rootRect.height - bottom) {
-                    setFixedStyle({
+                    const theStyle = {
                         ...fixedBaseStyle,
                         top: rootRect.y + rootRect.height - targetRect.height - bottom,
                         left: targetRect.x
-                    } as CSSProperties)
+                    }
+                    setFixedStyle(theStyle as CSSProperties)
                 } else {
                     setFixedStyle({})
                 }
@@ -46,16 +47,20 @@ const Sticky: FC<stickyProps> = (props) => {
     // 添加滚动事件
     useEffect(() => {
         const _root = getRoot ? getRoot() : rootId ? document.getElementById(rootId) : null
+        const rootParent = getRootParent ? getRootParent() : rootParentId ? document.getElementById(rootParentId) : null
         const root = _root === null ? document : _root
+
         const getFixed = () => scrollFun(root)
 
         getFixed()
         root.addEventListener('scroll', getFixed)
+        if (rootParent && rootParent !== root) rootParent.addEventListener('scroll', getFixed)
 
         return () => {
             root.removeEventListener('scroll', getFixed)
+            if (rootParent && rootParent !== root) rootParent.removeEventListener('scroll', getFixed)
         }
-    }, [getRoot, rootId, scrollFun])
+    }, [getRoot, rootId, getRootParent, rootParentId, scrollFun])
 
     return (
         <div ref={targetOutRef} className={className} style={{ minHeight: targetStyle.height, ...style }} {...restProps}>

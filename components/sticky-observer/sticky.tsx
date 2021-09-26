@@ -2,6 +2,7 @@ import React, { FC, useEffect, useRef, useState, CSSProperties } from 'react'
 import { useResizeObserver } from '../_hooks'
 import { stickyProps } from './types'
 
+// sticky-observer 不支持 rootParent
 const Sticky: FC<stickyProps> = (props) => {
     const { children, rootId, getRoot, offsetTop, offsetBottom, style = {}, className, ...restProps } = props
     const targetOutRef = useRef<HTMLDivElement>(null)
@@ -24,7 +25,7 @@ const Sticky: FC<stickyProps> = (props) => {
         const bottom = typeof offsetBottom === 'number' ? -offsetBottom : 0
 
         const options = {
-            root,
+            root: root,
             rootMargin: `${top}px 0px ${bottom}px 0px`,
             threshold: 0.99 // 避免块级元素部分不可见
         }

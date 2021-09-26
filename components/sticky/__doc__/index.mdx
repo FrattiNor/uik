@@ -31,14 +31,16 @@ import CodeWrapper from '@/components/code-wrapper'
 
 <div className="api">
 
-| 属性         | 说明                                                   | 类型                      | 默认值 | 版本 |
-| :----------- | :----------------------------------------------------- | :------------------------ | :----- | :--- |
-| offsetTop    | 距离滚动窗口底部达到指定偏移量后触发                   | number                    | -      | -    |
-| offsetBottom | 距离滚动窗口顶部达到指定偏移量后触发                   | number                    | -      | -    |
-| rootId       | 设置滚动窗口的 id（不设置默认为视窗）                  | string                    | -      | -    |
-| getRoot      | 获取滚动窗口（用于 ref 获取 dom）（优先级高于 rootId） | () => HTMLElement \| null | -      | -    |
-| style        | 设置元素的样式                                         | CSSProperties             | -      | -    |
-| className    | 设置元素的样式                                         | string                    | -      | -    |
+| 属性          | 说明                                                                     | 类型                      | 默认值 | 版本 |
+| :------------ | :----------------------------------------------------------------------- | :------------------------ | :----- | :--- |
+| offsetTop     | 距离滚动窗口底部达到指定偏移量后触发                                     | number                    | -      | -    |
+| offsetBottom  | 距离滚动窗口顶部达到指定偏移量后触发                                     | number                    | -      | -    |
+| rootId        | 设置滚动窗口的 id（不设置默认为视窗）                                    | string                    | -      | -    |
+| getRoot       | 获取滚动窗口（用于 ref 获取 dom）（优先级高于 rootId）                   | () => HTMLElement \| null | -      | -    |
+| rootParentId  | 设置滚动窗口外部的滚动窗口的 id （用于外部容器滚动也实时获取位置）       | string                    | -      | -    |
+| getRootParent | 获取滚动窗口外部的滚动窗口（用于 ref 获取 dom）（优先级高于 rootParentId | () => HTMLElement \| null | -      | -    |
+| style         | 设置元素的样式                                                           | CSSProperties             | -      | -    |
+| className     | 设置元素的样式                                                           | string                    | -      | -    |
 
 </div>
 
