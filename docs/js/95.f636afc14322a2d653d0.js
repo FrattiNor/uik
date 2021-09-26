@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[95],{386:function(n,e,o){"use strict";o.r(e),e.default="import React, { FC } from 'react'\nimport { Button, message } from 'uik'\n\nconst Demo: FC = () => {\n    const openMessage = () => message.open('这是一条普通message')\n\n    return <Button type=\"primary\" onClick={openMessage}>普通提示</Button>\n}\n\nexport default Demo\n"}}]);

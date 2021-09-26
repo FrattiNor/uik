@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[105],{401:function(n,t,o){"use strict";o.r(t),t.default=".btn-box {\n    margin-top: 15px;\n\n    & > button + button {\n        margin-left: 10px;\n    }\n}"}}]);

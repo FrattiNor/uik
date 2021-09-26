@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[66],{420:function(o,c){o.exports="<p>用 <code>target</code> 设置 <code>Sticky</code> 需要监听其滚动事件的元素，默认为 <code>window</code>。</p> "}}]);

@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[78],{347:function(o,n,e){"use strict";e.r(n),n.default="import React, { FC } from 'react'\nimport { Checkbox } from 'uik'\n\nconst Demo: FC = () => {\n    return <Checkbox>Checkbox</Checkbox>\n}\n\nexport default Demo\n"}}]);

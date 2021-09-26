@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[117],{425:function(n,t,e){"use strict";e.r(t),t.default="import React, { FC } from 'react'\nimport { Switch } from 'uik'\n\nconst Demo: FC = () => {\n    return <Switch defaultChecked />\n}\n\nexport default Demo\n"}}]);
