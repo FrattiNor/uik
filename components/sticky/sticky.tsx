@@ -17,7 +17,6 @@ const Sticky: FC<stickyProps> = (props) => {
     // 监控滚动事件
     const scrollFun = useCallback(
         (root: HTMLElement | Document) => {
-            // console.log('root', root)
             const haveOffsetTop = typeof offsetTop === 'number'
             const haveOffsetBottom = typeof offsetBottom === 'number'
             const top = typeof offsetTop === 'number' ? offsetTop : 0
@@ -46,14 +45,15 @@ const Sticky: FC<stickyProps> = (props) => {
 
     // 添加滚动事件
     useEffect(() => {
-        const root = getRoot ? getRoot() : rootId ? document.getElementById(rootId) : null
-        const getFixed = () => root && scrollFun(root)
+        const _root = getRoot ? getRoot() : rootId ? document.getElementById(rootId) : null
+        const root = _root === null ? document : _root
+        const getFixed = () => scrollFun(root)
 
         getFixed()
-        if (root) root.addEventListener('scroll', getFixed)
+        root.addEventListener('scroll', getFixed)
 
         return () => {
-            if (root) root.removeEventListener('scroll', getFixed)
+            root.removeEventListener('scroll', getFixed)
         }
     }, [getRoot, rootId, scrollFun])
 
