@@ -1,1 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[109],{407:function(o,n,t){"use strict";t.r(n),n.default="import React, { FC } from 'react'\nimport { Radio } from 'uik'\n\nconst Demo: FC = () => {\n    return <Radio>Radio</Radio>\n}\n\nexport default Demo\n"}}]);

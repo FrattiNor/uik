@@ -1,1 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[58],{396:function(o,e){o.exports="<p>弹窗有5种不同的定位 通过设置 <code>position</code> 为 <code>center</code> <code>top</code> <code>bottom</code> <code>left</code> <code>right</code> 分别把弹窗设为 居中 上 下 左 右 定位。若不设置 <code>position</code>，则定位为<code>center</code>。</p> "}}]);

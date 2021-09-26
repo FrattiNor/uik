@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[119],{422:function(t,n,o){"use strict";o.r(n),n.default="import React, { FC } from 'react'\nimport { Sticky, Button } from 'uik'\n\nconst Demo: FC = () => {\n    return (\n        <Sticky offsetTop={0}>\n            <Button type=\"primary\">Sticky</Button>\n        </Sticky>\n    )\n}\n\nexport default Demo\n"}}]);

@@ -1,1 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[70],{338:function(n,t,e){"use strict";e.r(t),t.default=".wrapper {\n    display: flex;\n    align-items: center;\n    \n    & > button + button {\n        margin-left: 10px;\n    }\n}"}}]);

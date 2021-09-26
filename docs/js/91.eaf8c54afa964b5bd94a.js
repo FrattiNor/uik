@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[91],{374:function(n,o,e){"use strict";e.r(o),o.default="import React, { FC } from 'react'\nimport { Input } from 'uik'\n\nconst Demo: FC = () => {\n    return <Input placeholder=\"请输入！\" allowClear />\n}\n\nexport default Demo\n"}}]);
