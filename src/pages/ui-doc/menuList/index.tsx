@@ -1,5 +1,4 @@
-import { FC } from 'react'
-import EmptyComponent from '@/components/empty-component'
+import React, { FC } from 'react'
 import menuString from '!!raw-loader!uik' // 无视报错即可
 import { formatMenuString } from './util'
 
@@ -51,7 +50,7 @@ const getDoc = (name: string): FC => {
         }
     }
 
-    return EmptyComponent
+    return () => <>暂无文档</>
 }
 
 export { menu, getTitle, judgeName, getDoc }
